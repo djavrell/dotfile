@@ -1,0 +1,16 @@
+## IDE
+.idea/
+.vscode/
+
+## global
+*.tmp
+*.log
+*~
+log/
+
+# os X
+.DS_Store
+
+# vim
+.ensime
+.tern-project

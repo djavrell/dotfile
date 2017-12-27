@@ -1,0 +1,22 @@
+{
+    "ecmaVersion": 6,
+    "libs": [
+        "browser",
+        "underscore"
+    ],
+    "loadEagerly": [
+    ],
+    "plugins": {
+        "complete_string": {},
+        "CommonJS": {},
+        "node": {},
+        "node-express": {},
+        "node-extension": {},
+        "electron": {},
+        "modules": {},
+        "es_modules": {},
+        "doc_comment": {
+            "FullDocs": true
+        }
+    }
+}

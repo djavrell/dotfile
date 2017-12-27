@@ -1,0 +1,65 @@
+#!/bin/bash
+
+filea=
+fileb=
+
+check_param()
+{
+    if [ "$1" == "-d" ]; then
+	shift
+	if [[ $1 = +([0-9]) ]]; then
+	    nba=$1
+	else
+	    echo -e "\e[31mError : \e[0mThe first parameter before \"-d\" is not a number\e[0m"
+	    echo -e "Usage : list [-d param1(number) param2(number)] files ..."
+	    exit
+	fi
+	shift
+	if [[ $1 = +([0-9]) ]]; then
+	    nbb=$1
+	else
+	    echo -e "\e[31mError : \e[0mThe first parameter before \"-d\" is not a number\e[0m"
+	    echo -e "Usage : list [-d param1(number) param2(number)] files ..."
+	    exit
+	fi
+	shift
+	if [ "$nba" -lt "$nbb" ]; then
+	    shift $(( nba - 1 ))
+	    filea=$1
+	    shift $(( nbb - nba ))
+	    fileb=$1
+	else
+	    shift $(( nbb - 1 ))
+	    fileb=$1
+	    shift $(( nba - nbb ))
+	    filea=$1
+	fi
+	return 3
+    fi
+    unset filea
+    unset fileb
+    return 0
+}
+
+check_param $@
+ret=$?
+if [ $ret -gt 0 ]; then
+    shift $ret
+fi
+
+while [ "$#" -gt 0 ]; do
+    if [ -f $1 ]; then
+    echo -e "\e[31m========\e[34m[$1]\e[31m========\e[0m"
+	pygmentize -g $1
+	# cat $1
+    fi
+    shift
+    if [ "$#" -gt 0 ] && [ -f $1 ]; then
+	echo -e "\e[31m.\n.\e[0m"
+    fi
+done
+
+if [ -n $filea ] && [ -n $fileb ] && [ $ret -gt 0 ]; then
+    echo -e "\e[31m========\e[34m[$filea - $fileb]\e[31m========\e[0m"
+    diff $filea $fileb
+fi

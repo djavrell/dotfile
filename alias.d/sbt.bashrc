@@ -1,0 +1,6 @@
+alias sbtdebug="sbt -jvm-debug 5005"
+alias sbt7="sbt -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/"
+alias sbt7debug="sbt -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/ -jvm-debug 5005"
+alias activatordebug="activator -jvm-debug 5005"
+alias activator7="activator -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/"
+alias activator7debug="activator -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/ -jvm-debug 5005"

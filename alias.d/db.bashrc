@@ -1,0 +1,1 @@
+alias dbIndaym='pgcli -h localhost -p 4001 -U indaym main'

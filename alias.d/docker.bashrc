@@ -1,0 +1,1 @@
+alias dockerEIP='docker run --rm -p 4001:5432 -v indaym-volume:/var/lib/postgresql/data --name indaym indaym:indaym'
