@@ -10,7 +10,7 @@ ZSH_THEME="agnoster"
 
 sourceIt $ZSH/oh-my-zsh.sh
 
-for file in ~/.bashrc.d/*.bashrc
+for file in ~/.bashrc.d/config/*.sh
 do
 	sourceIt "$file"
 done
