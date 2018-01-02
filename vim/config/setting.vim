@@ -13,7 +13,7 @@ set number
 set autoindent
 
 set list
-set listchars=tab:→\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
 
 set backspace=indent,eol,start
