@@ -4,7 +4,7 @@
 # Add wisely, as too many plugins slow down shell startup.
 
 plugins=(
-  git github git-prompt git-flow
+  git github git-prompt git-flow gitfast
   node npm
   scala
   colored-man colorize
