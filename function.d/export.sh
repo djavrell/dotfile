@@ -1,3 +1,3 @@
 function addToPath() {
-  export PATH=$PATH:$1
+  export PATH="$PATH:$1"
 }

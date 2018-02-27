@@ -14,3 +14,5 @@ for file in ~/.bashrc.d/config/*.sh
 do
 	sourceIt "$file"
 done
+
+export PATH=/Users/kpr/.local/bin/luna-studio:$PATH
