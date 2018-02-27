@@ -1,4 +1,5 @@
 #! /bin/sh
+# author: djavrell
 
 # installation script for this dotfile
 
