@@ -8,9 +8,12 @@
 *~
 log/
 
-# os X
+## os X
 .DS_Store
 
-# vim
+## vim
 .ensime
 .tern-project
+
+## slack
+slack-term.json

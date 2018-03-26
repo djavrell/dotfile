@@ -38,6 +38,9 @@ Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'godlygeek/tabular'                  " easy align
 
+" " tags
+Plugin 'majutsushi/tagbar'
+
 " " git integration
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
@@ -49,7 +52,7 @@ Plugin 'vim-airline/vim-airline'             " better status line
 Plugin 'vim-airline/vim-airline-themes'      " more themes for airline
 Plugin 'ap/vim-buftabline'
 " Plugin 'bling/vim-bufferline'
-Plugin 'tabman.vim'                          " show a panel with all tabs and each panel in them
+" Plugin 'tabman.vim'                          " show a panel with all tabs and each panel in them
 Plugin 'zhaocai/GoldenView.Vim'              " better panel manager
 Plugin 'ntpeters/vim-better-whitespace'      " show space at end of line
 

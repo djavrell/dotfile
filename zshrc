@@ -8,11 +8,9 @@ source $DOTFILE/function.d/source.sh
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
 
-sourceIt $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 for file in ~/.bashrc.d/config/*.sh
 do
-	sourceIt "$file"
+  source $file
 done
-
-export PATH=/Users/kpr/.local/bin/luna-studio:$PATH

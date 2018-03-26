@@ -10,4 +10,5 @@ plugins=(
   colored-man colorize
   brew osx
   zsh-syntax-highlighting zsh-wakatime
+  yarn-autocompletions
 )

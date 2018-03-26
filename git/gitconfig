@@ -1,6 +1,6 @@
 [user]
-	email = kevin.prouteau@fabernovel.com
-	name = Prouteau Kévin
+    email = kevin.prouteau@fabernovel.com
+    name = Prouteau Kévin
 
 [color]
     ui = true
@@ -14,10 +14,11 @@
     editor = vim
     whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
     excludesfile = /Users/kpr/.gitignore
+    pager = diff-so-fancy | less --tabs=2 -RFX
 
 [alias]
-    lol = log --all --decorate --graph --abbrev-commit --pretty=oneline
-    llol = log --decorate --graph --abbrev-commit --pretty=oneline
+    lol = log --all --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    llol = log --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     flol = log --all --decorate --graph --abbrev-commit
     hist = log --decorate --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
     ls = ls-tree -r HEAD --name-only
@@ -26,4 +27,22 @@
     dump = cat-file -p
 
 [merge]
-	tool = vimdiff
+    tool = vimdiff
+
+[color "diff-hightlight"]
+    oldNormal = red bold
+    oldHightlight = red bold 52
+    newNormal = gree bold
+    newHightlight = green bold 22
+
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    commit = yellow bold
+    old = red bold
+    new = green bold
+    whitspace = red reverse
+
+[diff-so-fancy]
+    changeHunkIndicator = true
+    stripLeadingSymbols = false

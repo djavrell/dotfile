@@ -17,3 +17,5 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\v[\/](node_modules|target|dist)|\.(git|hg|svn|idea)$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ }
+
+nnoremap <leader>b :CtrlPTag<CR>
