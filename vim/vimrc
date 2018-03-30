@@ -11,6 +11,9 @@ let g:python_host_prog='/usr/bin/python'
 
 let mapleader = '='
 
+set pyxversion=3
+set encoding=utf-8
+
 "" start  vundle confguration {{{
 
 set nocompatible
@@ -57,7 +60,10 @@ Plugin 'zhaocai/GoldenView.Vim'              " better panel manager
 Plugin 'ntpeters/vim-better-whitespace'      " show space at end of line
 
 " " syntax and completion
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/vim-hug-neovim-rpc'
+Plugin 'roxma/nvim-yarp'
 Plugin 'scrooloose/syntastic'                " syntax checker
 
 " " htlm
@@ -75,11 +81,12 @@ Plugin 'davidhalter/jedi-vim'                " python auto-completion
 " " rust
 Plugin 'racer-rust/vim-racer'                " plugin for rust completion
 Plugin 'rust-lang/rust.vim'                  " plugin for rust syntax
+Plugin 'sebastianmarkow/deoplete-rust'
 
 " " scala
 Plugin 'derekwyatt/vim-scala'
 Plugin 'gre/play2vim'                        " support of scala-play framwork for vim
-Plugin 'ensime/ensime-vim'
+" Plugin 'ensime/ensime-vim'
 
 " " js family
 Plugin 'moll/vim-node'
