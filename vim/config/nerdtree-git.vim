@@ -1,3 +1,5 @@
+Plugin 'Xuyuanp/nerdtree-git-plugin'         " git in neerdtree
+
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
     \ "Staged"    : "✚",

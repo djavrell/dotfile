@@ -1,5 +1,5 @@
 [user]
-  email = kevin.prouteau@fabernovel.com
+	email = kevin.prouteau@epitech.eu
   name  = Prouteau Kévin
 
 [color]
@@ -17,15 +17,16 @@
   pager         = diff-so-fancy | less --tabs=2 -RFX
 
 [alias]
-  lola  = log --decorate --graph --abbrev-commit --all --simplify-by-decoration --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-  llola = log --decorate --graph --abbrev-commit --all --simplify-by-decoration --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-  flola = log --decorate --graph --abbrev-commit --all --simplify-by-decoration
+  lola  = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  llola = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+  flola = log --decorate --graph --abbrev-commit --all
 
   lol  = log --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   llol = log --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   hist = log --decorate --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
   ldiff = diff HEAD~
+  dt    = difftool
 
   ls    = ls-tree -r HEAD --name-only
   mr    = !sh -c 'git fetch $1 merge-requests/$2/head:mr-$1-$2 && git checkout mr-$1-$2' -

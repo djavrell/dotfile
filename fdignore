@@ -1,0 +1,7 @@
+.git
+target
+build
+.idea
+*~
+.DS_STORE
+*.o

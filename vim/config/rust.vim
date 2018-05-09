@@ -1,3 +1,7 @@
+Plugin 'racer-rust/vim-racer'                " plugin for rust completion
+Plugin 'rust-lang/rust.vim'                  " plugin for rust syntax
+Plugin 'sebastianmarkow/deoplete-rust'
+
 set hidden
 
 let g:racer_experimental_completion = 1

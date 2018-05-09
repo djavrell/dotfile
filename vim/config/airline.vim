@@ -1,3 +1,6 @@
+Plugin 'vim-airline/vim-airline'             " better status line
+Plugin 'vim-airline/vim-airline-themes'      " more themes for airline
+
 let g:airline_powerline_fonts=1
 
 let g:airline_theme='badwolf'

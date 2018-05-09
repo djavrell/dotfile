@@ -1,0 +1,11 @@
+check if git is here
+  - $+commands[git] || return
+
+.git folder
+  - git rev-parse --git-dir 2>/dev/null
+
+git rev-parse --is-inside-work-tree -> are we in a git project
+
+git status -s -> if the repo is clean (nothing to track or modified)
+
+

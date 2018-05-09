@@ -1,3 +1,5 @@
+Plugin 'junegunn/gv.vim'
+
 map <C-g> :GV<CR>
 
 "nmap <buffer> <C-j> ]]o

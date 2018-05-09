@@ -1,3 +1,5 @@
+Plugin 'ap/vim-buftabline'
+
 set hidden
 
 " new buffer

@@ -1,3 +1,5 @@
+Plugin 'scrooloose/nerdtree'                 " tree view
+
 " NerdTree
 map <C-x>      :NERDTreeToggle<CR>
 map <C-c>      :NERDTreeFocus<CR>

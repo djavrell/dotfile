@@ -17,3 +17,10 @@ log/
 
 ## slack
 slack-term.json
+
+## Tags
+.tags
+tags
+
+## Docker
+docker/
