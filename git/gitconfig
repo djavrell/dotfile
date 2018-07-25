@@ -10,6 +10,9 @@
   local   = green bold
   remote  = cyan bold
 
+[advice]
+  statusUoption = true
+
 [core]
   editor        = vim
   whitespace    = fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -74,3 +77,10 @@
 [diff-so-fancy]
   changeHunkIndicator = true
   stripLeadingSymbols = false
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[credential]
+	username = djavrell

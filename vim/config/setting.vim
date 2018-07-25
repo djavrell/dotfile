@@ -26,3 +26,5 @@ set shiftround
 
 set ttimeout
 set ttimeoutlen=50
+
+set tags=./.tags,.tags,./tags,tags

@@ -12,7 +12,6 @@ log/
 .DS_Store
 
 ## vim
-.ensime
 .tern-project
 
 ## slack
@@ -24,3 +23,8 @@ tags
 
 ## Docker
 docker/
+
+## Ensime
+project/.ensime
+.ensime
+.ensime_cache/

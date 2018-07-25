@@ -27,13 +27,11 @@ call vundle#rc(s:editor_root . "/bundle")
 Plugin 'gmarik/Vundle.vim'                   " vundle plugin
 
 " begin   plugin
-" " do not uninstall -> dependency
 
 " " functionalities plugin
-Plugin 'tpope/vim-surround'                  " some function for surrounding text
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'godlygeek/tabular'                  " easy align
 Plugin 'brooth/far.vim'                     " better search and replace
+Plugin 'junegunn/vim-easy-align'
 
 " " tags
 
@@ -64,6 +62,8 @@ Plugin 'gre/play2vim'                        " support of scala-play framwork fo
 Plugin 'moll/vim-node'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'Quramy/tsuquyomi'                    " completion typescript
+
+" Plugin 'ryanoasis/vim-devicons'
 
 filetype plugin indent on
 " end    vundle configutation

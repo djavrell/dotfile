@@ -8,6 +8,9 @@ let g:racer_experimental_completion = 1
 let g:rustfmt_autosave = 1
 let g:racer_cmd = "~/.cargo/bin/racer"
 
+let g:deoplete#sources#rust#racer_binary = "~/.cargo/bin/racer"
+let g:deoplete#sources#rust#racer_source_path = "$RUST_SRC_PATH"
+
 au FileType rust nmap gd <Plug>(rust-def)
 au FileType rust nmap gs <Plug>(rust-def-split)
 au FileType rust nmap gx <Plug>(rust-def-vertical)

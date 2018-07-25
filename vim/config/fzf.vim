@@ -53,10 +53,11 @@ let g:fzf_buffers_jump = 1
 let g:fzf_commits_log_options = '--all --decorate --graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 " [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R'
+let g:fzf_tags_command = 'ctags -R .'
 
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'
 
 
 map <C-f> :Files<CR>
+map <leader>b :Buffers<CR>
