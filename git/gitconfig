@@ -1,6 +1,9 @@
 [user]
-	email = kevin.prouteau@epitech.eu
+  email = kevin.prouteau@epitech.eu
   name  = Prouteau Kévin
+
+[commit]
+  template = ~/.bashrc.d/git/gitmessage
 
 [color]
   ui = true
@@ -38,6 +41,8 @@
   prune = fetch --prune
 
   undo = reset --soft HEAD^
+
+  ia = !git add $(git ls-files --modified --others --exclude-standard | fzf --revers --multi)
 
 [rebase]
  autostash = true

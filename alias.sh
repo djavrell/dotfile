@@ -1,4 +1,5 @@
 # General
+alias ls='exa'
 alias ll='exa -lh'
 alias la='exa -la'
 alias s='source ~/.zshrc'
@@ -7,6 +8,8 @@ alias rml='rm -vrf $(ls | fzf-tmux -r 30% --multi --reverse)'
 alias cat='bat'
 
 alias cdroot='cd $(git rev-parse --show-toplevel)'
+
+alias ping='prettyping'
 
 # Git
 alias gitAbort="git reset --hard HEAD"

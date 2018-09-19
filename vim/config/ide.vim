@@ -8,3 +8,6 @@ set colorcolumn=80  " locate the 90' column
                     " color of the 90' color
 highlight ColorColumn ctermbg=darkgray
 
+" set line length at 72 for a git commit message
+autocmd Filetype gitcommit setlocal spell textwidth=72
+

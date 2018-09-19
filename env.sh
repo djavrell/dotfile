@@ -1,5 +1,7 @@
 export PATH="$PATH:$HOME/bin"
 
+export EDITOR="/usr/local/bin/vim"
+
 # NVM: node version manger
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -14,6 +16,9 @@ source ~/.bashrc.d/tmuxinator/tmuxinator.zsh
 
 # emscripten sdk
 source ~/.bashrc.d/emsdk_set_env.sh
+
+# gcloud
+export PATH="$PATH:~/Downloads/google-cloud-sdk/bin"
 
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
