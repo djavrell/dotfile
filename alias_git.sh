@@ -4,7 +4,7 @@ function add() {
 }
 
 function uadd() {
-  git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat {}" --preview-window=right:70%:wrap --multi)
+  git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat --color always {}" --preview-window=right:70%:wrap --multi)
 }
 
 alias gcfmt='git commit -m "formating" '
