@@ -24,11 +24,9 @@
 
 [alias]
   lola  = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-  llola = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   flola = log --decorate --graph --abbrev-commit --all
 
   lol  = log --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-  llol = log --decorate --graph --abbrev-commit --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
   hist = log --decorate --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
 
   ldiff = diff HEAD~

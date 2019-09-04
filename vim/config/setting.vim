@@ -28,3 +28,5 @@ set ttimeout
 set ttimeoutlen=50
 
 set tags=./.tags,.tags,./tags,tags
+
+autocmd BufWritePre * :%s/\s\+$//e

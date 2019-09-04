@@ -1,13 +1,13 @@
 set term=screen-256color
 set shell=/bin/sh
-
+set path+=**
 if has('nvim')
     let s:editor_root=expand("~/.nvim")
 else
     let s:editor_root=expand("~/.vim")
 endif
 
-let g:python_host_prog='/usr/bin/python'
+let g:python_host_prog='/usr/bin/python3.7'
 
 let mapleader = '='
 

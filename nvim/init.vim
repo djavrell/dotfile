@@ -3,64 +3,111 @@ if &compatible
 endif
 
 colorscheme darcula
+set tabstop=2       " size of hard tabstop
+set softtabstop=2   " size of tab in insert mode
+set shiftwidth=2    " size of an indents
+set expandtab       " use space instead of tab characters
+set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 
 " Plugins --------------------------------------------------------{{{
 
-" Add the dein installation directory into runtimepath
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+call plug#begin('~/.local/share/nvim/plugged')
 
-if dein#load_state('~/.cache/dein')
- call dein#begin('~/.cache/dein')
+Plug 'scrooloose/nerdtree'
 
- call dein#add('~/.cache/dein')
- call dein#add('haya14busa/dein-command.vim')
+Plug 'derekwyatt/vim-scala'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
- call dein#add('Shougo/denite.nvim')
- call dein#add('Shougo/deoplete.nvim')
+call plug#end()
 
- call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
- call dein#add('HerringtonDarkholme/yats.vim')
-
- call dein#add('jiangmiao/auto-pairs')
- call dein#add('simnalamburt/vim-mundo')
- call dein#add('w0rp/ale')
- call dein#add('scrooloose/nerdtree')
- call dein#add('tpope/vim-fugitive')
- call dein#add('tpope/vim-git')
- call dein#add('neoclide/denite-git')
- call dein#add('airblade/vim-gitgutter')
-
- call dein#add('vim-airline/vim-airline')
-
- call dein#end()
- call dein#save_state()
-endif
-
-if dein#check_install()
-  call dein#install()
-endif
 " }}}
 " ------------------------
 " CONFIGURATION
 " ------------------------
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
+" NerdTree ---------- {{{
 
-map	<C-x>	:NERDTreeToggle<CR>
-map	<C-c>	:NERDTreeFocus<CR>
+map <silent> <C-x> :NERDTreeToggle<CR>
 
-" ALE {{{
-let g:airline#extensions#ale#enable = 1
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 " }}}
 
-" mundo {{{
-set undofile
-set undodir=~/.vim/undo
+" COC --------------- {{{
+
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Some server have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Remap for do codeAction of current line
+nmap <leader>ac <Plug>(coc-codeaction)
+
+" Remap for do action format
+nnoremap <silent> F :call CocAction('format')<CR>
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
 " }}}
+
+" Configuration Vim-scala
+au BufRead,BufNewFile *.sbt set filetype=scala
+
+autocmd FileType json syntax match Comment +\/\/.\+$+
 
 filetype plugin indent on
 syntax enable

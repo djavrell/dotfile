@@ -1,6 +1,11 @@
+## WORK
+work.sh
+
 ## IDE
 .idea/
 .vscode/
+.metals/
+.bloop/
 
 ## global
 *.tmp

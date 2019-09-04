@@ -1,16 +1,17 @@
-
 function add() {
-  git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff {} | bat" --preview-window=right:70%:wrap --multi)
+  git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff {} | bat --color always" --preview-window=right:70%:wrap --multi)
 }
 
 function uadd() {
   git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat --color always {}" --preview-window=right:70%:wrap --multi)
 }
 
+alias sync='ggpull && gfo --prune && git fetch --tags'
 alias gcfmt='git commit -m "formating" '
 alias fuckit='git commit -m "$(curl -s whatthecommit.com/index.txt)"'
+alias bruteforce='ggpush --force'
+alias brute='ggpush --force-with-lease'
 alias g=git
-alias gback='git checkout -'
 
 alias ga='git add'
 alias gaa='git add --all'
@@ -24,6 +25,7 @@ alias gbd='git branch -d'
 alias gbda='git branch --no-color --merged | command grep -vE "^(\*|\s*(master|develop|dev)\s*$)" | command xargs -n 1 git branch -d'
 alias gbnm='git branch --no-merged'
 alias gbr='git branch --remote'
+alias gbdl='git branch -D $(git branch | fzf-tmux -r 30% --reverse --multi)'
 
 alias gbl='git blame -b -w'
 
@@ -44,6 +46,7 @@ alias gcmsg='git commit -m'
 alias 'gcn!'='git commit -v --no-edit --amend'
 alias gcs='git commit -S'
 alias gcsm='git commit -s -m'
+alias fuckit='git commit -m "$(curl -s whatthecommit.com/index.txt)"'
 
 alias gcf='git config --list'
 
@@ -53,9 +56,14 @@ alias gclean='git clean -fd'
 
 alias gco='git checkout'
 alias gcb='git checkout -b'
-alias gcd='git checkout develop'
 alias gch='git checkout hotfix'
 alias gcr='git checkout release'
+alias move='git checkout $(git branch | fzf-tmux -r 30% --reverse)'
+alias movea='git checkout $(gba | sed -e "s/ remotes\/origin\///g" -e "s/[* ]//g" | sort | uniq | fzf-tmux -r 30% --reverse)'
+alias movet='git checkout $(git tag | fzf-tmux -r 30% --reverse)'
+alias 'g-'='git checkout -'
+alias master='git checkout master'
+alias develop='git checkout develop'
 
 alias gcount='git shortlog -sn'
 
@@ -63,6 +71,12 @@ alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 
+function gds() {
+  git add -v $(git diff --staged --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff --staged {} | bat" --preview-window=right:70%:wrap --multi)
+}
+function gdl() {
+  git diff --raw | awk '{print $6}' | fzf --reverse --multi --preview="git -c color.diff=always diff {} | bat --color always" --preview-window=right:70%:wrap
+}
 alias gd='git diff'
 alias gdca='git diff --cached'
 alias gdcw='git diff --cached --word-diff'
@@ -96,12 +110,12 @@ alias gga='git gui citool --amend'
 alias ggpull='git pull origin $(git_current_branch)'
 alias ggpush='git push origin $(git_current_branch)'
 alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
+alias gupdate='ggpull && gfo --prune'
 
 alias ghh='git help'
 alias gignore='git update-index --assume-unchanged'
 alias gignored='git ls-files -v | grep "^[[:lower:]]"'
 alias git-svn-dcommit-push='git svn dcommit && git push github master:svntrunk'
-alias gitAbort='git reset --hard HEAD'
 alias gitVim='vim +GV'
 
 alias gk='\gitk --all --branches'
@@ -151,6 +165,7 @@ alias grep='grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}'
 
 alias grh='git reset HEAD'
 alias grhh='git reset HEAD --hard'
+alias gitAbort="git reset --hard HEAD"
 
 alias grmv='git remote rename'
 alias grrm='git remote remove'
@@ -201,4 +216,3 @@ alias gwch='git whatchanged -p --abbrev-commit --pretty=medium'
 
 alias gwip='git add -A; git rm $(git ls-files --deleted) 2> /dev/null; git commit --no-verify -m "--wip-- [skip ci]"'
 
-alias move='git checkout $(git branch | fzf-tmux -r 30% --reverse)'

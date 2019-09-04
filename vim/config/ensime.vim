@@ -1,4 +1,4 @@
-Plugin 'ensime/ensime-vim'
+" Plugin 'ensime/ensime-vim'
 
-autocmd BufWritePost *.scala silent :EnTypeCheck
+" autocmd BufWritePost *.scala silent :EnTypeCheck
 
