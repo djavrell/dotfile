@@ -11,9 +11,20 @@
       "args": ["--stdio"]
     },
     "efm": {
-     "command": "efm-langserver",
-     "args": [],
-     "filetypes": ["vim", "markdown", "yaml"]
+      "command": "efm-langserver",
+      "args": [],
+      "filetypes": ["vim", "markdown", "yaml"]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     }
-  }
+  },
+  "diagnostic.level": "error",
+  "diagnostic.virtualText": true,
+  "signature.floatMaxWidth": 500,
+  "signature.maxWindowHeight": 30,
+  "codeLens.enable": true
 }

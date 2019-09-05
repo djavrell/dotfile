@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/kpr/.oh-my-zsh
+export DOTFILE=~/.bashrc.d
 
 # https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
@@ -7,7 +8,7 @@ ZSH_THEME="agnoster"
 source $ZSH/oh-my-zsh.sh
 source "$DOTFILE/env.sh"
 source "$DOTFILE/alias.sh"
-source "$DOTFILE/work.sh"
+source "$DOTFILE/gruvbox_256palette_osx.sh"
 
 source ~/.local/share/zsh-syntax-hightlighting/zsh-syntax-highlighting.zsh
 source ~/.local/share/zsh-autosuggestions/zsh-autosuggestions.zsh

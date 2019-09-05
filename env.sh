@@ -1,7 +1,7 @@
+export LC_ALL=fr_FR.UTF-8
 export PATH="$PATH:$HOME/bin"
 
-export EDITOR="/usr/local/bin/vim"
-export DOTFILE="~/.bashrc.d"
+export EDITOR="/usr/local/bin/nvim"
 
 # Work
 export PROJECT="$HOME/Documents/project"
