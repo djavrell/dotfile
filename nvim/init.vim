@@ -46,12 +46,17 @@ set termguicolors
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
 
+" Key mapping: {{{1
+nmap <silent> <Leader>/ :nohlsearch<CR>
 
 " Plugins: declare plugin {{{1
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" NerdTree 2
+
+Plug 'diepm/vim-rest-console'
+
+" NerdTree {{{2
 Plug 'scrooloose/nerdtree'
 
 let g:NERDTreeMinimalUI=1
@@ -79,7 +84,19 @@ let g:NERDTreeIndicatorMapCustom = {
 
 
 
-" Numbers: 2
+" Nerdcommenter {{{2
+Plug 'scrooloose/nerdcommenter'
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
 
 Plug 'myusuf3/numbers.vim'                 " better line numbers
 
@@ -99,7 +116,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
+
+" Plugin: GoldenView {{{2
 Plug 'zhaocai/GoldenView.Vim'
+
+map <silent> <Leader>c  :close<CR>
 
 " Plugin: Vim Better Whitespace {{{2
 Plug 'ntpeters/vim-better-whitespace'
@@ -148,7 +169,7 @@ set updatetime=300
 set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
-" Some server have issues with backup files, see #649
+" Some server have issues with backup files
 set nobackup
 set nowritebackup
 " Better display for messages
@@ -216,7 +237,9 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Show all diagnostics
+" Show Buffers
+nnoremap <silent> <Leader>b :<C-u>CocList buffers<CR>
+"Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
@@ -227,8 +250,9 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-nnoremap <silent> <Leader>f  :<C-u>CocList normal files<CR>
+nnoremap <silent> <Leader>p :<C-u>CocListResume<CR>
+nnoremap <silent> <Leader>f :<C-u>CocList files<CR>
+nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
 " Coc-yank
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 

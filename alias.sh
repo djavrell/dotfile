@@ -30,12 +30,6 @@ alias tks='tmux kill-server'       # HARD KILL of tmux
 alias pi='ssh djavrell@192.168.0.14 -p 2424'
 alias picp='scp -P 2424 $1 djavrell@192.168.0.14:$2'
 
-# scala
-alias sbt='sbt -mem 2048'
-alias sbtdebug="sbt -jvm-debug 5005"
-alias sbt7="sbt -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/"
-alias sbt7debug="sbt -java-home /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/ -jvm-debug 5005"
-
 # Android
 alias emu="$ANDROID_HOME/emulator/emulator"
 
