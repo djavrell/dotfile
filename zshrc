@@ -1,8 +1,8 @@
-# Path to your oh-my-zsh installation.
-export ZSH=/Users/kpr/.oh-my-zsh
 export DOTFILE=~/.bashrc.d
 
 # TODO: nuke it when oh-my-zsh will be remove
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/kpr/.oh-my-zsh
 plugins=(
   node npm
   scala
