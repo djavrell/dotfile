@@ -4,3 +4,4 @@ tmux/plugins
 
 **/*private*
 **/*work*
+local.sh

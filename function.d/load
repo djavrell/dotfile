@@ -1,0 +1,3 @@
+function load {
+  test -f "$1" && . "$1"
+}

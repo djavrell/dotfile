@@ -14,10 +14,7 @@ alias pk="ps | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {1})
 
 alias vim='nvim'
 
-#alias ping='prettyping'
-
-# Git
-source "$DOTFILE/alias_git.sh"
+alias ping='prettyping'
 
 # tmux
 alias tl='tmux list-sessions'      # list all tmux session
@@ -29,7 +26,7 @@ alias tkl='tk $(tl | cut -d":" -f 1 | fzf-tmux -r 30% --reverse)'
 alias tk='tmux kill-session -t $*' # kill a tmux session
 alias tks='tmux kill-server'       # HARD KILL of tmux
 
-# ssh
+# ssh -> TODO: Move into local.conf
 alias pi='ssh djavrell@192.168.0.14 -p 2424'
 alias picp='scp -P 2424 $1 djavrell@192.168.0.14:$2'
 

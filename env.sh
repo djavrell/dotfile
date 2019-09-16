@@ -1,48 +1,42 @@
 export LC_ALL=fr_FR.UTF-8
-export PATH="$PATH:$HOME/bin"
-
 export EDITOR="/usr/local/bin/nvim"
 
-# Work
-export PROJECT="$HOME/Documents/project"
+fpath=( "$HOME/bin" $fpath )
+
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 # tmuxinator
-source ~/.bashrc.d/tmuxinator/tmuxinator.zsh
-
-# emscripten sdk
-source ~/.bashrc.d/emsdk_set_env.sh
+load "$DOTFILE/tmuxinator/tmuxinator.zsh"
 
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
-export ANDROID_HOME="~/Library/Android/sdk"
 
 # SCALA
 export SCALA_HOME="/usr/local/share/scala-2.12.6"
-export PATH="$PATH:$SCALA_HOME/bin"
+fpath=( "$SCALA_HOME/bin" $fpath)
 
 # Rust
-source $HOME/.cargo/env
+load "$HOME/.cargo/env"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Go
 export GOPATH="$HOME/go"
-export PATH="$PATH:$GOPATH/bin"
+fpath=( "$GOPATH/bin" $fpath )
 
 # NVM: node version manger
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+load "$NVM_DIR/nvm.sh"
+load "$NVM_DIR/bash_completion"
 
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # FZF fuzzy finder
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+load "~/.fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
@@ -50,10 +44,10 @@ export FZF_COMPLETION_TRIGGER='%'
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Nix
-source ~/.nix-profile/etc/profile.d/nix.sh
-export PATH="$PATH:~/.nix-profile/bin"
+load "~/.nix-profile/etc/profile.d/nix.sh"
+fpath=( "$HOME/.nix-profile/bin" $fpath )
 # End Nix
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-source ~/.rvm/scripts/rvm
+fpath=( "$HOME/.rvm/bin" $fpath )
+load "~/.rvm/scripts/rvm"
