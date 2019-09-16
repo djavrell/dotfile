@@ -48,6 +48,7 @@ let g:gruvbox_improved_warnings=1
 
 " Key mapping: {{{1
 nmap <silent> <Leader>/ :nohlsearch<CR>
+tnoremap <Esc> <C-\><C-n>
 
 " Plugins: declare plugin {{{1
 
@@ -55,6 +56,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 
 Plug 'diepm/vim-rest-console'
+Plug 'mtth/scratch.vim'
 
 " NerdTree {{{2
 Plug 'scrooloose/nerdtree'
@@ -68,23 +70,9 @@ map <silent> <C-x> :NERDTreeToggle<CR>
 map <silent> <C-c> :NERDTreeFocus<CR>
 map <silent> <Leader>x :NERDTreeFind<CR>
 
-Plug 'Xuyuanp/nerdtree-git-plugin'         " git in neerdtree
+Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 
-let g:NERDTreeIndicatorMapCustom = {
-    \ "Modified"  : "✹",
-    \ "Staged"    : "✚",
-    \ "Untracked" : "✭",
-    \ "Renamed"   : "➜",
-    \ "Unmerged"  : "═",
-    \ "Deleted"   : "✖",
-    \ "Dirty"     : "✗",
-    \ "Clean"     : "✔︎",
-    \ "Unknown"   : "?"
-    \ }
-
-
-
-" Nerdcommenter {{{2
+" Plugin: Nerdcommenter {{{2
 Plug 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -104,8 +92,6 @@ let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
-
-
 
 " Plugin: Utilsnip {{{2
 Plug 'SirVer/ultisnips'
@@ -129,7 +115,6 @@ nmap <silent> <C-Space> :StripWhitespace<CR>
 
 
 " Plugin: Tabline {{{2
-Plug 'ap/vim-buftabline'
 
 map <silent> <Leader>n :enew<CR>
 map <silent> <Leader>j :bnext<CR>
@@ -275,5 +260,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 call plug#end()
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" Move here, (neo)vim seems to have some issue with those unicode caracter :/
+let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 filetype plugin indent on

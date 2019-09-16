@@ -43,7 +43,7 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # FZF fuzzy finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND="fd --ansi --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
 # SSH
@@ -56,3 +56,4 @@ export PATH="$PATH:~/.nix-profile/bin"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+source ~/.rvm/scripts/rvm
