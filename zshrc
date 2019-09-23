@@ -5,7 +5,7 @@ SYSTEM_FILE=`uname -s | tr '[:upper]' '[:lower:]'`
 
 fpath=( "$DOTFILE/function.d" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
-autoload -Uz load link sourcesAll
+autoload -Uz load link sourcesAll git_current_branch
 autoload -Uz compinit && compinit
 autoload -Uz promptinit && promptinit && prompt pure
 autoload -Uz colors && colors
