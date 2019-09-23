@@ -1,8 +1,8 @@
 export LC_ALL=fr_FR.UTF-8
-export EDITOR="/usr/local/bin/nvim"
+export EDITOR="nvim"
+# export EDITOR="/usr/local/bin/nvim"
 
 fpath=( "$HOME/bin" $fpath )
-
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -25,11 +25,6 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 # Go
 export GOPATH="$HOME/go"
 fpath=( "$GOPATH/bin" $fpath )
-
-# NVM: node version manger
-export NVM_DIR="$HOME/.nvm"
-load "$NVM_DIR/nvm.sh"
-load "$NVM_DIR/bash_completion"
 
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"

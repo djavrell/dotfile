@@ -1,0 +1,15 @@
+[submodule "submodules/zsh-syntax-highlighting"]
+	path = submodules/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "submodules/zsh-autosuggestions"]
+	path = submodules/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
+[submodule "submodules/fzf-marks"]
+	path = submodules/fzf-marks
+	url = https://github.com/urbainvaes/fzf-marks
+[submodule "submodules/zsh-history-substring-search"]
+	path = submodules/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search
+[submodule "submodules/pure"]
+	path = submodules/pure
+	url = https://github.com/sindresorhus/pure

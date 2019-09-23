@@ -47,7 +47,7 @@ let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
 
 " Key mapping: {{{1
-nmap <silent> <Leader>/ :nohlsearch<CR>
+nmap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " Plugins: declare plugin {{{1
@@ -55,10 +55,23 @@ tnoremap <Esc> <C-\><C-n>
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-surround'
+
+" Plugin: rest console {{{ 2
 Plug 'diepm/vim-rest-console'
+
+let g:vrc_show_command = 1
+let s:vrc_auto_format_response_patterns = {
+      \ 'json': 'fx',
+      \ 'xml': 'xmllint --format -',
+    \}
+
+let g:vrc_curl_opts = { '-sS': '', '-i': '' }
+
+" }}}
+
 Plug 'mtth/scratch.vim'
 
-" Plugin: vim table {{{2
+" Plugin: vim table {{{ 2
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -255,6 +268,7 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 nnoremap <silent> <Leader>p :<C-u>CocListResume<CR>
 nnoremap <silent> <Leader>f :<C-u>CocList files<CR>
 nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
+nnoremap <silent> <leader>s :<C-u>CocList symbols<CR>
 " Coc-yank
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 
@@ -277,6 +291,9 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 call plug#end()
 
 autocmd FileType json syntax match Comment +\/\/.\+$+
+
+" Automaticaly close nvim if NERDTree is only thing left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Move here, (neo)vim seems to have some issue with those unicode caracter :/
 let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
