@@ -23,7 +23,7 @@ prompt pure
 
 typeset -ga sources
 
-sources+="$DOTFILE/vim_mode".zsh
+sources+="$DOTFILE/vim_mode.zsh"
 sources+="$DOTFILE/env.sh"
 sources+="$DOTFILE/alias.sh"
 sources+="$DOTFILE/alias_git.sh"
