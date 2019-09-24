@@ -1,22 +1,22 @@
 export LC_ALL=fr_FR.UTF-8
 export EDITOR="nvim"
-# export EDITOR="/usr/local/bin/nvim"
+export VISUAL="nvim"
 
-fpath=( "$HOME/bin" $fpath )
+path=( "$HOME/bin" $path )
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 # tmuxinator
-load "$DOTFILE/tmuxinator/tmuxinator.zsh"
+path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
 
 # SCALA
 export SCALA_HOME="/usr/local/share/scala-2.12.6"
-fpath=( "$SCALA_HOME/bin" $fpath)
+path=( "$SCALA_HOME/bin" $path)
 
 # Rust
 load "$HOME/.cargo/env"
@@ -24,7 +24,7 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Go
 export GOPATH="$HOME/go"
-fpath=( "$GOPATH/bin" $fpath )
+path=( "$GOPATH/bin" $path )
 
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
@@ -40,9 +40,9 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Nix
 load "~/.nix-profile/etc/profile.d/nix.sh"
-fpath=( "$HOME/.nix-profile/bin" $fpath )
+path=( "$HOME/.nix-profile/bin" $path )
 # End Nix
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-fpath=( "$HOME/.rvm/bin" $fpath )
+path=( "$HOME/.rvm/bin" $path )
 load "~/.rvm/scripts/rvm"
