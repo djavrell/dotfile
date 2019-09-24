@@ -3,12 +3,17 @@ export DOTFILE=~/.bashrc.d
 SUB_MODULES="$DOTFILE/submodules"
 SYSTEM_FILE=`uname -s | tr '[:upper]' '[:lower:]'`
 
-fpath=( "$DOTFILE/function.d" $fpath )
+fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 autoload -Uz load link sourcesAll git_current_branch
-autoload -Uz compinit && compinit
 autoload -Uz promptinit && promptinit && prompt pure
 autoload -Uz colors && colors
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
 
 zmodload -i zsh/complist
 
@@ -23,7 +28,7 @@ sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-sources+="$DOTFILE/function.d/lazynvm.sh"
+sources+="$DOTFILE/function.d/lazynvm"
 sources+="$DOTFILE/$SYSTEM_FILE.zsh"
 sources+="$DOTFILE/local.sh"
 
@@ -46,6 +51,12 @@ zstyle ':completion::complete:*' use-cache 1
 zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+
+# Binding
+
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 
 # Hook for desk activation
 [ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
