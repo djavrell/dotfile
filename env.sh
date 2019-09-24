@@ -1,6 +1,13 @@
+typeset -ga loading
+
 export LC_ALL=fr_FR.UTF-8
 export EDITOR="nvim"
 export VISUAL="nvim"
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+
+export HISTFILE=~/.zsh_history         # where to store zsh config
+export HISTSIZE=1024                   # big history
+export SAVEHIST=1024                   # big history
 
 path=( "$HOME/bin" $path )
 
@@ -19,7 +26,7 @@ export SCALA_HOME="/usr/local/share/scala-2.12.6"
 path=( "$SCALA_HOME/bin" $path)
 
 # Rust
-load "$HOME/.cargo/env"
+loading+="$HOME/.cargo/env"
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Go
@@ -31,7 +38,7 @@ export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # FZF fuzzy finder
-load "$HOME/.fzf.zsh"
+loading+="$HOME/.fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
@@ -39,10 +46,14 @@ export FZF_COMPLETION_TRIGGER='%'
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Nix
-load "~/.nix-profile/etc/profile.d/nix.sh"
+loading+="$HOME/.nix-profile/etc/profile.d/nix.sh"
 path=( "$HOME/.nix-profile/bin" $path )
 # End Nix
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
-load "~/.rvm/scripts/rvm"
+loading+="$HOME/.rvm/scripts/rvm"
+
+get_export() {
+  echo $loading
+}

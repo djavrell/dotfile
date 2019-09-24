@@ -1,1 +1,3 @@
-load "$DOTFILE/gruvbox_256palette_osx.sh"
+COLORS="$DOTFILE/gruvbox_256palette_osx.sh"
+
+test -f $COLORS && . $COLORS

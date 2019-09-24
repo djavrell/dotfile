@@ -1,10 +1,11 @@
-export DOTFILE=~/.bashrc.d
+export DOTFILE="$HOME/.bashrc.d"
 
 SUB_MODULES="$DOTFILE/submodules"
 SYSTEM_FILE=`uname -s | tr '[:upper]' '[:lower:]'`
 
 fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
+
 autoload -Uz load link sourcesAll git_current_branch
 autoload -Uz zcompile
 autoload -Uz promptinit && promptinit
@@ -21,10 +22,13 @@ zmodload -i zsh/complist
 # prompt specifics
 prompt pure
 
+# export all environement variables
+. "$DOTFILE/env.sh"
+
+# source all need script
 typeset -ga sources
 
 sources+="$DOTFILE/vim_mode.zsh"
-sources+="$DOTFILE/env.sh"
 sources+="$DOTFILE/alias.sh"
 sources+="$DOTFILE/alias_git.sh"
 
@@ -36,20 +40,21 @@ sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 sources+="$DOTFILE/function.d/lazynvm"
 sources+="$DOTFILE/$SYSTEM_FILE.zsh"
 sources+="$DOTFILE/local.sh"
+sources+=$(get_export) # Add sources from env.sh
 
 foreach file (`echo $sources`)
   if [[ -a $file ]]; then
-    source $file
+    . $file
   fi
 end
 
 
 # Completion
+unsetopt flow_control
+unsetopt menu_complete
 setopt auto_menu
 setopt always_to_end
 setopt complete_in_word
-unsetopt flow_control
-unsetopt menu_complete
 zstyle ':completion:*:*:*:*:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion::complete:*' use-cache 1
@@ -58,18 +63,13 @@ zstyle ':completion:*' list-colors ''
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
 
 # Binding
-
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
-export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 
 # History
-HISTFILE=~/.zsh_history         # where to store zsh config
-HISTSIZE=1024                   # big history
-SAVEHIST=1024                   # big history
+unsetopt hist_ignore_space      # ignore space prefixed commands
 setopt append_history           # append
 setopt hist_ignore_all_dups     # no duplicate
-unsetopt hist_ignore_space      # ignore space prefixed commands
 setopt hist_reduce_blanks       # trim blanks
 setopt hist_verify              # show before executing history commands
 setopt inc_append_history       # add commands as they are typed, don't wait until shell exit
