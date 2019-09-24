@@ -65,3 +65,7 @@
 | pgcli/config   | $XDG_CONFIG_HOME/pgcli    |
 |----------------|---------------------------|
 
+
+## Install
+
+> git submodules init
