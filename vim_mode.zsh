@@ -9,8 +9,6 @@
 bindkey -v
 
 # Restore some keymaps removed by vim keybind mode
-bindkey '^P' up-history
-bindkey '^N' down-history
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word

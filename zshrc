@@ -7,7 +7,6 @@ fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
 autoload -Uz load link sourcesAll git_current_branch
-autoload -Uz zcompile
 autoload -Uz promptinit && promptinit
 autoload -Uz colors && colors
 autoload -Uz compinit

@@ -50,6 +50,16 @@ let g:gruvbox_improved_warnings=1
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
 
+map <silent> <Leader>n :enew<CR>
+map <silent> <Leader>j :bnext<CR>
+map <silent> <Leader>k :bprev<CR>
+map <silent> <Leader>d :bp <BAR> bd #<CR>
+map <silent> <Leader>ls  :ls<CR>
+
+" circle through tab
+map <silent> <Leader><Right> :tabn<CR>
+map <silent> <Leader><Left>  :tabp<CR>
+
 " Plugins: declare plugin {{{1
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -115,7 +125,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 
-
 Plug 'myusuf3/numbers.vim'                 " better line numbers
 
 let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
@@ -142,16 +151,6 @@ map <silent> <Leader>c  :close<CR>
 Plug 'ntpeters/vim-better-whitespace'
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
-
-
-" Plugin: Tabline {{{2
-
-map <silent> <Leader>n :enew<CR>
-map <silent> <Leader>j :bnext<CR>
-map <silent> <Leader>k :bprev<CR>
-map <silent> <Leader>d :bp <BAR> bd #<CR>
-map <silent> <Leader>ls  :ls<CR>
-
 
 Plug 'liuchengxu/eleline.vim'
 set laststatus=2
