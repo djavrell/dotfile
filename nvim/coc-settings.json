@@ -26,5 +26,15 @@
   "diagnostic.virtualText": true,
   "signature.floatMaxWidth": 500,
   "signature.maxWindowHeight": 30,
-  "codeLens.enable": true
+  "codeLens.enable": true,
+  "list": {
+    "source": {
+      "mru": {
+        "ignoreGitIgnore": true
+      },
+      "files": {
+        "args": [ "--hidden", "--files" ]
+      }
+    }
+  }
 }

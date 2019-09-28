@@ -29,24 +29,20 @@ set inccommand=nosplit " live preview replace with :%s
 
 let mapleader = '='
 
-autocmd BufWritePre * :%s/\s\+$//e
-
-
-" Global: Folding {{{1
+" Global: Folding {{{
 syntax enable
-set foldmethod=syntax
-set foldlevel=99
-set foldcolumn=1
+set foldmethod=marker
+" }}}
 
-
-" Gobal: ColorScheme {{{1
+" ColorScheme {{{1
 colorscheme gruvbox
 set termguicolors
 
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
+" }}}
 
-" Key mapping: {{{1
+" Key mapping: {{{
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
 
@@ -56,11 +52,23 @@ map <silent> <Leader>k :bprev<CR>
 map <silent> <Leader>d :bp <BAR> bd #<CR>
 map <silent> <Leader>ls  :ls<CR>
 
+" resize pane
+nnoremap <silent> 6 :vertical resize +5<CR>
+nnoremap <silent> 4 :vertical resize -5<CR>
+nnoremap <silent> 8 :resize +5<CR>
+nnoremap <silent> 2 :resize -5<CR>
+
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
+" }}}
 
-" Plugins: declare plugin {{{1
+" Autocmd {{{
+autocmd BufRead *.conf set ft=conf
+autocmd BufWritePre * :%s/\s\+$//e
+" }}}
+
+" Plugins: declare plugin {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -79,7 +87,9 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
 
+" {{{ Scratch
 Plug 'mtth/scratch.vim'
+" }}}
 
 " Plugin: vim table {{{ 2
 Plug 'dhruvasagar/vim-table-mode'
@@ -98,7 +108,7 @@ inoreabbrev <expr> __
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 " }}}
 
-" NerdTree {{{2
+" NerdTree {{{
 Plug 'scrooloose/nerdtree'
 
 let g:NERDTreeMinimalUI=1
@@ -106,13 +116,16 @@ let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir
 " Hide the Nerdtree status line to avoid clutter
 let g:NERDTreeStatusline = ''
 
-map <silent> <C-x> :NERDTreeToggle<CR>
+map <silent> <C-w> :NERDTreeToggle<CR>
 map <silent> <C-c> :NERDTreeFocus<CR>
 map <silent> <Leader>x :NERDTreeFind<CR>
 
+" Nerdtree git plugin {{{
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
+" }}}
+" }}}
 
-" Plugin: Nerdcommenter {{{2
+" Nerdcommenter {{{2
 Plug 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -124,13 +137,16 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
+" }}}
 
+" Number {{{
 Plug 'myusuf3/numbers.vim'                 " better line numbers
 
 let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
+" }}}
 
 " Plugin: Utilsnip {{{2
 Plug 'SirVer/ultisnips'
@@ -268,8 +284,10 @@ nnoremap <silent> <Leader>p :<C-u>CocListResume<CR>
 nnoremap <silent> <Leader>f :<C-u>CocList files<CR>
 nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
 nnoremap <silent> <leader>s :<C-u>CocList symbols<CR>
-" Coc-yank
+
+" Coc-yank {{{
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
+" }}}
 
 " COC: Coc-snippets {{{3
 " Use <C-l> for trigger snippet expand.
@@ -284,11 +302,13 @@ let g:coc_snippet_prev = '<c-k>'
 
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
+" }}}
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
+" }}}
 
 call plug#end()
-
+" }}}
 autocmd FileType json syntax match Comment +\/\/.\+$+
 
 " Automaticaly close nvim if NERDTree is only thing left open
