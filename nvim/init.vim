@@ -27,21 +27,23 @@ set smarttab        " "tab" inserts "indents" instead of tab at the beginning of
 set completeopt+=preview
 set inccommand=nosplit " live preview replace with :%s
 
-let mapleader = '='
-
+try
+  source $XDG_CONFIG_HOME/local_nvim.vim
+catch
+  let mapleader = '='
+endtry
+" }}}
 " Global: Folding {{{
 syntax enable
 set foldmethod=marker
 " }}}
-
-" ColorScheme {{{1
+" ColorScheme {{{
 colorscheme gruvbox
 set termguicolors
 
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
 " }}}
-
 " Key mapping: {{{
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
@@ -62,19 +64,19 @@ nnoremap <silent> 2 :resize -5<CR>
 map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
 " }}}
-
 " Autocmd {{{
 autocmd BufRead *.conf set ft=conf
 autocmd BufWritePre * :%s/\s\+$//e
+autocmd FileType json syntax match Comment +\/\/.\+$+
+" Automaticaly close nvim if NERDTree is only thing left open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
-
 " Plugins: declare plugin {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-surround'
-
-" Plugin: rest console {{{ 2
+" Plugin: rest console {{{
 Plug 'diepm/vim-rest-console'
 
 let g:vrc_show_command = 1
@@ -86,11 +88,7 @@ let s:vrc_auto_format_response_patterns = {
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
-
-" {{{ Scratch
 Plug 'mtth/scratch.vim'
-" }}}
-
 " Plugin: vim table {{{ 2
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
@@ -107,7 +105,6 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 " }}}
-
 " NerdTree {{{
 Plug 'scrooloose/nerdtree'
 
@@ -124,7 +121,6 @@ map <silent> <Leader>x :NERDTreeFind<CR>
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 " }}}
 " }}}
-
 " Nerdcommenter {{{2
 Plug 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
@@ -138,7 +134,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
-
 " Number {{{
 Plug 'myusuf3/numbers.vim'                 " better line numbers
 
@@ -147,32 +142,31 @@ let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
 " }}}
-
-" Plugin: Utilsnip {{{2
+" Plugin: Utilsnip {{{
 Plug 'SirVer/ultisnips'
 " let g:UltiSnipsUsePythonVersion = 3
-
+" }}}
 Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
-
-" Plugin: GoldenView {{{2
+" Plugin: GoldenView {{{
 Plug 'zhaocai/GoldenView.Vim'
 
 map <silent> <Leader>c  :close<CR>
-
-" Plugin: Vim Better Whitespace {{{2
+" }}}
+" Plugin: Vim Better Whitespace {{{
 Plug 'ntpeters/vim-better-whitespace'
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
-
+" }}}
+" Eleline {{{
 Plug 'liuchengxu/eleline.vim'
 set laststatus=2
 let g:eleline_powerline_fonts=1
-
-" Plugin: Vim-markdow {{{2
+" }}}
+" Vim-markdow {{{
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     if has('nvim')
@@ -182,17 +176,17 @@ function! BuildComposer(info)
     endif
   endif
 endfunction
-
+" }}}
+" Markdown composer {{{
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 let g:markdown_composer_open_browser=0
-
+" }}}
 " Plugin: vim-scala {{{2
 Plug 'derekwyatt/vim-scala'
 au BufRead,BufNewFile *.sbt set filetype=scala
-
+" }}}
+" Plugin: COC {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-" Plugin: COC {{{2
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
 " don't give |ins-completion-menu| messages.
@@ -289,7 +283,7 @@ nnoremap <silent> <leader>s :<C-u>CocList symbols<CR>
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 " }}}
 
-" COC: Coc-snippets {{{3
+" COC: Coc-snippets {{{
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 " Use <C-j> for select text for visual placeholder of snippet.
@@ -309,10 +303,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 call plug#end()
 " }}}
-autocmd FileType json syntax match Comment +\/\/.\+$+
-
-" Automaticaly close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " Move here, (neo)vim seems to have some issue with those unicode caracter :/
 let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }

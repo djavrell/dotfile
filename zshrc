@@ -1,7 +1,9 @@
-export DOTFILE="$HOME/.bashrc.d"
+DOTFOLDER=".bashrc.d"
+export DOTFILE="$HOME/$DOTFOLDER"
 
 SUB_MODULES="$DOTFILE/submodules"
-SYSTEM_FILE=`uname -s | tr '[:upper]' '[:lower:]'`
+SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
+echo $SYSTEM_FILE
 
 fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
