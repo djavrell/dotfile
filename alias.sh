@@ -13,7 +13,7 @@ alias cdroot='cd $(git rev-parse --show-toplevel)'
 
 alias pk="ps | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {1})'"
 
-# alias vim='nvim'
+alias mux='tmuxinator'
 
 alias ping='prettyping'
 

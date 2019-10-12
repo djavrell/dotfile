@@ -1,3 +1,4 @@
+" vim: set fdm=marker fmr={{{,}}} fdl=0 :
 if &compatible
  set nocompatible
 endif
@@ -6,6 +7,7 @@ endif
 set shell=/bin/sh
 set encoding=UTF-8
 set hidden
+set autoread
 
 set nobackup
 set noswapfile
@@ -35,7 +37,8 @@ endtry
 " }}}
 " Global: Folding {{{
 syntax enable
-set foldmethod=marker
+set foldmethod=syntax
+set foldlevel=99
 " }}}
 " ColorScheme {{{
 colorscheme gruvbox
@@ -65,6 +68,7 @@ map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
 " }}}
 " Autocmd {{{
+autocmd BufRead *.tsx set ft=typescript
 autocmd BufRead *.conf set ft=conf
 autocmd BufWritePre * :%s/\s\+$//e
 autocmd FileType json syntax match Comment +\/\/.\+$+
@@ -75,6 +79,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'ianks/vim-tsx'
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'tpope/vim-surround'
 " Plugin: rest console {{{
 Plug 'diepm/vim-rest-console'
