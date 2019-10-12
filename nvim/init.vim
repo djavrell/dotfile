@@ -96,7 +96,7 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
 Plug 'mtth/scratch.vim'
-" Plugin: vim table {{{ 2
+" Plugin: vim table {{{
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -128,7 +128,7 @@ map <silent> <Leader>x :NERDTreeFind<CR>
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 " }}}
 " }}}
-" Nerdcommenter {{{2
+" Nerdcommenter {{{
 Plug 'scrooloose/nerdcommenter'
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -194,6 +194,7 @@ au BufRead,BufNewFile *.sbt set filetype=scala
 " }}}
 " Plugin: COC {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
 " don't give |ins-completion-menu| messages.
@@ -205,7 +206,22 @@ set nobackup
 set nowritebackup
 " Better display for messages
 set cmdheight=2
+" }}}
+" auto cmd {{{
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+" }}}
+" Key mapping {{{
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -241,9 +257,6 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
@@ -251,13 +264,6 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -285,7 +291,6 @@ nnoremap <silent> <Leader>p :<C-u>CocListResume<CR>
 nnoremap <silent> <Leader>f :<C-u>CocList files<CR>
 nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
 nnoremap <silent> <leader>s :<C-u>CocList symbols<CR>
-
 " Coc-yank {{{
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 " }}}
@@ -304,8 +309,8 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
+" }}}
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
 
 call plug#end()
