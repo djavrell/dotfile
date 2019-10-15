@@ -96,7 +96,7 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
 Plug 'mtth/scratch.vim'
-" Plugin: vim table {{{ 2
+" Plugin: vim table {{{
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -168,10 +168,45 @@ Plug 'ntpeters/vim-better-whitespace'
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
-" Eleline {{{
+" Eleline (status line) {{{
 Plug 'liuchengxu/eleline.vim'
 set laststatus=2
 let g:eleline_powerline_fonts=1
+" }}}
+" Vista.vim (LSP symbole view & search) {{{
+Plug 'liuchengxu/vista.vim'
+
+" Executive used when opening vista sidebar without specifying it.
+" See all the avaliable executives via `:echo g:vista#executives`.
+let g:vista_default_executive = 'coc'
+
+" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+" let g:vista#renderer#enable_icon = 1
+
+" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+" let g:vista#renderer#icons = {
+" \   "function": "\uf794",
+" \   "variable": "\uf71b",
+" \  }
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+" }}}
+" Vim Clap {{{
+Plug 'liuchengxu/vim-clap'
+" }}}
+" Skim {{{
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " }}}
 " Vim-markdow {{{
 function! BuildComposer(info)
