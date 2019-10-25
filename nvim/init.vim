@@ -1,9 +1,7 @@
 " vim: set fdm=marker fmr={{{,}}} fdl=0 :
-if &compatible
- set nocompatible
-endif
 
 " Global: Vim settings {{{1
+set nocompatible
 set shell=/bin/sh
 set encoding=UTF-8
 set hidden
@@ -26,7 +24,7 @@ set softtabstop=2   " size of tab in insert mode
 set shiftwidth=2    " size of an indents
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
-set completeopt+=preview
+set completeopt+=menuone,preview
 set inccommand=nosplit " live preview replace with :%s
 
 try
@@ -47,6 +45,44 @@ set termguicolors
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
 " }}}
+" Functions {{{
+
+" Function windows splitting {{{
+let s:golden_ration = 1.618
+lockvar s:golden_ration
+
+function! GetSplitMethode()
+  let ww = winwidth(winnr())
+  let tw = &textwidth
+
+  if tw != 0 && ww > s:golden_ration * tw
+    return 'vsplit'
+  endif
+
+  if ww > &columns / s:golden_ration
+    return 'vsplit'
+  endif
+  return 'split'
+endfunction
+
+function! SplitWindow()
+ let spli_cmd = GetSplitMethode()
+
+  try
+    exec spli_cmd
+  catch /^Vim\%((\a\+)\)\=:E36/
+    if spli_cmd == 'split'
+      let &winminheight = &winminheight / 2
+    else
+      let &winminwidth = &winminwidth / 2
+    endif
+    exec spli_cmd
+  endtry
+  wincmd p
+endfunction
+" }}}
+
+" }}}
 " Key mapping: {{{
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
@@ -55,13 +91,17 @@ map <silent> <Leader>n :enew<CR>
 map <silent> <Leader>j :bnext<CR>
 map <silent> <Leader>k :bprev<CR>
 map <silent> <Leader>d :bp <BAR> bd #<CR>
-map <silent> <Leader>ls  :ls<CR>
 
 " resize pane
-nnoremap <silent> 6 :vertical resize +5<CR>
-nnoremap <silent> 4 :vertical resize -5<CR>
-nnoremap <silent> 8 :resize +5<CR>
-nnoremap <silent> 2 :resize -5<CR>
+nnoremap <silent> <S-Right> :vertical resize +5<CR>
+nnoremap <silent> <S-Left> :vertical resize -5<CR>
+nnoremap <silent> <S-Up> :resize +5<CR>
+nnoremap <silent> <S-Down> :resize -5<CR>
+
+" circle through windows
+nnoremap <silent> <C-l> :call SplitWindow()<CR>
+nnoremap <silent> <C-n> :wincmd w<Cr>
+nnoremap <silent> <C-p> :wincmd W<Cr>
 
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
@@ -75,15 +115,37 @@ autocmd FileType json syntax match Comment +\/\/.\+$+
 " Automaticaly close nvim if NERDTree is only thing left open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
-" Plugins: declare plugin {{{
+" Plugins {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Eleline (status line) {{{
+Plug 'liuchengxu/eleline.vim'
+set laststatus=2
+let g:eleline_powerline_fonts=1
+" }}}
+" Vim timebox {{{
+
+" Plug 'dominikduda/vim_timebox'
+"
+" set  statusline+=%{vim_timebox#time_left()}
+" call timer_start(900, {-> execute(':redraw')}, { 'repeat': -1 })
+
+" }}}
+" Number {{{
+Plug 'myusuf3/numbers.vim'                 " better line numbers
+
+let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree', 'vim-clap']
+
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :NumbersOnOff<CR>
+" }}}
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
-" Plugin: rest console {{{
+" Rest console {{{
 Plug 'diepm/vim-rest-console'
 
 let g:vrc_show_command = 1
@@ -96,7 +158,7 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
 Plug 'mtth/scratch.vim'
-" Plugin: vim table {{{
+" Vim table {{{
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -141,15 +203,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
-" Number {{{
-Plug 'myusuf3/numbers.vim'                 " better line numbers
-
-let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree']
-
-nnoremap <F3> :NumbersToggle<CR>
-nnoremap <F4> :NumbersOnOff<CR>
-" }}}
-" Plugin: Utilsnip {{{
+" Utilsnip {{{
 Plug 'SirVer/ultisnips'
 " let g:UltiSnipsUsePythonVersion = 3
 " }}}
@@ -158,20 +212,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
-" Plugin: GoldenView {{{
-Plug 'zhaocai/GoldenView.Vim'
-
-map <silent> <Leader>c  :close<CR>
+" Vimade: fade inactive buffer {{{
+" Plug 'TaDaa/vimade'
 " }}}
-" Plugin: Vim Better Whitespace {{{
+" Vim Better Whitespace {{{
 Plug 'ntpeters/vim-better-whitespace'
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
-" }}}
-" Eleline (status line) {{{
-Plug 'liuchengxu/eleline.vim'
-set laststatus=2
-let g:eleline_powerline_fonts=1
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
 Plug 'liuchengxu/vista.vim'
@@ -204,6 +251,12 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " }}}
 " Vim Clap {{{
 Plug 'liuchengxu/vim-clap'
+
+nnoremap <silent> <leader>f :<C-u>Clap files<CR>
+nnoremap <silent> <leader>b :<C-u>Clap buffers<CR>
+nnoremap <silent> <leader>g :<C-u>Clap grep<CR>
+nnoremap <silent> <leader>s :<C-u>Clap tags<CR>
+
 " }}}
 " Skim {{{
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
@@ -223,11 +276,11 @@ endfunction
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 let g:markdown_composer_open_browser=0
 " }}}
-" Plugin: vim-scala {{{2
+" Vim-scala {{{2
 Plug 'derekwyatt/vim-scala'
 au BufRead,BufNewFile *.sbt set filetype=scala
 " }}}
-" Plugin: COC {{{
+" COC {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
@@ -236,9 +289,6 @@ set updatetime=300
 set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
-" Some server have issues with backup files
-set nobackup
-set nowritebackup
 " Better display for messages
 set cmdheight=2
 " }}}
@@ -279,7 +329,6 @@ nmap <leader>ac <Plug>(coc-codeaction)
 
 " Remap for do action format
 nnoremap <silent> F :call CocAction('format')<CR>
-"nnoremap <silent> <Leader>I :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })<CR>
 
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -296,8 +345,8 @@ endfunction
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
 
 
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
@@ -309,23 +358,16 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Show Buffers
-nnoremap <silent> <Leader>b :<C-u>CocList buffers<CR>
 "Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list
-nnoremap <silent> <Leader>p :<C-u>CocListResume<CR>
-nnoremap <silent> <Leader>f :<C-u>CocList files<CR>
-nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
-nnoremap <silent> <leader>s :<C-u>CocList symbols<CR>
 " Coc-yank {{{
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 " }}}
