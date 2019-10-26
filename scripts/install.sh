@@ -4,7 +4,6 @@
 SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 
 source "./$SYSTEM/variables.sh"
-PACKAGE_SOURCE="./$SYSTEM/packages.txt"
 
 # pre install hook
 pre_install
@@ -30,5 +29,5 @@ if [ "${SHELL##*/}" != "zsh" ]; then
 fi
 
 # Install packages
-echo "Instal packages from $PACKAGE_SOURCE"
-install_packages $PACKAGE_SOURCE
+echo "Instal packages"
+install_packages

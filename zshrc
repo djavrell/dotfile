@@ -47,6 +47,7 @@ end
 
 
 # Completion
+compinit
 unsetopt flow_control
 unsetopt menu_complete
 setopt auto_menu
