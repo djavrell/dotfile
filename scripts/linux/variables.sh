@@ -7,11 +7,7 @@ function pre_install() {
   which yay
   if [ $? -eq 1 ]; then
     echo "Installing yay"
-    git clone https://aur.archlinux.org/yay.git yay
-    cd yay
-    makepkg -si
-    cd ..
-    rm -rf yay
+    sudo pacman -S yay
   fi
 }
 
