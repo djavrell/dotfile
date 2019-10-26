@@ -2,7 +2,7 @@
 
 INSTALLER="yay -S"
 INSTAL_ALL="yay -S"
-PACKAGES="./packages.txt"
+PACKAGES="packages.txt"
 
 function pre_install() {
   which yay > /dev/null 2>&1
