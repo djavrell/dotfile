@@ -15,5 +15,7 @@ function pre_install() {
 # $1: file containing all package to install
 function install_packages() {
   echo "Installing ...."
-  $INSTAL_ALL $(cat $PACKAGES)
+  echo $PACKAGES
+  cat $PACKAGES
+  $INSTAL_ALL $(cat "$PACKAGES")
 }
