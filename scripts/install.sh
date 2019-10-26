@@ -6,9 +6,9 @@ SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 source "./$SYSTEM/variables.sh"
 PACKAGE_SOURCE="./$SYSTEM/packages.txt"
 
-echo "will use: $INSTALLER as installer"
 # pre install hook
 pre_install
+echo "will use: $INSTALLER as installer"
 
 # charger les variable en fonction d'un fichier nommé trouvable grace à uname
 #

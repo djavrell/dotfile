@@ -1,10 +1,18 @@
 #!/bin/sh
 
-INSTALLER="sudo pacman -S"
-INSTAL_ALL="sudo pacman -Sa --needed -"
+INSTALLER="yay -S"
+INSTAL_ALL="yay -S"
 
 function pre_install() {
-  echo "pre_install hook (do nothing here)"
+  which yay
+  if [ $? -eq 1 ]; then
+    echo "Installing yay"
+    git clone https://aur.archlinux.org/yay.git yay
+    cd yay
+    makepkg -si
+    cd ..
+    rm -rf yay
+  fi
 }
 
 # $1: file containing all package to install
