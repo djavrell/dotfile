@@ -81,12 +81,6 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-
 # zstyle ':completion:*' verbose true
 # zstyle :compinstall filename '/Users/kpr/.zshrc'
 
-if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
-  compinit
-else
-  compinit -C
-fi
-
 # Binding
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -105,5 +99,6 @@ setopt bang_hist                # !keyword
 setopt extended_glob            # activate complex pattern globbing
 unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
-# uncomment to know what take to much time at the load and init time
+# # uncomment to know what take to much time at the load and init time
+# zmodload zsh/zprof # top of your .zshrc file
 # zprof
