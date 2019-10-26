@@ -2,7 +2,7 @@
 
 INSTALLER="yay -S"
 INSTAL_ALL="yay -S"
-PACKAGES="packages.txt"
+PACKAGES="./linux/packages.txt"
 
 function pre_install() {
   which yay > /dev/null 2>&1
@@ -14,8 +14,6 @@ function pre_install() {
 
 # $1: file containing all package to install
 function install_packages() {
-  echo "Installing ...."
-  echo $PACKAGES
-  cat $PACKAGES
+  echo "Installing packages"
   $INSTAL_ALL $(cat "$PACKAGES")
 }

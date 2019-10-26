@@ -29,5 +29,4 @@ if [ "${SHELL##*/}" != "zsh" ]; then
 fi
 
 # Install packages
-echo "Instal packages"
 install_packages
