@@ -108,12 +108,15 @@ map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
 " }}}
 " Autocmd {{{
-autocmd BufRead *.tsx set ft=typescript
-autocmd BufRead *.conf set ft=conf
-autocmd BufWritePre * :%s/\s\+$//e
-autocmd FileType json syntax match Comment +\/\/.\+$+
-" Automaticaly close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup global
+  autocmd!
+  autocmd BufRead *.tsx set ft=typescript
+  autocmd BufRead *.conf set ft=conf
+  autocmd BufWritePre * :%s/\s\+$//e
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+  " Automaticaly close nvim if NERDTree is only thing left open
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 " }}}
 " Plugins {{{
 
@@ -293,16 +296,16 @@ set signcolumn=yes
 set cmdheight=2
 " }}}
 " auto cmd {{{
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
-augroup mygroup
+augroup coc_augroup
   autocmd!
+  " Highlight symbol under cursor on CursorHold
+  autocmd CursorHold * silent call CocActionAsync('highlight')
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+augroup END
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
