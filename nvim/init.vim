@@ -3,7 +3,7 @@
 " Global: Vim settings {{{1
 set nocompatible
 set shell=/bin/sh
-set encoding=UTF-8
+set encoding=utf8
 set hidden
 set autoread
 
@@ -391,6 +391,10 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
 " }}}
 
+" }}}
+" Vim devicons (should always be the last one) {{{
+Plug 'ryanoasis/vim-devicons'
+set guifont=Hasklug_Nerd_Font:h11
 " }}}
 
 call plug#end()

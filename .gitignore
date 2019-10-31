@@ -1,6 +1,7 @@
-vim/bundle
 tmux/resurrect
 tmux/plugins
+
+nvim/local_nvim.vim
 
 **/*private*
 **/*work*

@@ -35,3 +35,5 @@ alias picp='scp -P 2424 $1 djavrell@192.168.0.14:$2'
 alias emu="$ANDROID_HOME/emulator/emulator"
 
 alias dstop='docker stop $(docker ps | rev | cut -d" " -f1 | rev | tail -n +2 | fzf-tmux -r 30% --reverse --multi)'
+
+alias swapLokkup='sudo fs_usage | rg swapfile'
