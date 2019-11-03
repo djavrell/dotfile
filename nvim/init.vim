@@ -1,44 +1,48 @@
 " vim: set fdm=marker fmr={{{,}}} fdl=0 :
 
 " Global: Vim settings {{{1
-set nocompatible
 set shell=/bin/sh
 set encoding=utf8
+set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
+set showbreak=↪
+set backspace=indent,eol,start
+set nrformats-=octl
+set path+=**
+set tabstop=2       " size of hard tabstop
+set softtabstop=2   " size of tab in insert mode
+set shiftwidth=2    " size of an indents
+set completeopt+=menuone,preview
+set inccommand=nosplit " live preview replace with :%s
+set scrolloff=5
+" disable automatic commenting on newline
+set formatoptions-=c, formatoptions-=r, formatoptions-=o
+
+set nocompatible
 set hidden
 set autoread
-
 set nobackup
 set noswapfile
 set nowritebackup
 set relativenumber
 set number
 set list
-set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
-set showbreak=↪
-set backspace=indent,eol,start
 set showmatch
 set shiftround
-set nrformats-=octl
-set path+=**
-set tabstop=2       " size of hard tabstop
-set softtabstop=2   " size of tab in insert mode
-set shiftwidth=2    " size of an indents
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
-set completeopt+=menuone,preview
-set inccommand=nosplit " live preview replace with :%s
-set scrolloff=5
+set splitbelow splitright
+
+" Folding {{{
+syntax enable
+set foldmethod=syntax
+set foldlevel=99
+" }}}
 
 try
   source $XDG_CONFIG_HOME/local_nvim.vim
 catch
   let mapleader = '='
 endtry
-" }}}
-" Global: Folding {{{
-syntax enable
-set foldmethod=syntax
-set foldlevel=99
 " }}}
 " ColorScheme {{{
 colorscheme gruvbox
@@ -366,7 +370,16 @@ function! BuildComposer(info)
 endfunction
 " }}}
 " Markdown composer {{{
+" builder {{{
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    !cargo build --release --locked --no-default-features --features json-rpc
+  endif
+endfunction
+" }}}
+
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+
 let g:markdown_composer_open_browser=0
 " }}}
 " Vim-scala {{{2
