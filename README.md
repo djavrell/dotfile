@@ -50,20 +50,21 @@
 
 ### Symlink
 
-| source         | destination               |
-|----------------|---------------------------|
-| bin folder     | a folder add in your PATH |
-| zshrc          | $HOME                     |
-| profile        | $HOME                     |
-| gitconfig      | $HOME                     |
-| gitignore      | $HOME                     |
-| wuzz           | $HOME                     |
-| vifm           | $HOME                     |
-| tmux           | $HOME                     |
-| tmux/tmux.conf | $HOME                     |
-| nvim           | $XDG_CONFIG_HOME          |
-| pgcli/config   | $XDG_CONFIG_HOME/pgcli    |
-|----------------|---------------------------|
+| source          | destination                                 |
+|-----------------|---------------------------------------------|
+| bin folder      | a folder add in your PATH                   |
+| zshrc           | $HOME                                       |
+| profile         | $HOME                                       |
+| gitconfig       | $HOME                                       |
+| gitignore       | $HOME                                       |
+| wuzz            | $HOME                                       |
+| vifm            | $HOME                                       |
+| tmux            | $HOME                                       |
+| tmux/tmux.conf  | $HOME                                       |
+| nvim            | $XDG_CONFIG_HOME                            |
+| pgcli/config    | $XDG_CONFIG_HOME/pgcli                      |
+| efm-config.yaml | $XDG_CONFIG_HOME/efm-langserver/config.yaml |
+|-----------------|---------------------------------------------|
 
 
 ## Install

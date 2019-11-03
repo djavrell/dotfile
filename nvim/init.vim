@@ -10,6 +10,7 @@ set autoread
 set nobackup
 set noswapfile
 set nowritebackup
+set relativenumber
 set number
 set list
 set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
@@ -26,6 +27,7 @@ set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set completeopt+=menuone,preview
 set inccommand=nosplit " live preview replace with :%s
+set scrolloff=5
 
 try
   source $XDG_CONFIG_HOME/local_nvim.vim
@@ -122,6 +124,31 @@ augroup END
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Startify {{{
+Plug 'mhinz/vim-startify'
+
+let g:startify_session_persistence = 1
+let g:startify_session_delete_buffers = 1
+let g:startify_session_sort = 1
+let g:startify_session_number = 10
+let g:startify_change_to_dir = 0
+
+let g:startify_custom_header =
+      \ 'startify#center(startify#fortune#cowsay())'
+
+let g:startify_bookmarks = [
+      \ { 'c': '~/.bashrc.d/zshrc' },
+      \ { 'v' :'~/.bashrc.d/nvim/init.vim' }
+      \ ]
+
+let g:startify_skiplist = [
+      \ '^/tmp',
+      \ '/project',
+      \ 'COMMIT_EDITMSG',
+      \ '/etc'
+      \ ]
+
+" }}}
 " Eleline (status line) {{{
 Plug 'liuchengxu/eleline.vim'
 set laststatus=2
@@ -134,14 +161,6 @@ let g:eleline_powerline_fonts=1
 " set  statusline+=%{vim_timebox#time_left()}
 " call timer_start(900, {-> execute(':redraw')}, { 'repeat': -1 })
 
-" }}}
-" Number {{{
-Plug 'myusuf3/numbers.vim'                 " better line numbers
-
-let g:numbers_exclude = ['tagbar', 'gundo', 'minibufexpl', 'nerdtree', 'vim-clap']
-
-nnoremap <F3> :NumbersToggle<CR>
-nnoremap <F4> :NumbersOnOff<CR>
 " }}}
 Plug 'ianks/vim-tsx'
 Plug 'leafgarland/typescript-vim'
@@ -189,12 +208,13 @@ map <silent> <C-w> :NERDTreeToggle<CR>
 map <silent> <C-c> :NERDTreeFocus<CR>
 map <silent> <Leader>x :NERDTreeFind<CR>
 
+" }}}
 " Nerdtree git plugin {{{
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 " }}}
-" }}}
 " Nerdcommenter {{{
 Plug 'scrooloose/nerdcommenter'
+
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
@@ -206,17 +226,87 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
-" Utilsnip {{{
-Plug 'SirVer/ultisnips'
-" let g:UltiSnipsUsePythonVersion = 3
-" }}}
-Plug 'honza/vim-snippets'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
-" Vimade: fade inactive buffer {{{
-" Plug 'TaDaa/vimade'
+" Goyo {{{
+Plug 'junegunn/goyo.vim'
+
+let g:goyo_linenr = 1
+let g:goyo_width = 150
+
+" Goyo on enter {{{
+function! s:goyo_enter()
+  " tmux {{{
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux setw window-status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  " }}}
+  " proper quit {{{
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+  " }}}
+
+  setlocal go-=r
+  setlocal statusline=
+  set shortmess+=F
+  set scrolloff=999
+  set noshowmode
+  set noshowcmd
+  set nonumber norelativenumber
+  set laststatus=0
+
+  Limelight
+endfunction
+" }}}
+" Goyo on leave {{{
+function! s:goyo_leave()
+  " tmux {{{
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux setw window-status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  " }}}
+  " proper quit {{{
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+  " }}}
+
+  setlocal go+=r
+  set shortmess-=F
+  set scrolloff=5
+  set showmode
+  set showcmd
+  set number relativenumber
+  set laststatus=2
+
+  Limelight!
+endfunction
+" }}}
+" augroup {{{
+augroup Goyo
+  autocmd!
+
+  autocmd User GoyoEnter nested call <SID>goyo_enter()
+  autocmd User GoyoLeave nested call <SID>goyo_leave()
+  autocmd BufLeave goyo_pad setlocal norelativenumber
+augroup END
+" }}}
+" }}}
+" Limelight {{{
+Plug 'junegunn/limelight.vim'
 " }}}
 " Vim Better Whitespace {{{
 Plug 'ntpeters/vim-better-whitespace'
