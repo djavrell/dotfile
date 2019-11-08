@@ -349,25 +349,15 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " Vim Clap {{{
 Plug 'liuchengxu/vim-clap'
 
-nnoremap <silent> <leader>f :<C-u>Clap files<CR>
-nnoremap <silent> <leader>b :<C-u>Clap buffers<CR>
-nnoremap <silent> <leader>g :<C-u>Clap grep<CR>
-nnoremap <silent> <leader>s :<C-u>Clap tags<CR>
+nnoremap <silent> <leader>f :Clap files<CR>
+nnoremap <silent> <leader>b :Clap buffers<CR>
+nnoremap <silent> <leader>g :Clap grep<CR>
+nnoremap <silent> <leader>s :Clap tags<CR>
+nnoremap <silent> <leader>c :Clap<CR>
 
 " }}}
 " Skim {{{
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-" }}}
-" Vim-markdow {{{
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    if has('nvim')
-      !cargo build release
-    else
-      !cargo build release no-default-features features json-rpc
-    endif
-  endif
-endfunction
 " }}}
 " Markdown composer {{{
 " builder {{{
@@ -378,7 +368,7 @@ function! BuildComposer(info)
 endfunction
 " }}}
 
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
+" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 let g:markdown_composer_open_browser=0
 " }}}
