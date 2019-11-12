@@ -90,13 +90,18 @@ endfunction
 
 " }}}
 " Key mapping: {{{
+
+" clean highlight after a search with /
 nmap <silent> <Esc><Esc> :nohlsearch<CR>
+" When in termianl, remap tu use Esc
 tnoremap <Esc> <C-\><C-n>
 
+" buffer management
 map <silent> <Leader>n :enew<CR>
 map <silent> <Leader>j :bnext<CR>
 map <silent> <Leader>k :bprev<CR>
 map <silent> <Leader>d :bp <BAR> bd #<CR>
+map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
 
 " resize pane
 nnoremap <silent> <S-Right> :vertical resize +5<CR>
@@ -167,8 +172,12 @@ let g:eleline_powerline_fonts=1
 
 " }}}
 Plug 'ianks/vim-tsx'
-Plug 'leafgarland/typescript-vim'
+" Vim jsx/tsx {{{
 Plug 'maxmellon/vim-jsx-pretty'
+
+let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
+" }}}
+Plug 'leafgarland/typescript-vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Rest console {{{
