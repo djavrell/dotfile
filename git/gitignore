@@ -12,6 +12,7 @@ work.sh
 *.log
 *~
 log/
+tmp/
 
 ## os X
 .DS_Store

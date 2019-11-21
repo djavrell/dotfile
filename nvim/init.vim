@@ -356,7 +356,13 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " }}}
 " Vim Clap {{{
-Plug 'liuchengxu/vim-clap'
+function! VimClapBuilder(info)
+  if a:info.status != 'unchanged' || a:info.force
+    call clap#helper#build_maple()
+  endif
+endfunction
+
+Plug 'liuchengxu/vim-clap', { 'do': function('VimClapBuilder') }
 
 nnoremap <silent> <leader>f :Clap files<CR>
 nnoremap <silent> <leader>b :Clap buffers<CR>
@@ -367,19 +373,6 @@ nnoremap <silent> <leader>c :Clap<CR>
 " }}}
 " Skim {{{
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-" }}}
-" Markdown composer {{{
-" builder {{{
-function! BuildComposer(info)
-  if a:info.status != 'unchanged' || a:info.force
-    !cargo build --release --locked --no-default-features --features json-rpc
-  endif
-endfunction
-" }}}
-
-" Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
-
-let g:markdown_composer_open_browser=0
 " }}}
 " Vim-scala {{{2
 Plug 'derekwyatt/vim-scala'
