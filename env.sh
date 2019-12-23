@@ -18,6 +18,9 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # tmuxinator
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
+# Python
+path=( "/Users/kpr/Library/Python/3.7/bin" $path )
+
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
 

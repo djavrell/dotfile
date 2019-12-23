@@ -22,6 +22,8 @@
       "ignoredRootPaths": ["~"]
     }
   },
+  "diagnostic.displayByAle": true,
+  "diagnostic.virtualText": true,
   "diagnostic.level": "error",
   "diagnostic.virtualText": true,
   "signature.floatMaxWidth": 500,

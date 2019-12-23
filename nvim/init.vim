@@ -14,8 +14,11 @@ set shiftwidth=2    " size of an indents
 set completeopt+=menuone,preview
 set inccommand=nosplit " live preview replace with :%s
 set scrolloff=5
+set shortmess+=c
 " disable automatic commenting on newline
 set formatoptions-=c, formatoptions-=r, formatoptions-=o
+set signcolumn=yes
+set cmdheight=2
 
 set nocompatible
 set hidden
@@ -30,7 +33,6 @@ set showmatch
 set shiftround
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
-set splitbelow splitright
 
 " Folding {{{
 syntax enable
@@ -125,6 +127,7 @@ augroup global
   autocmd BufRead *.conf set ft=conf
   autocmd BufWritePre * :%s/\s\+$//e
   autocmd FileType json syntax match Comment +\/\/.\+$+
+  autocmd FileType log set nowrap
   " Automaticaly close nvim if NERDTree is only thing left open
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
@@ -132,6 +135,8 @@ augroup END
 " Plugins {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
+
+" Plug 'itchyny/calendar.vim'
 
 " Startify {{{
 Plug 'mhinz/vim-startify'
@@ -362,7 +367,7 @@ function! VimClapBuilder(info)
   endif
 endfunction
 
-Plug 'liuchengxu/vim-clap', { 'do': function('VimClapBuilder') }
+Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 
 nnoremap <silent> <leader>f :Clap files<CR>
 nnoremap <silent> <leader>b :Clap buffers<CR>
@@ -376,19 +381,36 @@ Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " }}}
 " Vim-scala {{{2
 Plug 'derekwyatt/vim-scala'
-au BufRead,BufNewFile *.sbt set filetype=scala
+
+augroup scala
+  autocmd BufRead,BufNewFile *.sbt set filetype=scala
+  autocmd BufRead *.sc :ALEDisableBuffer
+augroup END
+" }}}
+" Ale {{{
+
+let g:ale_set_loclist = 1
+
+let g:ale_sign_column_always = 1
+
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+let g:ale_lsp_show_message_format = '[%linter%] %s [%severity%]'
+
+let g:ale_virtualtext_cursor = 1
+let g:ale_virtualtext_prefix = '►'
+let g:ale_sign_highlight_linenrs = 1
+
+Plug 'dense-analysis/ale'
+
 " }}}
 " COC {{{
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-" always show signcolumns
-set signcolumn=yes
-" Better display for messages
-set cmdheight=2
 " }}}
 " auto cmd {{{
 
@@ -484,6 +506,22 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
+
+" Command for Metals {{{
+" Start Metals Doctor
+command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
+" Manually start build import
+command! -nargs=0 MetalsImport :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })
+" Manually connect with the build server
+command! -nargs=0 MetalsConnect :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })
+" }}}
+" }}}
+" Coc extension {{{
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 " }}}
 
 " }}}
