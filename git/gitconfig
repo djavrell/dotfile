@@ -38,6 +38,7 @@
   prune = fetch --prune
 
   undo = reset --soft HEAD^
+  undoo = reset HEAD^
 
   ia = !git add $(git ls-files --modified --others --exclude-standard | fzf --revers --multi)
 

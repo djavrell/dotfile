@@ -522,6 +522,8 @@ Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'weirongxu/coc-explorer'
 " }}}
 
 " }}}

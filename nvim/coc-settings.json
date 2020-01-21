@@ -38,5 +38,10 @@
         "args": [ "--hidden", "--files" ]
       }
     }
+  },
+  "explorer": {
+    "icon": {
+      "enableNerdfont": true
+    }
   }
 }
