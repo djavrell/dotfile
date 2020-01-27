@@ -7,6 +7,9 @@ work.sh
 .metals/
 .bloop/
 
+# scala vim
+project/metals.sbt
+
 ## global
 *.tmp
 *.log

@@ -126,10 +126,14 @@ augroup global
   autocmd BufRead *.tsx set ft=typescript
   autocmd BufRead *.conf set ft=conf
   autocmd BufWritePre * :%s/\s\+$//e
-  autocmd FileType json syntax match Comment +\/\/.\+$+
   autocmd FileType log set nowrap
   " Automaticaly close nvim if NERDTree is only thing left open
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+
+augroup JSON
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+  autocmd FileType json set foldmethod=syntax
 augroup END
 " }}}
 " Plugins {{{
@@ -361,13 +365,10 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " }}}
 " Vim Clap {{{
-function! VimClapBuilder(info)
-  if a:info.status != 'unchanged' || a:info.force
-    call clap#helper#build_maple()
-  endif
-endfunction
 
 Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
+
+let g:clap_layout = { 'relative': 'editor' }
 
 nnoremap <silent> <leader>f :Clap files<CR>
 nnoremap <silent> <leader>b :Clap buffers<CR>
@@ -507,7 +508,9 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
 
-" Command for Metals {{{
+" Metals specifics {{{
+nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
 " Start Metals Doctor
 command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
 " Manually start build import
