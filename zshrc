@@ -1,9 +1,10 @@
+# zmodload zsh/zprof # top of your .zshrc file
+
 DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 
 SUB_MODULES="$DOTFILE/submodules"
 SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
-echo $SYSTEM_FILE
 
 fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
@@ -104,11 +105,5 @@ setopt bang_hist                # !keyword
 setopt extended_glob            # activate complex pattern globbing
 unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
-# VIM Mode
-
-# Hook for desk activation
-[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true
-
-# # uncomment to know what take to much time at the load and init time
-# zmodload zsh/zprof # top of your .zshrc file
+# uncomment to know what take to much time at the load and init time
 # zprof

@@ -366,7 +366,7 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 " }}}
 " Vim Clap {{{
 
-Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 let g:clap_layout = { 'relative': 'editor' }
 
@@ -388,23 +388,22 @@ augroup scala
   autocmd BufRead *.sc :ALEDisableBuffer
 augroup END
 " }}}
-" Ale {{{
+" Haskell {{{
 
-let g:ale_set_loclist = 1
+Plug 'neovimhaskell/haskell-vim'
 
-let g:ale_sign_column_always = 1
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+Plug 'alx741/vim-hindent'
 
-let g:ale_lsp_show_message_format = '[%linter%] %s [%severity%]'
-
-let g:ale_virtualtext_cursor = 1
-let g:ale_virtualtext_prefix = '►'
-let g:ale_sign_highlight_linenrs = 1
-
-Plug 'dense-analysis/ale'
+let g:hindent_on_save = 1
+let g:hindent_indent_size = 2
 
 " }}}
 " COC {{{

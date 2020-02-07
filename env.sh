@@ -5,11 +5,12 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 
-export HISTFILE=~/.zsh_history         # where to store zsh config
-export HISTSIZE=1024                   # big history
-export SAVEHIST=1024                   # big history
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1024
+export SAVEHIST=1024
 
 path=( "$HOME/bin" $path )
+path=( "$HOME/.local/bin" $path )
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -56,6 +57,9 @@ path=( "$HOME/.nix-profile/bin" $path )
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
 loading+="$HOME/.rvm/scripts/rvm"
+
+# Haskell
+loading+="$HOME/.ghcup/env"
 
 get_export() {
   echo $loading

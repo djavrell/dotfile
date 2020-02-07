@@ -1,5 +1,6 @@
 ## WORK
 work.sh
+*-bck
 
 ## IDE
 .idea/
@@ -9,6 +10,9 @@ work.sh
 
 # scala vim
 project/metals.sbt
+
+# Haskell
+.stack-*
 
 ## global
 *.tmp
