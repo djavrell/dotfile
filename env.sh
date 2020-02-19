@@ -50,8 +50,8 @@ export FZF_COMPLETION_TRIGGER='%'
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Nix
-loading+="$HOME/.nix-profile/etc/profile.d/nix.sh"
-path=( "$HOME/.nix-profile/bin" $path )
+# loading+="$HOME/.nix-profile/etc/profile.d/nix.sh"
+# path=( "$HOME/.nix-profile/bin" $path )
 # End Nix
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.

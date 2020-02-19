@@ -106,10 +106,10 @@ map <silent> <Leader>d :bp <BAR> bd #<CR>
 map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
 
 " resize pane
-nnoremap <silent> <S-Right> :vertical resize +5<CR>
-nnoremap <silent> <S-Left> :vertical resize -5<CR>
-nnoremap <silent> <S-Up> :resize +5<CR>
-nnoremap <silent> <S-Down> :resize -5<CR>
+" nnoremap <silent> <S-Right> :vertical resize +5<CR>
+" nnoremap <silent> <S-Left> :vertical resize -5<CR>
+" nnoremap <silent> <S-Up> :resize +5<CR>
+" nnoremap <silent> <S-Down> :resize -5<CR>
 
 " circle through windows
 nnoremap <silent> <C-l> :call SplitWindow()<CR>
@@ -370,11 +370,14 @@ Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 let g:clap_layout = { 'relative': 'editor' }
 
-nnoremap <silent> <leader>f :Clap files<CR>
-nnoremap <silent> <leader>b :Clap buffers<CR>
-nnoremap <silent> <leader>g :Clap grep<CR>
-nnoremap <silent> <leader>s :Clap tags<CR>
-nnoremap <silent> <leader>c :Clap<CR>
+nnoremap  <silent>  <leader>f :Clap files<CR>
+nnoremap  <silent>  <space>f  :Clap filer<CR>
+nnoremap  <silent>  <leader>b :Clap buffers<CR>
+nnoremap  <silent>  <leader>g :Clap grep<CR>
+nnoremap  <silent>  <leader>s :Clap tags<CR>
+nnoremap  <silent>  <leader>c :Clap<CR>
+nnoremap  <silent>  <space>a  :Clap loclist<CR>
+nnoremap  <silent>  <space>o  :Clap tags<CR>
 
 " }}}
 " Skim {{{
@@ -444,12 +447,6 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
-
-" Remap for do action format
-nnoremap <silent> F :call CocAction('format')<CR>
-
 " Use K for show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -468,22 +465,21 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>F  <Plug>(coc-format-selected)
 nmap <leader>F  <Plug>(coc-format-selected)
 
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Remap for do action format
+nnoremap <silent> F :call CocAction('format')<CR>
+
+" Remap for do codeAction of current line
+nmap <leader>ac <Plug>(coc-codeaction)
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
 
-"Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-" Search workspace symbols
-" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
