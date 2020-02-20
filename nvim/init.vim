@@ -1,5 +1,3 @@
-" vim: set fdm=marker fmr={{{,}}} fdl=0 :
-
 " Global: Vim settings {{{1
 set shell=/bin/sh
 set encoding=utf8
@@ -47,8 +45,8 @@ catch
 endtry
 " }}}
 " ColorScheme {{{
-colorscheme gruvbox
 set termguicolors
+colorscheme gruvbox
 
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
@@ -57,7 +55,7 @@ let g:gruvbox_improved_warnings=1
 
 " Function windows splitting {{{
 let s:golden_ration = 1.618
-lockvar s:golden_ration
+" lockvar s:golden_ration
 
 function! GetSplitMethode()
   let ww = winwidth(winnr())
@@ -140,8 +138,14 @@ augroup END
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Plug 'itchyny/calendar.vim'
+" Smoothie {{{
+Plug 'psliwka/vim-smoothie'
+" }}}
+" Loupe {{{
+Plug 'wincent/loupe'
 
+let g:LoupeClearHighlightMap=0
+" }}}
 " Startify {{{
 Plug 'mhinz/vim-startify'
 
@@ -225,6 +229,7 @@ let g:NERDTreeMinimalUI=1
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.metals$[[dir]]',  '\.bloop$[[dir]]','\.sass-cache$']
 " Hide the Nerdtree status line to avoid clutter
 let g:NERDTreeStatusline = ''
+let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 map <silent> <C-w> :NERDTreeToggle<CR>
 map <silent> <C-c> :NERDTreeFocus<CR>
@@ -533,7 +538,6 @@ set guifont=Hasklug_Nerd_Font:h11
 call plug#end()
 " }}}
 
-" Move here, (neo)vim seems to have some issue with those unicode caracter :/
-let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 filetype plugin indent on
+" vim: set fdm=marker fmr={{{,}}} fdl=0 :
