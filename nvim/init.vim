@@ -1,5 +1,5 @@
 " Global: Vim settings {{{1
-set shell=/bin/sh
+set shell=/bin/zsh
 set encoding=utf8
 set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
 set showbreak=↪
@@ -31,6 +31,7 @@ set showmatch
 set shiftround
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
+set guifont=Hasklug_Nerd_Font:h11
 
 " Folding {{{
 syntax enable
@@ -138,13 +139,9 @@ augroup END
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" UI {{{
 " Smoothie {{{
 Plug 'psliwka/vim-smoothie'
-" }}}
-" Loupe {{{
-Plug 'wincent/loupe'
-
-let g:LoupeClearHighlightMap=0
 " }}}
 " Startify {{{
 Plug 'mhinz/vim-startify'
@@ -176,14 +173,36 @@ Plug 'liuchengxu/eleline.vim'
 set laststatus=2
 let g:eleline_powerline_fonts=1
 " }}}
-" Vim timebox {{{
+" Vim Better Whitespace {{{
+Plug 'ntpeters/vim-better-whitespace'
 
-" Plug 'dominikduda/vim_timebox'
-"
-" set  statusline+=%{vim_timebox#time_left()}
-" call timer_start(900, {-> execute(':redraw')}, { 'repeat': -1 })
-
+nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
+" }}}
+
+" Folding {{{
+" FoldDigest {{{
+Plug 'vim-scripts/folddigest.vim'
+
+let folddigest_options = "vertical,flexnumwidth"
+let folddigest_size = 30
+
+nnoremap  <silent>  <leader>t :call FoldDigest()<CR>
+" }}}
+" CleanFold {{{
+Plug 'arecarn/vim-clean-fold'
+
+set foldtext=clean_fold#fold_text('\ ')
+" }}}
+" }}}
+" Loupe {{{
+Plug 'wincent/loupe'
+
+let g:LoupeClearHighlightMap=0
+" }}}
+
+" Languages {{{
+" Typescript {{{
 Plug 'ianks/vim-tsx'
 " Vim jsx/tsx {{{
 Plug 'maxmellon/vim-jsx-pretty'
@@ -191,6 +210,37 @@ Plug 'maxmellon/vim-jsx-pretty'
 let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
 " }}}
 Plug 'leafgarland/typescript-vim'
+" }}}
+" Scala {{{
+" Vim-scala {{{
+Plug 'derekwyatt/vim-scala'
+
+augroup scala
+  autocmd BufRead,BufNewFile *.sbt set filetype=scala
+  autocmd BufRead *.sc :ALEDisableBuffer
+augroup END
+" }}}
+" }}}
+" Haskell {{{
+
+Plug 'neovimhaskell/haskell-vim'
+
+let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
+let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
+let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
+let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
+let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
+let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
+let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
+
+Plug 'alx741/vim-hindent'
+
+let g:hindent_on_save = 1
+let g:hindent_indent_size = 2
+
+" }}}
+" }}}
+
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Rest console {{{
@@ -331,14 +381,30 @@ augroup Goyo
   autocmd BufLeave goyo_pad setlocal norelativenumber
 augroup END
 " }}}
-" }}}
 " Limelight {{{
 Plug 'junegunn/limelight.vim'
 " }}}
-" Vim Better Whitespace {{{
-Plug 'ntpeters/vim-better-whitespace'
+" }}}
+" Vim Clap {{{
 
-nmap <silent> <C-Space> :StripWhitespace<CR>
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+
+let g:clap_layout = { 'relative': 'editor' }
+
+nnoremap  <silent>  <leader>f :Clap files<CR>
+nnoremap  <silent>  <space>f  :Clap filer<CR>
+nnoremap  <silent>  <leader>b :Clap buffers<CR>
+nnoremap  <silent>  <leader>g :Clap grep<CR>
+vnoremap  <silent>  <leader>g :Clap grep ++query=@visual<CR>
+nnoremap  <silent>  <leader>G :Clap grep ++query=<cword><CR>
+nnoremap  <silent>  <leader>s :Clap tags<CR>
+nnoremap  <silent>  <leader>c :Clap<CR>
+nnoremap  <silent>  <space>a  :Clap loclist<CR>
+nnoremap  <silent>  <space>o  :Clap tags<CR>
+
+" }}}
+" Skim {{{
+Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
 Plug 'liuchengxu/vista.vim'
@@ -367,51 +433,6 @@ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 " If you want to show the nearest function in your statusline automatically,
 " you can add the following line to your vimrc
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
-" }}}
-" Vim Clap {{{
-
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
-
-let g:clap_layout = { 'relative': 'editor' }
-
-nnoremap  <silent>  <leader>f :Clap files<CR>
-nnoremap  <silent>  <space>f  :Clap filer<CR>
-nnoremap  <silent>  <leader>b :Clap buffers<CR>
-nnoremap  <silent>  <leader>g :Clap grep<CR>
-nnoremap  <silent>  <leader>s :Clap tags<CR>
-nnoremap  <silent>  <leader>c :Clap<CR>
-nnoremap  <silent>  <space>a  :Clap loclist<CR>
-nnoremap  <silent>  <space>o  :Clap tags<CR>
-
-" }}}
-" Skim {{{
-Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-" }}}
-" Vim-scala {{{2
-Plug 'derekwyatt/vim-scala'
-
-augroup scala
-  autocmd BufRead,BufNewFile *.sbt set filetype=scala
-  autocmd BufRead *.sc :ALEDisableBuffer
-augroup END
-" }}}
-" Haskell {{{
-
-Plug 'neovimhaskell/haskell-vim'
-
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-Plug 'alx741/vim-hindent'
-
-let g:hindent_on_save = 1
-let g:hindent_indent_size = 2
 
 " }}}
 " COC {{{
@@ -508,8 +529,22 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
 
+" Notify coc.nvim that <enter> has been pressed.
+" Currently used for the formatOnType feature.
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 " Metals specifics {{{
 nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+" Toggle panel with Tree Views
+nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+" Toggle Tree View 'metalsBuild'
+nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" Toggle Tree View 'metalsCompile'
+nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" Reveal current current class (trait or object) in Tree View 'metalsBuild'
+nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
 
 " Start Metals Doctor
 command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
@@ -532,7 +567,6 @@ Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 " }}}
 " Vim devicons (should always be the last one) {{{
 Plug 'ryanoasis/vim-devicons'
-set guifont=Hasklug_Nerd_Font:h11
 " }}}
 
 call plug#end()
