@@ -93,7 +93,7 @@ endfunction
 " Key mapping: {{{
 
 " clean highlight after a search with /
-nmap <silent> <Esc><Esc> :nohlsearch<CR>
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 " When in termianl, remap tu use Esc
 tnoremap <Esc> <C-\><C-n>
 
@@ -505,6 +505,8 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
+
+nmap <silent> <space>c  :CocCommand<CR>
 
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>

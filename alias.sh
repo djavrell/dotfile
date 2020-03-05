@@ -11,7 +11,7 @@ alias rml='rm -vrf $(ls | fzf-tmux -r 30% --multi --reverse)'
 
 alias groot='cd $(git rev-parse --show-toplevel)'
 
-alias pk="ps | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {1})'"
+alias pk="ps aux | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {1})'"
 
 alias mux='tmuxinator'
 

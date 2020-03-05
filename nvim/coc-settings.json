@@ -69,5 +69,10 @@
     "preferences": {
       "formatOnType": true
     }
+  },
+  "capabilities": {
+    "experimental": {
+      "treeViewProvider": true
+    }
   }
 }
