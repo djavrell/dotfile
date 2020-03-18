@@ -105,10 +105,10 @@ map <silent> <Leader>d :bp <BAR> bd #<CR>
 map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
 
 " resize pane
-" nnoremap <silent> <S-Right> :vertical resize +5<CR>
-" nnoremap <silent> <S-Left> :vertical resize -5<CR>
-" nnoremap <silent> <S-Up> :resize +5<CR>
-" nnoremap <silent> <S-Down> :resize -5<CR>
+nnoremap <silent> <S-Right> :vertical resize +5<CR>
+nnoremap <silent> <S-Left> :vertical resize -5<CR>
+nnoremap <silent> <S-Up> :resize +5<CR>
+nnoremap <silent> <S-Down> :resize -5<CR>
 
 " circle through windows
 nnoremap <silent> <C-l> :call SplitWindow()<CR>
