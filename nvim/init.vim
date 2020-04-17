@@ -392,15 +392,16 @@ Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 let g:clap_layout = { 'relative': 'editor' }
 
 nnoremap  <silent>  <leader>f :Clap files<CR>
+nnoremap  <silent>  <leader>F :Clap files +name-only<CR>
 nnoremap  <silent>  <space>f  :Clap filer<CR>
 nnoremap  <silent>  <leader>b :Clap buffers<CR>
-nnoremap  <silent>  <leader>g :Clap grep<CR>
-vnoremap  <silent>  <leader>g :Clap grep ++query=@visual<CR>
-nnoremap  <silent>  <leader>G :Clap grep ++query=<cword><CR>
-nnoremap  <silent>  <leader>s :Clap tags<CR>
+nnoremap  <silent>  <leader>g :Clap grep2<CR>
+vnoremap  <silent>  <leader>g :Clap grep2 ++query=@visual<CR>
+nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
 nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <space>a  :Clap loclist<CR>
 nnoremap  <silent>  <space>o  :Clap tags<CR>
+nnoremap  <silent>  <space>O  :Clap proj_tags<CR>
 
 " }}}
 " Skim {{{
@@ -538,6 +539,9 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 " Metals specifics {{{
 nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+
+" Go to Super method
+nnoremap <silent> gm  :<C-u>CocCommand metals.go-to-super-method<CR>
 
 " Toggle panel with Tree Views
 nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
