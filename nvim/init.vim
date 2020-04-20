@@ -241,6 +241,9 @@ let g:hindent_indent_size = 2
 " }}}
 " }}}
 
+" Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
+Plug 'DrCracket/painless-digraph'
+
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Rest console {{{
@@ -390,15 +393,16 @@ Plug 'junegunn/limelight.vim'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 let g:clap_layout = { 'relative': 'editor' }
+let g:clap_multi_selection_warning_silent = 1
 
+nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <leader>f :Clap files<CR>
-nnoremap  <silent>  <leader>F :Clap files +name-only<CR>
+nnoremap  <silent>  <leader>ff :Clap files +name-only<CR>
 nnoremap  <silent>  <space>f  :Clap filer<CR>
 nnoremap  <silent>  <leader>b :Clap buffers<CR>
 nnoremap  <silent>  <leader>g :Clap grep2<CR>
 vnoremap  <silent>  <leader>g :Clap grep2 ++query=@visual<CR>
 nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
-nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <space>a  :Clap loclist<CR>
 nnoremap  <silent>  <space>o  :Clap tags<CR>
 nnoremap  <silent>  <space>O  :Clap proj_tags<CR>
