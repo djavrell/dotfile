@@ -3,7 +3,7 @@
   name  = Prouteau Kévin
 
 [commit]
-  template = ~/.bashrc.d/git/gitmessage
+  template = "$DOTFILE/git/gitmessage"
 
 [color]
   ui = true

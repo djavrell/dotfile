@@ -11,19 +11,14 @@ export SAVEHIST=1024
 
 path=( "$HOME/bin" $path )
 path=( "$HOME/.local/bin" $path )
+path=( "$DOTFILE/bin" $path )
 
-# nvim
+# XDG
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
 # tmuxinator
-path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
-
-# Python
-path=( "/Users/kpr/Library/Python/3.7/bin" $path )
-
-# JAVA
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
+path=( "$SHEL_ROOT/tmuxinator.zsh" $path )
 
 # SCALA
 export SCALA_HOME="/usr/local/share/scala-2.12.6"
@@ -42,17 +37,12 @@ export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # FZF fuzzy finder
-loading+="$HOME/.fzf.zsh"
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
+loading+="$SHELL_ROOT/fzf.zsh"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file $SHELL_ROOT/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Nix
-# loading+="$HOME/.nix-profile/etc/profile.d/nix.sh"
-# path=( "$HOME/.nix-profile/bin" $path )
-# End Nix
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )

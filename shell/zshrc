@@ -1,10 +1,12 @@
 # zmodload zsh/zprof # top of your .zshrc file
 
+SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 
-SUB_MODULES="$DOTFILE/submodules"
-SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
+export SHELL_ROOT="$DOTFILE/shell"
+SUB_MODULES="$SHELL_ROOT/submodules"
+SYSTEM_FOLDER="$DOTFILE/os/$SYSTEM"
 
 fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
@@ -20,23 +22,23 @@ zmodload -i zsh/complist
 prompt pure
 
 # export all environement variables
-. "$DOTFILE/env.sh"
+. "$SHELL_ROOT/env.sh"
 
 # source all need script
 typeset -ga sources
 
-sources+="$DOTFILE/vim_mode.zsh"
-sources+="$DOTFILE/alias.sh"
-sources+="$DOTFILE/alias_git.sh"
+sources+="$SHELL_ROOT/vim_mode.zsh"
+sources+="$SHELL_ROOT/alias/alias.sh"
+sources+="$SHELL_ROOT/alias/alias_git.sh"
 
 sources+="$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
 sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-sources+="$DOTFILE/function.d/lazynvm"
-sources+="$DOTFILE/$SYSTEM_FILE.zsh"
-sources+="$DOTFILE/local.sh"
+sources+="$SHELL_ROOT/function.d/lazynvm"
+sources+="$SHELL_ROOT/os/$SYSTEM/load.zsh"
+sources+="$SHELL_ROOT/local.sh"
 sources+=$(get_export) # Add sources from env.sh
 
 foreach file (`echo $sources`)
