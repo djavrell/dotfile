@@ -25,6 +25,7 @@ prompt pure
 # source all need script
 typeset -ga sources
 
+sources+="$DOTFILE/colors.sh"
 sources+="$DOTFILE/vim_mode.zsh"
 sources+="$DOTFILE/alias.sh"
 sources+="$DOTFILE/alias_git.sh"

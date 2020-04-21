@@ -112,6 +112,20 @@ alias ggpush='git push origin $(git_current_branch)'
 alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
 alias gupdate='ggpull && gfo --prune'
 
+function gpush() {
+  local branch=$(git_current_branch)
+
+  if [[ $# -eq 0 ]]; then
+    echo "gpush <remote_name>+"
+  fi
+
+  for remote in "$@"
+  do
+    color "push the commit $(yellow "$branch") to remote $(red "$remote")"
+    git push  "$remote" "$branch"
+  done
+}
+
 alias ghh='git help'
 alias gignore='git update-index --assume-unchanged'
 alias gignored='git ls-files -v | grep "^[[:lower:]]"'
