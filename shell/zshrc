@@ -8,7 +8,7 @@ export SHELL_ROOT="$DOTFILE/shell"
 SUB_MODULES="$SHELL_ROOT/submodules"
 SYSTEM_FOLDER="$DOTFILE/os/$SYSTEM"
 
-fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
+fpath=( "$SHELL_ROOT/function.d" "$SHELL_ROOT/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
 autoload -Uz load link sourcesAll git_current_branch
