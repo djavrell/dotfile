@@ -11,6 +11,7 @@ export SAVEHIST=1024
 
 path=( "$HOME/bin" $path )
 path=( "$HOME/.local/bin" $path )
+path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"

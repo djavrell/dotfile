@@ -6,7 +6,7 @@ export DOTFILE="$HOME/$DOTFOLDER"
 SUB_MODULES="$DOTFILE/submodules"
 SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
 
-fpath=( "$DOTFILE/function.d" "$DOTFILE/function.d/**/*~*/" $fpath )
+fpath=( "$DOTFILE/function.d" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
 autoload -Uz load link sourcesAll git_current_branch
@@ -21,6 +21,9 @@ prompt pure
 
 # export all environement variables
 . "$DOTFILE/env.sh"
+
+# prevent the global variable PATH to have duplicate
+typeset -U path
 
 # source all need script
 typeset -ga sources
@@ -46,6 +49,7 @@ foreach file (`echo $sources`)
   fi
 end
 
+# export PATH
 
 # Completion
 unsetopt flow_control
