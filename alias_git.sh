@@ -121,7 +121,7 @@ function gpush() {
 
   for remote in "$@"
   do
-    color "push the commit $(yellow "$branch") to remote $(red "$remote")"
+    color "push the commit from $(yellow "$branch") to remote $(red "$remote")"
     git push  "$remote" "$branch"
   done
 }
