@@ -30,3 +30,7 @@ fi
 
 # Install packages
 install_packages
+
+# Stowing
+stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles zsh tmux git
+stow --dotfiles nvim pgcli wuzz vifm
