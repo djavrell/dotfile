@@ -25,8 +25,11 @@ export SCALA_HOME="/usr/local/share/scala-2.12.6"
 path=( "$SCALA_HOME/bin" $path)
 
 # Rust
-. "$HOME/.cargo/env"
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+local cargo_env="$HOME/.cargo/env"
+if [[ -a "$cargo_env" ]]; then
+  . "$cargo_env"
+  export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+fi
 
 # Go
 export GOPATH="$HOME/go"
