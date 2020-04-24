@@ -1,34 +1,48 @@
 #! /bin/sh
 
-# pouvoir trouver la distro linux en plus au cas où
+cd $(dirname $0)
+
+# TODO: find the current linux distribution too
 SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 
-source "./$SYSTEM/variables.sh"
-
-# pre install hook
-pre_install
-echo "will use: $INSTALLER as installer"
-
-# charger les variable en fonction d'un fichier nommé trouvable grace à uname
+# load all needed variables for the current os in use
 #
 # files:
 #   - variables_<os>.sh
 #   - packages_<os>.sh
 #   - symlinks_<os>.sh
 #
-# variables -> ce fichier vont definir les variables suivantes:
+# variables -> this file must have thoses variables defined
 #   - INSTALLER_TOOLS (aka: pacman, brew, ...)
-#   -
+source "./$SYSTEM/variables.sh"
 
-if [ "${SHELL##*/}" != "zsh" ]; then
-  echo "Zsh install"
-  $INSTALLER zsh zsh-completions
-  chsh -s "/bin/zsh"
+# install the package manager if needed
+PM_install
+echo "will use: $INSTALLER as installer"
+echo "update of the os"
+global_update
+
+function install_zsh() {
+  if [ "${SHELL##*/}" != "zsh" ]; then
+    echo "Zsh install"
+    $INSTALLER zsh zsh-completions
+    chsh -s "/bin/zsh"
+  fi
+
+  # install + link zsh configuration
+  cd ../zsh
+  echo "init zsh submodule"
+  git submodules init
+  cd ..
+  echo "link zsh configuration file"
+  stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles zsh
+  cd $(dirname $0)
+
   echo "You need to logout and relaunch this script in order to properly activate zsh"
-  exit 1
-fi
+}
 
-# Install packages
+
+install_zsh
 install_packages
 
 # Stowing

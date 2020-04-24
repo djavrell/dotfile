@@ -6,14 +6,15 @@ SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 
-export SHELL_ROOT="$DOTFILE/shell"
+export SHELL_ROOT="$DOTFILE/zsh"
 SUB_MODULES="$SHELL_ROOT/submodules"
-SYSTEM_FOLDER="$DOTFILE/os/$SYSTEM"
+SYSTEM_FOLDER="$SHELL_ROOT/os/$SYSTEM"
 
 fpath=( "$SHELL_ROOT/function.d" "$SHELL_ROOT/function.d/**/*~*/" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
 autoload -Uz load link sourcesAll git_current_branch
+autoload -Uz nvm node npm npx vim
 autoload -Uz promptinit && promptinit
 autoload -Uz colors && colors
 autoload -Uz compinit
@@ -38,7 +39,7 @@ sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-sources+="$SHELL_ROOT/function.d/lazynvm"
+# sources+="$SHELL_ROOT/function.d/lazynvm"
 sources+="$SHELL_ROOT/os/$SYSTEM/load.zsh"
 sources+="$SHELL_ROOT/local.sh"
 sources+=$(get_export) # Add sources from env.sh

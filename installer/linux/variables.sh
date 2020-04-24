@@ -2,9 +2,9 @@
 
 INSTALLER="yay -S"
 INSTAL_ALL="yay -S"
-PACKAGES="./linux/packages.txt"
+PACKAGES="./packages.txt"
 
-function pre_install() {
+function PM_install() {
   which yay > /dev/null 2>&1
   if [ $? -eq 1 ]; then
     echo "Installing yay"
