@@ -19,5 +19,6 @@ function global_update() {
 # $1: file containing all package to install
 function install_packages() {
   echo "Installing packages"
+  echo "$PWD"
   $INSTAL_ALL $(cat "$PACKAGES")
 }
