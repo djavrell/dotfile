@@ -39,7 +39,7 @@ sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-# sources+="$SHELL_ROOT/function.d/lazynvm"
+sources+="$SHELL_ROOT/function.d/lazynvm"
 sources+="$SHELL_ROOT/os/$SYSTEM/load.zsh"
 sources+="$SHELL_ROOT/local.sh"
 sources+=$(get_export) # Add sources from env.sh

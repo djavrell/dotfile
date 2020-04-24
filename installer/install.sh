@@ -16,12 +16,6 @@ SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 #   - INSTALLER_TOOLS (aka: pacman, brew, ...)
 source "./$SYSTEM/variables.sh"
 
-# install the package manager if needed
-PM_install
-echo "will use: $INSTALLER as installer"
-echo "update of the os"
-global_update
-
 function install_zsh() {
   if [ "${SHELL##*/}" != "zsh" ]; then
     echo "Zsh install"
@@ -40,9 +34,18 @@ function install_zsh() {
   echo "You need to logout and relaunch this script in order to properly activate zsh"
 }
 
+function install_vim() {
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
+  vim +PluginInstall
+}
+
+# install the package manager if needed
+PM_install
+global_update
 install_zsh
 install_packages
+install_vim
 
 # Stowing
 stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles zsh tmux git
