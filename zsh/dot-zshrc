@@ -3,11 +3,13 @@
 # zmodload zsh/zprof # top of your .zshrc file
 
 SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
-DOTFOLDER=".bashrc.d"
+DOTFOLDER=$(basename "$PWD")
+echo "dotfolder is $DOTFOLDER"
+echo "pwd is $PWD"
 export DOTFILE="$HOME/$DOTFOLDER"
 
 export SHELL_ROOT="$DOTFILE/zsh"
-SUB_MODULES="$SHELL_ROOT/submodules"
+SUB_MODULES="$DOTFILE/submodules"
 SYSTEM_FOLDER="$SHELL_ROOT/os/$SYSTEM"
 
 fpath=( "$SHELL_ROOT/function.d" "$SHELL_ROOT/function.d/**/*~*/" $fpath )
