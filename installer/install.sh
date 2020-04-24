@@ -30,10 +30,9 @@ function install_zsh() {
   fi
 
   # install + link zsh configuration
-  cd ../zsh
-  echo "init zsh submodule"
-  git submodule init
   cd ..
+  echo "init zsh submodule"
+  git submodule update --init --recursive
   echo "link zsh configuration file"
   stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles zsh
   cd $(dirname $0)
