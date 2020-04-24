@@ -3,9 +3,7 @@
 # zmodload zsh/zprof # top of your .zshrc file
 
 SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
-DOTFOLDER=$(basename "$PWD")
-echo "dotfolder is $DOTFOLDER"
-echo "pwd is $PWD"
+DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 
 export SHELL_ROOT="$DOTFILE/zsh"
