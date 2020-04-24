@@ -2,7 +2,7 @@
 
 INSTALLER="yay"
 INSTAL_ALL="yay -S"
-PACKAGES="./packages.txt"
+PACKAGES="./installer/linux/packages.txt"
 
 function PM_install() {
   which $INSTALLER > /dev/null 2>&1
@@ -19,6 +19,5 @@ function global_update() {
 # $1: file containing all package to install
 function install_packages() {
   echo "Installing packages"
-  echo "$PWD"
   $INSTAL_ALL $(cat "$PACKAGES")
 }
