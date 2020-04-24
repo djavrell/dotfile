@@ -13,3 +13,6 @@
 [submodule "submodules/pure"]
 	path = submodules/pure
 	url = https://github.com/sindresorhus/pure
+[submodule "submodules/fzf"]
+  path = submodules/fzf
+  url = https://github.com/junegunn/fzf
