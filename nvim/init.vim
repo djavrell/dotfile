@@ -390,7 +390,7 @@ Plug 'junegunn/limelight.vim'
 " }}}
 " Vim Clap {{{
 
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 let g:clap_layout = { 'relative': 'editor' }
 let g:clap_multi_selection_warning_silent = 1
@@ -546,6 +546,12 @@ nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
 " Go to Super method
 nnoremap <silent> gm  :<C-u>CocCommand metals.go-to-super-method<CR>
+" Show hierarchy
+nnoremap <silent> sh  :<C-u>CocCommand metals.super-method-hierarchy<CR>
+
+" Trigger for code actions
+" Make sure `"codeLens.enable": true` is set in your coc config
+nnoremap <leader>cll :<C-u>call CocActionAsync('codeLensAction')<CR>
 
 " Toggle panel with Tree Views
 nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>

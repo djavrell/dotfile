@@ -10,6 +10,7 @@ work.sh
 
 # scala vim
 project/metals.sbt
+*.worksheet.sc
 
 # Haskell
 .stack-*
