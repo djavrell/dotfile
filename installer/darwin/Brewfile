@@ -74,4 +74,3 @@ brew "universal-ctags/universal-ctags/universal-ctags", args: ["HEAD"]
 cask "java"
 cask "keycastr"
 cask "mark-text"
-cask "oni"

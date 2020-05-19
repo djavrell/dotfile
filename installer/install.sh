@@ -37,7 +37,7 @@ function install_zsh() {
 function install_vim() {
   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-  vim +PluginInstall
+  nvim +PlugInstall
 }
 
 # install the package manager if needed
@@ -48,5 +48,6 @@ install_packages
 install_vim
 
 # Stowing
-stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles zsh tmux git
+## this regex ignore all files that are not starting with `dot-`
+stow --ignore='^(?<!dot-)[\w\.]+' --dotfiles tmux git
 stow --dotfiles nvim pgcli wuzz vifm
