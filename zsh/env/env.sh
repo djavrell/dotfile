@@ -47,7 +47,8 @@ export FZF_COMPLETION_TRIGGER='%'
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# Ruby
+## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
 loading+="$HOME/.rvm/scripts/rvm"
 

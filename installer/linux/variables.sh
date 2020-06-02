@@ -1,23 +1,7 @@
 #!/bin/sh
 
-INSTALLER="yay"
-INSTAL_ALL="yay -S"
-PACKAGES="./installer/linux/packages.txt"
+source "./installer/global/install_$SYSTEM.sh"
 
-function PM_install() {
-  which $INSTALLER > /dev/null 2>&1
-  if [ $? -eq 1 ]; then
-    echo "Installing $INSTALLER"
-    sudo pacman -S $INSTALLER
-  fi
-}
-
-function global_update() {
-  $INSTALLER -Syu
-}
-
-# $1: file containing all package to install
-function install_packages() {
-  echo "Installing packages"
-  $INSTAL_ALL $(cat "$PACKAGES")
-}
+install_PM
+global_update
+install_packages

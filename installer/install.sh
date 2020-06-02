@@ -3,18 +3,10 @@
 cd $(dirname $0)
 
 # TODO: find the current linux distribution too
-SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
+export SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
 
-# load all needed variables for the current os in use
-#
-# files:
-#   - variables_<os>.sh
-#   - packages_<os>.sh
-#   - symlinks_<os>.sh
-#
-# variables -> this file must have thoses variables defined
-#   - INSTALLER_TOOLS (aka: pacman, brew, ...)
-source "./$SYSTEM/variables.sh"
+source "./global/install.sh"
+global
 
 function install_zsh() {
   if [ "${SHELL##*/}" != "zsh" ]; then
@@ -41,8 +33,6 @@ function install_vim() {
 }
 
 # install the package manager if needed
-PM_install
-global_update
 install_zsh
 install_packages
 install_vim

@@ -25,7 +25,7 @@ zmodload -i zsh/complist
 prompt pure
 
 # export all environement variables
-. "$SHELL_ROOT/env.sh"
+. "$SHELL_ROOT/env/env.sh"
 
 # source all need script
 typeset -ga sources
