@@ -20,6 +20,7 @@
   whitespace    = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile  = /Users/kpr/.gitignore
   pager         = diff-so-fancy | less --tabs=2 -RFX
+  autocrlf      = input
 
 [alias]
   lola  = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'

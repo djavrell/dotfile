@@ -1,16 +1,38 @@
-languages:
-  vim:
+tools:
+  vim-vint: &vim-vint
     lint-command: 'vint -'
-    lint-stdin: true
-
-  markdown:
-    lint-command: 'markdownlint -s'
-    lint-stdin: true
-    lint-formats:
-      - '%f: %l: %m'
-
-  yaml:
-    lint-command: 'yamllint -f parsable -'
     lint-stdin: true
     lint-formats:
       - '%f:%l:%c: %m'
+
+  markdown-markdownlint: &markdown-markdownlint
+    lint-command: 'markdownlint -s -c %USERPROFILE%\.markdownlintrc'
+    lint-stdin: true
+    lint-formats:
+      - '%f:%l %m'
+      - '%f:%l:%c %m'
+      - '%f: %l: %m'
+
+  yaml-yamllint: &yaml-yamllint
+    lint-command: 'yamllint -f parsable -'
+    lint-stdin: true
+
+  json-jq: &json-jq
+    lint-command: 'jq .'
+
+  csv-csvlint: &csv-csvlint
+    lint-command: 'csvlint'
+
+languages:
+  vim:
+    - <<: *vim-vint
+  yaml:
+    - <<: *yaml-yamllint
+  json:
+    - <<: *json-jq
+  csv:
+    - <<: *csv-csvlint
+  _:
+    - <<: *any-excitetranslate
+  markdown:
+    - <<: *markdown-markdownlint

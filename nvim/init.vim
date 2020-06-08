@@ -36,7 +36,7 @@ set guifont=Hasklug_Nerd_Font:h11
 " Folding {{{
 syntax enable
 set foldmethod=syntax
-set foldlevel=99
+set foldlevel=1
 " }}}
 
 try
@@ -48,6 +48,7 @@ endtry
 " ColorScheme {{{
 set termguicolors
 colorscheme gruvbox
+set background=dark
 
 let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_improved_warnings=1
@@ -241,6 +242,15 @@ let g:hindent_indent_size = 2
 " }}}
 " }}}
 
+" Database {{{
+" vim dadbob {{{
+Plug 'tpope/vim-dadbod'
+" }}}
+" vim dadbob UI {{{
+Plug 'kristijanhusak/vim-dadbod-ui'
+" }}}
+" }}}
+
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 Plug 'DrCracket/painless-digraph'
 
@@ -276,13 +286,13 @@ inoreabbrev <expr> __
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 " }}}
 " NerdTree {{{
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree'
 
-let g:NERDTreeMinimalUI=1
+let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.metals$[[dir]]',  '\.bloop$[[dir]]','\.sass-cache$']
 " Hide the Nerdtree status line to avoid clutter
 let g:NERDTreeStatusline = ''
-let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
+let g:NERDTreeQuitOnOpen = 3
 
 map <silent> <C-w> :NERDTreeToggle<CR>
 map <silent> <C-c> :NERDTreeFocus<CR>
@@ -291,6 +301,8 @@ map <silent> <Leader>x :NERDTreeFind<CR>
 " }}}
 " Nerdtree git plugin {{{
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
+let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
+
 " }}}
 " Nerdcommenter {{{
 Plug 'scrooloose/nerdcommenter'
@@ -441,7 +453,7 @@ autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " }}}
 " COC {{{
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
 " Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
@@ -577,6 +589,7 @@ Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+Plug 'vn-ki/coc-clap'
 " Plug 'weirongxu/coc-explorer'
 " }}}
 

@@ -11,6 +11,7 @@
 - [http-propt](https://github.com/eliangcs/http-prompt)
 - [dry](https://moncho.github.io/dry/)
 - [Fzf](https://github.com/junegunn/fzf)
+- [shellcheck](https://github.com/koalaman/shellcheck)
 
 ### Powered by Rust
 
@@ -23,6 +24,8 @@
 
 - [Go](https://golang.org/)
   - [wuzz](https://github.com/asciimoo/wuzz)
+  - [csvlint](https://github.com/Clever/csvlint)
+
 
 ## Color theme
 
