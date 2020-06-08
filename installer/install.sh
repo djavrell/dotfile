@@ -1,11 +1,11 @@
 #! /bin/sh
-
+set -e
 cd $(dirname $0)
 
-# TODO: find the current linux distribution too
-export SYSTEM=`uname -s | tr '[:upper:]' '[:lower:]'`
+source "./utils.sh"
+loading "./variables.sh"
 
-source "./global/install.sh"
+loading "./global/install.sh"
 global
 
 function install_zsh() {
