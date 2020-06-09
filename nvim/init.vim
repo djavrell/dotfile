@@ -119,6 +119,10 @@ nnoremap <silent> <C-p> :wincmd W<Cr>
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
+
+" force write when the sudo was forgotten
+cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
+
 " }}}
 " Autocmd {{{
 augroup global
@@ -519,9 +523,6 @@ nmap <leader>ac <Plug>(coc-codeaction)
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-" Remap for do codeAction of current line
-nmap <leader>ac  <Plug>(coc-codeaction)
 
 nmap <silent> <space>c  :CocCommand<CR>
 
