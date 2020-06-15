@@ -88,3 +88,5 @@
 	clean = git-lfs clean -- %f
 [credential]
 	username = djavrell
+[pull]
+	rebase = false
