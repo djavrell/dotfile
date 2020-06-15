@@ -273,6 +273,9 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
 Plug 'mtth/scratch.vim'
+" Vim CSV {{{
+Plug 'chrisbra/csv.vim'
+" }}}
 " Vim table {{{
 Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)

@@ -112,3 +112,5 @@ unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
 # uncomment to know what take to much time at the load and init time
 # zprof
+
+eval "$(direnv hook zsh)"

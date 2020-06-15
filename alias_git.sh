@@ -6,6 +6,10 @@ function uadd() {
   git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat --color always {}" --preview-window=right:70%:wrap --multi)
 }
 
+function gbdll() {
+  git branch -vv
+}
+
 alias sync='ggpull && gfo --prune && git fetch --tags'
 alias gcfmt='git commit -m "formating" '
 alias fuckit='git commit -m "$(curl -s whatthecommit.com/index.txt)"'

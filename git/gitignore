@@ -8,12 +8,15 @@ work.sh
 .metals/
 .bloop/
 
-# scala vim
+## scala vim
 project/metals.sbt
 *.worksheet.sc
 
-# Haskell
+## Haskell
 .stack-*
+
+## direnv
+.envrc
 
 ## global
 *.tmp
