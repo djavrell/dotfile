@@ -1,4 +1,5 @@
-" Global: Vim settings {{{1
+" vim: set fdm=marker fmr={{{,}}} fdl=0 :
+" Global {{{
 set shell=/bin/zsh
 set encoding=utf8
 set listchars=tab:→\ ,trail:⋅,extends:❯,precedes:❮
@@ -45,14 +46,6 @@ catch
   let mapleader = '='
 endtry
 " }}}
-" ColorScheme {{{
-set termguicolors
-colorscheme gruvbox
-set background=dark
-
-let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_improved_warnings=1
-" }}}
 " Functions {{{
 
 " Function windows splitting {{{
@@ -91,7 +84,7 @@ endfunction
 " }}}
 
 " }}}
-" Key mapping: {{{
+" Key mapping {{{
 
 " clean highlight after a search with /
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
@@ -183,7 +176,13 @@ Plug 'ntpeters/vim-better-whitespace'
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
+" ColorScheme {{{
+Plug 'lifepillar/vim-gruvbox8'
 " }}}
+" }}}
+
+" Handle and update colorscheme tamplate
+Plug 'lifepillar/vim-colortemplate'
 
 " Folding {{{
 " FoldDigest {{{
@@ -204,6 +203,18 @@ set foldtext=clean_fold#fold_text('\ ')
 Plug 'wincent/loupe'
 
 let g:LoupeClearHighlightMap=0
+" }}}
+" QuickScope {{{
+Plug 'unblevable/quick-scope'
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_buftype_blacklist = ['terminal', 'nofile']
+
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#b57614' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#427b58' gui=underline ctermfg=81 cterm=underline
+augroup END
 " }}}
 
 " Languages {{{
@@ -433,31 +444,13 @@ Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " Vista.vim (LSP symbole view & search) {{{
 Plug 'liuchengxu/vista.vim'
 
-" Executive used when opening vista sidebar without specifying it.
-" See all the avaliable executives via `:echo g:vista#executives`.
 let g:vista_default_executive = 'coc'
-
-" How each level is indented and what to prepend.
-" This could make the display more compact or more spacious.
-" e.g., more compact: ["▸ ", ""]
-" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_echo_cursor_strategy='floating_win'
 
-" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-" let g:vista#renderer#enable_icon = 1
-
-" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-" let g:vista#renderer#icons = {
-" \   "function": "\uf794",
-" \   "variable": "\uf71b",
-" \  }
-
-" By default vista.vim never run if you don't call it explicitly.
-"
-" If you want to show the nearest function in your statusline automatically,
-" you can add the following line to your vimrc
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
+augroup Vista
+  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+augroup END
 " }}}
 " COC {{{
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
@@ -519,7 +512,7 @@ nmap <leader>F  <Plug>(coc-format-selected)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Remap for do action format
-nnoremap <silent> F :call CocAction('format')<CR>
+" nnoremap <silent> F :call CocAction('format')<CR>
 
 " Remap for do codeAction of current line
 nmap <leader>ac <Plug>(coc-codeaction)
@@ -604,7 +597,19 @@ Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 " }}}
+" ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
+set termguicolors
+set background=dark
+colorscheme gruvbox8
 
+let g:gruvbox_filetype_hi_groups=1
+let g:gruvbox_plugin_hi_groups=1
+
+augroup hg_gruvbox
+  hi SignifySignAdd     guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
+  hi SignifySignChange  guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
+  hi SignifySignDelete  guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
+augroup END
+" }}}
 
 filetype plugin indent on
-" vim: set fdm=marker fmr={{{,}}} fdl=0 :
