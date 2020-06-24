@@ -178,26 +178,15 @@ nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
 " ColorScheme {{{
 Plug 'lifepillar/vim-gruvbox8'
-" }}}
-" }}}
-
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
-
-" Folding {{{
-" FoldDigest {{{
-Plug 'vim-scripts/folddigest.vim'
-
-let folddigest_options = "vertical,flexnumwidth"
-let folddigest_size = 30
-
-nnoremap  <silent>  <leader>t :call FoldDigest()<CR>
 " }}}
+" }}}
+
 " CleanFold {{{
 Plug 'arecarn/vim-clean-fold'
 
 set foldtext=clean_fold#fold_text('\ ')
-" }}}
 " }}}
 " Loupe {{{
 Plug 'wincent/loupe'
@@ -210,6 +199,7 @@ Plug 'unblevable/quick-scope'
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let g:qs_buftype_blacklist = ['terminal', 'nofile']
 
+" Change default color of the hint letter
 augroup qs_colors
   autocmd!
   autocmd ColorScheme * highlight QuickScopePrimary guifg='#b57614' gui=underline ctermfg=155 cterm=underline
@@ -442,15 +432,15 @@ nnoremap  <silent>  <space>O  :Clap proj_tags<CR>
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
-Plug 'liuchengxu/vista.vim'
-
-let g:vista_default_executive = 'coc'
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_echo_cursor_strategy='floating_win'
-
-augroup Vista
-  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-augroup END
+" Plug 'liuchengxu/vista.vim'
+"
+" let g:vista_default_executive = 'coc'
+" let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+" let g:vista_echo_cursor_strategy='floating_win'
+"
+" augroup Vista
+"   autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+" augroup END
 " }}}
 " COC {{{
 Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
@@ -600,11 +590,13 @@ call plug#end()
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
 set background=dark
-colorscheme gruvbox8
+colorscheme gruvbox8_hard
 
 let g:gruvbox_filetype_hi_groups=1
 let g:gruvbox_plugin_hi_groups=1
 
+" Remove the colored background for all git status sign in the left gutter
+" (smoother to the eyes)
 augroup hg_gruvbox
   hi SignifySignAdd     guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
   hi SignifySignChange  guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE

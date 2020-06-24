@@ -5,22 +5,22 @@
       "rootPatterns": ["build.sbt"],
       "filetypes": ["scala", "sbt"]
     },
-    "dockerfile": {
-      "command": "docker-langserver",
-      "filetypes": ["dockerfile"],
-      "args": ["--stdio"]
-    },
-    "efm": {
-      "command": "efm-langserver",
-      "args": [],
-      "filetypes": ["vim", "markdown", "yaml"]
-    },
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    },
+//    "dockerfile": {
+//      "command": "docker-langserver",
+//      "filetypes": ["dockerfile"],
+//      "args": ["--stdio"]
+//    },
+//    "efm": {
+//      "command": "efm-langserver",
+//      "args": [],
+//      "filetypes": ["vim", "markdown", "yaml"]
+//    },
+//    "bash": {
+//      "command": "bash-language-server",
+//      "args": ["start"],
+//      "filetypes": ["sh"],
+//      "ignoredRootPaths": ["~"]
+//    },
     "haskell": {
       "command": "ghcide",
       "args": ["--lsp"],

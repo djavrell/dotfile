@@ -10,14 +10,14 @@ fpath=( "$DOTFILE/function.d" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
 autoload -Uz load link sourcesAll git_current_branch
-autoload -Uz promptinit && promptinit
+# autoload -Uz promptinit && promptinit
 autoload -Uz colors && colors
 autoload -Uz compinit
 
 zmodload -i zsh/complist
 
 # prompt specifics
-prompt pure
+# prompt pure
 
 # export all environement variables
 . "$DOTFILE/env.sh"
@@ -29,7 +29,7 @@ typeset -U path
 typeset -ga sources
 
 sources+="$DOTFILE/colors.sh"
-sources+="$DOTFILE/vim_mode.zsh"
+# sources+="$DOTFILE/vim_mode.zsh"
 sources+="$DOTFILE/alias.sh"
 sources+="$DOTFILE/alias_git.sh"
 
@@ -114,3 +114,4 @@ unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 # zprof
 
 eval "$(direnv hook zsh)"
+eval "$(starship init zsh)"
