@@ -7,3 +7,5 @@ function global() {
   global_update
   install_packages
 }
+
+global
