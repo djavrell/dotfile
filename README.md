@@ -49,6 +49,13 @@
 - json
 - git
 
+
+## GIT
+### Git credantial with gpg
+https://grahamlopez.org/git/git_credentials.html
+
+NB: in your gitconfig file, be sure to not have the field `username` under `[credential]` section
+
 ## Installation
 
 ### Symlink

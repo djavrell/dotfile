@@ -88,6 +88,6 @@
 	required = true
 	clean = git-lfs clean -- %f
 [credential]
-	username = djavrell
+	helper = netrc
 [pull]
 	rebase = false

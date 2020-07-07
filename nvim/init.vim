@@ -10,7 +10,7 @@ set path+=**
 set tabstop=2       " size of hard tabstop
 set softtabstop=2   " size of tab in insert mode
 set shiftwidth=2    " size of an indents
-set completeopt+=menuone,preview
+set completeopt=menuone,noinsert,noselect,preview
 set inccommand=nosplit " live preview replace with :%s
 set scrolloff=5
 set shortmess+=c
@@ -33,6 +33,7 @@ set shiftround
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set guifont=Hasklug_Nerd_Font:h11
+set paste " keep proper indent when pasting
 
 " Folding {{{
 syntax enable
@@ -345,6 +346,7 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 Plug 'DrCracket/painless-digraph'
 
+Plug 'pedrohdz/vim-yaml-folds'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-surround'
 " Rest console {{{
@@ -468,7 +470,6 @@ augroup coc_augroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup END
 
-autocmd CursorHold * silent call CocActionAsync('highlight')
 " }}}
 " Key mapping {{{
 " Use <c-space> for trigger completion.
@@ -526,21 +527,6 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Coc-yank {{{
 nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
-" }}}
-
-" COC: Coc-snippets {{{
-" Use <C-l> for trigger snippet expand.
-imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
 " }}}
 
 " Notify coc.nvim that <enter> has been pressed.

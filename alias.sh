@@ -9,8 +9,6 @@ alias as='alias | grep $*'
 alias ah='history | grep $*'
 alias rml='rm -vrf $(ls | fzf-tmux -r 30% --multi --reverse)'
 
-alias groot='cd $(git rev-parse --show-toplevel)'
-
 alias pk="ps aux | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {2})'"
 
 alias mux='tmuxinator'
@@ -26,13 +24,6 @@ alias tka='tmux kill-session -a'   # kill all tmux session
 alias tkl='tk $(tl | cut -d":" -f 1 | fzf-tmux -r 30% --reverse)'
 alias tk='tmux kill-session -t $*' # kill a tmux session
 alias tks='tmux kill-server'       # HARD KILL of tmux
-
-# ssh -> TODO: Move into local.conf
-alias pi='ssh djavrell@192.168.0.14 -p 2424'
-alias picp='scp -P 2424 $1 djavrell@192.168.0.14:$2'
-
-# Android
-alias emu="$ANDROID_HOME/emulator/emulator"
 
 alias dstop='docker stop $(docker ps | rev | cut -d" " -f1 | rev | tail -n +2 | fzf-tmux -r 30% --reverse --multi)'
 

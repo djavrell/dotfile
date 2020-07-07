@@ -3,6 +3,7 @@ typeset -ga loading
 export LC_ALL=fr_FR.UTF-8
 export EDITOR="nvim"
 export VISUAL="nvim"
+export MANPAGER="nvim +Man!"
 export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 
 export HISTFILE=~/.zsh_history

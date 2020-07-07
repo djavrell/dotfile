@@ -9,7 +9,10 @@ SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
 fpath=( "$DOTFILE/function.d" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
-autoload -Uz load link sourcesAll git_current_branch
+for func in $(ls "$DOTFILE/function.d"); do
+  autoload -Uz $func
+done
+
 # autoload -Uz promptinit && promptinit
 autoload -Uz colors && colors
 autoload -Uz compinit

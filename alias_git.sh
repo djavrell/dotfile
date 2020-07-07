@@ -1,3 +1,15 @@
+# git rev-parse --show-superproject-working-tree
+alias groot='cd $(git rev-parse --show-toplevel)'
+
+function ggroot() {
+  local super=$(git rev-parse --show-superproject-working-tree)
+
+  if [[ ! "$super" ]]; then
+    return 1
+  fi
+  cd "$super"
+}
+
 function add() {
   git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff {} | bat --color always" --preview-window=right:70%:wrap --multi)
 }
