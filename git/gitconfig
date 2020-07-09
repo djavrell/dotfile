@@ -91,3 +91,5 @@
 	helper = netrc
 [pull]
 	rebase = false
+[push]
+	followTags = true
