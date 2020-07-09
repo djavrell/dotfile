@@ -1,6 +1,7 @@
 ## WORK
 work.sh
 *-bck
+*.rest
 
 ## IDE
 .idea/
