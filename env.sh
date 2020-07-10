@@ -63,6 +63,9 @@ loading+="$HOME/.rvm/scripts/rvm"
 # Haskell
 loading+="$HOME/.ghcup/env"
 
+# Git
+path=( "$DOTFILE/git/function.d" $path )
+
 get_export() {
   echo $loading
 }

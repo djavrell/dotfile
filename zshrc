@@ -41,7 +41,7 @@ sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-sources+="$DOTFILE/function.d/lazynvm"
+# sources+="$DOTFILE/function.d/lazynvm"
 sources+="$DOTFILE/$SYSTEM_FILE.zsh"
 sources+="$DOTFILE/local.sh"
 sources+=$(get_export) # Add sources from env.sh

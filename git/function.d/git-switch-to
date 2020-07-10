@@ -1,0 +1,11 @@
+#! /bin/sh
+
+newBranch=$1
+
+if [ ! -z "$1" ]; then
+  git stash
+  git checkout -b "$newBranch"
+  git stash pop
+else
+  echo "usage: git switch-to <new_branch>"
+fi
