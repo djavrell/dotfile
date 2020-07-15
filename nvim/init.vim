@@ -33,7 +33,7 @@ set shiftround
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set guifont=Hasklug_Nerd_Font:h11
-set paste " keep proper indent when pasting
+" set paste " keep proper indent when pasting
 
 " Folding {{{
 syntax enable
@@ -442,7 +442,7 @@ nnoremap  <silent>  <space>O  :Clap proj_tags<CR>
 Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
-" Plug 'liuchengxu/vista.vim'
+" Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 "
 " let g:vista_default_executive = 'coc'
 " let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
@@ -453,7 +453,7 @@ Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
 " augroup END
 " }}}
 " COC {{{
-Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile' }
+Plug 'neoclide/coc.nvim', { 'branch':  'release' }
 " Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
