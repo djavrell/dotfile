@@ -32,3 +32,6 @@ modified_count.enabled = true
 modified_count.style = "purple"
 deleted_count.enabled = true
 show_sync_count.enabled = true
+renamed.style = "blue"
+renamed_count.enabled = true
+renamed_count.style = "blue"

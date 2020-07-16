@@ -10,7 +10,6 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=1024
 export SAVEHIST=1024
 
-path=( "$HOME/bin" $path )
 path=( "$HOME/.local/bin" $path )
 path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
 
@@ -32,7 +31,8 @@ export SCALA_HOME="/usr/local/share/scala-2.12.6"
 path=( "$SCALA_HOME/bin" $path)
 
 # Rust
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
+path=( "$HOME/.cargo/bin" $path )
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # Go
@@ -61,10 +61,12 @@ path=( "$HOME/.rvm/bin" $path )
 loading+="$HOME/.rvm/scripts/rvm"
 
 # Haskell
-loading+="$HOME/.ghcup/env"
+# loading+="$HOME/.ghcup/env"
 
 # Git
 path=( "$DOTFILE/git/function.d" $path )
+
+path=( "$HOME/bin" $path )
 
 get_export() {
   echo $loading

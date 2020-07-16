@@ -1,0 +1,10 @@
+# vim:ft=zsh
+
+local ref
+ref=$(command git rev-parse --show-toplevel --quiet)
+local ret=$?
+
+if [[ $ret != 0 ]]; then
+  [[ $ret == 128 ]] && return # no git repo
+fi
+echo $ref
