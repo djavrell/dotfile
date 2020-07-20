@@ -18,6 +18,7 @@ set shortmess+=c
 set formatoptions-=c, formatoptions-=r, formatoptions-=o
 set signcolumn=yes
 set cmdheight=2
+set spelllang=en_us,fr_fr
 
 set nocompatible
 set hidden
@@ -130,9 +131,17 @@ augroup global
 augroup END
 
 augroup JSON
+  autocmd!
   autocmd FileType json syntax match Comment +\/\/.\+$+
   autocmd FileType json set foldmethod=syntax
 augroup END
+
+augroup QuickfixBuffer
+  autocmd!
+  autocmd FileType qf setlocal cursorline
+  autocmd bufenter * if (winnr('$') == 1 && &buftype == 'quickfix') | q | endif
+augroup END
+
 " }}}
 " Plugins {{{
 
