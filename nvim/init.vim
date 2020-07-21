@@ -34,7 +34,6 @@ set shiftround
 set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set guifont=Hasklug_Nerd_Font:h11
-" set paste " keep proper indent when pasting
 
 " Folding {{{
 syntax enable
@@ -139,7 +138,12 @@ augroup END
 augroup QuickfixBuffer
   autocmd!
   autocmd FileType qf setlocal cursorline
-  autocmd bufenter * if (winnr('$') == 1 && &buftype == 'quickfix') | q | endif
+  autocmd bufenter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
+augroup END
+
+augroup HelpFile
+  autocmd!
+  autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
 augroup END
 
 " }}}
@@ -304,6 +308,9 @@ augroup END
 " }}}
 
 " Languages {{{
+" Global {{{
+Plug 'https://github.com/andrewradev/splitjoin.vim'
+" }}}
 " Typescript {{{
 Plug 'ianks/vim-tsx'
 " Vim jsx/tsx {{{
@@ -370,7 +377,6 @@ let s:vrc_auto_format_response_patterns = {
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 
 " }}}
-Plug 'mtth/scratch.vim'
 " Vim CSV {{{
 Plug 'chrisbra/csv.vim'
 " }}}
@@ -594,6 +600,9 @@ call plug#end()
 set termguicolors
 set background=dark
 colorscheme gruvbox8_hard
+
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
 let g:gruvbox_filetype_hi_groups=1
 let g:gruvbox_plugin_hi_groups=1
