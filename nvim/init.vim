@@ -158,15 +158,25 @@ Plug 'JMcKiern/vim-venter'
 " let g:venter_disable_vertsplit = v:true
 let g:venter_width = &columns/6
 " }}}
-
-" }}}
-
 " Fold {{{
+Plug 'pedrohdz/vim-yaml-folds'
 Plug 'scr1pt0r/crease.vim'
 
 set fillchars=fold:\    " space
 let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
 " }}}
+
+Plug 'tpope/vim-surround'
+
+" Menu {{{
+source $VIMRUNTIME/menu.vim
+set wildmenu
+set cpo-=<
+set wcm=<C-Z>
+" }}}
+
+" }}}
+
 " QuickScope {{{
 Plug 'unblevable/quick-scope'
 
@@ -182,9 +192,14 @@ augroup END
 " }}}
 
 " Languages {{{
-" Global {{{
-Plug 'https://github.com/andrewradev/splitjoin.vim'
+" Polyglot {{{
+Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
+                                       " plugin which unfortunately interferes with mkdx list indentation.
 " }}}
+
+Plug 'https://github.com/andrewradev/splitjoin.vim'
+
 " Typescript {{{
 Plug 'ianks/vim-tsx'
 " Vim jsx/tsx {{{
@@ -257,6 +272,12 @@ endfunction
 Plug 'rbong/vim-flog'
 
 " }}}
+" Blamer {{{
+Plug 'APZelos/blamer.nvim'
+
+let g:blamer_delay = 250
+:command! -nargs=0 Blame call BlamerToggle()
+" }}}
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -283,10 +304,18 @@ Plug 'puremourning/vimspector'
 
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 Plug 'DrCracket/painless-digraph'
+Plug 'jiangmiao/auto-pairs'
 
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-surround'
+" Markdown {{{
+Plug 'SidOfc/mkdx'
+
+let g:mkdx#settings = { 'highlight': { 'enable': 1 },
+                        \ 'enter': { 'shift': 1 },
+                        \ 'links': { 'external': { 'enable': 1 } },
+                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
+                        \ 'fold': { 'enable': 1 } }
+" }}}
+
 " Rest console {{{
 Plug 'diepm/vim-rest-console'
 
@@ -344,7 +373,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
-Plug 'jiangmiao/auto-pairs'
 " Vim Clap {{{
 
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
