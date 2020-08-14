@@ -47,106 +47,6 @@ catch
   let mapleader = '='
 endtry
 " }}}
-" Functions {{{
-
-" Function windows splitting {{{
-let s:golden_ration = 1.618
-" lockvar s:golden_ration
-
-function! GetSplitMethode()
-  let ww = winwidth(winnr())
-  let tw = &textwidth
-
-  if tw != 0 && ww > s:golden_ration * tw
-    return 'vsplit'
-  endif
-
-  if ww > &columns / s:golden_ration
-    return 'vsplit'
-  endif
-  return 'split'
-endfunction
-
-function! SplitWindow()
- let spli_cmd = GetSplitMethode()
-
-  try
-    exec spli_cmd
-  catch /^Vim\%((\a\+)\)\=:E36/
-    if spli_cmd == 'split'
-      let &winminheight = &winminheight / 2
-    else
-      let &winminwidth = &winminwidth / 2
-    endif
-    exec spli_cmd
-  endtry
-  wincmd p
-endfunction
-" }}}
-
-" }}}
-" Key mapping {{{
-
-" clean highlight after a search with /
-nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
-" When in termianl, remap tu use Esc
-tnoremap <Esc> <C-\><C-n>
-
-" buffer management
-map <silent> <Leader>n :enew<CR>
-map <silent> <Leader>j :bnext<CR>
-map <silent> <Leader>k :bprev<CR>
-map <silent> <Leader>d :bp <BAR> bd #<CR>
-map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
-
-" resize pane
-nnoremap <silent> <S-Right> :vertical resize +5<CR>
-nnoremap <silent> <S-Left> :vertical resize -5<CR>
-nnoremap <silent> <S-Up> :resize +5<CR>
-nnoremap <silent> <S-Down> :resize -5<CR>
-
-" circle through windows
-nnoremap <silent> <C-l> :call SplitWindow()<CR>
-nnoremap <silent> <C-n> :wincmd w<Cr>
-nnoremap <silent> <C-p> :wincmd W<Cr>
-
-" circle through tab
-map <silent> <Leader><Right> :tabn<CR>
-map <silent> <Leader><Left>  :tabp<CR>
-
-" force write when the sudo was forgotten
-cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
-
-" }}}
-" Autocmd {{{
-augroup global
-  autocmd!
-  autocmd BufRead *.tsx set ft=typescript
-  autocmd BufRead *.conf set ft=conf
-  autocmd BufWritePre * :%s/\s\+$//e
-  autocmd FileType log set nowrap
-  " Automaticaly close nvim if NERDTree is only thing left open
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
-augroup JSON
-  autocmd!
-  autocmd FileType json syntax match Comment +\/\/.\+$+
-  autocmd FileType json set foldmethod=syntax
-augroup END
-
-augroup QuickfixBuffer
-  autocmd!
-  autocmd FileType qf setlocal cursorline
-  autocmd bufenter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
-augroup END
-
-augroup HelpFile
-  autocmd!
-  autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
-augroup END
-
-" }}}
 " Plugins {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -155,32 +55,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Smoothie {{{
 Plug 'psliwka/vim-smoothie'
 " }}}
-" Startify {{{
-Plug 'mhinz/vim-startify'
-
-let g:startify_session_persistence = 1
-let g:startify_session_delete_buffers = 1
-let g:startify_session_sort = 1
-let g:startify_session_number = 10
-let g:startify_change_to_dir = 0
-
-let g:startify_custom_header =
-      \ 'startify#center(startify#fortune#cowsay())'
-
-let g:startify_bookmarks = [
-      \ { 'c': '~/.bashrc.d/zshrc' },
-      \ { 'v' :'~/.bashrc.d/nvim/init.vim' }
-      \ ]
-
-let g:startify_skiplist = [
-      \ '^/tmp',
-      \ '/project',
-      \ 'COMMIT_EDITMSG',
-      \ '/etc'
-      \ ]
-
-" }}}
-" Eleline (status line) {{{
+" Status Line {{{
 Plug 'liuchengxu/eleline.vim'
 set laststatus=2
 let g:eleline_powerline_fonts=1
@@ -188,10 +63,13 @@ let g:eleline_powerline_fonts=1
 " Vim Better Whitespace {{{
 Plug 'ntpeters/vim-better-whitespace'
 
+let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'dashboard']
+let g:better_whitespace_operator=''
+
 nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
 " ColorScheme {{{
-Plug 'lifepillar/vim-gruvbox8'
+Plug 'hardcoreplayers/gruvbox9'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
 " }}}
@@ -283,15 +161,11 @@ let g:venter_width = &columns/6
 
 " }}}
 
-" CleanFold {{{
-Plug 'arecarn/vim-clean-fold'
+" Fold {{{
+Plug 'scr1pt0r/crease.vim'
 
-set foldtext=clean_fold#fold_text('\ ')
-" }}}
-" Loupe {{{
-Plug 'wincent/loupe'
-
-let g:LoupeClearHighlightMap=0
+set fillchars=fold:\    " space
+let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
 " }}}
 " QuickScope {{{
 Plug 'unblevable/quick-scope'
@@ -350,13 +224,61 @@ let g:hindent_indent_size = 2
 " }}}
 " }}}
 
+" Git {{{
+" Nerdtree git plugin {{{
+Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
+let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
+
+" }}}
+" Committia {{{
+Plug 'rhysd/committia.vim'
+
+let g:committia_edit_window_width = 120
+let g:committia_hooks = {}
+function! g:committia_hooks.edit_open(info)
+    " Additional settings
+    setlocal spell
+
+    " If no commit message, start with insert mode
+    if a:info.vcs ==# 'git' && getline(1) ==# ''
+        startinsert
+    endif
+
+    " Scroll the diff window from insert mode
+    " Map <C-n> and <C-p>
+    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
+    nmap <buffer> ) <Plug>(committia-scroll-diff-down-half)
+
+    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
+    nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
+endfunction
+" }}}
+" Flog {{{
+Plug 'rbong/vim-flog'
+
+" }}}
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'mhinz/vim-signify'
+" }}}
+
 " Database {{{
 " vim dadbob {{{
 Plug 'tpope/vim-dadbod'
 " }}}
 " vim dadbob UI {{{
 Plug 'kristijanhusak/vim-dadbod-ui'
+
+let g:db_ui_execute_on_save = 0
+let g:db_ui_show_database_icon = 1
+let g:db_ui_use_nerd_fonts = 1
+
 " }}}
+" }}}
+
+" Debugger {{{
+Plug 'puremourning/vimspector'
 " }}}
 
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
@@ -368,14 +290,12 @@ Plug 'tpope/vim-surround'
 " Rest console {{{
 Plug 'diepm/vim-rest-console'
 
-let g:vrc_show_command = 1
 let s:vrc_auto_format_response_patterns = {
       \ 'json': 'fx',
       \ 'xml': 'xmllint --format -',
     \}
 
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
-
 " }}}
 " Vim CSV {{{
 Plug 'chrisbra/csv.vim'
@@ -405,14 +325,9 @@ let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir
 let g:NERDTreeStatusline = ''
 let g:NERDTreeQuitOnOpen = 3
 
-map <silent> <C-w> :NERDTreeToggle<CR>
-map <silent> <C-c> :NERDTreeFocus<CR>
+map <silent> <Leader>w :NERDTreeToggle<CR>
+map <silent> <Leader>c :NERDTreeFocus<CR>
 map <silent> <Leader>x :NERDTreeFind<CR>
-
-" }}}
-" Nerdtree git plugin {{{
-Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
-let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 " }}}
 " Nerdcommenter {{{
@@ -429,9 +344,6 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'mhinz/vim-signify'
 Plug 'jiangmiao/auto-pairs'
 " Vim Clap {{{
 
@@ -449,23 +361,21 @@ nnoremap  <silent>  <leader>g :Clap grep2<CR>
 vnoremap  <silent>  <leader>g :Clap grep2 ++query=@visual<CR>
 nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
 nnoremap  <silent>  <space>a  :Clap loclist<CR>
-nnoremap  <silent>  <space>o  :Clap tags<CR>
-nnoremap  <silent>  <space>O  :Clap proj_tags<CR>
+nnoremap  <silent>  <space>t  :Clap tags<CR>
+nnoremap  <silent>  <space>T  :Clap proj_tags<CR>
 
 " }}}
-" Skim {{{
-Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-" }}}
 " Vista.vim (LSP symbole view & search) {{{
-" Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
-"
-" let g:vista_default_executive = 'coc'
-" let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-" let g:vista_echo_cursor_strategy='floating_win'
-"
-" augroup Vista
-"   autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-" augroup END
+Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
+
+let g:vista_default_executive = 'coc'
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_echo_cursor_strategy='floating_win'
+let g:vista#renderer#enable_icon = 1
+
+augroup Vista
+  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+augroup END
 " }}}
 " COC {{{
 Plug 'neoclide/coc.nvim', { 'branch':  'release' }
@@ -487,6 +397,7 @@ augroup END
 
 " }}}
 " Key mapping {{{
+" General {{{
 " Use <c-space> for trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
@@ -548,7 +459,7 @@ nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
 " Currently used for the formatOnType feature.
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
+" }}}
 " Metals specifics {{{
 nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
 
@@ -562,13 +473,13 @@ nnoremap <silent> sh  :<C-u>CocCommand metals.super-method-hierarchy<CR>
 nnoremap <leader>cll :<C-u>call CocActionAsync('codeLensAction')<CR>
 
 " Toggle panel with Tree Views
-nnoremap <silent> <space>t :<C-u>CocCommand metals.tvp<CR>
+nnoremap <silent> <space>o :<C-u>CocCommand metals.tvp<CR>
 " Toggle Tree View 'metalsBuild'
-nnoremap <silent> <space>tb :<C-u>CocCommand metals.tvp metalsBuild<CR>
+nnoremap <silent> <space>ob :<C-u>CocCommand metals.tvp metalsBuild<CR>
 " Toggle Tree View 'metalsCompile'
-nnoremap <silent> <space>tc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+nnoremap <silent> <space>oc :<C-u>CocCommand metals.tvp metalsCompile<CR>
 " Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <space>tf :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+nnoremap <silent> <space>of :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
 
 " Start Metals Doctor
 command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
@@ -586,6 +497,7 @@ Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 Plug 'vn-ki/coc-clap'
+Plug 'neoclide/coc-git'
 " Plug 'weirongxu/coc-explorer'
 " }}}
 
@@ -596,13 +508,117 @@ Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 " }}}
+" Functions {{{
+
+" Function windows splitting {{{
+let s:golden_ration = 1.618
+" lockvar s:golden_ration
+
+function! GetSplitMethode()
+  let ww = winwidth(winnr())
+  let tw = &textwidth
+
+  if tw != 0 && ww > s:golden_ration * tw
+    return 'vsplit'
+  endif
+
+  if ww > &columns / s:golden_ration
+    return 'vsplit'
+  endif
+  return 'split'
+endfunction
+
+function! SplitWindow()
+ let spli_cmd = GetSplitMethode()
+
+  try
+    exec spli_cmd
+  catch /^Vim\%((\a\+)\)\=:E36/
+    if spli_cmd == 'split'
+      let &winminheight = &winminheight / 2
+    else
+      let &winminwidth = &winminwidth / 2
+    endif
+    exec spli_cmd
+  endtry
+  wincmd p
+endfunction
+
+nnoremap <silent> <C-l> :call SplitWindow()<CR>
+" }}}
+
+" }}}
+" Key mapping {{{
+
+" clean highlight after a search with /
+nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
+" When in termianl, remap tu use Esc
+tnoremap <Esc> <C-\><C-n>
+
+" buffer management
+map <silent> <Leader>n :enew<CR>
+map <silent> <Leader>j :bnext<CR>
+map <silent> <Leader>k :bprev<CR>
+map <silent> <Leader>d :bp <BAR> bd #<CR>
+map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
+
+" resize pane
+nnoremap <silent> <S-Right> :vertical resize +5<CR>
+nnoremap <silent> <S-Left> :vertical resize -5<CR>
+nnoremap <silent> <S-Up> :resize +5<CR>
+nnoremap <silent> <S-Down> :resize -5<CR>
+
+" circle through windows
+nnoremap <silent> <C-n> :wincmd w<Cr>
+nnoremap <silent> <C-p> :wincmd W<Cr>
+
+" circle through tab
+map <silent> <Leader><Right> :tabn<CR>
+map <silent> <Leader><Left>  :tabp<CR>
+
+" force write when the sudo was forgotten
+cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
+
+" set next match at the center of the screen
+"   zv -> open needed fold
+"   zz -> set cursor at the center of the screnn
+nnoremap n nzvzz
+nnoremap N Nzvzz
+
+" }}}
+" Autocmd {{{
+augroup global
+  autocmd!
+  autocmd BufRead *.tsx set ft=typescript
+  autocmd BufRead *.conf set ft=conf
+  autocmd BufWritePre * :%s/\s\+$//e
+  autocmd FileType log set nowrap
+  " Automaticaly close nvim if NERDTree is only thing left open
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
+
+augroup JSON
+  autocmd!
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+  autocmd FileType json set foldmethod=syntax
+augroup END
+
+augroup QuickfixBuffer
+  autocmd!
+  autocmd FileType qf setlocal cursorline
+  autocmd bufenter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
+augroup END
+
+augroup HelpFile
+  autocmd!
+  autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
+augroup END
+
+" }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
 set background=dark
-colorscheme gruvbox8_hard
-
-let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+colorscheme gruvbox9_hard
 
 let g:gruvbox_filetype_hi_groups=1
 let g:gruvbox_plugin_hi_groups=1

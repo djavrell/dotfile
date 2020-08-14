@@ -18,6 +18,8 @@ alias mux='tmuxinator'
 
 alias ping='prettyping'
 
+alias vim="nvim"
+
 # tmux
 alias tl='tmux list-sessions'      # list all tmux session
 alias ta='tmux a -t $*'            # go into a tmux session

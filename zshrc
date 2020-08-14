@@ -13,14 +13,10 @@ for func in $(ls "$DOTFILE/function.d"); do
   autoload -Uz $func
 done
 
-# autoload -Uz promptinit && promptinit
 autoload -Uz colors && colors
 autoload -Uz compinit
 
 zmodload -i zsh/complist
-
-# prompt specifics
-# prompt pure
 
 # export all environement variables
 . "$DOTFILE/env.sh"
@@ -32,7 +28,6 @@ typeset -U path
 typeset -ga sources
 
 sources+="$DOTFILE/colors.sh"
-# sources+="$DOTFILE/vim_mode.zsh"
 sources+="$DOTFILE/alias.sh"
 sources+="$DOTFILE/alias_git.sh"
 
@@ -41,7 +36,6 @@ sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
-# sources+="$DOTFILE/function.d/lazynvm"
 sources+="$DOTFILE/$SYSTEM_FILE.zsh"
 sources+="$DOTFILE/local.sh"
 sources+=$(get_export) # Add sources from env.sh
@@ -118,3 +112,4 @@ unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
+eval "$(fnm env --use-on-cd --log-level=quiet)"

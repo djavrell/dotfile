@@ -12,6 +12,11 @@ export SAVEHIST=1024
 
 path=( "$HOME/.local/bin" $path )
 path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
+path=( "$HOME/bin" $path )
+
+# ZSH config
+export COMPLETION_WAITING_DOTS="true"
+export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
 # nvim
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -19,6 +24,24 @@ export XDG_DATA_HOME="$HOME/.local/share"
 
 # tmuxinator
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
+
+# FZF fuzzy finder
+loading+="$HOME/.fzf.zsh"
+export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
+export FZF_COMPLETION_TRIGGER='%'
+
+# SSH
+export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+# Git
+path=( "$DOTFILE/git/function.d" $path )
+
+# FNM Node version manager
+export FNM_DIR="$XDG_DATA_HOME/fnm"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+path=( "$HOME/.rvm/bin" $path )
+loading+="$HOME/.rvm/scripts/rvm"
 
 # Python
 path=( "/Users/kpr/Library/Python/3.7/bin" $path )
@@ -39,34 +62,8 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 export GOPATH="$HOME/go"
 path=( "$GOPATH/bin" $path )
 
-# ZSH config
-export COMPLETION_WAITING_DOTS="true"
-export DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# FZF fuzzy finder
-loading+="$HOME/.fzf.zsh"
-export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
-export FZF_COMPLETION_TRIGGER='%'
-
-# SSH
-export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Nix
-# loading+="$HOME/.nix-profile/etc/profile.d/nix.sh"
-# path=( "$HOME/.nix-profile/bin" $path )
-# End Nix
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-path=( "$HOME/.rvm/bin" $path )
-loading+="$HOME/.rvm/scripts/rvm"
-
 # Haskell
 # loading+="$HOME/.ghcup/env"
-
-# Git
-path=( "$DOTFILE/git/function.d" $path )
-
-path=( "$HOME/bin" $path )
 
 get_export() {
   echo $loading
