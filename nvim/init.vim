@@ -242,7 +242,7 @@ let g:hindent_indent_size = 2
 " Git {{{
 " Nerdtree git plugin {{{
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
-let g:NERDTreeIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
+let g:NERDTreeGitStatusIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 " }}}
 " Committia {{{
@@ -316,16 +316,12 @@ let g:mkdx#settings = { 'highlight': { 'enable': 1 },
                         \ 'fold': { 'enable': 1 } }
 " }}}
 
-" Rest console {{{
-Plug 'diepm/vim-rest-console'
-
-let s:vrc_auto_format_response_patterns = {
-      \ 'json': 'fx',
-      \ 'xml': 'xmllint --format -',
-    \}
-
-let g:vrc_curl_opts = { '-sS': '', '-i': '' }
+" Text Format {{{
+" JSON {{{
+Plug 'rhysd/vim-fixjson', { 'for': 'json' }
+let g:fixjson_fix_on_save = 0
 " }}}
+" CSV {{{
 " Vim CSV {{{
 Plug 'chrisbra/csv.vim'
 " }}}
@@ -344,6 +340,19 @@ inoreabbrev <expr> <bar><bar>
 inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
+" }}}
+" }}}
+" }}}
+
+" Rest console {{{
+Plug 'diepm/vim-rest-console'
+
+let s:vrc_auto_format_response_patterns = {
+      \ 'json': 'fx',
+      \ 'xml': 'xmllint --format -',
+    \}
+
+let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " NerdTree {{{
 Plug 'preservim/nerdtree'
