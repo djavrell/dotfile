@@ -166,8 +166,6 @@ set fillchars=fold:\    " space
 let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
 " }}}
 
-Plug 'tpope/vim-surround'
-
 " Menu {{{
 source $VIMRUNTIME/menu.vim
 set wildmenu
@@ -175,6 +173,14 @@ set cpo-=<
 set wcm=<C-Z>
 " }}}
 
+" }}}
+
+Plug 'tpope/vim-surround'
+" Expand Region {{{
+Plug 'terryma/vim-expand-region'
+
+map v <Plug>(expand_region_expand)
+map <C-v> <Plug>(expand_region_shrink)
 " }}}
 
 " QuickScope {{{
@@ -196,6 +202,15 @@ augroup END
 Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
                                        " plugin which unfortunately interferes with mkdx list indentation.
+
+" Stylus {{{
+augroup Stylus
+  autocmd!
+  autocmd FileType stylus set foldmarker={,}
+  autocmd FileType stylus set foldmethod=marker
+augroup END
+" }}}
+
 " }}}
 
 Plug 'https://github.com/andrewradev/splitjoin.vim'
@@ -278,6 +293,9 @@ Plug 'APZelos/blamer.nvim'
 let g:blamer_delay = 250
 :command! -nargs=0 Blame call BlamerToggle()
 " }}}
+" Git Message Viwer {{{
+Plug 'rhysd/git-messenger.vim'
+" }}}
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -301,6 +319,8 @@ let g:db_ui_use_nerd_fonts = 1
 " Debugger {{{
 Plug 'puremourning/vimspector'
 " }}}
+
+Plug 'MTDL9/vim-log-highlighting'
 
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 Plug 'DrCracket/painless-digraph'
@@ -388,6 +408,7 @@ Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 let g:clap_layout = { 'relative': 'editor' }
 let g:clap_multi_selection_warning_silent = 1
+let g:clap_preview_size={ '*': 5, 'grep2': 10 }
 
 nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <leader>f :Clap files<CR>
@@ -400,6 +421,7 @@ nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
 nnoremap  <silent>  <space>a  :Clap loclist<CR>
 nnoremap  <silent>  <space>t  :Clap tags<CR>
 nnoremap  <silent>  <space>T  :Clap proj_tags<CR>
+nnoremap  <silent>  <space>d  :Clap coc_diagnostics<CR>
 
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
@@ -436,7 +458,17 @@ augroup END
 " Key mapping {{{
 " General {{{
 " Use <c-space> for trigger completion.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 inoremap <silent><expr> <c-space> coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
 " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
@@ -638,6 +670,12 @@ augroup JSON
   autocmd!
   autocmd FileType json syntax match Comment +\/\/.\+$+
   autocmd FileType json set foldmethod=syntax
+augroup END
+
+augroup ConfFile
+  autocmd!
+  autocmd FileType conf set foldmarker={,}
+  autocmd FileType conf set foldmethod=marker
 augroup END
 
 augroup QuickfixBuffer

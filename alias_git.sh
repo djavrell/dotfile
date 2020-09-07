@@ -219,7 +219,7 @@ alias gsst='git show --stat'
 alias gsr='git svn rebase'
 
 alias gss='git status -s'
-alias gst='git status'
+alias gst='git status --untracked-files'
 
 alias gsth='git stash'
 alias gsta='git stash save'

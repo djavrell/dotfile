@@ -9,8 +9,10 @@ work.sh
 .metals/
 .bloop/
 
-## scala vim
+## metals
 project/metals.sbt
+project/project/metals.sbt
+project/project/project/metals.sbt
 *.worksheet.sc
 
 ## Haskell
@@ -42,7 +44,3 @@ tags
 ## Docker
 # docker/
 
-## Ensime
-project/.ensime
-.ensime
-.ensime_cache/
