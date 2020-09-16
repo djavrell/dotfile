@@ -1,4 +1,3 @@
-" vim: set fdm=marker fmr={{{,}}} fdl=0 :
 " Global {{{
 set shell=/bin/zsh
 set encoding=utf8
@@ -173,9 +172,16 @@ set cpo-=<
 set wcm=<C-Z>
 " }}}
 
+Plug 'MTDL9/vim-log-highlighting'
+
 " }}}
 
+" Surround {{{
 Plug 'tpope/vim-surround'
+" }}}
+" AutoPair {{{
+Plug 'jiangmiao/auto-pairs'
+" }}}
 " Expand Region {{{
 Plug 'terryma/vim-expand-region'
 " }}}
@@ -317,11 +323,10 @@ let g:db_ui_use_nerd_fonts = 1
 Plug 'puremourning/vimspector'
 " }}}
 
-Plug 'MTDL9/vim-log-highlighting'
-
+" Painless diagraph {{{
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 Plug 'DrCracket/painless-digraph'
-Plug 'jiangmiao/auto-pairs'
+" }}}
 
 " Markdown {{{
 " mkdx {{{
@@ -408,6 +413,12 @@ let g:NERDTreeQuitOnOpen = 3
 map <silent> <Leader>w :NERDTreeToggle<CR>
 map <silent> <Leader>c :NERDTreeFocus<CR>
 map <silent> <Leader>x :NERDTreeFind<CR>
+
+augroup NerdTree
+  autocmd!
+  " Automaticaly close nvim if NERDTree is only thing left open
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+augroup END
 
 " }}}
 " Nerdcommenter {{{
@@ -679,39 +690,59 @@ nnoremap N Nzvzz
 
 " }}}
 " Autocmd {{{
-augroup global
+" Global {{{
+augroup Global
   autocmd!
   autocmd BufRead *.tsx set ft=typescript
   autocmd BufRead *.conf set ft=conf
   autocmd BufWritePre * :%s/\s\+$//e
-  autocmd FileType log set nowrap
-  " Automaticaly close nvim if NERDTree is only thing left open
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
-
+" }}}
+" Json {{{
 augroup JSON
   autocmd!
   autocmd FileType json syntax match Comment +\/\/.\+$+
   autocmd FileType json set foldmethod=syntax
 augroup END
-
+" }}}
+" Mardown {{{
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set textwidth=80 linebreak
+augroup END
+" }}}
+" NeoVim {{{
+augroup NeoVim
+  autocmd!
+  autocmd FileType vim set fdm=marker fmr={{{,}}} fdl=0
+augroup END
+" }}}
+" Conf {{{
 augroup ConfFile
   autocmd!
   autocmd FileType conf set foldmarker={,}
   autocmd FileType conf set foldmethod=marker
 augroup END
-
+" }}}
+" Log {{{
+augroup Log
+  autocmd!
+  autocmd FileType log set nowrap
+augroup END
+" }}}
+" QuickfixBuffer {{{
 augroup QuickfixBuffer
   autocmd!
   autocmd FileType qf setlocal cursorline
   autocmd bufenter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
 augroup END
-
+" }}}
+" HelpFile {{{
 augroup HelpFile
   autocmd!
   autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
 augroup END
-
+" }}}
 " }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
