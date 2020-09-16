@@ -30,6 +30,8 @@ loading+="$HOME/.fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
+# GPG
+export GPG_TTY=`tty`
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 

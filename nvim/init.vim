@@ -52,6 +52,11 @@ endtry
 call plug#begin('~/.local/share/nvim/plugged')
 
 " UI {{{
+" ColorScheme {{{
+Plug 'hardcoreplayers/gruvbox9'
+" Handle and update colorscheme tamplate
+Plug 'lifepillar/vim-colortemplate'
+" }}}
 " Smoothie {{{
 Plug 'psliwka/vim-smoothie'
 " }}}
@@ -67,11 +72,6 @@ let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc
 let g:better_whitespace_operator=''
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
-" }}}
-" ColorScheme {{{
-Plug 'hardcoreplayers/gruvbox9'
-" Handle and update colorscheme tamplate
-Plug 'lifepillar/vim-colortemplate'
 " }}}
 " Goyo {{{
 Plug 'junegunn/goyo.vim'
@@ -178,9 +178,6 @@ set wcm=<C-Z>
 Plug 'tpope/vim-surround'
 " Expand Region {{{
 Plug 'terryma/vim-expand-region'
-
-map v <Plug>(expand_region_expand)
-map <C-v> <Plug>(expand_region_shrink)
 " }}}
 
 " QuickScope {{{
@@ -327,13 +324,31 @@ Plug 'DrCracket/painless-digraph'
 Plug 'jiangmiao/auto-pairs'
 
 " Markdown {{{
+" mkdx {{{
 Plug 'SidOfc/mkdx'
 
-let g:mkdx#settings = { 'highlight': { 'enable': 1 },
+let g:mkdx#settings = { 'auto_update': { 'enable': 1 },
+                        \ 'highlight': { 'enable': 1 },
                         \ 'enter': { 'shift': 1 },
                         \ 'links': { 'external': { 'enable': 1 } },
                         \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1 } }
+                        \ 'fold': { 'enable': 1, 'components': [ 'toc', 'fence' ] },
+                        \ 'map': { 'enable': 1 },
+                        \ 'checkbox': { 'update_tree': 2 }
+                       \}
+
+nmap <leader>+ <Plug>(mkdx-promote-header)
+nmap <leader>- <Plug>(mkdx-demote-header)
+
+augroup mkdx
+    autocmd!
+    " Include dash in 'word'
+    autocmd FileType markdown setlocal iskeyword+=-
+augroup END
+
+" }}}
+
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 " }}}
 
 " Text Format {{{
@@ -361,6 +376,13 @@ inoreabbrev <expr> __
           \ <SID>isAtStartOfLine('__') ?
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 " }}}
+" }}}
+" GPG {{{
+Plug 'jamessan/vim-gnupg'
+augroup GPG
+  autocmd!
+  autocmd User GnuPG setl textwidth=72
+augroup END
 " }}}
 " }}}
 
@@ -567,6 +589,7 @@ Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 Plug 'vn-ki/coc-clap'
 Plug 'neoclide/coc-git'
+Plug 'fannheyward/coc-markdownlint'
 " Plug 'weirongxu/coc-explorer'
 " }}}
 
