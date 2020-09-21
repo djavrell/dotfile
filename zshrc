@@ -1,31 +1,27 @@
 # zmodload zsh/zprof # top of your .zshrc file
 
-DOTFOLDER=".bashrc.d"
-export DOTFILE="$HOME/$DOTFOLDER"
-
-SUB_MODULES="$DOTFILE/submodules"
-SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
-
-fpath=( "$DOTFILE/function.d" $fpath )
-fpath=( "$SUB_MODULES/pure" $fpath )
-
-for func in $(ls "$DOTFILE/function.d"); do
-  echo "$func"
-  autoload -Uz $func
-done
-
-for func in $(ls "$DOTFILE/git/function.d"); do
-  echo "$func"
-  autoload -Uz $func
-done
-
 autoload -Uz colors && colors
 autoload -Uz compinit
 
 zmodload -i zsh/complist
 
+DOTFOLDER=".bashrc.d"
+export DOTFILE="$HOME/$DOTFOLDER"
+
+export SUB_MODULES="$DOTFILE/submodules"
+SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
+
 # export all environement variables
 . "$DOTFILE/env.sh"
+
+function load_func() {
+  for func in $(ls "$1"); do
+    autoload -Uz $func
+  done
+}
+
+load_func "$DOTFILE/function.d"
+load_func "$DOTFILE/git/function.d"
 
 # prevent the global variable PATH to have duplicate
 typeset -U path
@@ -113,9 +109,10 @@ setopt bang_hist                # !keyword
 setopt extended_glob            # activate complex pattern globbing
 unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
-# uncomment to know what take to much time at the load and init time
-# zprof
-
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 eval "$(fnm env --use-on-cd --log-level=quiet)"
+
+# uncomment to know what take to much time at the load and init time
+# zprof
+

@@ -14,6 +14,9 @@ path=( "$HOME/.local/bin" $path )
 path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
 path=( "$HOME/bin" $path )
 
+fpath=( "$DOTFILE/function.d" $fpath )
+# fpath=( "$SUB_MODULES/pure" $fpath )
+
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -36,7 +39,7 @@ export GPG_TTY=`tty`
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Git
-path=( "$DOTFILE/git/function.d" $path )
+fpath=( "$DOTFILE/git/function.d" $fpath )
 
 # FNM Node version manager
 export FNM_DIR="$XDG_DATA_HOME/fnm"

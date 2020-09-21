@@ -724,6 +724,15 @@ augroup NeoVim
   autocmd FileType vim set fdm=marker fmr={{{,}}} fdl=0
 augroup END
 " }}}
+" Zsh Script {{{
+augroup ZSH
+  autocmd!
+  autocmd FileType zsh
+        \ set fdm=marker |
+        \ set fmr={,}    |
+        \ set fdl=0
+augroup END
+" }}}
 " Conf {{{
 augroup ConfFile
   autocmd!
