@@ -9,7 +9,21 @@ SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
 fpath=( "$DOTFILE/function.d" $fpath )
 fpath=( "$SUB_MODULES/pure" $fpath )
 
-for func in $(ls "$DOTFILE/function.d"); do
+function load_func() {
+  if [ $# -gt 0 ]; then
+    for func in $(ls "$1"); do
+      autoload -Uz $func
+    done
+  fi
+}
+load_func "$DOTFILE/function.d"
+load_func "$DOTFILE/git/function.d"
+
+# for func in $(ls "$DOTFILE/function.d"); do
+#   autoload -Uz $func
+# done
+#
+for func in $(ls "$DOTFILE/git/function.d"); do
   autoload -Uz $func
 done
 

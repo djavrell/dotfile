@@ -15,7 +15,7 @@
 
 [advice]
   statusUoption = true
-	detachedHead = false
+  detachedHead = false
 
 [core]
   whitespace    = fix,-indent-with-non-tab,trailing-space,cr-at-eol
@@ -82,14 +82,18 @@
 [diff-so-fancy]
   changeHunkIndicator = true
   stripLeadingSymbols = false
+
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+
 [credential]
-	helper = netrc
+  helper = netrc
+
 [pull]
-	rebase = false
+  rebase = false
+
 [push]
-	followTags = true
+  followTags = true

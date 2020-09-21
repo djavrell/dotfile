@@ -21,6 +21,7 @@ alias ping='prettyping'
 alias vim="nvim"
 alias vimdb="vim +DBUIToggle"
 alias vimup="vim +PlugUpdate"
+alias flog='vim +Flog'
 
 # tmux
 alias tl='tmux list-sessions'      # list all tmux session

@@ -203,7 +203,7 @@ augroup END
 " Languages {{{
 " Polyglot {{{
 Plug 'sheerun/vim-polyglot'
-let g:polyglot_disabled = ['markdown'] " for vim-polyglot users, it loads Plasticboy's markdown
+let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
                                        " plugin which unfortunately interferes with mkdx list indentation.
 
 " Stylus {{{
@@ -419,6 +419,10 @@ augroup NerdTree
   " Automaticaly close nvim if NERDTree is only thing left open
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 augroup END
+
+" DASH {{{
+Plug 'liuchengxu/nerdtree-dash'
+" }}}
 
 " }}}
 " Nerdcommenter {{{
@@ -672,8 +676,8 @@ nnoremap <silent> <S-Up> :resize +5<CR>
 nnoremap <silent> <S-Down> :resize -5<CR>
 
 " circle through windows
-nnoremap <silent> <C-n> :wincmd w<Cr>
-nnoremap <silent> <C-p> :wincmd W<Cr>
+" nnoremap <silent> <C-n> :wincmd w<Cr>
+" nnoremap <silent> <C-p> :wincmd W<Cr>
 
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
@@ -708,7 +712,10 @@ augroup END
 " Mardown {{{
 augroup Markdown
   autocmd!
-  autocmd FileType markdown set textwidth=80 linebreak
+  autocmd FileType markdown
+        \ set textwidth=80  |
+        \ set linebreak     |
+        \ set spell
 augroup END
 " }}}
 " NeoVim {{{
