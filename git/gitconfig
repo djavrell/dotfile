@@ -97,3 +97,6 @@
 
 [push]
   followTags = true
+
+[checkout]
+  defaultRemote = origin

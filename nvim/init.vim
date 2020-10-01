@@ -172,8 +172,10 @@ set cpo-=<
 set wcm=<C-Z>
 " }}}
 
-Plug 'MTDL9/vim-log-highlighting'
+" }}}
 
+" Log File {{{
+Plug 'MTDL9/vim-log-highlighting'
 " }}}
 
 " Surround {{{
@@ -233,7 +235,6 @@ Plug 'derekwyatt/vim-scala'
 
 augroup scala
   autocmd BufRead,BufNewFile *.sbt set filetype=scala
-  autocmd BufRead *.sc :ALEDisableBuffer
 augroup END
 " }}}
 " }}}
@@ -743,7 +744,10 @@ augroup END
 " Log {{{
 augroup Log
   autocmd!
-  autocmd FileType log set nowrap
+  autocmd FileType log
+        \ set nowrap
+        \ set fdm=marker |
+        \ set fmr={,}
 augroup END
 " }}}
 " QuickfixBuffer {{{
