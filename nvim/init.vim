@@ -655,6 +655,24 @@ endfunction
 nnoremap <silent> <C-l> :call SplitWindow()<CR>
 " }}}
 
+" Handle curser line {{{
+let s:ruler = 0
+
+function! ToggleRuler()
+  if s:ruler == 0
+    set cursorline
+    set cursorcolumn
+    let s:ruler = 1
+  else
+    set nocursorline
+    set nocursorcolumn
+    let s:ruler = 0
+  endif
+endfunction
+
+command -nargs=0 Ruler :call ToggleRuler()
+" }}}
+
 " }}}
 " Key mapping {{{
 
