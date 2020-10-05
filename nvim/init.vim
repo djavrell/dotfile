@@ -745,7 +745,7 @@ augroup END
 augroup Log
   autocmd!
   autocmd FileType log
-        \ set nowrap
+        \ set nowrap     |
         \ set fdm=marker |
         \ set fmr={,}
 augroup END
