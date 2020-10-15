@@ -88,10 +88,10 @@ alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 
 function gds() {
-  git add -v $(git diff --staged --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff --staged {} | bat" --preview-window=right:70%:wrap --multi)
+  git add -v $(git diff --staged --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff --staged {} | delta" --preview-window=right:70%:wrap --multi)
 }
 function gdl() {
-  git diff --raw | awk '{print $6}' | fzf --reverse --multi --preview="git -c color.diff=always diff {} | bat --color always" --preview-window=right:70%:wrap
+  git diff --raw | awk '{print $6}' | fzf --reverse --multi --preview="git diff {} | delta" --preview-window=bottom:90%
 }
 alias gd='git diff'
 alias gdca='git diff --cached'

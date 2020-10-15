@@ -20,7 +20,8 @@
 [core]
   whitespace    = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile  = /Users/kpr/.gitignore
-  pager         = diff-so-fancy | less --tabs=2 -RFX
+  ;;pager         = diff-so-fancy | less --tabs=2 -RFX
+  pager = delta
   autocrlf      = input
 
 [alias]
@@ -53,14 +54,20 @@
 [pager]
   difftool = true
 
-[diff]
-  tool = icdiff
+; [diff]
+;   tool = icdiff
 
 [difftool]
   prompt = false
 
 [difftool "icdiff"]
   cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+
+[delta]
+  line-numbers = true
+
+[interactive]
+  diffFilter = delta --color-only
 
 [icdiff]
   options = --highlight --line-numbers
