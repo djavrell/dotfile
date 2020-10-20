@@ -11,7 +11,7 @@ function ggroot() {
 }
 
 function add() {
-  git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff {} | bat --color always" --preview-window=right:70%:wrap --multi)
+  git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git diff {} | delta" --preview-window=bottom:90%:wrap --multi)
 }
 
 function uadd() {
