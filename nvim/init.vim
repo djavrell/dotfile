@@ -50,6 +50,10 @@ endtry
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Global {{{
+Plug 'benknoble/vimpbcopy'
+" }}}
+
 " UI {{{
 " ColorScheme {{{
 Plug 'hardcoreplayers/gruvbox9'
