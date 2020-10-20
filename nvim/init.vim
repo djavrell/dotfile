@@ -172,6 +172,13 @@ set cpo-=<
 set wcm=<C-Z>
 " }}}
 
+" Show Unicode Char {{{
+Plug 'vim-utils/vim-troll-stopper'
+augroup TrollStopper
+  autocmd!
+  autocmd ColorScheme * highlight TrollStopper ctermbg=red guibg=#FF0000
+augroup END
+" }}}
 " }}}
 
 " Log File {{{
@@ -746,6 +753,10 @@ augroup END
 " Zsh Script {{{
 augroup ZSH
   autocmd!
+  autocmd FileType sh
+        \ set fdm=marker |
+        \ set fmr={,}    |
+        \ set fdl=0
   autocmd FileType zsh
         \ set fdm=marker |
         \ set fmr={,}    |
