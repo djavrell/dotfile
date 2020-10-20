@@ -31,8 +31,11 @@
   },
   "diagnostic.virtualText": true,
   "diagnostic.level": "error",
-  "signature.floatMaxWidth": 500,
-  "signature.maxWindowHeight": 30,
+  "signature": {
+    "floatMaxWidth": 500,
+    "maxWindowHeight": 50,
+    "maxPreviewHeight": 50
+  },
   "codeLens.enable": true,
   "list": {
     "source": {
@@ -51,7 +54,8 @@
   },
   "coc": {
     "preferences": {
-      "formatOnType": true
+      "formatOnType": true,
+      "previewMaxHeight": 50
     }
   },
   "capabilities": {
@@ -60,12 +64,11 @@
     }
   },
   "metals": {
-    "statusBarEnabled": true
+    "statusBarEnabled": true,
+    "enableStripMarginOnTypeFormatting": true,
+    "typeAnnotationsEnabled": true,
+    "implicitArgumentAnnotationsEnabled": true
   },
-  //"tsserver": {
-  //  "log": "verbose",
-  //  "trace.server": "verbose"
-  //},
   "imselect.enableStatusItem": true,
   "imselect.enableFloating": true,
   "imselect.defaultInput": "com.apple.keylayout.FR_fr"
