@@ -20,8 +20,7 @@
 [core]
   whitespace    = fix,-indent-with-non-tab,trailing-space,cr-at-eol
   excludesfile  = /Users/kpr/.gitignore
-  ;;pager         = diff-so-fancy | less --tabs=2 -RFX
-  pager = delta
+  pager         = delta
   autocrlf      = input
 
 [alias]

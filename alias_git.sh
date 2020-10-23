@@ -18,6 +18,8 @@ function uadd() {
   git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat --color always {}" --preview-window=right:70%:wrap --multi)
 }
 
+alias vadd='vim +MagitOnly'
+
 function gbdll() {
   git branch -vv
 }
