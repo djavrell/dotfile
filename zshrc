@@ -111,7 +111,7 @@ unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
-eval "$(fnm env --use-on-cd --log-level=quiet)"
+eval "$(fnm env --use-on-cd)"
 
 # uncomment to know what take to much time at the load and init time
 # zprof

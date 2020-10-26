@@ -39,10 +39,12 @@ export GPG_TTY=`tty`
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 # Git
+path=( "$DOTFILE/git/scripts" $path )
 fpath=( "$DOTFILE/git/function.d" $fpath )
 
 # FNM Node version manager
 export FNM_DIR="$XDG_DATA_HOME/fnm"
+export FNM_LOGLEVEL=quiet
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
