@@ -46,38 +46,95 @@ catch
   let mapleader = '='
 endtry
 " }}}
-" Plugins {{{
+" Plugins definition {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Global {{{
-Plug 'benknoble/vimpbcopy'
-" }}}
-
-" UI {{{
-" ColorScheme {{{
 Plug 'hardcoreplayers/gruvbox9'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
-" }}}
-" Smoothie {{{
+
+Plug 'benknoble/vimpbcopy'
 Plug 'psliwka/vim-smoothie'
-" }}}
-" Status Line {{{
 Plug 'liuchengxu/eleline.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+Plug 'JMcKiern/vim-venter'
+Plug 'pedrohdz/vim-yaml-folds'
+Plug 'scr1pt0r/crease.vim'
+Plug 'vim-utils/vim-troll-stopper'
+Plug 'MTDL9/vim-log-highlighting'
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+Plug 'terryma/vim-expand-region'
+Plug 'romgrk/equal.operator'
+Plug 'unblevable/quick-scope'
+Plug 'sheerun/vim-polyglot'
+Plug 'https://github.com/andrewradev/splitjoin.vim'
+Plug 'ianks/vim-tsx'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'leafgarland/typescript-vim'
+Plug 'derekwyatt/vim-scala'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'alx741/vim-hindent'
+Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
+Plug 'rhysd/committia.vim'
+Plug 'rbong/vim-flog'
+Plug 'APZelos/blamer.nvim'
+Plug 'rhysd/git-messenger.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'puremourning/vimspector'
+Plug 'DrCracket/painless-digraph'
+Plug 'SidOfc/mkdx'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'rhysd/vim-fixjson', { 'for': 'json' }
+Plug 'chrisbra/csv.vim'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'jamessan/vim-gnupg'
+Plug 'diepm/vim-rest-console'
+Plug 'preservim/nerdtree'
+Plug 'liuchengxu/nerdtree-dash'
+Plug 'scrooloose/nerdcommenter'
+Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
+
+Plug 'neoclide/coc.nvim', { 'branch':  'release' }
+Plug 'fannheyward/coc-markdownlint'
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+
+Plug 'vn-ki/coc-clap'
+Plug 'neoclide/coc-git'
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
+" }}}
+" Plugins Configuration {{{
+
+" UI {{{
+" Eleline {{{
 set laststatus=2
 let g:eleline_powerline_fonts=1
 " }}}
 " Vim Better Whitespace {{{
-Plug 'ntpeters/vim-better-whitespace'
-
 let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'dashboard']
 let g:better_whitespace_operator=''
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
 " }}}
 " Goyo {{{
-Plug 'junegunn/goyo.vim'
 
 let g:goyo_linenr = 1
 let g:goyo_width = 150
@@ -151,19 +208,13 @@ augroup Goyo
 augroup END
 " }}}
 " }}}
-" Limelight {{{
-Plug 'junegunn/limelight.vim'
-" }}}
 
 " Venter - Center your buffer {{{
-Plug 'JMcKiern/vim-venter'
 
 " let g:venter_disable_vertsplit = v:true
 let g:venter_width = &columns/6
 " }}}
 " Fold {{{
-Plug 'pedrohdz/vim-yaml-folds'
-Plug 'scr1pt0r/crease.vim'
 
 set fillchars=fold:\    " space
 let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
@@ -177,7 +228,6 @@ set wcm=<C-Z>
 " }}}
 
 " Show Unicode Char {{{
-Plug 'vim-utils/vim-troll-stopper'
 augroup TrollStopper
   autocmd!
   autocmd ColorScheme * highlight TrollStopper ctermbg=red guibg=#FF0000
@@ -185,25 +235,7 @@ augroup END
 " }}}
 " }}}
 
-" Log File {{{
-Plug 'MTDL9/vim-log-highlighting'
-" }}}
-
-" Surround {{{
-Plug 'tpope/vim-surround'
-" }}}
-" AutoPair {{{
-Plug 'jiangmiao/auto-pairs'
-" }}}
-" Expand Region {{{
-Plug 'terryma/vim-expand-region'
-" }}}
-" LHS/RHS operator {{{
-Plug 'romgrk/equal.operator'
-" }}}
-
 " QuickScope {{{
-Plug 'unblevable/quick-scope'
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 let g:qs_buftype_blacklist = ['terminal', 'nofile']
@@ -218,7 +250,6 @@ augroup END
 
 " Languages {{{
 " Polyglot {{{
-Plug 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
                                        " plugin which unfortunately interferes with mkdx list indentation.
 
@@ -232,20 +263,20 @@ augroup END
 
 " }}}
 
-Plug 'https://github.com/andrewradev/splitjoin.vim'
 
 " Typescript {{{
-Plug 'ianks/vim-tsx'
-" Vim jsx/tsx {{{
-Plug 'maxmellon/vim-jsx-pretty'
-
 let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
-" }}}
-Plug 'leafgarland/typescript-vim'
+
+augroup Typescript
+  autocmd!
+  autocmd FileType typescript set makeprg=tsc
+  " show quickfix windows if there is some errors
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
+augroup END
 " }}}
 " Scala {{{
 " Vim-scala {{{
-Plug 'derekwyatt/vim-scala'
 
 augroup scala
   autocmd BufRead,BufNewFile *.sbt set filetype=scala
@@ -254,7 +285,6 @@ augroup END
 " }}}
 " Haskell {{{
 
-Plug 'neovimhaskell/haskell-vim'
 
 let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
 let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
@@ -264,8 +294,8 @@ let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
 let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
 let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
 
-Plug 'alx741/vim-hindent'
 
+" Hindent
 let g:hindent_on_save = 1
 let g:hindent_indent_size = 2
 
@@ -274,12 +304,10 @@ let g:hindent_indent_size = 2
 
 " Git {{{
 " Nerdtree git plugin {{{
-Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 let g:NERDTreeGitStatusIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 " }}}
 " Committia - Better commit window {{{
-Plug 'rhysd/committia.vim'
 
 let g:committia_edit_window_width = 120
 let g:committia_hooks = {}
@@ -302,41 +330,32 @@ function! g:committia_hooks.edit_open(info)
 endfunction
 " }}}
 " Flog - Git tree visualization {{{
-Plug 'rbong/vim-flog'
 
 " }}}
 " Blamer {{{
-Plug 'APZelos/blamer.nvim'
 
 let g:blamer_delay = 250
 :command! -nargs=0 Blame call BlamerToggle()
 " }}}
 " Git Message Viwer {{{
-Plug 'rhysd/git-messenger.vim'
 " }}}
 
 " Git Gutter {{{
-Plug 'airblade/vim-gitgutter'
 
 nmap <leader>h <Plug>(GitGutterNextHunk)
 nmap <leader>H <Plug>(GitGutterPrevHunk)
 
 " }}}
 
-Plug 'jreybert/vimagit'
+" vimagit
 let g:magit_default_show_all_files=2
 
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'mhinz/vim-signify'
 " }}}
 
 " Database {{{
 " vim dadbob {{{
-Plug 'tpope/vim-dadbod'
 " }}}
 " vim dadbob UI {{{
-Plug 'kristijanhusak/vim-dadbod-ui'
 
 let g:db_ui_execute_on_save = 0
 let g:db_ui_show_database_icon = 1
@@ -346,17 +365,14 @@ let g:db_ui_use_nerd_fonts = 1
 " }}}
 
 " Debugger {{{
-Plug 'puremourning/vimspector'
 " }}}
 
 " Painless diagraph {{{
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
-Plug 'DrCracket/painless-digraph'
 " }}}
 
 " Markdown {{{
 " mkdx {{{
-Plug 'SidOfc/mkdx'
 
 let g:mkdx#settings = { 'auto_update': { 'enable': 1 },
                         \ 'highlight': { 'enable': 1 },
@@ -379,20 +395,27 @@ augroup END
 
 " }}}
 
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown
+        \ set textwidth=80  |
+        \ set linebreak     |
+        \ set spell
+augroup END
 " }}}
 
 " Text Format {{{
 " JSON {{{
-Plug 'rhysd/vim-fixjson', { 'for': 'json' }
 let g:fixjson_fix_on_save = 0
+
+augroup JSON
+  autocmd!
+  autocmd FileType json syntax match Comment +\/\/.\+$+
+  autocmd FileType json set foldmethod=syntax
+augroup END
 " }}}
 " CSV {{{
-" Vim CSV {{{
-Plug 'chrisbra/csv.vim'
-" }}}
 " Vim table {{{
-Plug 'dhruvasagar/vim-table-mode'
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
   let mapping_pattern = '\V' . escape(a:mapping, '\')
@@ -409,7 +432,6 @@ inoreabbrev <expr> __
 " }}}
 " }}}
 " GPG {{{
-Plug 'jamessan/vim-gnupg'
 augroup GPG
   autocmd!
   autocmd User GnuPG setl textwidth=72
@@ -418,8 +440,6 @@ augroup END
 " }}}
 
 " Rest console {{{
-Plug 'diepm/vim-rest-console'
-
 let s:vrc_auto_format_response_patterns = {
       \ 'json': 'fx',
       \ 'xml': 'xmllint --format -',
@@ -428,7 +448,6 @@ let s:vrc_auto_format_response_patterns = {
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " NerdTree {{{
-Plug 'preservim/nerdtree'
 
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.metals$[[dir]]',  '\.bloop$[[dir]]','\.sass-cache$']
@@ -447,12 +466,10 @@ augroup NerdTree
 augroup END
 
 " DASH {{{
-Plug 'liuchengxu/nerdtree-dash'
 " }}}
 
 " }}}
 " Nerdcommenter {{{
-Plug 'scrooloose/nerdcommenter'
 
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
@@ -467,7 +484,6 @@ let g:NERDToggleCheckAllLines = 1
 " }}}
 " Vim Clap {{{
 
-Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
 let g:clap_layout = { 'relative': 'editor' }
 let g:clap_multi_selection_warning_silent = 1
@@ -489,7 +505,6 @@ nnoremap  <silent>  <space>q  :Clap quickfix<CR>
 
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
-Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 
 let g:vista_default_executive = 'coc'
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
@@ -501,7 +516,6 @@ augroup Vista
 augroup END
 " }}}
 " COC {{{
-Plug 'neoclide/coc.nvim', { 'branch':  'release' }
 " Set variables {{{
 " Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
@@ -629,24 +643,11 @@ command! -nargs=0 MetalsConnect :call CocRequestAsync('metals', 'workspace/execu
 " }}}
 " }}}
 " Coc extension {{{
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-Plug 'vn-ki/coc-clap'
-Plug 'neoclide/coc-git'
-Plug 'fannheyward/coc-markdownlint'
 " Plug 'weirongxu/coc-explorer'
 " }}}
 
 " }}}
-" Vim devicons (should always be the last one) {{{
-Plug 'ryanoasis/vim-devicons'
-" }}}
 
-call plug#end()
 " }}}
 " Functions {{{
 
@@ -749,22 +750,6 @@ augroup Global
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
 " }}}
-" Json {{{
-augroup JSON
-  autocmd!
-  autocmd FileType json syntax match Comment +\/\/.\+$+
-  autocmd FileType json set foldmethod=syntax
-augroup END
-" }}}
-" Mardown {{{
-augroup Markdown
-  autocmd!
-  autocmd FileType markdown
-        \ set textwidth=80  |
-        \ set linebreak     |
-        \ set spell
-augroup END
-" }}}
 " NeoVim {{{
 augroup NeoVim
   autocmd!
@@ -774,23 +759,10 @@ augroup END
 " Zsh Script {{{
 augroup ZSH
   autocmd!
-  autocmd FileType sh
+  autocmd FileType sh,zsh
         \ set fdm=marker |
         \ set fmr={,}    |
         \ set fdl=0
-  autocmd FileType zsh
-        \ set fdm=marker |
-        \ set fmr={,}    |
-        \ set fdl=0
-augroup END
-" }}}
-" Typescript {{{
-augroup Typescript
-  autocmd!
-  autocmd FileType typescript set makeprg=tsc
-  " show quickfix windows if there is some errors
-  autocmd QuickFixCmdPost [^l]* nested cwindow
-  autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 " }}}
 " Conf {{{
