@@ -70,7 +70,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 Plug 'romgrk/equal.operator'
 Plug 'unblevable/quick-scope'
-Plug 'sheerun/vim-polyglot'
 Plug 'https://github.com/andrewradev/splitjoin.vim'
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -117,6 +116,11 @@ Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 Plug 'vn-ki/coc-clap'
 Plug 'neoclide/coc-git'
 Plug 'ryanoasis/vim-devicons'
+
+" Have to be defined before loading the plugin
+let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
+                                       " plugin which unfortunately interferes with mkdx list indentation.
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -250,9 +254,6 @@ augroup END
 
 " Languages {{{
 " Polyglot {{{
-let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
-                                       " plugin which unfortunately interferes with mkdx list indentation.
-
 " Stylus {{{
 augroup Stylus
   autocmd!
