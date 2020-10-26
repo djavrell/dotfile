@@ -37,7 +37,7 @@ set guifont=Hasklug_Nerd_Font:h11
 " Folding {{{
 syntax enable
 set foldmethod=syntax
-set foldlevel=1
+set foldlevel=999
 " }}}
 
 try
@@ -198,6 +198,9 @@ Plug 'jiangmiao/auto-pairs'
 " Expand Region {{{
 Plug 'terryma/vim-expand-region'
 " }}}
+" LHS/RHS operator {{{
+Plug 'romgrk/equal.operator'
+" }}}
 
 " QuickScope {{{
 Plug 'unblevable/quick-scope'
@@ -275,7 +278,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 let g:NERDTreeGitStatusIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
 
 " }}}
-" Committia {{{
+" Committia - Better commit window {{{
 Plug 'rhysd/committia.vim'
 
 let g:committia_edit_window_width = 120
@@ -298,7 +301,7 @@ function! g:committia_hooks.edit_open(info)
     nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
 endfunction
 " }}}
-" Flog {{{
+" Flog - Git tree visualization {{{
 Plug 'rbong/vim-flog'
 
 " }}}
@@ -311,6 +314,17 @@ let g:blamer_delay = 250
 " Git Message Viwer {{{
 Plug 'rhysd/git-messenger.vim'
 " }}}
+
+" Git Gutter {{{
+Plug 'airblade/vim-gitgutter'
+
+nmap <leader>h <Plug>(GitGutterNextHunk)
+nmap <leader>H <Plug>(GitGutterPrevHunk)
+
+" }}}
+
+Plug 'jreybert/vimagit'
+let g:magit_default_show_all_files=2
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
@@ -471,6 +485,7 @@ nnoremap  <silent>  <space>a  :Clap loclist<CR>
 nnoremap  <silent>  <space>t  :Clap tags<CR>
 nnoremap  <silent>  <space>T  :Clap proj_tags<CR>
 nnoremap  <silent>  <space>d  :Clap coc_diagnostics<CR>
+nnoremap  <silent>  <space>q  :Clap quickfix<CR>
 
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
@@ -498,9 +513,15 @@ augroup coc_augroup
   " Highlight symbol under cursor on CursorHold
   autocmd CursorHold * silent call CocActionAsync('highlight')
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,typescriptreact,javascriptreact,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup END
+
+augroup ReactFiletype
+  autocmd!
+  autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+  autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
 augroup END
 
 " }}}
@@ -693,9 +714,6 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 tnoremap <Esc> <C-\><C-n>
 
 " buffer management
-map <silent> <Leader>n :enew<CR>
-map <silent> <Leader>j :bnext<CR>
-map <silent> <Leader>k :bprev<CR>
 map <silent> <Leader>d :bp <BAR> bd #<CR>
 map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
 
@@ -727,7 +745,6 @@ nnoremap N Nzvzz
 " Global {{{
 augroup Global
   autocmd!
-  autocmd BufRead *.tsx set ft=typescript
   autocmd BufRead *.conf set ft=conf
   autocmd BufWritePre * :%s/\s\+$//e
 augroup END
@@ -765,6 +782,15 @@ augroup ZSH
         \ set fdm=marker |
         \ set fmr={,}    |
         \ set fdl=0
+augroup END
+" }}}
+" Typescript {{{
+augroup Typescript
+  autocmd!
+  autocmd FileType typescript set makeprg=tsc
+  " show quickfix windows if there is some errors
+  autocmd QuickFixCmdPost [^l]* nested cwindow
+  autocmd QuickFixCmdPost    l* nested lwindow
 augroup END
 " }}}
 " Conf {{{
