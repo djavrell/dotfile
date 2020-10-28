@@ -37,7 +37,7 @@ set guifont=Hasklug_Nerd_Font:h11
 " Folding {{{
 syntax enable
 set foldmethod=syntax
-set foldlevel=999
+set foldlevel=1
 " }}}
 
 try
@@ -80,16 +80,6 @@ Plug 'leafgarland/typescript-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'alx741/vim-hindent'
-Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
-Plug 'rhysd/committia.vim'
-Plug 'rbong/vim-flog'
-Plug 'APZelos/blamer.nvim'
-Plug 'rhysd/git-messenger.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
-Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'puremourning/vimspector'
@@ -107,7 +97,22 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 
+" Git {{{
+Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
+Plug 'rhysd/committia.vim'
+Plug 'rbong/vim-flog'
+Plug 'APZelos/blamer.nvim'
+Plug 'rhysd/git-messenger.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'mhinz/vim-signify'
+" }}}
+
+" COC {{{
 Plug 'neoclide/coc.nvim', { 'branch':  'release' }
+
 Plug 'fannheyward/coc-markdownlint'
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
@@ -115,9 +120,10 @@ Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-
 Plug 'vn-ki/coc-clap'
 Plug 'neoclide/coc-git'
+
+" }}}
 Plug 'ryanoasis/vim-devicons'
 
 " Have to be defined before loading the plugin
@@ -256,7 +262,6 @@ augroup END
 " }}}
 
 " Languages {{{
-" Polyglot {{{
 " Stylus {{{
 augroup Stylus
   autocmd!
@@ -265,18 +270,8 @@ augroup Stylus
 augroup END
 " }}}
 
-" }}}
-
 " Typescript {{{
 let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
-
-augroup Typescript
-  autocmd!
-  autocmd FileType typescript set makeprg=tsc
-  " show quickfix windows if there is some errors
-  autocmd QuickFixCmdPost [^l]* nested cwindow
-  autocmd QuickFixCmdPost    l* nested lwindow
-augroup END
 " }}}
 " Scala {{{
 " Vim-scala {{{
@@ -506,6 +501,7 @@ nnoremap  <silent>  <space>t  :Clap tags<CR>
 nnoremap  <silent>  <space>T  :Clap proj_tags<CR>
 nnoremap  <silent>  <space>d  :Clap coc_diagnostics<CR>
 nnoremap  <silent>  <space>q  :Clap quickfix<CR>
+nnoremap  <silent>  <space>r  :Clap registers<CR>
 
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
