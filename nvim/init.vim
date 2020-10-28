@@ -70,10 +70,13 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 Plug 'romgrk/equal.operator'
 Plug 'unblevable/quick-scope'
-Plug 'https://github.com/andrewradev/splitjoin.vim'
+Plug 'andrewradev/splitjoin.vim'
+Plug 'christianrondeau/vim-base64'
+
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
+
 Plug 'derekwyatt/vim-scala'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'alx741/vim-hindent'
@@ -264,7 +267,6 @@ augroup END
 
 " }}}
 
-
 " Typescript {{{
 let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
 
@@ -330,17 +332,11 @@ function! g:committia_hooks.edit_open(info)
     nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
 endfunction
 " }}}
-" Flog - Git tree visualization {{{
-
-" }}}
 " Blamer {{{
 
 let g:blamer_delay = 250
 :command! -nargs=0 Blame call BlamerToggle()
 " }}}
-" Git Message Viwer {{{
-" }}}
-
 " Git Gutter {{{
 
 nmap <leader>h <Plug>(GitGutterNextHunk)
@@ -348,8 +344,15 @@ nmap <leader>H <Plug>(GitGutterPrevHunk)
 
 " }}}
 
-" vimagit
+" Vimagit {{{
 let g:magit_default_show_all_files=2
+
+augroup VimaGIT
+  autocmd!
+  autocmd FileType magit set textwidth=80
+augroup END
+
+" }}}
 
 " }}}
 
@@ -725,15 +728,11 @@ nnoremap <silent> <S-Left> :vertical resize -5<CR>
 nnoremap <silent> <S-Up> :resize +5<CR>
 nnoremap <silent> <S-Down> :resize -5<CR>
 
-" circle through windows
-" nnoremap <silent> <C-n> :wincmd w<Cr>
-" nnoremap <silent> <C-p> :wincmd W<Cr>
-
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
 
-" force write when the sudo was forgotten
+" force write when the sudo was forgotten
 cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
 
 " set next match at the center of the screen
