@@ -89,6 +89,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'rhysd/vim-fixjson', { 'for': 'json' }
 Plug 'chrisbra/csv.vim'
 Plug 'dhruvasagar/vim-table-mode'
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'diepm/vim-rest-console'
 Plug 'preservim/nerdtree'

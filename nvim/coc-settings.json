@@ -55,7 +55,7 @@
   "coc": {
     "preferences": {
       "formatOnType": true,
-      "previewMaxHeight": 50
+      "previewMaxHeight": 100
     }
   },
   "capabilities": {
@@ -67,9 +67,16 @@
     "statusBarEnabled": true,
     "enableStripMarginOnTypeFormatting": true,
     "typeAnnotationsEnabled": true,
-    "implicitArgumentAnnotationsEnabled": true
+    "implicitArgumentAnnotationsEnabled": true,
+    "showImplicitArguments": true
   },
   "imselect.enableStatusItem": true,
   "imselect.enableFloating": true,
-  "imselect.defaultInput": "com.apple.keylayout.FR_fr"
+  "imselect.defaultInput": "com.apple.keylayout.FR_fr",
+  "suggest": {
+    "floatEnable": true
+  },
+  "diagnostic": {
+    "virtualText": true
+  }
 }

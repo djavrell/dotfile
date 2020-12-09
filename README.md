@@ -74,6 +74,7 @@ NB: in your gitconfig file, be sure to not have the field `username` under `[cre
 | nvim            | $XDG_CONFIG_HOME                            |
 | pgcli/config    | $XDG_CONFIG_HOME/pgcli                      |
 | efm-config.yaml | $XDG_CONFIG_HOME/efm-langserver/config.yaml |
+| kitty.conf      | $XDG_CONFIG_HOME/kitty/kitty.conf           |
 |-----------------|---------------------------------------------|
 
 

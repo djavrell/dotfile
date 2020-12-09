@@ -15,7 +15,6 @@ path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
 path=( "$HOME/bin" $path )
 
 fpath=( "$DOTFILE/function.d" $fpath )
-# fpath=( "$SUB_MODULES/pure" $fpath )
 
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
@@ -61,7 +60,6 @@ export SCALA_HOME="/usr/local/share/scala-2.12.6"
 path=( "$SCALA_HOME/bin" $path)
 
 # Rust
-# . "$HOME/.cargo/env"
 path=( "$HOME/.cargo/bin" $path )
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
