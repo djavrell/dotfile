@@ -97,6 +97,20 @@ alias ggpull='git pull origin $(git_current_branch)'
 alias ggpush='git push origin $(git_current_branch) --follow-tags'
 alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
 
+function gpushf() {
+  local branch=$(git_current_branch)
+
+  if [[ $# -eq 0 ]]; then
+    echo "gpush <remote_name>+"
+  fi
+
+  for remote in "$@"
+  do
+    color "\npush the commit from $(yellow "$branch") to remote $(red "$remote")\n"
+    git push --force-with-lease "$remote" "$branch"
+  done
+}
+
 function gpush() {
   local branch=$(git_current_branch)
 
@@ -107,7 +121,7 @@ function gpush() {
   for remote in "$@"
   do
     color "\npush the commit from $(yellow "$branch") to remote $(red "$remote")\n"
-    git push  "$remote" "$branch"
+    git push "$remote" "$branch"
   done
 }
 

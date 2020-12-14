@@ -34,6 +34,7 @@ export FZF_COMPLETION_TRIGGER='%'
 
 # GPG
 export GPG_TTY=`tty`
+
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
 
@@ -44,10 +45,6 @@ fpath=( "$DOTFILE/git/function.d" $fpath )
 # FNM Node version manager
 export FNM_DIR="$XDG_DATA_HOME/fnm"
 export FNM_LOGLEVEL=quiet
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-path=( "$HOME/.rvm/bin" $path )
-loading+="$HOME/.rvm/scripts/rvm"
 
 # Python
 path=( "/Users/kpr/Library/Python/3.7/bin" $path )
@@ -69,6 +66,10 @@ path=( "$GOPATH/bin" $path )
 
 # Haskell
 # loading+="$HOME/.ghcup/env"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+path=( "$HOME/.rvm/bin" $path )
+loading+="$HOME/.rvm/scripts/rvm"
 
 get_export() {
   echo $loading
