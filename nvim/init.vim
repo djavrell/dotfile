@@ -485,9 +485,12 @@ let g:NERDToggleCheckAllLines = 1
 " Vim Clap {{{
 
 
-let g:clap_layout = { 'relative': 'editor' }
+let g:clap_layout = {
+  \   'height': '30%',
+  \   'row': '10%',
+  \ }
 let g:clap_multi_selection_warning_silent = 1
-let g:clap_preview_size={ '*': 5, 'grep2': 10 }
+let g:clap_preview_size={ '*': 15 }
 
 nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <leader>f :Clap files<CR>
