@@ -46,12 +46,6 @@ fpath=( "$DOTFILE/git/function.d" $fpath )
 export FNM_DIR="$XDG_DATA_HOME/fnm"
 export FNM_LOGLEVEL=quiet
 
-# Python
-path=( "/Users/kpr/Library/Python/3.7/bin" $path )
-
-# JAVA
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
-
 # SCALA
 export SCALA_HOME="/usr/local/share/scala-2.12.6"
 path=( "$SCALA_HOME/bin" $path)

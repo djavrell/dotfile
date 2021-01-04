@@ -29,14 +29,15 @@ typeset -ga sources
 # export all environement variables
 . "$DOTFILE/env.sh"
 
-sources+="$DOTFILE/colors.sh"
-sources+="$DOTFILE/alias.sh"
-sources+="$DOTFILE/alias_git.sh"
-
 sources+="$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
 sources+="$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 sources+="$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 sources+="$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
+sources+="$DOTFILE/vim_mode.zsh"
+
+sources+="$DOTFILE/colors.sh"
+sources+="$DOTFILE/alias.sh"
+sources+="$DOTFILE/alias_git.sh"
 
 sources+="$DOTFILE/$SYSTEM_FILE.zsh"
 sources+="$DOTFILE/completion.zsh"
