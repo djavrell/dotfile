@@ -20,11 +20,8 @@ autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd 'v' edit-command-line
 
-
 # Dependencies for the following lines
 zmodload zsh/zle
-
-# And also a beam as the cursor
 
 # Callback for vim mode change
 function zle-keymap-select () {

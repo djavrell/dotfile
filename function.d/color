@@ -1,0 +1,5 @@
+#! /bin/zsh
+
+color() {
+  echo "$fg[$1]$2$reset_color"
+}

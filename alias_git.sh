@@ -106,7 +106,7 @@ function gpushf() {
 
   for remote in "$@"
   do
-    color "\npush the commit from $(yellow "$branch") to remote $(red "$remote")\n"
+    echo "\nforce push the commit from $(color yellow $branch) to remote $(color red $remote)\n"
     git push --force-with-lease "$remote" "$branch"
   done
 }
@@ -120,7 +120,7 @@ function gpush() {
 
   for remote in "$@"
   do
-    color "\npush the commit from $(yellow "$branch") to remote $(red "$remote")\n"
+    echo "\npush the commit from $(color yellow $branch) to remote $(color red $remote)\n"
     git push "$remote" "$branch"
   done
 }

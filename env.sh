@@ -1,5 +1,3 @@
-typeset -ga loading
-
 export LC_ALL=fr_FR.UTF-8
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -14,8 +12,6 @@ path=( "$HOME/.local/bin" $path )
 path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
 path=( "$HOME/bin" $path )
 
-fpath=( "$DOTFILE/function.d" $fpath )
-
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
@@ -28,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
 # FZF fuzzy finder
-loading+="$HOME/.fzf.zsh"
+load "$HOME/.fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
@@ -41,6 +37,8 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # Git
 path=( "$DOTFILE/git/scripts" $path )
 fpath=( "$DOTFILE/git/function.d" $fpath )
+load_func "$DOTFILE/git/function.d"
+load "$DOTFILE/alias_git.sh"
 
 # FNM Node version manager
 export FNM_DIR="$XDG_DATA_HOME/fnm"
@@ -59,12 +57,8 @@ export GOPATH="$HOME/go"
 path=( "$GOPATH/bin" $path )
 
 # Haskell
-# loading+="$HOME/.ghcup/env"
+# load "$HOME/.ghcup/env"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
-loading+="$HOME/.rvm/scripts/rvm"
-
-get_export() {
-  echo $loading
-}
+load "$HOME/.rvm/scripts/rvm"
