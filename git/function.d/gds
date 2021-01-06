@@ -1,0 +1,3 @@
+# vim:ft=zsh
+
+git add -v $(git diff --staged --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff --staged {} | delta" --preview-window=right:70%:wrap --multi)

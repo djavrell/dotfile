@@ -27,6 +27,7 @@ typeset -U path
 
 # export all environement variables
 load "$DOTFILE/env.sh"
+load "$DOTFILE/git/init.zsh"
 
 load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
 load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"

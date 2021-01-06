@@ -1,0 +1,8 @@
+# vim:ft=zsh
+
+local super=$(git rev-parse --show-superproject-working-tree)
+
+if [[ ! "$super" ]]; then
+  return 1
+fi
+cd "$super"

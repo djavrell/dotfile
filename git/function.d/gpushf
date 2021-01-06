@@ -1,0 +1,13 @@
+# vim:ft=zsh
+
+local branch=$(git_current_branch)
+
+if [[ $# -eq 0 ]]; then
+  echo "gpush <remote_name>+"
+fi
+
+for remote in "$@"
+do
+  echo "\npush force the commit from $(color yellow $branch) to remote $(color red $remote)\n"
+  git push --force-with-lease "$remote" "$branch"
+done

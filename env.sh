@@ -24,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
 # FZF fuzzy finder
-load "$HOME/.fzf.zsh"
+load "$DOTFILE/fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
@@ -33,12 +33,6 @@ export GPG_TTY=`tty`
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Git
-path=( "$DOTFILE/git/scripts" $path )
-fpath=( "$DOTFILE/git/function.d" $fpath )
-load_func "$DOTFILE/git/function.d"
-load "$DOTFILE/alias_git.sh"
 
 # FNM Node version manager
 export FNM_DIR="$XDG_DATA_HOME/fnm"

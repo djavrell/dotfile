@@ -1,28 +1,7 @@
 # git rev-parse --show-superproject-working-tree
 alias groot='cd $(git rev-parse --show-toplevel)'
 
-function ggroot() {
-  local super=$(git rev-parse --show-superproject-working-tree)
-
-  if [[ ! "$super" ]]; then
-    return 1
-  fi
-  cd "$super"
-}
-
-function add() {
-  git add -v $(git diff --raw | awk '{print $6}' | fzf --reverse --preview="git diff {} | delta" --preview-window=bottom:90%:wrap --multi)
-}
-
-function uadd() {
-  git add -v $(git ls-files --others --exclude-standard | fzf --reverse --preview="bat --color always {}" --preview-window=right:70%:wrap --multi)
-}
-
 alias vadd='vim +MagitOnly'
-
-function gbdll() {
-  git branch -vv
-}
 
 alias sync='ggpull && gfo --prune && git fetch --tags'
 alias gcfmt='git commit -m "formating" '
@@ -75,12 +54,6 @@ alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
 alias gcpc='git cherry-pick --continue'
 
-function gds() {
-  git add -v $(git diff --staged --raw | awk '{print $6}' | fzf --reverse --preview="git -c color.diff=always diff --staged {} | delta" --preview-window=right:70%:wrap --multi)
-}
-function gdl() {
-  git diff --raw | awk '{print $6}' | fzf --reverse --multi --preview="git diff {} | delta" --preview-window=bottom:90%
-}
 alias gd='git diff'
 alias gdca='git diff --cached'
 alias gdcw='git diff --cached --word-diff'
@@ -96,34 +69,6 @@ alias gfo='git fetch origin'
 alias ggpull='git pull origin $(git_current_branch)'
 alias ggpush='git push origin $(git_current_branch) --follow-tags'
 alias ggsup='git branch --set-upstream-to=origin/$(git_current_branch)'
-
-function gpushf() {
-  local branch=$(git_current_branch)
-
-  if [[ $# -eq 0 ]]; then
-    echo "gpush <remote_name>+"
-  fi
-
-  for remote in "$@"
-  do
-    echo "\nforce push the commit from $(color yellow $branch) to remote $(color red $remote)\n"
-    git push --force-with-lease "$remote" "$branch"
-  done
-}
-
-function gpush() {
-  local branch=$(git_current_branch)
-
-  if [[ $# -eq 0 ]]; then
-    echo "gpush <remote_name>+"
-  fi
-
-  for remote in "$@"
-  do
-    echo "\npush the commit from $(color yellow $branch) to remote $(color red $remote)\n"
-    git push "$remote" "$branch"
-  done
-}
 
 alias gignore='git update-index --assume-unchanged'
 alias gignored='git ls-files -v | grep "^[[:lower:]]"'
