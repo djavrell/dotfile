@@ -1,5 +1,3 @@
-COLORS="$SYSFILE/gruvbox_256palette_osx.sh"
-
 # Git
 gitVersion=$(basename /usr/local/Cellar/git/*)
 export PERL5LIB="/usr/local/Cellar/git/$gitVersion/share/perl5:$PERL5LIB"
@@ -11,4 +9,4 @@ path=( "/Users/kpr/Library/Python/$pythonVersion/bin" $path )
 # JAVA
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"
 
-load $COLORS
+load "$SYSFILE/gruvbox_256palette_osx.sh"
