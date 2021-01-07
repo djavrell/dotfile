@@ -1,8 +1,11 @@
 tmux/resurrect
 tmux/plugins
 
-nvim/local_nvim.vim
-nvim/spell/
+nvim/.config/nvim/local_nvim.vim
+nvim/.config/nvim/spell/
+
+pgcli/.config/pgcli/log
+pgcli/.config/pgcli/history
 
 **/*private*
 **/*work*
