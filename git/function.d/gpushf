@@ -8,6 +8,7 @@ fi
 
 for remote in "$@"
 do
-  echo "\npush force the commit from $(color yellow $branch) to remote $(color red $remote)\n"
+  echo "\n\tpush force the commit from $(color yellow $branch) to remote $(color red $remote)\n"
+  git log --oneline $remote/$branch..$branch
   git push --force-with-lease "$remote" "$branch"
 done
