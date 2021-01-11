@@ -16,10 +16,10 @@ autoload -Uz load_func
 typeset -U path
 
 DOTFOLDER=".bashrc.d"
-SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
-
 export DOTFILE="$HOME/$DOTFOLDER"
 export SUB_MODULES="$DOTFILE/submodules"
+
+SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
 export SYSFILE="$DOTFILE/$SYSTEM_FILE"
 
 # load all core function
