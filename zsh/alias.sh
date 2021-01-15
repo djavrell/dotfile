@@ -1,6 +1,7 @@
 # General
 alias ..='cd ..'
 alias -- -='cd -'
+alias exa='exa --git'
 alias ls='exa'
 alias ll='exa -lh'
 alias la='exa -la'
