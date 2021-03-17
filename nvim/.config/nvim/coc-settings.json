@@ -56,6 +56,10 @@
     "preferences": {
       "formatOnType": true,
       "previewMaxHeight": 100
+    },
+    "source": {
+      "buffer": { "enable": false },
+      "aroud": { "enable": false }
     }
   },
   "capabilities": {

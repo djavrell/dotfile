@@ -72,6 +72,7 @@ Plug 'romgrk/equal.operator'
 Plug 'unblevable/quick-scope'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'christianrondeau/vim-base64'
+Plug 'kburdett/vim-nuuid'
 
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -97,6 +98,10 @@ Plug 'liuchengxu/nerdtree-dash'
 Plug 'scrooloose/nerdcommenter'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
+
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " Git {{{
 Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
@@ -371,6 +376,10 @@ let g:db_ui_use_nerd_fonts = 1
 " Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
 " }}}
 
+" UUID {{{
+let g:nuuid_no_mappings = 1
+" }}}
+
 " Markdown {{{
 " mkdx {{{
 
@@ -484,13 +493,13 @@ let g:NERDToggleCheckAllLines = 1
 " }}}
 " Vim Clap {{{
 
-
 let g:clap_layout = {
   \   'height': '30%',
   \   'row': '10%',
   \ }
 let g:clap_multi_selection_warning_silent = 1
 let g:clap_preview_size={ '*': 15 }
+let g:clap_preview_direction='UD'
 
 nnoremap  <silent>  <leader>c :Clap<CR>
 nnoremap  <silent>  <leader>f :Clap files<CR>
@@ -740,6 +749,11 @@ cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
 "   zz -> set cursor at the center of the screnn
 nnoremap n nzvzz
 nnoremap N Nzvzz
+
+" zM -> fold everything
+" zv -> open needed fold
+" zz -> set cursor at the center of the screen
+nnoremap <leader>z zMzvzz
 
 " }}}
 " Autocmd {{{
