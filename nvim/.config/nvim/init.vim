@@ -54,6 +54,9 @@ Plug 'hardcoreplayers/gruvbox9'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
 
+" Fun
+Plug 'iqxd/vim-mine-sweeping'
+
 Plug 'benknoble/vimpbcopy'
 Plug 'psliwka/vim-smoothie'
 Plug 'liuchengxu/eleline.vim'
@@ -93,8 +96,9 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'diepm/vim-rest-console'
-Plug 'preservim/nerdtree'
-Plug 'liuchengxu/nerdtree-dash'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
 Plug 'scrooloose/nerdcommenter'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
@@ -134,7 +138,7 @@ Plug 'ryanoasis/vim-devicons'
 
 " Have to be defined before loading the plugin
 let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
-                                       " plugin which unfortunately interferes with mkdx list indentation.
+" plugin which unfortunately interferes with mkdx list indentation.
 Plug 'sheerun/vim-polyglot'
 
 call plug#end()
@@ -456,27 +460,14 @@ let s:vrc_auto_format_response_patterns = {
 
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
-" NerdTree {{{
+" nvim tree {{{
+let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals' ]
+" let g:nvim_tree_hide_dotfiles = 1
 
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeIgnore = ['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.metals$[[dir]]',  '\.bloop$[[dir]]','\.sass-cache$']
-" Hide the Nerdtree status line to avoid clutter
-let g:NERDTreeStatusline = ''
-let g:NERDTreeQuitOnOpen = 3
+map <silent> <Leader>w :NvimTreeToggle<CR>
+map <silent> <Leader>x :NvimTreeFindFile<CR>
 
-map <silent> <Leader>w :NERDTreeToggle<CR>
-map <silent> <Leader>c :NERDTreeFocus<CR>
-map <silent> <Leader>x :NERDTreeFind<CR>
-
-augroup NerdTree
-  autocmd!
-  " Automaticaly close nvim if NERDTree is only thing left open
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-augroup END
-
-" DASH {{{
-" }}}
-
+highlight NvimTreeFolderIcon guibg=blue
 " }}}
 " Nerdcommenter {{{
 
@@ -502,11 +493,11 @@ let g:clap_preview_size={ '*': 15 }
 let g:clap_preview_direction='UD'
 
 nnoremap  <silent>  <leader>c :Clap<CR>
-nnoremap  <silent>  <leader>f :Clap files<CR>
+" nnoremap  <silent>  <leader>f :Clap files<CR>
 nnoremap  <silent>  <leader>ff :Clap files +name-only<CR>
 nnoremap  <silent>  <space>f  :Clap filer<CR>
-nnoremap  <silent>  <leader>b :Clap buffers<CR>
-nnoremap  <silent>  <leader>g :Clap grep2<CR>
+" nnoremap  <silent>  <leader>b :Clap buffers<CR>
+" nnoremap  <silent>  <leader>g :Clap grep2<CR>
 vnoremap  <silent>  <leader>g :Clap grep2 ++query=@visual<CR>
 nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
 nnoremap  <silent>  <space>a  :Clap loclist<CR>
@@ -516,6 +507,55 @@ nnoremap  <silent>  <space>d  :Clap coc_diagnostics<CR>
 nnoremap  <silent>  <space>q  :Clap quickfix<CR>
 nnoremap  <silent>  <space>r  :Clap registers<CR>
 
+" }}}
+" Telescope {{{
+
+lua << EOF
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case'
+    },
+    prompt_position = "bottom",
+    prompt_prefix = "> ",
+    selection_caret = "> ",
+    entry_prefix = "  ",
+    initial_mode = "insert",
+    selection_strategy = "reset",
+    sorting_strategy = "descending",
+    layout_strategy = "horizontal",
+    layout_defaults = {
+      horizontal = {
+        mirror = false,
+      },
+      vertical = {
+        mirror = false,
+      },
+    },
+    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
+    file_ignore_patterns = {},
+    shorten_path = true,
+    border = {},
+    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    color_devicons = true,
+    use_less = true,
+    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
+    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+  }
+}
+EOF
+
+nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
 
