@@ -24,7 +24,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
 # FZF fuzzy finder
-load "$DOTFILE/fzf.zsh"
+# load "$DOTFILE/fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
