@@ -54,9 +54,6 @@ Plug 'hardcoreplayers/gruvbox9'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
 
-" Fun
-Plug 'iqxd/vim-mine-sweeping'
-
 Plug 'benknoble/vimpbcopy'
 Plug 'psliwka/vim-smoothie'
 Plug 'liuchengxu/eleline.vim'
@@ -73,6 +70,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 Plug 'romgrk/equal.operator'
 Plug 'unblevable/quick-scope'
+Plug 'nacro90/numb.nvim'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'christianrondeau/vim-base64'
 Plug 'kburdett/vim-nuuid'
@@ -508,9 +506,17 @@ nnoremap  <silent>  <space>q  :Clap quickfix<CR>
 nnoremap  <silent>  <space>r  :Clap registers<CR>
 
 " }}}
+" numb.nvim {{{
+lua <<EOF
+require('numb').setup{
+  show_number = true,
+  show_cursorline = true
+}
+EOF
+" }}}
 " Telescope {{{
 
-lua << EOF
+lua <<EOF
 require('telescope').setup{
   defaults = {
     vimgrep_arguments = {
@@ -864,6 +870,8 @@ augroup hg_gruvbox
   hi SignifySignChange  guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
   hi SignifySignDelete  guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
 augroup END
+
+highlight! StatusLineNC gui=underline guibg=NONE guifg=#3e4451
 " }}}
 
 filetype plugin indent on
