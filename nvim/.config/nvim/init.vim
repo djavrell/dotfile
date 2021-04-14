@@ -800,6 +800,10 @@ nnoremap N Nzvzz
 " zv -> open needed fold
 " zz -> set cursor at the center of the screen
 nnoremap <leader>z zMzvzz
+"
+" Move visual selection
+vnoremap J :m '>+1<cr>gv=gv
+vnoremap K :m '<-2<cr>gv=gv
 
 " }}}
 " Autocmd {{{
