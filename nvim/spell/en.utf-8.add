@@ -15,3 +15,7 @@ rebase
 Config
 gitconfig
 Reflog
+plugins
+djavrell
+plugins
+nvim
