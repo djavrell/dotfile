@@ -858,6 +858,12 @@ augroup HelpFile
   autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
 augroup END
 " }}}
+" envrc files {{{
+augroup EnvRC
+  autocmd!
+  autocmd BufRead .envrc set ft=zsh
+augroup END
+" }}}
 " }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
