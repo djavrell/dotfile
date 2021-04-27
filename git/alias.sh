@@ -45,7 +45,7 @@ alias move='git checkout $(git branch | fzf --reverse)'
 alias movea='git checkout $(gba | sed -e "s/ remotes\/origin\///g" -e "s/[* ]//g" | sort | uniq | fzf --reverse)'
 alias movet='git checkout $(git tag | fzf-tmux -r 30% --reverse)'
 alias 'g-'='git checkout -'
-alias master='git checkout master'
+alias master='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d"/" -f2)'
 alias develop='git checkout develop'
 
 alias gcount='git shortlog -sn'
