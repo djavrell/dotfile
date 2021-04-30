@@ -23,6 +23,10 @@ export XDG_DATA_HOME="$HOME/.local/share"
 # tmuxinator
 path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
 
+# Vim mode
+export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
+export ZVM_CURSOR_STYLE_ENABLED=false
+
 # FZF fuzzy finder
 # load "$DOTFILE/fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
