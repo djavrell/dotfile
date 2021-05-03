@@ -114,9 +114,9 @@ Plug 'rbong/vim-flog'
 Plug 'APZelos/blamer.nvim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-git'
+" Plug 'jreybert/vimagit'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
 " }}}
 
