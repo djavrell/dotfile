@@ -132,9 +132,11 @@ Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
 Plug 'vn-ki/coc-clap'
 Plug 'neoclide/coc-git'
+Plug 'josa42/coc-lua'
 
 " }}}
 Plug 'ryanoasis/vim-devicons'
+Plug 'folke/trouble.nvim'
 
 " Have to be defined before loading the plugin
 let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
@@ -600,6 +602,11 @@ EOF
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
+" }}}
+" LSP Trouble {{{
+lua << EOF
+  require("trouble").setup {}
+EOF
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
 
