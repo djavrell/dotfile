@@ -28,7 +28,6 @@ export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
 export ZVM_CURSOR_STYLE_ENABLED=false
 
 # FZF fuzzy finder
-# load "$DOTFILE/fzf.zsh"
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
@@ -53,9 +52,6 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 # Go
 export GOPATH="$HOME/go"
 path=( "$GOPATH/bin" $path )
-
-# Haskell
-# load "$HOME/.ghcup/env"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
