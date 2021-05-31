@@ -54,6 +54,8 @@ Plug 'hardcoreplayers/gruvbox9'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
 
+Plug 'hsanson/vim-openapi'
+
 Plug 'benknoble/vimpbcopy'
 Plug 'psliwka/vim-smoothie'
 Plug 'liuchengxu/eleline.vim'
@@ -99,6 +101,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'scrooloose/nerdcommenter'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+Plug 'matbme/JABS.nvim'
 Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 
 Plug 'nvim-lua/popup.nvim'
@@ -546,6 +549,9 @@ nnoremap  <silent>  <space>q  :Clap quickfix<CR>
 nnoremap  <silent>  <space>r  :Clap registers<CR>
 
 " }}}
+" JABS {{{
+nnoremap <silent> <leader>b :JABSOpen<CR>
+" }}}
 " numb.nvim {{{
 lua <<EOF
 require('numb').setup{
@@ -601,7 +607,7 @@ EOF
 
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
+" nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 " LSP Trouble {{{
 lua << EOF
@@ -794,20 +800,35 @@ nnoremap <silent> <C-l> :call SplitWindow()<CR>
 
 " Handle curser line {{{
 let s:ruler = 0
+let s:ruler2 = 0
 
 function! ToggleRuler()
+  let s:ruler2 = 0
+
   if s:ruler == 0
     set cursorline
-    set cursorcolumn
     let s:ruler = 1
   else
     set nocursorline
-    set nocursorcolumn
     let s:ruler = 0
   endif
 endfunction
 
+function! ToggleRuler2()
+  let s:ruler = 0
+  if s:ruler2 == 0
+    set cursorline
+    set cursorcolumn
+    let s:ruler2 = 1
+  else
+    set nocursorline
+    set nocursorcolumn
+    let s:ruler2 = 0
+  endif
+endfunction
+
 command -nargs=0 Ruler :call ToggleRuler()
+command -nargs=0 Ruler2 :call ToggleRuler2()
 " }}}
 
 " }}}
