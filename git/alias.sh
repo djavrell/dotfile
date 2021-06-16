@@ -4,6 +4,8 @@ alias groot='cd $(git rev-parse --show-toplevel)'
 alias vadd='vim +MagitOnly'
 alias vdiff='vim +DiffviewOpen'
 
+alias gd='git diff'
+
 alias sync='ggpull && gfo --prune && git fetch --tags'
 alias brute='ggpush --force-with-lease'
 
