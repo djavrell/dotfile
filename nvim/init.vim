@@ -117,7 +117,7 @@ Plug 'rbong/vim-flog'
 Plug 'APZelos/blamer.nvim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
-" Plug 'jreybert/vimagit'
+Plug 'jreybert/vimagit'
 " Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
@@ -128,6 +128,7 @@ Plug 'neoclide/coc.nvim', { 'branch':  'release' }
 
 Plug 'fannheyward/coc-markdownlint'
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-prettier'
 Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -140,6 +141,7 @@ Plug 'josa42/coc-lua'
 " }}}
 Plug 'ryanoasis/vim-devicons'
 Plug 'folke/trouble.nvim'
+Plug 'folke/todo-comments.nvim'
 
 " Have to be defined before loading the plugin
 let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
@@ -503,6 +505,8 @@ let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " nvim tree {{{
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals' ]
+let g:nvim_tree_auto_close = 1
+let g:nvim_tree_highlight_opened_files = 1
 " let g:nvim_tree_hide_dotfiles = 1
 
 map <silent> <Leader>w :NvimTreeToggle<CR>
@@ -550,7 +554,7 @@ nnoremap  <silent>  <space>r  :Clap registers<CR>
 
 " }}}
 " JABS {{{
-nnoremap <silent> <leader>b :JABSOpen<CR>
+nnoremap <silent> <leader>B :JABSOpen<CR>
 " }}}
 " numb.nvim {{{
 lua <<EOF
@@ -607,11 +611,16 @@ EOF
 
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-" nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 " LSP Trouble {{{
 lua << EOF
   require("trouble").setup {}
+EOF
+" }}}
+" TODO Trouble {{{
+lua << EOF
+  require("todo-comments").setup {}
 EOF
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
