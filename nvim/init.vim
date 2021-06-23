@@ -412,7 +412,12 @@ EOF
 
 " Neogit {{{
 lua << EOF
-  require("neogit").setup {}
+require("neogit").setup {
+  disable_context_highlighting = true,
+  integrations = {
+    diffview = true
+  }
+}
 EOF
 " }}}
 " }}}
