@@ -118,6 +118,8 @@ Plug 'APZelos/blamer.nvim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
+Plug 'Odie/gitabra'
+Plug 'TimUntersberger/neogit'
 " Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-git'
 Plug 'mhinz/vim-signify'
@@ -402,6 +404,17 @@ augroup END
 
 " }}}
 
+" Gitabra {{{
+lua << EOF
+  require("gitabra").setup {}
+EOF
+" }}}
+
+" Neogit {{{
+lua << EOF
+  require("neogit").setup {}
+EOF
+" }}}
 " }}}
 
 " Database {{{
