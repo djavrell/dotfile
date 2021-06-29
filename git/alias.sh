@@ -1,7 +1,7 @@
 # git rev-parse --show-superproject-working-tree
 alias groot='cd $(git rev-parse --show-toplevel)'
 
-alias vadd='vim +MagitOnly'
+alias vadd='vim +Neogit'
 alias vdiff='vim +DiffviewOpen'
 
 alias gd='git diff'
@@ -12,6 +12,7 @@ alias brute='ggpush --force-with-lease'
 alias gw='git worktree'
 alias gwa='gw add'
 alias gwl='gw list'
+alias gwr='gw remove'
 
 alias gb='git branch'
 alias gba='git branch -a'
