@@ -948,6 +948,12 @@ augroup EnvRC
   autocmd BufRead .envrc set ft=zsh
 augroup END
 " }}}
+" Rest file {{{
+augroup RestFile
+  autocmd!
+  autocmd FileType rest set nowrap
+augroup END
+" }}}
 " }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
