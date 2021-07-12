@@ -587,7 +587,6 @@ require('telescope').setup{
       '--column',
       '--smart-case'
     },
-    prompt_position = "bottom",
     prompt_prefix = "> ",
     selection_caret = "> ",
     entry_prefix = "  ",
@@ -595,7 +594,8 @@ require('telescope').setup{
     selection_strategy = "reset",
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    layout_defaults = {
+    layout_config = {
+      prompt_position = "bottom",
       horizontal = {
         mirror = false,
       },
@@ -605,7 +605,7 @@ require('telescope').setup{
     },
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
-    shorten_path = true,
+    path_display = "shorten",
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     color_devicons = true,
