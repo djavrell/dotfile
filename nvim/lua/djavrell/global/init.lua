@@ -1,11 +1,10 @@
-P = function(v)
+function _G.info(v)
   print(vim.inspect(v))
   return v
 end
 
-D = function(...)
+function _G.dump(...)
   local obj = vim.tbl_map(vim.inspect, {...})
   print(unpack(obj))
+  return ...
 end
-
-require("djavrell.global.opt")
