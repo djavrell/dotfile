@@ -605,6 +605,7 @@ require('telescope').setup{
     },
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
+    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
     path_display = "shorten",
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
@@ -620,7 +621,8 @@ EOF
 
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+" nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 " LSP Trouble {{{
 lua << EOF
