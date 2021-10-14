@@ -97,7 +97,7 @@ Plug 'AndrewRadev/tagalong.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'diepm/vim-rest-console'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'scrooloose/nerdcommenter'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
@@ -107,6 +107,7 @@ Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Git {{{
 Plug 'sindrets/diffview.nvim'
@@ -404,10 +405,10 @@ augroup END
 " Neogit {{{
 lua << EOF
 require("neogit").setup {
-  disable_context_highlighting = true,
-  integrations = {
-    diffview = true
-  }
+ disable_context_highlighting = true,
+ integrations = {
+   diffview = true
+ }
 }
 EOF
 " }}}
@@ -513,9 +514,26 @@ let s:vrc_auto_format_response_patterns = {
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " nvim tree {{{
+" lua << EOF
+" require("nvim-tree").setup {
+" --[[  disable_netrw       = true,
+"   hijack_netrw        = true,
+"   open_on_setup       = false,
+"   auto_close          = true,
+"   open_on_tab         = false,
+"   update_to_buf_dir   = {
+"     enable = true,
+"     auto_open = true,
+"   },
+"   hijack_cursor       = false,
+"   update_cwd          = false,
+"   lsp_diagnostics     = false, ]]--
+" }
+" EOF
+
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals' ]
-let g:nvim_tree_auto_close = 1
-let g:nvim_tree_highlight_opened_files = 1
+" let g:nvim_tree_auto_close = 1
+" let g:nvim_tree_highlight_opened_files = 1
 " let g:nvim_tree_hide_dotfiles = 1
 
 map <silent> <Leader>w :NvimTreeToggle<CR>
@@ -576,7 +594,8 @@ EOF
 " Telescope {{{
 
 lua <<EOF
-require('telescope').setup{
+local Telescope = require('telescope')
+Telescope.setup{
   defaults = {
     vimgrep_arguments = {
       'rg',
@@ -606,7 +625,7 @@ require('telescope').setup{
     file_sorter =  require'telescope.sorters'.get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    path_display = "shorten",
+    path_display = {},
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     color_devicons = true,
@@ -617,12 +636,15 @@ require('telescope').setup{
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
   }
 }
+
+-- extension
+Telescope.load_extension('fzf')
+
 EOF
 
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
-" nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
 " }}}
 " LSP Trouble {{{
 lua << EOF
@@ -690,7 +712,7 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " For navigate diagnostics
 nmap <silent> <Leader>E <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)
+nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)=z
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -854,6 +876,8 @@ command -nargs=0 Ruler2 :call ToggleRuler2()
 " }}}
 " Key mapping {{{
 
+" let @a="0f{a f}i 3ecs"'AÄkbj"
+
 " clean highlight after a search with /
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 " When in termianl, remap tu use Esc
@@ -881,6 +905,10 @@ cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
 "   zz -> set cursor at the center of the screnn
 nnoremap n nzvzz
 nnoremap N Nzvzz
+
+nnoremap <S-L> Lzz
+nnoremap <S-M> Mzz
+nnoremap <S-H> Hzz
 
 " zM -> fold everything
 " zv -> open needed fold
@@ -935,19 +963,26 @@ augroup END
 augroup QuickfixBuffer
   autocmd!
   autocmd FileType qf setlocal cursorline
-  autocmd bufenter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
+  autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
+augroup END
+" }}}
+" DBUI dbout{{{
+augroup DUIout
+  autocmd!
+  autocmd FileType dbout setlocal cursorline
 augroup END
 " }}}
 " HelpFile {{{
 augroup HelpFile
   autocmd!
-  autocmd bufenter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
+  autocmd BufEnter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
 augroup END
 " }}}
 " envrc files {{{
 augroup EnvRC
   autocmd!
-  autocmd BufRead .envrc set ft=zsh
+  autocmd BufRead .envrc set ft=sh
+  autocmd BufRead .env.* set ft=sh
 augroup END
 " }}}
 " Rest file {{{
