@@ -347,42 +347,6 @@ function! g:committia_hooks.edit_open(info)
     nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
 endfunction
 " }}}
-" diffview {{{
-lua <<EOF
-local cb = require'diffview.config'.diffview_callback
-
-require'diffview'.setup {
-  diff_binaries = false,    -- Show diffs for binaries
-  use_icons = true,        -- Requires nvim-web-devicons
-  file_panel = {
-    width = 35,
-  },
-  key_bindings = {
-    -- The `view` bindings are active in the diff buffers, only when the current
-    -- tabpage is a Diffview.
-    view = {
-      ["<tab>"]     = cb("select_next_entry"),  -- Open the diff for the next file
-      ["<s-tab>"]   = cb("select_prev_entry"),  -- Open the diff for the previous file
-      ["<leader>e"] = cb("focus_files"),        -- Bring focus to the files panel
-      ["<leader>b"] = cb("toggle_files"),       -- Toggle the files panel.
-    },
-    file_panel = {
-      ["j"]         = cb("next_entry"),         -- Bring the cursor to the next file entry
-      ["<down>"]    = cb("next_entry"),
-      ["k"]         = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
-      ["<up>"]      = cb("prev_entry"),
-      ["<cr>"]      = cb("select_entry"),       -- Open the diff for the selected entry.
-      ["o"]         = cb("select_entry"),
-      ["R"]         = cb("refresh_files"),      -- Update stats and entries in the file list.
-      ["<tab>"]     = cb("select_next_entry"),
-      ["<s-tab>"]   = cb("select_prev_entry"),
-      ["<leader>e"] = cb("focus_files"),
-      ["<leader>b"] = cb("toggle_files"),
-    }
-  }
-}
-EOF
-" }}}
 " Blamer {{{
 
 let g:blamer_delay = 250
@@ -404,17 +368,6 @@ augroup VimaGIT
 augroup END
 
 " }}}
-
-" Neogit {{{
-lua << EOF
-require("neogit").setup {
- disable_context_highlighting = true,
- integrations = {
-   diffview = true
- }
-}
-EOF
-" }}}
 " }}}
 
 " Database {{{
@@ -427,9 +380,6 @@ let g:db_ui_show_database_icon = 1
 let g:db_ui_use_nerd_fonts = 1
 
 " }}}
-" }}}
-
-" Debugger {{{
 " }}}
 
 " Painless diagraph {{{
@@ -517,37 +467,16 @@ let s:vrc_auto_format_response_patterns = {
 let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " nvim tree {{{
-" lua << EOF
-" require("nvim-tree").setup {
-" --[[  disable_netrw       = true,
-"   hijack_netrw        = true,
-"   open_on_setup       = false,
-"   auto_close          = true,
-"   open_on_tab         = false,
-"   update_to_buf_dir   = {
-"     enable = true,
-"     auto_open = true,
-"   },
-"   hijack_cursor       = false,
-"   update_cwd          = false,
-"   lsp_diagnostics     = false, ]]--
-" }
-" EOF
 
 let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals' ]
 " let g:nvim_tree_auto_close = 1
 " let g:nvim_tree_highlight_opened_files = 1
 " let g:nvim_tree_hide_dotfiles = 1
 
-map <silent> <Leader>w :NvimTreeToggle<CR>
-map <silent> <Leader>x :NvimTreeFindFile<CR>
+" map <silent> <Leader>w :NvimTreeToggle<CR>
+" map <silent> <Leader>x :NvimTreeFindFile<CR>
 
 highlight NvimTreeFolderIcon guibg=blue
-" }}}
-" Comment {{{
-lua << EOF
-require("Comment").setup()
-EOF
 " }}}
 " Nerdcommenter {{{
 
@@ -590,79 +519,6 @@ nnoremap  <silent>  <space>f  :Clap filer<CR>
 " }}}
 " JABS {{{
 nnoremap <silent> <leader>B :JABSOpen<CR>
-" }}}
-" numb.nvim {{{
-lua <<EOF
-require('numb').setup{
-  show_number = true,
-  show_cursorline = true
-}
-EOF
-" }}}
-" Telescope {{{
-
-lua <<EOF
-local Telescope = require('telescope')
-Telescope.setup{
-  defaults = {
-    vimgrep_arguments = {
-      'rg',
-      '--color=never',
-      '--no-heading',
-      '--with-filename',
-      '--line-number',
-      '--column',
-      '--smart-case'
-    },
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    initial_mode = "insert",
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
-    layout_config = {
-      prompt_position = "bottom",
-      horizontal = {
-        mirror = false,
-      },
-      vertical = {
-        mirror = false,
-      },
-    },
-    file_sorter =  require'telescope.sorters'.get_fuzzy_file,
-    file_ignore_patterns = {},
-    generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
-    path_display = {},
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-    color_devicons = true,
-    use_less = true,
-    set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
-    qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
-  }
-}
-
--- extension
-Telescope.load_extension('fzf')
-
-EOF
-
-nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({}))<cr>
-" }}}
-" LSP Trouble {{{
-lua << EOF
-  require("trouble").setup {}
-EOF
-" }}}
-" TODO Trouble {{{
-lua << EOF
-  require("todo-comments").setup {}
-EOF
 " }}}
 " Vista.vim (LSP symbole view & search) {{{
 
