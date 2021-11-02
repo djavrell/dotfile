@@ -30,7 +30,7 @@ alias gcl='git clone --recursive'
 
 alias gcb='git checkout -b'
 alias move='git checkout $(git branch | sd "[\+* ]" "" | fzf --reverse)'
-alias movea='git checkout $(gba | sd "/ remotes/origin" "" | sd "[\+* ]" "" | sort | uniq | fzf --reverse)'
+alias movea='git checkout $(gba | sd "remotes/origin/" "" | sd "[\+* ]" "" | sort | uniq | fzf --reverse)'
 alias movet='git checkout $(git tag | fzf-tmux -r 30% --reverse)'
 alias 'g-'='git checkout -'
 alias master='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d"/" -f2)'
