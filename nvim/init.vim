@@ -87,7 +87,7 @@ Plug 'alx741/vim-hindent'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'puremourning/vimspector'
-Plug 'DrCracket/painless-digraph'
+" Plug 'DrCracket/painless-digraph'
 Plug 'SidOfc/mkdx'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'rhysd/vim-fixjson', { 'for': 'json' }
@@ -382,10 +382,6 @@ let g:db_ui_use_nerd_fonts = 1
 " }}}
 " }}}
 
-" Painless diagraph {{{
-" Use to easily enter characters composed of 2 (ex: <ctrl-k>12 -> ½ or a5 -> あ)
-" }}}
-
 " UUID {{{
 let g:nuuid_no_mappings = 1
 " }}}
@@ -459,12 +455,12 @@ augroup END
 " }}}
 
 " Rest console {{{
-let s:vrc_auto_format_response_patterns = {
-      \ 'json': 'fx',
-      \ 'xml': 'xmllint --format -',
-    \}
-
-let g:vrc_curl_opts = { '-sS': '', '-i': '' }
+" let s:vrc_auto_format_response_patterns = {
+"       \ 'json': 'fx',
+"       \ 'xml': 'xmllint --format -',
+"     \}
+"
+" let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
 " nvim tree {{{
 
@@ -477,59 +473,6 @@ let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals'
 " map <silent> <Leader>x :NvimTreeFindFile<CR>
 
 highlight NvimTreeFolderIcon guibg=blue
-" }}}
-" Nerdcommenter {{{
-
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-" }}}
-" Vim Clap {{{
-
-let g:clap_layout = {
-  \   'height': '30%',
-  \   'row': '10%',
-  \ }
-let g:clap_multi_selection_warning_silent = 1
-let g:clap_preview_size={ '*': 15 }
-let g:clap_preview_direction='UD'
-
-" nnoremap  <silent>  <leader>c :Clap<CR>
-" nnoremap  <silent>  <leader>f :Clap files<CR>
-" nnoremap  <silent>  <leader>ff :Clap files +name-only<CR>
-nnoremap  <silent>  <space>f  :Clap filer<CR>
-" nnoremap  <silent>  <leader>b :Clap buffers<CR>
-" nnoremap  <silent>  <leader>g :Clap grep2<CR>
-" vnoremap  <silent>  <leader>g :Clap grep2 ++query=@visual<CR>
-" nnoremap  <silent>  <leader>G :Clap grep2 ++query=<cword><CR>
-" nnoremap  <silent>  <space>a  :Clap loclist<CR>
-" nnoremap  <silent>  <space>t  :Clap tags<CR>
-" nnoremap  <silent>  <space>T  :Clap proj_tags<CR>
-" nnoremap  <silent>  <space>d  :Clap coc_diagnostics<CR>
-" nnoremap  <silent>  <space>q  :Clap quickfix<CR>
-" nnoremap  <silent>  <space>r  :Clap registers<CR>
-
-" }}}
-" JABS {{{
-nnoremap <silent> <leader>B :JABSOpen<CR>
-" }}}
-" Vista.vim (LSP symbole view & search) {{{
-
-let g:vista_default_executive = 'coc'
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_echo_cursor_strategy='floating_win'
-let g:vista#renderer#enable_icon = 1
-
-augroup Vista
-  autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-augroup END
 " }}}
 " COC {{{
 " Set variables {{{
@@ -783,78 +726,6 @@ nnoremap <leader>z zMzvzz
 vnoremap J :m '>+1<cr>gv=gv
 vnoremap K :m '<-2<cr>gv=gv
 
-" }}}
-" Autocmd {{{
-" Global {{{
-augroup Global
-  autocmd!
-  autocmd BufRead *.conf set ft=conf
-  autocmd BufWritePre * :%s/\s\+$//e
-augroup END
-" }}}
-" NeoVim {{{
-augroup NeoVim
-  autocmd!
-  autocmd FileType vim set fdm=marker fmr={{{,}}} fdl=0
-augroup END
-" }}}
-" Zsh Script {{{
-augroup ZSH
-  autocmd!
-  autocmd FileType sh,zsh
-        \ set fdm=marker |
-        \ set fmr={,}    |
-        \ set fdl=0
-augroup END
-" }}}
-" Conf {{{
-augroup ConfFile
-  autocmd!
-  autocmd FileType conf set foldmarker={,}
-  autocmd FileType conf set foldmethod=marker
-augroup END
-" }}}
-" Log {{{
-augroup Log
-  autocmd!
-  autocmd FileType log
-        \ set nowrap     |
-        \ set fdm=marker |
-        \ set fmr={,}
-augroup END
-" }}}
-" QuickfixBuffer {{{
-augroup QuickfixBuffer
-  autocmd!
-  autocmd FileType qf setlocal cursorline
-  autocmd BufEnter * if (winnr('$') == 1 && &buftype ==# 'quickfix') | q | endif
-augroup END
-" }}}
-" DBUI dbout{{{
-augroup DUIout
-  autocmd!
-  autocmd FileType dbout setlocal cursorline
-augroup END
-" }}}
-" HelpFile {{{
-augroup HelpFile
-  autocmd!
-  autocmd BufEnter * if &buftype ==# 'help' | nnoremap gd <C-]> | endif
-augroup END
-" }}}
-" envrc files {{{
-augroup EnvRC
-  autocmd!
-  autocmd BufRead .envrc set ft=sh
-  autocmd BufRead .env.* set ft=sh
-augroup END
-" }}}
-" Rest file {{{
-augroup RestFile
-  autocmd!
-  autocmd FileType rest set nowrap
-augroup END
-" }}}
 " }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
 set termguicolors
