@@ -13,7 +13,7 @@ function zvm_after_init() {
 
   load "$DOTFILE/zsh/navi.zsh"
 
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  load "~/.fzf.zsh"
 
   eval "$(direnv hook zsh)"
   eval "$(starship init zsh)"

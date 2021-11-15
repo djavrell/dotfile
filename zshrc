@@ -11,7 +11,7 @@ function load_func() {
   done
 }
 autoload -Uz load_func
-#
+
 # prevent the global variable PATH to have duplicate
 typeset -U path
 
@@ -19,7 +19,7 @@ DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 export SUB_MODULES="$DOTFILE/submodules"
 
-SYSTEM_FILE=`uname -s | tr '[:upper:]' '[:lower:]'`
+SYSTEM_FILE=$(uname -s | tr '[:upper:]' '[:lower:]')
 export SYSFILE="$DOTFILE/$SYSTEM_FILE"
 
 # load all core function
