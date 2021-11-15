@@ -1,1 +1,1 @@
-autocmd FileType vim set fdm=marker fmr={{{,}}} fdl=0
+set fdm=marker fmr={{{,}}} fdl=0

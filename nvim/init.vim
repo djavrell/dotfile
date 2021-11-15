@@ -19,6 +19,8 @@ set signcolumn=yes
 set cmdheight=2
 set spelllang=en_us,fr_fr
 
+set splitright
+set splitbelow
 set nocompatible
 set hidden
 set autoread
@@ -461,18 +463,6 @@ augroup END
 "     \}
 "
 " let g:vrc_curl_opts = { '-sS': '', '-i': '' }
-" }}}
-" nvim tree {{{
-
-let g:nvim_tree_ignore = [ '.git', 'node_modules', '.cache', 'target', '.metals' ]
-" let g:nvim_tree_auto_close = 1
-" let g:nvim_tree_highlight_opened_files = 1
-" let g:nvim_tree_hide_dotfiles = 1
-
-" map <silent> <Leader>w :NvimTreeToggle<CR>
-" map <silent> <Leader>x :NvimTreeFindFile<CR>
-
-highlight NvimTreeFolderIcon guibg=blue
 " }}}
 " COC {{{
 " Set variables {{{
