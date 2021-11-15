@@ -52,7 +52,7 @@ endtry
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'hardcoreplayers/gruvbox9'
+Plug 'sainnhe/gruvbox-material'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
 
@@ -718,22 +718,20 @@ vnoremap K :m '<-2<cr>gv=gv
 
 " }}}
 " ColorScheme (keep this section after the plugin on, in case some plugins requires you to set your own highlight) {{{
-set termguicolors
+if has('termguicolors')
+  set termguicolors
+endif
+
 set background=dark
-colorscheme gruvbox9_hard
 
-let g:gruvbox_filetype_hi_groups=1
-let g:gruvbox_plugin_hi_groups=1
+let g:gruvbox_material_palette = 'original'
+let g:gruvbox_material_background = 'hard'
 
-" Remove the colored background for all git status sign in the left gutter
-" (smoother to the eyes)
-augroup hg_gruvbox
-  hi SignifySignAdd     guifg=#b8bb26 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
-  hi SignifySignChange  guifg=#8ec07c guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
-  hi SignifySignDelete  guifg=#fb4934 guibg=#3c3836 guisp=NONE gui=NONE cterm=NONE
-augroup END
+let g:gruvbox_material_enable_italic = 1
+let g:gruvbox_material_enable_bold = 1
+let g:gruvbox_material_enable_italic = 1
 
-highlight! StatusLineNC gui=underline guibg=NONE guifg=#3e4451
+colorscheme gruvbox-material
 " }}}
 
 filetype plugin indent on
