@@ -38,7 +38,9 @@ set guifont=Hasklug_Nerd_Font:h11
 
 " Folding {{{
 syntax enable
-set foldmethod=syntax
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=syntax
 set foldlevel=1
 " }}}
 
@@ -89,7 +91,6 @@ Plug 'alx741/vim-hindent'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'puremourning/vimspector'
-" Plug 'DrCracket/painless-digraph'
 Plug 'SidOfc/mkdx'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 Plug 'rhysd/vim-fixjson', { 'for': 'json' }
@@ -101,7 +102,6 @@ Plug 'diepm/vim-rest-console'
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 " Plug 'kyazdani42/nvim-tree.lua'
 
-" Plug 'scrooloose/nerdcommenter'
 Plug 'numToStr/Comment.nvim'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'matbme/JABS.nvim'
@@ -149,9 +149,9 @@ Plug 'folke/todo-comments.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Have to be defined before loading the plugin
-let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
+" let g:polyglot_disabled = ['markdown'] " mkdx: for vim-polyglot users, it loads Plasticboy's markdown
 " plugin which unfortunately interferes with mkdx list indentation.
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 
@@ -724,7 +724,7 @@ endif
 
 set background=dark
 
-let g:gruvbox_material_palette = 'original'
+let g:gruvbox_material_palette = 'mix'
 let g:gruvbox_material_background = 'hard'
 
 let g:gruvbox_material_enable_italic = 1
