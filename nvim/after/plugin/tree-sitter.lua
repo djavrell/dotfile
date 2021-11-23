@@ -1,6 +1,7 @@
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  ignore_install = { "vim" },
   highlight = {
     enable = true,              -- false will disable the whole extension
     use_languagetree = false,
@@ -25,16 +26,4 @@ require'nvim-treesitter.configs'.setup {
       show_help = "?",
     },
   },
-}
-
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.http = {
-  install_info = {
-    url = "https://github.com/NTBBloodbath/tree-sitter-http", -- local path or git repo
-    files = {"src/parser.c"},
-    branch = "main",
-    generate_requires_npm = true,
-  },
-  filetype = "httpResponse", -- if filetype does not agrees with parser name
-  maintainers = { "@NTBBloodbath" }
 }

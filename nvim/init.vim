@@ -86,7 +86,6 @@ Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafgarland/typescript-vim'
 
 Plug 'derekwyatt/vim-scala'
-Plug 'neovimhaskell/haskell-vim'
 Plug 'alx741/vim-hindent'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
@@ -115,13 +114,11 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 " Git {{{
 Plug 'sindrets/diffview.nvim'
 
-Plug 'Xuyuanp/nerdtree-git-plugin' " git in neerdtree
 Plug 'rhysd/committia.vim'
 Plug 'rbong/vim-flog'
 Plug 'APZelos/blamer.nvim'
 Plug 'rhysd/git-messenger.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
 Plug 'TimUntersberger/neogit'
 Plug 'mhinz/vim-signify'
 " }}}
@@ -159,95 +156,11 @@ call plug#end()
 " Plugins Configuration {{{
 
 " UI {{{
-" Eleline {{{
-set laststatus=2
-let g:eleline_powerline_fonts=1
-" }}}
 " Vim Better Whitespace {{{
 let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'dashboard']
 let g:better_whitespace_operator=''
 
 nmap <silent> <C-Space> :StripWhitespace<CR>
-" }}}
-" Goyo {{{
-
-let g:goyo_linenr = 1
-let g:goyo_width = 150
-
-" Goyo on enter {{{
-function! s:goyo_enter()
-  " tmux {{{
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status off
-    silent !tmux setw window-status off
-    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  endif
-  " }}}
-  " proper quit {{{
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-  " }}}
-
-  setlocal go-=r
-  setlocal statusline=
-  set shortmess+=F
-  set scrolloff=999
-  set noshowmode
-  set noshowcmd
-  set nonumber norelativenumber
-  set laststatus=0
-
-  Limelight
-endfunction
-" }}}
-" Goyo on leave {{{
-function! s:goyo_leave()
-  " tmux {{{
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status on
-    silent !tmux setw window-status on
-    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  endif
-  " }}}
-  " proper quit {{{
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-  " }}}
-
-  setlocal go+=r
-  set shortmess-=F
-  set scrolloff=5
-  set showmode
-  set showcmd
-  set number relativenumber
-  set laststatus=2
-
-  Limelight!
-endfunction
-" }}}
-" augroup {{{
-augroup Goyo
-  autocmd!
-
-  autocmd User GoyoEnter nested call <SID>goyo_enter()
-  autocmd User GoyoLeave nested call <SID>goyo_leave()
-  autocmd BufLeave goyo_pad setlocal norelativenumber
-augroup END
-" }}}
-" }}}
-
-" Venter - Center your buffer {{{
-
-" let g:venter_disable_vertsplit = v:true
-let g:venter_width = &columns/6
 " }}}
 " Fold {{{
 
@@ -255,42 +168,9 @@ set fillchars=fold:\    " space
 let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
 " }}}
 
-" Menu {{{
-source $VIMRUNTIME/menu.vim
-set wildmenu
-set cpo-=<
-set wcm=<C-Z>
-" }}}
-
-" Show Unicode Char {{{
-augroup TrollStopper
-  autocmd!
-  autocmd ColorScheme * highlight TrollStopper ctermbg=red guibg=#FF0000
-augroup END
-" }}}
-" }}}
-
-" QuickScope {{{
-
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-let g:qs_buftype_blacklist = ['terminal', 'nofile']
-
-" Change default color of the hint letter
-augroup qs_colors
-  autocmd!
-  autocmd ColorScheme * highlight QuickScopePrimary guifg='#b57614' gui=underline ctermfg=155 cterm=underline
-  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#427b58' gui=underline ctermfg=81 cterm=underline
-augroup END
 " }}}
 
 " Languages {{{
-" Stylus {{{
-augroup Stylus
-  autocmd!
-  autocmd FileType stylus set foldmarker={,}
-  autocmd FileType stylus set foldmethod=marker
-augroup END
-" }}}
 
 " Typescript {{{
 let g:vim_jsx_pretty_template_tags = ['html', 'jsx', 'tsx']
@@ -303,158 +183,18 @@ augroup scala
 augroup END
 " }}}
 " }}}
-" Haskell {{{
-
-
-let g:haskell_enable_quantification = 1   " to enable highlighting of `forall`
-let g:haskell_enable_recursivedo = 1      " to enable highlighting of `mdo` and `rec`
-let g:haskell_enable_arrowsyntax = 1      " to enable highlighting of `proc`
-let g:haskell_enable_pattern_synonyms = 1 " to enable highlighting of `pattern`
-let g:haskell_enable_typeroles = 1        " to enable highlighting of type roles
-let g:haskell_enable_static_pointers = 1  " to enable highlighting of `static`
-let g:haskell_backpack = 1                " to enable highlighting of backpack keywords
-
-
-" Hindent
-let g:hindent_on_save = 1
-let g:hindent_indent_size = 2
-
-" }}}
 " }}}
 
-" Git {{{
-" Nerdtree git plugin {{{
-let g:NERDTreeGitStatusIndicatorMapCustom = { "Modified": "✹", "Staged": "✚", "Untracked": "✭", "Renamed": "➜", "Unmerged": "═", "Deleted": "✖", "Dirty": "✗", "Clean": "✔︎", "Unknown": "?" }
+" Quickscop
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_buftype_blacklist = ['terminal', 'nofile']
 
-" }}}
-" Committia - Better commit window {{{
-
-let g:committia_edit_window_width = 120
-let g:committia_hooks = {}
-function! g:committia_hooks.edit_open(info)
-    " Additional settings
-    setlocal spell
-
-    " If no commit message, start with insert mode
-    if a:info.vcs ==# 'git' && getline(1) ==# ''
-        startinsert
-    endif
-
-    " Scroll the diff window from insert mode
-    " Map <C-n> and <C-p>
-    imap <buffer><C-n> <Plug>(committia-scroll-diff-down-half)
-    nmap <buffer> ) <Plug>(committia-scroll-diff-down-half)
-
-    imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
-    nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
-endfunction
-" }}}
-" Blamer {{{
-
-let g:blamer_delay = 250
-:command! -nargs=0 Blame call BlamerToggle()
-" }}}
-" Git Gutter {{{
-
-nmap <leader>h <Plug>(GitGutterNextHunk)
-nmap <leader>H <Plug>(GitGutterPrevHunk)
-
-" }}}
-
-" Vimagit {{{
-let g:magit_default_show_all_files=2
-
-augroup VimaGIT
+" Change default color of the hint letter
+augroup qs_colors
   autocmd!
-  autocmd FileType magit set textwidth=80
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#b57614' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#427b58' gui=underline ctermfg=81 cterm=underline
 augroup END
-
-" }}}
-" }}}
-
-" Database {{{
-" vim dadbob {{{
-" }}}
-" vim dadbob UI {{{
-
-let g:db_ui_execute_on_save = 0
-let g:db_ui_show_database_icon = 1
-let g:db_ui_use_nerd_fonts = 1
-
-" }}}
-" }}}
-
-" UUID {{{
-let g:nuuid_no_mappings = 1
-" }}}
-
-" Markdown {{{
-" mkdx {{{
-
-let g:mkdx#settings = { 'auto_update': { 'enable': 1 },
-                        \ 'highlight': { 'enable': 1 },
-                        \ 'enter': { 'shift': 1 },
-                        \ 'links': { 'external': { 'enable': 1 } },
-                        \ 'toc': { 'text': 'Table of Contents', 'update_on_write': 1 },
-                        \ 'fold': { 'enable': 1, 'components': [ 'toc', 'fence' ] },
-                        \ 'map': { 'enable': 1 },
-                        \ 'checkbox': { 'update_tree': 2 }
-                       \}
-
-nmap <leader>+ <Plug>(mkdx-promote-header)
-nmap <leader>- <Plug>(mkdx-demote-header)
-
-augroup mkdx
-    autocmd!
-    " Include dash in 'word'
-    autocmd FileType markdown setlocal iskeyword+=-
-augroup END
-
-" }}}
-
-augroup Markdown
-  autocmd!
-  autocmd FileType markdown
-        \ set textwidth=80  |
-        \ set linebreak     |
-        \ set spell
-augroup END
-" }}}
-
-" Text Format {{{
-" JSON {{{
-let g:fixjson_fix_on_save = 0
-
-augroup JSON
-  autocmd!
-  autocmd FileType json syntax match Comment +\/\/.\+$+
-  autocmd FileType json set foldmethod=syntax
-augroup END
-" }}}
-" CSV {{{
-" Vim table {{{
-function! s:isAtStartOfLine(mapping)
-  let text_before_cursor = getline('.')[0 : col('.')-1]
-  let mapping_pattern = '\V' . escape(a:mapping, '\')
-  let comment_pattern = '\V' . escape(substitute(&l:commentstring, '%s.*$', '', ''), '\')
-  return (text_before_cursor =~? '^' . ('\v(' . comment_pattern . '\v)?') . '\s*\v' . mapping_pattern . '\v$')
-endfunction
-
-inoreabbrev <expr> <bar><bar>
-          \ <SID>isAtStartOfLine('\|\|') ?
-          \ '<c-o>:TableModeEnable<cr><bar><space><bar><left><left>' : '<bar><bar>'
-inoreabbrev <expr> __
-          \ <SID>isAtStartOfLine('__') ?
-          \ '<c-o>:silent! TableModeDisable<cr>' : '__'
-" }}}
-" }}}
-" GPG {{{
-augroup GPG
-  autocmd!
-  autocmd User GnuPG setl textwidth=72
-augroup END
-" }}}
-" }}}
 
 " Rest console {{{
 " let s:vrc_auto_format_response_patterns = {
@@ -673,16 +413,10 @@ command -nargs=0 Ruler2 :call ToggleRuler2()
 " }}}
 " Key mapping {{{
 
-" let @a="0f{a f}i 3ecs"'AÄkbj"
-
 " clean highlight after a search with /
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR>
 " When in termianl, remap tu use Esc
 tnoremap <Esc> <C-\><C-n>
-
-" buffer management
-map <silent> <Leader>d :bp <BAR> bd #<CR>
-map <silent> :BufOnly  :%bd <BAR> e# <BAR> bd #<CR>
 
 " resize pane
 nnoremap <silent> <S-Right> :vertical resize +5<CR>
@@ -693,9 +427,6 @@ nnoremap <silent> <S-Down> :resize -5<CR>
 " circle through tab
 map <silent> <Leader><Right> :tabn<CR>
 map <silent> <Leader><Left>  :tabp<CR>
-
-" force write when the sudo was forgotten
-cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar>edit!
 
 " set next match at the center of the screen
 "   zv -> open needed fold

@@ -1,1 +1,1 @@
-set fdm=syntax
+set foldmethod=syntax
