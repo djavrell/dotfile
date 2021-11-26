@@ -9,7 +9,8 @@ set path+=**
 set tabstop=2       " size of hard tabstop
 set softtabstop=2   " size of tab in insert mode
 set shiftwidth=2    " size of an indents
-set completeopt=menuone,noinsert,noselect,preview
+set completeopt=menu,menuone,noselect
+" set completeopt=menuone,noinsert,noselect,preview
 set inccommand=nosplit " live preview replace with :%s
 set scrolloff=5
 set shortmess+=c
@@ -19,8 +20,6 @@ set signcolumn=yes
 set cmdheight=2
 set spelllang=en_us,fr_fr
 
-set splitright
-set splitbelow
 set nocompatible
 set hidden
 set autoread
@@ -104,7 +103,7 @@ Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'numToStr/Comment.nvim'
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 Plug 'matbme/JABS.nvim'
-Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
+" Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -123,20 +122,36 @@ Plug 'TimUntersberger/neogit'
 Plug 'mhinz/vim-signify'
 " }}}
 
-" COC {{{
-Plug 'neoclide/coc.nvim', { 'branch':  'release' }
+Plug 'L3MON4D3/LuaSnip'
+Plug 'neovim/nvim-lspconfig'
+Plug 'wbthomason/lsp-status.nvim'
 
-Plug 'fannheyward/coc-markdownlint'
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier'
-Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
-Plug 'vn-ki/coc-clap'
-Plug 'neoclide/coc-git'
-Plug 'josa42/coc-lua'
+" Completion {{{
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'saadparwaiz1/cmp_luasnip'
+
+Plug 'onsails/lspkind-nvim'
+" }}}
+
+" COC {{{
+" Plug 'neoclide/coc.nvim', { 'branch':  'release' }
+"
+" Plug 'fannheyward/coc-markdownlint'
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-prettier'
+" Plug 'neoclide/coc-tslint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'scalameta/coc-metals', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'vn-ki/coc-clap'
+" Plug 'neoclide/coc-git'
+" Plug 'josa42/coc-lua'
 
 " }}}
 Plug 'ryanoasis/vim-devicons'
@@ -204,138 +219,138 @@ augroup END
 "
 " let g:vrc_curl_opts = { '-sS': '', '-i': '' }
 " }}}
-" COC {{{
-" Set variables {{{
-" Smaller updatetime for CursorHold & CursorHoldI
-set updatetime=300
-" }}}
-" auto cmd {{{
-
-augroup coc_augroup
-  autocmd!
-  " Highlight symbol under cursor on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,typescriptreact,javascriptreact,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup END
-
-augroup ReactFiletype
-  autocmd!
-  autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
-  autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
-augroup END
-
-" }}}
-" Key mapping {{{
-" General {{{
-" Use <c-space> for trigger completion.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" For navigate diagnostics
-nmap <silent> <Leader>E <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)=z
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Remap for format selected region
-xmap <leader>F  <Plug>(coc-format-selected)
-nmap <leader>F  <Plug>(coc-format-selected)
-
-" Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Remap for do action format
-" nnoremap <silent> F :call CocAction('format')<CR>
-
-" Remap for do codeAction of current line
-nmap <leader>ac <Plug>(coc-codeaction)
-" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-nmap <silent> <space>c  :CocCommand<CR>
-
-" Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Coc-yank {{{
-nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
-" }}}
-
-" Notify coc.nvim that <enter> has been pressed.
-" Currently used for the formatOnType feature.
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" }}}
-" Metals specifics {{{
-nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
-
-" Go to Super method
-nnoremap <silent> gm  :<C-u>CocCommand metals.go-to-super-method<CR>
-" Show hierarchy
-nnoremap <silent> sh  :<C-u>CocCommand metals.super-method-hierarchy<CR>
-
-" Trigger for code actions
-" Make sure `"codeLens.enable": true` is set in your coc config
-nnoremap <leader>cll :<C-u>call CocActionAsync('codeLensAction')<CR>
-
-" Toggle panel with Tree Views
-nnoremap <silent> <space>o :<C-u>CocCommand metals.tvp<CR>
-" Toggle Tree View 'metalsBuild'
-nnoremap <silent> <space>ob :<C-u>CocCommand metals.tvp metalsBuild<CR>
-" Toggle Tree View 'metalsCompile'
-nnoremap <silent> <space>oc :<C-u>CocCommand metals.tvp metalsCompile<CR>
-" Reveal current current class (trait or object) in Tree View 'metalsBuild'
-nnoremap <silent> <space>of :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
-
-" Start Metals Doctor
-command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
-" Manually start build import
-command! -nargs=0 MetalsImport :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })
-" Manually connect with the build server
-command! -nargs=0 MetalsConnect :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })
-" }}}
-" }}}
-" Coc extension {{{
-" Plug 'weirongxu/coc-explorer'
-" }}}
-
-" }}}
+" " COC {{{
+" " Set variables {{{
+" " Smaller updatetime for CursorHold & CursorHoldI
+" set updatetime=300
+" " }}}
+" " auto cmd {{{
+"
+" augroup coc_augroup
+"   autocmd!
+"   " Highlight symbol under cursor on CursorHold
+"   autocmd CursorHold * silent call CocActionAsync('highlight')
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,typescriptreact,javascriptreact,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup END
+"
+" augroup ReactFiletype
+"   autocmd!
+"   autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+"   autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
+" augroup END
+"
+" " }}}
+" " Key mapping {{{
+" " General {{{
+" " Use <c-space> for trigger completion.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <c-space> coc#refresh()
+"
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+"
+" " Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" " Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"
+" " For navigate diagnostics
+" nmap <silent> <Leader>E <Plug>(coc-diagnostic-prev)
+" nmap <silent> <Leader>e <Plug>(coc-diagnostic-next)=z
+"
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+"
+" " Use K for show documentation in preview window
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+"
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+"
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
+"
+" " Remap for format selected region
+" xmap <leader>F  <Plug>(coc-format-selected)
+" nmap <leader>F  <Plug>(coc-format-selected)
+"
+" " Fix autofix problem of current line
+" nmap <leader>qf  <Plug>(coc-fix-current)
+"
+" " Remap for do action format
+" " nnoremap <silent> F :call CocAction('format')<CR>
+"
+" " Remap for do codeAction of current line
+" nmap <leader>ac <Plug>(coc-codeaction)
+" " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+"
+" nmap <silent> <space>c  :CocCommand<CR>
+"
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Coc-yank {{{
+" nnoremap <silent> <Leader>y :<C-u>CocList -A normal yank<CR>
+" " }}}
+"
+" " Notify coc.nvim that <enter> has been pressed.
+" " Currently used for the formatOnType feature.
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" " }}}
+" " Metals specifics {{{
+" nmap <Leader>ws <Plug>(coc-metals-expand-decoration)
+"
+" " Go to Super method
+" nnoremap <silent> gm  :<C-u>CocCommand metals.go-to-super-method<CR>
+" " Show hierarchy
+" nnoremap <silent> sh  :<C-u>CocCommand metals.super-method-hierarchy<CR>
+"
+" " Trigger for code actions
+" " Make sure `"codeLens.enable": true` is set in your coc config
+" nnoremap <leader>cll :<C-u>call CocActionAsync('codeLensAction')<CR>
+"
+" " Toggle panel with Tree Views
+" nnoremap <silent> <space>o :<C-u>CocCommand metals.tvp<CR>
+" " Toggle Tree View 'metalsBuild'
+" nnoremap <silent> <space>ob :<C-u>CocCommand metals.tvp metalsBuild<CR>
+" " Toggle Tree View 'metalsCompile'
+" nnoremap <silent> <space>oc :<C-u>CocCommand metals.tvp metalsCompile<CR>
+" " Reveal current current class (trait or object) in Tree View 'metalsBuild'
+" nnoremap <silent> <space>of :<C-u>CocCommand metals.revealInTreeView metalsBuild<CR>
+"
+" " Start Metals Doctor
+" command! -nargs=0 MetalsDoctor :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'doctor-run' })
+" " Manually start build import
+" command! -nargs=0 MetalsImport :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-import' })
+" " Manually connect with the build server
+" command! -nargs=0 MetalsConnect :call CocRequestAsync('metals', 'workspace/executeCommand', { 'command': 'build-connect' })
+" " }}}
+" " }}}
+" " Coc extension {{{
+" " Plug 'weirongxu/coc-explorer'
+" " }}}
+"
+" " }}}
 
 " }}}
 " Functions {{{
