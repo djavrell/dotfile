@@ -10,3 +10,4 @@ pgcli/.config/pgcli/history
 **/*private*
 **/*work*
 local.sh
+local.d/
