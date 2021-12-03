@@ -24,3 +24,7 @@ augroup GPG
   autocmd!
   autocmd User GnuPG setl textwidth=72
 augroup END
+
+augroup Scala
+  autocmd BufRead,BufNewFile *.sbt set filetype=scala
+augroup END

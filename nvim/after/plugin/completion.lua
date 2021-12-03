@@ -1,6 +1,9 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 
+local lspkind = require "lspkind"
+lspkind.init()
+
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
@@ -39,7 +42,6 @@ cmp.setup({
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<C-e>'] = cmp.mapping({
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
@@ -54,12 +56,13 @@ cmp.setup({
     { name = 'buffer', keyword_length = 5 }
   }),
   formatting = {
-    format = require("lspkind").cmp_format({with_text = true, menu = ({
+    format = require("lspkind").cmp_format({with_text = true, menu = {
       buffer = "[Buffer]",
       nvim_lsp = "[LSP]",
       luasnip = "[LuaSnip]",
       nvim_lua = "[Lua]",
-    })}),
+      ['vim-dadbod-completion'] = "[DB]",
+    }}),
   },
   experimental = {
     native_menu = false,
@@ -82,7 +85,7 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local servers = { 'metals', 'tsserver', 'bashls' }
+local servers = { 'metals', 'tsserver', 'bashls', 'jsonls' }
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 for _, lsp in ipairs(servers) do
@@ -94,3 +97,17 @@ for _, lsp in ipairs(servers) do
     },
   }
 end
+
+_ = vim.cmd [[
+  augroup DadbodSql
+    au!
+    autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
+  augroup END
+]]
+
+_ = vim.cmd [[
+  augroup CmpZsh
+    au!
+    autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
+  augroup END
+]]
