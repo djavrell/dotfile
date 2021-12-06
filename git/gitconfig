@@ -22,6 +22,7 @@
   excludesfile  = /Users/kpr/.gitignore
   pager         = delta
   autocrlf      = input
+  blame         = delta
 
 [alias]
   lola  = log --decorate --graph --abbrev-commit --all --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
@@ -53,23 +54,31 @@
 [pager]
   difftool = true
 
-; [diff]
-;   tool = icdiff
+[diff]
+  colorMoved = default
 
 [difftool]
   prompt = false
 
-[difftool "icdiff"]
-  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
-
 [delta]
+  navigate = true
   line-numbers = true
+  features = decorations
+
+[delta "interactive"]
+  keep-plus-minus-markers = false
+
+[delta "decorations"]
+  commit-decoration-style = blue ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = blue box
+  hunk-header-file-style = red
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
 
 [interactive]
-  diffFilter = delta --color-only
-
-[icdiff]
-  options = --highlight --line-numbers
+  diffFilter = delta --color-only --features=interactive
 
 [color "diff-hightlight"]
   oldNormal     = red bold
