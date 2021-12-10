@@ -2,7 +2,9 @@ local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 
 local lspkind = require "lspkind"
-lspkind.init()
+lspkind.init({
+  with_text = true
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer

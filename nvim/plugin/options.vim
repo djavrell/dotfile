@@ -42,8 +42,3 @@ set foldexpr=nvim_treesitter#foldexpr()
 set foldlevel=1
 " }}}
 
-try
-  source $XDG_CONFIG_HOME/local_nvim.vim
-catch
-  let mapleader = '='
-endtry

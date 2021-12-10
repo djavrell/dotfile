@@ -2,6 +2,9 @@
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
 Plug 'sainnhe/gruvbox-material'
 " Handle and update colorscheme tamplate
 Plug 'lifepillar/vim-colortemplate'
@@ -47,16 +50,13 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'diepm/vim-rest-console'
-Plug 'kyazdani42/nvim-web-devicons' " for file icons
 " Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'numToStr/Comment.nvim'
-" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
-Plug 'matbme/JABS.nvim'
-" Plug 'liuchengxu/vista.vim' ", { 'on': ['Vista'] }
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
+Plug 'matbme/JABS.nvim'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
@@ -89,6 +89,8 @@ Plug 'onsails/lspkind-nvim'
 " }}}
 
 Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+
 Plug 'folke/trouble.nvim'
 Plug 'folke/todo-comments.nvim'
 
@@ -97,5 +99,11 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 " }}}
+
+try
+  source $XDG_CONFIG_HOME/local_nvim.vim
+catch
+  let mapleader = '='
+endtry
 
 filetype plugin indent on
