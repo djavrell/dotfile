@@ -28,3 +28,8 @@ augroup END
 augroup Scala
   autocmd BufRead,BufNewFile *.sbt set filetype=scala
 augroup END
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank { higroup='IncSearch', timeout=200 }
+augroup END

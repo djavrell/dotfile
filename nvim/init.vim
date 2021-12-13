@@ -26,11 +26,12 @@ Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-expand-region'
 Plug 'romgrk/equal.operator'
-Plug 'unblevable/quick-scope'
 Plug 'nacro90/numb.nvim'
 Plug 'andrewradev/splitjoin.vim'
 Plug 'christianrondeau/vim-base64'
 Plug 'kburdett/vim-nuuid'
+
+Plug 'phaazon/hop.nvim'
 
 Plug 'ianks/vim-tsx'
 Plug 'maxmellon/vim-jsx-pretty'
