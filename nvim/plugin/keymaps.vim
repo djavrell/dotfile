@@ -32,3 +32,5 @@ nnoremap <leader>z zMzvzz
 vnoremap J :m '>+1<cr>gv=gv
 vnoremap K :m '<-2<cr>gv=gv
 
+nnoremap <silent> <c-n> :cnext<cr>zvzz
+nnoremap <silent> <c-p> :cprev<cr>zvzz
