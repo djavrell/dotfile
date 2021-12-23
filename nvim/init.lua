@@ -1,3 +1,4 @@
+vim.cmd([[
 " Plugins definition {{{
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -108,3 +109,4 @@ catch
 endtry
 
 filetype plugin indent on
+]])
