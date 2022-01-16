@@ -34,6 +34,49 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 end
 
+local kind_names = {
+  nvim_lsp = "[LSP]",
+  path = "[Path]",
+  calc = "[Calc]",
+  luasnip = "[Snippet]",
+  buffer = "[Buffer]",
+  ['vim-dadbod-completion'] = "[DB]",
+}
+local kind_dup = {
+  buffer = 1,
+  path = 1,
+  nvim_lsp = 0,
+  luasnip = 1,
+}
+local kind_dup_default = 0
+local kind_icons = {
+  Class = " ",
+  Color = " ",
+  Constant = "ﲀ ",
+  Constructor = " ",
+  Enum = "練",
+  EnumMember = " ",
+  Event = " ",
+  Field = " ",
+  File = "",
+  Folder = " ",
+  Function = " ",
+  Interface = "ﰮ ",
+  Keyword = " ",
+  Method = " ",
+  Module = " ",
+  Operator = "",
+  Property = " ",
+  Reference = " ",
+  Snippet = " ",
+  Struct = " ",
+  Text = " ",
+  TypeParameter = " ",
+  Unit = "塞",
+  Value = " ",
+  Variable = " ",
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -58,13 +101,17 @@ cmp.setup({
     { name = 'buffer', keyword_length = 5 }
   }),
   formatting = {
-    format = require("lspkind").cmp_format({with_text = true, menu = {
-      buffer = "[Buffer]",
-      nvim_lsp = "[LSP]",
-      luasnip = "[LuaSnip]",
-      nvim_lua = "[Lua]",
-      ['vim-dadbod-completion'] = "[DB]",
-    }}),
+      fields = { "kind", "abbr", "menu" },
+      kind_icons = kind_icons,
+      source_names = kind_name,
+      duplicates = kind_dup,
+      duplicates_default = 0,
+      format = function(entry, vim_item)
+        vim_item.kind = kind_icons[vim_item.kind]
+        vim_item.menu = kind_names[entry.source.name]
+        vim_item.dup = kind_dup[entry.source.name] or kind_dup_default
+        return vim_item
+      end,
   },
   experimental = {
     native_menu = false,

@@ -1,6 +1,6 @@
 local map = vim.api.nvim_set_keymap
 
---[[ require('nvim-tree').setup {
+require('nvim-tree').setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -14,7 +14,7 @@ local map = vim.api.nvim_set_keymap
   diagnostics         = {
     enable= true
   },
-} ]]
+}
 
 map('n', '<leader>w', ':NvimTreeToggle<cr>', { silent = true, noremap = true })
 map('n', '<leader>x', ':NvimTreeFindFile<cr>', { silent = true, noremap = true })
