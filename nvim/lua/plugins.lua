@@ -96,4 +96,12 @@ return require('packer').startup(function()
   use 'folke/todo-comments.nvim'
 
   use {'nvim-treesitter/nvim-treesitter', run = 'TSUpdate'}
+  use { 'nvim-treesitter/playground' }
+
+  use {'kevinhwang91/nvim-bqf', ft = 'qf'}
+  use {'junegunn/fzf', run = function()
+      vim.fn['fzf#install']()
+  end
+  }
+
 end)
