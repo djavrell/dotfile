@@ -11,8 +11,14 @@ require('nvim-tree').setup {
   },
   hijack_cursor       = false,
   update_cwd          = false,
-  diagnostics         = {
-    enable= true
+  diagnostics = {
+    enable = true,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
   },
 }
 
