@@ -1,4 +1,4 @@
 setlocal iskeyword+=-
-set textwidth=80
-set linebreak
-set spell
+setlocal textwidth=80
+setlocal linebreak
+setlocal spell
