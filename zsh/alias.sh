@@ -21,7 +21,7 @@ alias ping='prettyping'
 
 alias vim="nvim"
 alias vimdb="vim +DBUIToggle"
-alias vimup="vim +PlugUpdate"
+alias vimup="vim +PackerSync"
 alias flog='vim +Flog'
 
 # tmux

@@ -95,7 +95,7 @@ return require('packer').startup(function()
   use 'folke/trouble.nvim'
   use 'folke/todo-comments.nvim'
 
-  use {'nvim-treesitter/nvim-treesitter', run = 'TSUpdate'}
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use { 'nvim-treesitter/playground' }
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
