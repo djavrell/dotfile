@@ -26,7 +26,7 @@ nnoremap <S-H> Hzz
 " zM -> fold everything
 " zv -> open needed fold
 " zz -> set cursor at the center of the screen
-nnoremap <leader>z zMzvzz
+nnoremap <leader>zz zMzvzz
 "
 " Move visual selection
 vnoremap J :m '>+1<cr>gv=gv
