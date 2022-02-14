@@ -1,10 +1,6 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
-
 local lspkind = require "lspkind"
-lspkind.init({
-  with_text = true
-})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -25,7 +21,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  -- buf_set_keymap('n', '<leader>ac', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '<leader>E', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
@@ -33,6 +30,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<space>s', ':Telescope lsp_dynamic_workspace_symbols<CR>', opts)
 end
 
 local kind_names = {
@@ -102,17 +100,11 @@ cmp.setup({
     { name = 'buffer', keyword_length = 5 }
   }),
   formatting = {
-      fields = { "kind", "abbr", "menu" },
-      kind_icons = kind_icons,
-      source_names = kind_name,
-      duplicates = kind_dup,
-      duplicates_default = 0,
-      format = function(entry, vim_item)
-        vim_item.kind = kind_icons[vim_item.kind]
-        vim_item.menu = kind_names[entry.source.name]
-        vim_item.dup = kind_dup[entry.source.name] or kind_dup_default
-        return vim_item
-      end,
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      maxwidth = 50,
+      symbol_map = kind_icons,
+    })
   },
   experimental = {
     native_menu = false,
