@@ -1,12 +1,22 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 local lspkind = require "lspkind"
+local ts_utils_lsp = require("nvim-lsp-ts-utils")
+
+local ts_utils = function(client, bufnr)
+  ts_utils_lsp.setup({})
+  ts_utils_lsp.setup_client(client)
+end
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  if (client.name == "tsserver") then
+    ts_utils(client, bufner)
+  end
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
