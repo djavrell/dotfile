@@ -1,22 +1,21 @@
 local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
-local lspkind = require "lspkind"
+local lspkind = require("lspkind")
 local ts_utils_lsp = require("nvim-lsp-ts-utils")
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local ts_utils = function(client, bufnr)
-  ts_utils_lsp.setup({})
-  ts_utils_lsp.setup_client(client)
-end
+local additionalSetup = {
+  tsserver = function(client, bufnr)
+    ts_utils_lsp.setup({})
+    ts_utils_lsp.setup_client(client)
+  end
+}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  if (client.name == "tsserver") then
-    ts_utils(client, bufner)
-  end
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -41,6 +40,8 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', '<space>s', ':Telescope lsp_dynamic_workspace_symbols<CR>', opts)
+
+  additionalSetup[client.name](client, bufnr)
 end
 
 local kind_names = {
@@ -138,7 +139,6 @@ cmp.setup.cmdline(':', {
 })
 
 local servers = { 'metals', 'tsserver', 'bashls', 'jsonls' }
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
