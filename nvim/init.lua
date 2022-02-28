@@ -3,6 +3,7 @@ if require "djavrell.init_config"() then
 end
 
 require('plugins')
+require('djavrell.globals')
 
 vim.cmd([[
   try
