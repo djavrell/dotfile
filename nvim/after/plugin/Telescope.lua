@@ -40,17 +40,36 @@ Telescope.setup{
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
     grep_previewer = require'telescope.previewers'.vim_buffer_vimgrep.new,
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
+    mappings = {
+      i = {
+        -- IMPORTANT
+        -- either hot-reloaded or `function(prompt_bufnr) telescope.extensions.hop.hop end`
+        ["<C-h>"] = R("telescope").extensions.hop.hop,  -- hop.hop_toggle_selection
+        -- custom hop loop to multi selects and sending selected entries to quickfix list
+        ["<C-space>"] = function(prompt_bufnr)
+          local opts = {
+            callback = actions.toggle_selection,
+            loop_callback = actions.send_selected_to_qflist,
+          }
+          require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
+        end,
+      },
+    }
   },
   extensions = {
     fzf = {
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
+    },
+    hop = {
+
     }
   }
 }
 
 -- extension
 Telescope.load_extension('fzf')
+Telescope.load_extension('hop')
 
 local opt = { silent = true, noremap = true }
 map('n', '<leader>f', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>', opt)
