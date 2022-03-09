@@ -12,11 +12,10 @@ function zvm_after_init() {
   load "$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
   load "$DOTFILE/zsh/navi.zsh"
-  load "$DOTFILE/startship-init.zsh"
 
   load "~/.fzf.zsh"
 
   eval "$(direnv hook zsh)"
-  # eval "$(starship init zsh)"
+  eval "$(starship init zsh)"
   eval "$(fnm env --use-on-cd)"
 }
