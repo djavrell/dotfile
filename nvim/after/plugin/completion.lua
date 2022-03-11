@@ -117,8 +117,10 @@ cmp.setup({
       symbol_map = kind_icons,
     })
   },
+  view = {
+    entries = 'native'
+  },
   experimental = {
-    native_menu = false,
     ghost_text = true
   }
 })
