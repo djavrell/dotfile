@@ -34,6 +34,9 @@ set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set guifont=Hasklug_Nerd_Font:h11
 
+" global status line
+set laststatus=3
+
 set lazyredraw " Do not redraw screen in the middle of a macro. Makes them complete faster.
 
 " Folding {{{
