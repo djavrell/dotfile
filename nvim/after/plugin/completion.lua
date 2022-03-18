@@ -4,12 +4,16 @@ local lspkind = require("lspkind")
 local ts_utils_lsp = require("nvim-lsp-ts-utils")
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local additionalSetup = {
+local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
   end
-}
+}, {
+  __index = function()
+    return function() end
+  end
+})
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -140,7 +144,12 @@ cmp.setup.cmdline(':', {
   })
 })
 
-local servers = { 'metals', 'tsserver', 'bashls', 'jsonls' }
+local servers = {
+  'metals',
+  'tsserver',
+  'bashls',
+  -- 'clangd',
+}
 
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
