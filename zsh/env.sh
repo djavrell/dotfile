@@ -32,7 +32,7 @@ export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashr
 export FZF_COMPLETION_TRIGGER='%'
 
 # GPG
-export GPG_TTY=`tty`
+export GPG_TTY=$(tty)
 
 # SSH
 export SSH_KEY_PATH="~/.ssh/rsa_id"
