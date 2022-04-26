@@ -93,6 +93,8 @@ return require('packer').startup(function()
   use 'onsails/lspkind-nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
+  use 'lukas-reineke/lsp-format.nvim'
+
   use 'ryanoasis/vim-devicons'
   use 'kyazdani42/nvim-web-devicons' -- for file icons
 
