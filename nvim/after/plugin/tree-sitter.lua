@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = { "bash", "c", "cpp", "cmake", "css", "html", "http", "json", "scala", "scss", "tsx", "vim", "yaml", "lua", "typescript" },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {},
   highlight = {
@@ -83,4 +83,13 @@ parser_config.sql = {
     branch = "main", -- default branch in case of git repo if different from master
   },
   filetype = "sql", -- if filetype does not match the parser name
+}
+
+parser_config.markdown = {
+  install_info = {
+    url = "https://github.com/MDeiml/tree-sitter-markdown",
+    files = {"src/parser.c"},
+    branch = "main",
+  },
+  filetype = "md",
 }
