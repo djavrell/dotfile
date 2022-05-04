@@ -16,7 +16,7 @@ return require('packer').startup(function()
   use 'hsanson/vim-openapi'
 
   use 'benknoble/vimpbcopy'
-  use 'psliwka/vim-smoothie'
+  use { 'psliwka/vim-smoothie', commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }
   use 'liuchengxu/eleline.vim'
   use 'ntpeters/vim-better-whitespace'
   use 'junegunn/goyo.vim'
