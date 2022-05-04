@@ -89,6 +89,7 @@ return require('packer').startup(function()
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-cmdline'
   use 'saadparwaiz1/cmp_luasnip'
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
 
   use 'onsails/lspkind-nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
