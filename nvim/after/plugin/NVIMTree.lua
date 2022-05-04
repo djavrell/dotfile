@@ -4,14 +4,14 @@ require('nvim-tree').setup {
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
-  update_to_buf_dir   = {
-    enable = true,
-    auto_open = true,
-  },
-  hijack_cursor       = false,
+  -- update_focused_file = {
+  --   enable = true,
+  -- },
+  hijack_cursor       = true,
   update_cwd          = false,
   diagnostics = {
     enable = true,
+    show_on_dirs = true,
     icons = {
       hint = "",
       info = "",
@@ -19,6 +19,9 @@ require('nvim-tree').setup {
       error = "",
     }
   },
+  git = {
+    enable = true
+  }
 }
 
 map('n', '<leader>w', ':NvimTreeToggle<cr>', { silent = true, noremap = true })
