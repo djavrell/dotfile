@@ -113,9 +113,8 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
-    { name = 'path' },
     { name = 'luasnip' },
-    { name = 'buffer', keyword_length = 5 }
+    { name = 'path' },
   }),
   formatting = {
     format = lspkind.cmp_format({
@@ -135,9 +134,11 @@ cmp.setup({
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
-  sources = {{ name = 'buffer' }},
+  sources = cmp.config.sources({
+    { name = 'buffer' }
+  }),
   view = {
-    entries = { name="custom" }
+    entries = { name = 'custom' }
   }
 })
 
@@ -145,11 +146,11 @@ cmp.setup.cmdline('/', {
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' },
-    { name = 'cmdline' }
+    { name = 'cmdline' },
+    { name = 'path' }
   }),
   view = {
-    entries = { name="custom" }
+    entries = { name = 'custom' }
   }
 })
 
