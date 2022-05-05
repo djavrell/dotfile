@@ -54,7 +54,16 @@ Telescope.setup{
           }
           require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
         end,
-        ["<c-q>"] = actions.send_to_qflist
+        ["<c-a>"] = actions.add_to_qflist,
+        ["<c-A>"] = actions.add_selected_to_qflist,
+        ["<c-q>"] = function(bufnr)
+          actions.send_to_qflist(bufnr)
+          actions.open_qflist(bufnr)
+        end,
+        ["<c-Q>"] = function(bufnr)
+          actions.send_selected_to_qflist(bufnr)
+          actions.open_qflist(bufnr)
+        end
       },
     }
   },
