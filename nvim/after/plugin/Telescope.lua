@@ -1,5 +1,6 @@
 local map = vim.api.nvim_set_keymap
 local Telescope = require('telescope')
+local actions = require('telescope.actions')
 
 Telescope.setup{
   defaults = {
@@ -53,6 +54,7 @@ Telescope.setup{
           }
           require("telescope").extensions.hop._hop_loop(prompt_bufnr, opts)
         end,
+        ["<c-q>"] = actions.send_to_qflist
       },
     }
   },
