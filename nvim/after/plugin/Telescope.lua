@@ -90,8 +90,9 @@ Telescope.setup{
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
     },
-    hop = {
-
+    hop = {},
+    ['ui-select'] = {
+      require("telescope.themes").get_cursor {}
     }
   }
 }
@@ -99,6 +100,7 @@ Telescope.setup{
 -- extension
 Telescope.load_extension('fzf')
 Telescope.load_extension('hop')
+Telescope.load_extension('ui-select')
 
 local opt = { silent = true, noremap = true }
 map('n', '<leader>f', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>', opt)
