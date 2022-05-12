@@ -107,3 +107,4 @@ map('n', '<leader>f', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>'
 map('n', '<leader>g', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', opt)
 map('n', '<leader>b', '<cmd>lua require(\'telescope.builtin\').buffers(require(\'telescope.themes\').get_dropdown({}))<cr>', opt)
 map('n', '<space>r', '<cmd>lua require(\'telescope.builtin\').resume()<cr>', opt)
+map('n', '<space>d', '<cmd>lua require(\'telescope.builtin\').commands(require(\'telescope.themes\').get_dropdown({}))<cr>', opt)
