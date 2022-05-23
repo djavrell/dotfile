@@ -2,9 +2,6 @@ if require "djavrell.init_config"() then
   return
 end
 
-require('plugins')
-require('djavrell.globals')
-
 vim.cmd([[
   try
     source $XDG_CONFIG_HOME/local_nvim.vim
@@ -14,3 +11,10 @@ vim.cmd([[
 
   filetype plugin indent on
 ]])
+
+require('plugins')
+require('djavrell.globals')
+
+require('djavrell.telescope.setup')
+require('djavrell.telescope.mapping')
+

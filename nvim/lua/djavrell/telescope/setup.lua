@@ -1,8 +1,8 @@
-local map = vim.api.nvim_set_keymap
 local Telescope = require('telescope')
 local actions = require('telescope.actions')
+local actions_layout = require('telescope.actions.layout')
 
-Telescope.setup{
+Telescope.setup {
   defaults = {
     vimgrep_arguments = {
       'rg',
@@ -70,7 +70,12 @@ Telescope.setup{
           actions.send_selected_to_qflist(bufnr)
           actions.open_qflist(bufnr)
         end,
-        ['<c-d>'] = actions.delete_buffer
+        ['<c-d>'] = actions.delete_buffer,
+        ['<c-p>'] = actions_layout.toggle_preview,
+        ['<c-j>'] = actions.preview_scrolling_down,
+        ['<c-k>'] = actions.preview_scrolling_up,
+        ['<c-v>'] = actions.file_vsplit,
+        ['<c-t>'] = actions.file_tab,
       },
       n = {
         ['d'] = actions.delete_buffer,
@@ -82,6 +87,11 @@ Telescope.setup{
           actions.send_selected_to_qflist(bufnr)
           actions.open_qflist(bufnr)
         end,
+        ['p'] = actions_layout.toggle_preview,
+        ['<c-j>'] = actions.preview_scrolling_down,
+        ['<c-k>'] = actions.preview_scrolling_up,
+        ['<c-v>'] = actions.file_vsplit,
+        ['<c-t>'] = actions.file_tab,
       }
     }
   },
@@ -102,9 +112,3 @@ Telescope.load_extension('fzf')
 Telescope.load_extension('hop')
 Telescope.load_extension('ui-select')
 
-local opt = { silent = true, noremap = true }
-map('n', '<leader>f', '<cmd>lua require(\'telescope.builtin\').find_files()<cr>', opt)
-map('n', '<leader>g', '<cmd>lua require(\'telescope.builtin\').live_grep()<cr>', opt)
-map('n', '<leader>b', '<cmd>lua require(\'telescope.builtin\').buffers(require(\'telescope.themes\').get_dropdown({}))<cr>', opt)
-map('n', '<space>r', '<cmd>lua require(\'telescope.builtin\').resume()<cr>', opt)
-map('n', '<space>d', '<cmd>lua require(\'telescope.builtin\').commands(require(\'telescope.themes\').get_dropdown({}))<cr>', opt)
