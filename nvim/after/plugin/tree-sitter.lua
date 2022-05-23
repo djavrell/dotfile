@@ -1,10 +1,25 @@
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "bash", "c", "cpp", "cmake", "css", "html", "http", "json", "scala", "scss", "tsx", "vim", "yaml", "lua", "typescript" },
+  ensure_installed = {
+    "bash",
+    "c",
+    "cpp",
+    "cmake",
+    "css",
+    "html",
+    "http",
+    "json",
+    "scala",
+    "scss",
+    "tsx",
+    "vim",
+    "yaml",
+    "lua",
+    "typescript",
+  },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {},
   highlight = {
     enable = true,              -- false will disable the whole extension
-    use_languagetree = false,
     additional_vim_regex_highlighting = false,
   },
   playground = {
@@ -52,6 +67,7 @@ require'nvim-treesitter.configs'.setup {
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
         ["ic"] = "@class.inner",
+        ["aco"] = "@comment.outer"
       },
     },
     swap = {
@@ -72,6 +88,15 @@ require'nvim-treesitter.configs'.setup {
       },
     },
   },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "<leader>v",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  }
 }
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
