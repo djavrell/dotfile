@@ -1,6 +1,17 @@
--- vim.cmd [[ packadd packer.nvim ]]
+return require('packer').startup(function(use)
 
-return require('packer').startup(function()
+  local local_use = function(plug, github, opts)
+    opts = opts or {}
+
+    if vim.fn.isdirectory(vim.fn.expand("~/nvimPlugins/" .. plug)) then
+      opts[1] = "~/nvimPlugins/" .. plug
+    else
+      opts[1] = vim.fn.expand("%s/%s", github, plug)
+    end
+
+    use(opts)
+  end
+
   use 'wbthomason/packer.nvim'
 
   use 'kyazdani42/nvim-tree.lua'
@@ -109,7 +120,7 @@ return require('packer').startup(function()
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
 
-  use 'kevinhwang91/nvim-bqf'
+  local_use("nvim-bqf", "kevinhwang91")
   use {'junegunn/fzf', run = function()
       vim.fn['fzf#install']()
   end

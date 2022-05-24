@@ -12,8 +12,8 @@ vim.cmd([[
   filetype plugin indent on
 ]])
 
-require('plugins')
 require('djavrell.globals')
+require('plugins')
 
 require('djavrell.telescope.setup')
 require('djavrell.telescope.mapping')
