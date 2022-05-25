@@ -120,7 +120,8 @@ return require('packer').startup(function(use)
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
 
-  local_use("nvim-bqf", "kevinhwang91")
+  -- local_use("nvim-bqf", "kevinhwang91")
+  use 'kevinhwang91/nvim-bqf'
   use {'junegunn/fzf', run = function()
       vim.fn['fzf#install']()
   end
