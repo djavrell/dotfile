@@ -1,4 +1,4 @@
-local map = vim.api.nvim_set_keymap
+local map = vim.keymap.set
 
 require('nvim-tree').setup {
   disable_netrw       = true,

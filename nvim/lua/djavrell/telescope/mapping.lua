@@ -12,14 +12,14 @@ local Tmap = function(key, f, option)
   local rhs = string.format("<cmd>lua R('djavrell.telescope')['%s'](TelescopeArgs['%s'])<cr>", f, map_key)
 
   local opt = { silent = true, noremap = true }
-  vim.api.nvim_set_keymap('n', key, rhs, opt)
+  vim.keymap.set('n', key, rhs, opt)
 end
 
 Tmap('<leader>f', 'find_files')
 Tmap('<leader>g', 'live_grep')
 Tmap('<leader>G', 'grep_string')
 Tmap('<leader>b', 'buffers')
-Tmap('<space>r', 'resume')
+-- Tmap('<space>r', 'resume')
 Tmap('<space>d', 'commands')
 Tmap('<space>sh', 'search_history')
 Tmap('<space>qh', 'quickfixhistory')

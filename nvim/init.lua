@@ -17,4 +17,3 @@ require('plugins')
 
 require('djavrell.telescope.setup')
 require('djavrell.telescope.mapping')
-
