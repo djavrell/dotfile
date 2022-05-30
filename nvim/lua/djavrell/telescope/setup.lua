@@ -84,7 +84,7 @@ Telescope.setup {
           actions.open_qflist(bufnr)
         end,
         ['q'] = function(bufnr)
-          actions.send_selected_to_qflist(bufnr)
+          actions.send_to_qflist(bufnr)
           actions.open_qflist(bufnr)
         end,
         ['p'] = actions_layout.toggle_preview,
