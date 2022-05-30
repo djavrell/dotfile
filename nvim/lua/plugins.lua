@@ -117,6 +117,9 @@ return require('packer').startup(function(use)
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
 
+  -- DAP
+  use 'mfussenegger/nvim-dap'
+
   use 'kevinhwang91/nvim-bqf'
   use {'junegunn/fzf', run = function()
       vim.fn['fzf#install']()

@@ -15,5 +15,7 @@ vim.cmd([[
 require('djavrell.globals')
 require('plugins')
 
+require('djavrell.dap.setup')
+
 require('djavrell.telescope.setup')
 require('djavrell.telescope.mapping')
