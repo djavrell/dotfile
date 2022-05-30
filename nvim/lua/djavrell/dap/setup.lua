@@ -18,16 +18,23 @@ local adapters_bin = {
   node2 = {
     folder = home .. "/bin/vscode-node-debug2/out/src/",
     bin = "nodeDebug.js"
-  }
+  },
+  nlua = "enable"
 }
 
 local has_one = false
 for adapter, conf in pairs(adapters_bin) do
-  if  vim.fn.isdirectory(conf.folder) then
+  local has_dir = type(conf) == "table" and vim.fn.isdirectory(conf.folder)
+  local test = type(conf) == "string" and conf == "enable"
+  log.info("dap", string.format("loading %s", adapter))
+  log.info("dap", string.format("%s or %s => %s", has_dir, test, has_dir or test))
+  if has_dir or test then
 
     local c = configs[adapter](conf)
-    dap.adapters[adapter] = c.adapter
-    dap.configurations[c.configuration_key or adapter] = c.configuration
+    if c then
+      dap.adapters[adapter] = c.adapter
+      dap.configurations[c.configuration_key or adapter] = c.configuration
+    end
 
     mappings[adapter]()
 

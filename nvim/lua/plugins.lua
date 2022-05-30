@@ -13,6 +13,7 @@ return require('packer').startup(function(use)
   end
 
   use 'wbthomason/packer.nvim'
+  use 'tjdevries/vlog.nvim'
 
   use 'kyazdani42/nvim-tree.lua'
 

@@ -9,6 +9,10 @@ local log = function(level, loc, msg)
   ]], level, loc, msg))
 end
 
+function M.info(...)
+  return log("None", ...)
+end
+
 function M.warn(...)
   return log("WarningMsg", ...)
 end

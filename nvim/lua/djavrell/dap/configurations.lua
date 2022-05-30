@@ -59,7 +59,7 @@ end
 return setmetatable({}, {
   __index = function(_, k)
     if not M[k] then
-      log.warn("dap.adapter.configuration", string.format("cannot find mapping for %s adapter", k))
+      log.warn("dap.adapter.configuration", string.format("cannot find configuration for %s adapter", k))
       return function() end
     else
       return M[k]
