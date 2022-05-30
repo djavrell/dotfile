@@ -38,7 +38,6 @@ return require('packer').startup(function(use)
   use 'vim-utils/vim-troll-stopper'
   use 'MTDL9/vim-log-highlighting'
   use 'tpope/vim-surround'
-  -- use 'jiangmiao/auto-pairs'
   use 'windwp/nvim-autopairs'
   use 'terryma/vim-expand-region'
   use 'romgrk/equal.operator'
@@ -53,7 +52,7 @@ return require('packer').startup(function(use)
   use 'maxmellon/vim-jsx-pretty'
   use 'leafgarland/typescript-vim'
 
-  use 'derekwyatt/vim-scala'
+  use({'scalameta/nvim-metals', requires = { "nvim-lua/plenary.nvim" }})
   use 'alx741/vim-hindent'
   use 'tpope/vim-dadbod'
   use 'kristijanhusak/vim-dadbod-ui'
@@ -93,8 +92,6 @@ return require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'wbthomason/lsp-status.nvim'
 
-  use 'j-hui/fidget.nvim'
-
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
@@ -120,7 +117,6 @@ return require('packer').startup(function(use)
   use { 'RRethy/nvim-treesitter-textsubjects' }
   use { 'nvim-treesitter/nvim-treesitter-textobjects' }
 
-  -- local_use("nvim-bqf", "kevinhwang91")
   use 'kevinhwang91/nvim-bqf'
   use {'junegunn/fzf', run = function()
       vim.fn['fzf#install']()

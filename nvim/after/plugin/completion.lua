@@ -8,6 +8,7 @@ local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
+    -- client.server_capabilities.document_formatting = false
   end
 }, {
   __index = function()
@@ -18,17 +19,26 @@ local additionalSetup = setmetatable({
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_keymap(...) vim.keymap.set(...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  require "lsp-format".on_attach(client)
+  -- require "lsp-format".on_attach(client)
 
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap=true, silent=true, buffer=bufnr }
 
+  -- map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
+  -- map("n", "<leader>sh", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
+  -- map("n", "<leader>ws", '<cmd>lua require"metals".hover_worksheet()<CR>')
+  -- map("n", "<leader>aa", [[<cmd>lua vim.diagnostic.setqflist()<CR>]]) -- all workspace diagnostics
+  -- map("n", "<leader>ae", [[<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>]]) -- all workspace errors
+  -- map("n", "<leader>aw", [[<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>]]) -- all workspace warnings
+  -- map("n", "<leader>d", "<cmd>lua vim.diagnostic.setloclist()<CR>") -- buffer diagnostics only
+  -- map("n", "[c", "<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>")
+  -- map("n", "]c", "<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>")
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -158,7 +168,8 @@ local servers = {
   'metals',
   'tsserver',
   'bashls',
-  -- 'clangd',
+  'sumneko_lua',
+  'clangd',
 }
 
 for _, lsp in ipairs(servers) do
@@ -170,8 +181,6 @@ for _, lsp in ipairs(servers) do
     },
   }
 end
-
-require("fidget").setup {}
 
 _ = vim.cmd [[
   augroup DadbodSql
@@ -186,3 +195,30 @@ _ = vim.cmd [[
     autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
   augroup END
 ]]
+
+_ = vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
+
+----------------------------------
+-- Metals ------------------------
+----------------------------------
+
+local metals_config = require("metals").bare_config()
+
+-- Example of settings
+metals_config.settings = {
+  showImplicitArguments = true,
+  showImplicitConversionsAndClasses = true,
+  excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+}
+
+metals_config.capabilities = capabilities
+
+-- Autocmd that will actually be in charging of starting the whole thing
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "scala", "sbt" },
+  callback = function()
+    require("metals").initialize_or_attach(metals_config)
+  end,
+  group = nvim_metals_group,
+})
