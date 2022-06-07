@@ -1,13 +1,13 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
 
+#include "keymap_french.h"
+
 enum layers {
     BASE,  // default layer
     SYMB,  // symbols
     MDIA,  // media keys
 };
-
-enum custom_keycodes {};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -29,19 +29,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | Home |       | PgUp |        |      |
  *                                 | Space|Backsp|------|       |------|  Tab   |Enter |
- *                                 |      |ace   | End  |       | PgDn |        |      |
+ *                                 |      |ace   | Esc  |       | PgDn |        |      |
  *                                 `--------------------'       `----------------------'
  */
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
-  KC_EQL,          KC_1,        KC_2,          KC_3,    KC_4,    KC_5,    KC_LEFT,              KC_RGHT,      KC_6,    KC_7,    KC_8,    KC_9,              KC_0,           KC_MINS,
-  KC_DEL,          KC_Q,        KC_W,          KC_E,    KC_R,    KC_T,    TG(SYMB),             TG(SYMB),     KC_Y,    KC_U,    KC_I,    KC_O,              KC_P,           KC_BSLS,
-  KC_BSPC,         KC_A,        KC_S,          KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), GUI_T(KC_QUOT),
-  KC_LSFT,         CTL_T(KC_Z), KC_X,          KC_C,    KC_V,    KC_B,    ALL_T(KC_NO),         MEH_T(KC_NO), KC_N,    KC_M,    KC_COMM, KC_DOT,           CTL_T(KC_SLSH), KC_RSFT,
-  LT(SYMB,KC_GRV), KC_QUOT,     LALT(KC_LSFT), KC_LEFT, KC_RGHT,                                              KC_UP,   KC_DOWN, KC_LBRC, KC_RBRC, TT(SYMB),
-                                                           ALT_T(KC_APP), KC_LGUI,                KC_LALT, CTL_T(KC_ESC),
+  KC_ESC,          FR_1,        FR_2,          FR_3,    FR_4,    FR_5,    KC_LEFT,              KC_RGHT,      FR_6,    FR_7,              FR_8,               FR_9,     FR_0,           KC_MINS,
+  KC_DEL,          FR_A,        FR_Z,          FR_E,    FR_R,    FR_T,    TG(SYMB),             TG(SYMB),     FR_Y,    FR_U,              FR_I,               FR_O,     FR_P,           KC_BSLS,
+  KC_BSPC,         FR_Q,        FR_S,          FR_D,    FR_F,    FR_G,                                        FR_H,    FR_J,              FR_K,               FR_L,     FR_M,           GUI_T(KC_QUOT),
+  KC_LSFT,         CTL_T(FR_W), FR_X,          FR_C,    FR_V,    FR_B,    ALL_T(KC_NO),         TG(MDIA),     FR_N,    FR_COMM,           FR_SCLN,            FR_COLN,  CTL_T(FR_EXLM), KC_RSFT,
+  LT(SYMB,KC_GRV), KC_QUOT,     LALT(KC_LSFT), KC_LEFT, KC_RGHT,                                              KC_UP,   KC_DOWN,           KC_LBRC,            KC_RBRC,  KC_NO,
+                                                           ALT_T(KC_APP), KC_DEL,                 KC_LALT, CTL_T(KC_ESC),
                                                                           KC_HOME,                KC_PGUP,
-                                                         KC_SPC, KC_BSPC, CTL_T(KC_ESC),          KC_PGDN, KC_TAB, KC_ENT
+                                                         KC_SPC, KC_BSPC, KC_ESC,                 KC_PGDN, KC_TAB, KC_ENT
 ),
 /* Keymap 1: Symbol Layer
  *
@@ -98,13 +98,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [MDIA] = LAYOUT_ergodox_pretty(
   // left hand
-  _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, KC_MS_U, _______, _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______,                       _______, _______, _______, _______, _______, KC_MPLY,
-  _______, _______, _______, _______, _______, _______, _______,     _______, _______, _______, KC_MPRV, KC_MNXT, _______, _______,
-  _______, _______, _______, KC_BTN1, KC_BTN2,                                         KC_VOLU, KC_VOLD, KC_MUTE, _______, _______,
+  _______, _______, _______, _______, _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, KC_UP  , _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,                       KC_BTN1, KC_BTN1, KC_BTN2, _______, _______, KC_MPLY,
+  _______, _______, _______, _______, _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, KC_BTN1, KC_BTN2,                                         _______, _______, _______, _______, _______,
 
-                                               _______, _______,     _______, _______,
+                                               _______, RESET  ,     _______, _______,
                                                         _______,     _______,
                                       _______, _______, _______,     _______, _______, KC_WBAK
 ),
