@@ -15,7 +15,7 @@ vim.cmd([[
 require('djavrell.globals')
 require('plugins')
 
-require('djavrell.auto_cmd')
+require('djavrell.augroups')
 require('djavrell.dap.setup')
 
 require('djavrell.telescope.setup')
