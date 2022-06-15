@@ -34,14 +34,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [BASE] = LAYOUT_ergodox_pretty(
   // left hand
-  KC_ESC,          FR_1,        FR_2,          FR_3,    FR_4,    FR_5,    KC_LEFT,              KC_RGHT,      FR_6,    FR_7,              FR_8,               FR_9,     FR_0,           KC_MINS,
-  KC_DEL,          FR_A,        FR_Z,          FR_E,    FR_R,    FR_T,    TG(SYMB),             TG(SYMB),     FR_Y,    FR_U,              FR_I,               FR_O,     FR_P,           KC_BSLS,
-  KC_BSPC,         FR_Q,        FR_S,          FR_D,    FR_F,    FR_G,                                        FR_H,    FR_J,              FR_K,               FR_L,     FR_M,           GUI_T(KC_QUOT),
-  KC_LSFT,         CTL_T(FR_W), FR_X,          FR_C,    FR_V,    FR_B,    ALL_T(KC_NO),         TG(MDIA),     FR_N,    FR_COMM,           FR_SCLN,            FR_COLN,  CTL_T(FR_EXLM), KC_RSFT,
-  LT(SYMB,KC_GRV), KC_QUOT,     LALT(KC_LSFT), KC_LEFT, KC_RGHT,                                              KC_UP,   KC_DOWN,           KC_LBRC,            KC_RBRC,  KC_NO,
-                                                           ALT_T(KC_APP), KC_DEL,                 KC_LALT, CTL_T(KC_ESC),
-                                                                          KC_HOME,                KC_PGUP,
-                                                         KC_SPC, KC_BSPC, KC_ESC,                 KC_PGDN, KC_TAB, KC_ENT
+  _______,          KC_F1,        KC_F2,          KC_F3,    KC_F4,          KC_F5,   _______,           _______,  KC_F6,  KC_F7,          KC_F8,    KC_F9,    KC_F10,         KC_F11,
+  KC_NO,            FR_A,         FR_Z,           FR_E,     FR_R,           FR_T,   TG(SYMB),           TG(SYMB), FR_Y,   FR_U,           FR_I,     FR_O,     FR_P,           KC_BSLS,
+  KC_NO,            FR_Q,         FR_S,           FR_D,     LT(SYMB,FR_F),  FR_G,                                 FR_H,   LT(SYMB,FR_J),  FR_K,     FR_L,     FR_M,           GUI_T(KC_QUOT),
+  KC_LSFT,          CTL_T(FR_W),  FR_X,           FR_C,     FR_V,           FR_B,   ALL_T(KC_NO),       TG(MDIA), FR_N,   FR_COMM,        FR_SCLN,  FR_COLN,  CTL_T(FR_EXLM), KC_RSFT,
+  LT(SYMB,KC_GRV),  KC_QUOT,      LALT(KC_LSFT),  KC_LEFT,  KC_RGHT,                                                KC_UP,          KC_DOWN,  KC_LBRC,  KC_RBRC,        KC_NO,
+                                                            ALT_T(KC_APP),  KC_DEL,               KC_LALT, CTL_T(KC_ESC),
+                                                                            KC_HOME,              KC_PGUP,
+                                                         KC_SPC, KC_BSPC,   KC_ESC,               KC_PGDN, KC_TAB, KC_ENT
 ),
 /* Keymap 1: Symbol Layer
  *
@@ -67,13 +67,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [SYMB] = LAYOUT_ergodox_pretty(
   // left hand
   _______, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   _______,     _______, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-  _______, KC_EXLM, KC_AT,   KC_LCBR, KC_RCBR, KC_PIPE, _______,     _______, KC_UP,   KC_7,    KC_8,    KC_9,    KC_ASTR, KC_F12,
-  _______, KC_HASH, KC_DLR,  KC_LPRN, KC_RPRN, KC_GRV,               KC_DOWN, KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
-  _______, KC_PERC, KC_CIRC, KC_LBRC, KC_RBRC, KC_TILD, _______,     _______, KC_AMPR, KC_1,    KC_2,    KC_3,    KC_BSLS, _______,
-  EEP_RST, _______, _______, _______, _______,                                         _______, KC_DOT,  KC_0,    KC_EQL,  _______,
+  _______, FR_EXLM, FR_AT,   FR_LCBR, FR_RCBR, FR_PIPE, _______,     _______, KC_UP,   FR_7,    FR_8,    FR_9,    FR_ASTR, KC_F12,
+  _______, FR_HASH, FR_DLR,  FR_LPRN, FR_RPRN, FR_GRV,               KC_DOWN, FR_4,    FR_5,    FR_6,    FR_PLUS, _______,
+  _______, FR_PERC, FR_CIRC, FR_LBRC, FR_RBRC, FR_TILD, _______,     _______, FR_AMPR, FR_1,    FR_2,    FR_3,    KC_BSLS, _______,
+  _______, _______, _______, _______, _______,                                         _______, KC_DOT,  KC_0,    KC_EQL,  _______,
                                                RGB_MOD, _______,     RGB_TOG, RGB_M_P,
                                                         _______,     _______,
-                                      RGB_VAD, RGB_VAI, _______,     _______, RGB_HUD, RGB_HUI
+                                       KC_SPC, KC_BSPC, _______,     _______, RGB_HUD, RGB_HUI
 ),
 /* Keymap 2: Media and mouse keys
  *
