@@ -71,7 +71,7 @@ Telescope.setup {
           actions.open_qflist(bufnr)
         end,
         ['<c-d>'] = actions.delete_buffer,
-        ['<c-P>'] = actions_layout.toggle_preview,
+        ['<c-o>'] = actions_layout.toggle_preview,
         ['<c-j>'] = actions.preview_scrolling_down,
         ['<c-k>'] = actions.preview_scrolling_up,
         ['<c-v>'] = actions.file_vsplit,

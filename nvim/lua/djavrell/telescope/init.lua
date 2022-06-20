@@ -12,11 +12,11 @@ local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
 
 local dropdown = themes.get_dropdown {
-    previewer = false,
-    layout_config = {
-      prompt_position = "top"
-    }
+  previewer = false,
+  layout_config = {
+    prompt_position = "top"
   }
+}
 
 function M.buffers()
   return require('telescope.builtin').buffers(dropdown)
@@ -47,6 +47,57 @@ function M.quickfixhistory()
       prompt_position = "top"
     }
   })
+end
+
+function M.lsp_references()
+  return require('telescope.builtin').lsp_references {
+    layout_strategy = "vertical",
+    layout_config = {
+      width = function(_, col, _)
+        return math.min(col, 100)
+      end,
+      height = function(_, _, row)
+        return math.min(row, 50)
+      end,
+      prompt_position = "top"
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
+function M.lsp_implementations()
+  return require('telescope.builtin').lsp_references {
+    layout_strategy = "vertical",
+    layout_config = {
+      width = function(_, col, _)
+        return math.min(col, 100)
+      end,
+      height = function(_, _, row)
+        return math.min(row, 50)
+      end,
+      prompt_position = "top"
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
+end
+
+function M.lsp_definitions()
+  return require('telescope.builtin').lsp_references {
+    layout_strategy = "vertical",
+    layout_config = {
+      width = function(_, col, _)
+        return math.min(col, 100)
+      end,
+      height = function(_, _, row)
+        return math.min(row, 50)
+      end,
+      prompt_position = "top"
+    },
+    sorting_strategy = "ascending",
+    ignore_filename = false,
+  }
 end
 
 return setmetatable({}, {

@@ -2,7 +2,10 @@ local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 local lspkind = require("lspkind")
 local ts_utils_lsp = require("nvim-lsp-ts-utils")
+
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local augroups = require("djavrell.augroups.utils")
+local Tmap = require("djavrell.telescope.mapping")
 
 local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
@@ -41,14 +44,14 @@ local on_attach = function(client, bufnr)
   -- map("n", "]c", "<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>")
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  Tmap('gd', 'lsp_definitions')
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  Tmap('gi', 'lsp_implementations')
   buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  Tmap('gr', 'lsp_references')
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '<leader>E', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -196,7 +199,7 @@ _ = vim.cmd [[
   augroup END
 ]]
 
-_ = vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
+-- _ = vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
 
 ----------------------------------
 -- Metals ------------------------
@@ -214,11 +217,11 @@ metals_config.settings = {
 metals_config.capabilities = capabilities
 
 -- Autocmd that will actually be in charging of starting the whole thing
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+-- local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "scala", "sbt" },
   callback = function()
     require("metals").initialize_or_attach(metals_config)
   end,
-  group = nvim_metals_group,
+  group = augroups["nvimMetals"],
 })
