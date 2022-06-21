@@ -64,7 +64,7 @@ return require('packer').startup(function(use)
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
   use {'rhysd/vim-fixjson', ft = { 'json' } }
   use 'chrisbra/csv.vim'
-  use 'dhruvasagar/vim-table-mode'
+  -- use 'dhruvasagar/vim-table-mode'
   use 'AndrewRadev/tagalong.vim'
   use 'jamessan/vim-gnupg'
   use 'diepm/vim-rest-console'
