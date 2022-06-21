@@ -120,6 +120,9 @@ return require('packer').startup(function(use)
 
   -- DAP
   use 'mfussenegger/nvim-dap'
+  use 'rcarriga/nvim-dap-ui'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'nvim-telescope/telescope-dap.nvim'
 
   use 'kevinhwang91/nvim-bqf'
   use {'junegunn/fzf', run = function()

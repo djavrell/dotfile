@@ -16,7 +16,6 @@ require('djavrell.globals')
 require('plugins')
 
 require('djavrell.augroups')
-require('djavrell.dap.setup')
 
 require('djavrell.telescope.setup')
 require('djavrell.telescope.mapping')
