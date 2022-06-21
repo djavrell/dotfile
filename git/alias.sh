@@ -19,6 +19,7 @@ alias gba='git branch -a'
 alias gbd='git branch -d'
 alias gbr='git branch --remote'
 alias gbdl='git branch -D $(git branch | fzf-tmux -r 30% --reverse --multi)'
+alias gbm='git branch -m $(git_current_branch)'
 
 alias gc='git commit -v'
 alias gcm='git commit -v -m'
