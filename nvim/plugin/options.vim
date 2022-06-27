@@ -46,4 +46,3 @@ set foldexpr=nvim_treesitter#foldexpr()
 " set foldmethod=syntax
 set foldlevel=1
 " }}}
-
