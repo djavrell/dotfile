@@ -79,15 +79,18 @@ return require('packer').startup(function(use)
   use 'nvim-telescope/telescope-hop.nvim'
   use 'nvim-telescope/telescope-ui-select.nvim'
 
+  use { 'anuvyklack/hydra.nvim',
+    requires = 'anuvyklack/keymap-layer.nvim' -- needed only for pink hydras
+  }
+
   use 'sindrets/diffview.nvim'
 
   use 'rhysd/committia.vim'
-  use 'rbong/vim-flog'
-  use 'APZelos/blamer.nvim'
   use 'rhysd/git-messenger.vim'
-  use 'airblade/vim-gitgutter'
+  -- use 'airblade/vim-gitgutter'
   use 'TimUntersberger/neogit'
-  use 'mhinz/vim-signify'
+  -- use 'mhinz/vim-signify'
+  use 'lewis6991/gitsigns.nvim'
 
   use 'L3MON4D3/LuaSnip'
   use 'neovim/nvim-lspconfig'
