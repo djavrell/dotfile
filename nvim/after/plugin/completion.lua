@@ -109,10 +109,10 @@ local kind_icons = {
 }
 
 cmp.setup({
-  enabled = function ()
+  --[[ enabled = function ()
     return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
       or require("cmp_dap").is_dap_buffer()
-  end,
+  end, ]]
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
@@ -134,7 +134,6 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'luasnip' },
     { name = 'path' },
-    { name = 'dap' }
   }),
   formatting = {
     format = lspkind.cmp_format({
@@ -174,8 +173,14 @@ cmp.setup.cmdline(':', {
   }
 })
 
-
-
+cmp.setup.filetype('prompt', {
+  sources = cmp.config.sources({
+    { name = 'dap' }
+  }),
+  view = {
+    entries = 'native'
+  },
+})
 
 local servers = {
   'metals',
