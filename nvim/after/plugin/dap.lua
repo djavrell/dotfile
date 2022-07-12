@@ -20,6 +20,17 @@ dap.configurations.typescript = {
     request = 'attach',
     processId = require'dap.utils'.pick_process,
   },
+  {
+    name = 'Launch Node TS',
+    type = 'node2',
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+    outFiles = { "${workspaceFolder}/out/**/*.js", "${workspaceFolder}/dist/**/*.js" },
+  },
 }
 
 local map = function(lhs, rhs, desc)
