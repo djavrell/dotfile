@@ -4,6 +4,7 @@ if not has_dap then
 end
 
 local dap = require('dap')
+local Hydra = require('hydra')
 local augroups = require('djavrell.augroups.utils')
 
 dap.adapters.node2 = {
@@ -41,6 +42,41 @@ local map = function(lhs, rhs, desc)
   vim.keymap.set("n", lhs, rhs, { silent = true, desc = desc })
 end
 
+local function b(action)
+  return string.format("require('dap').%s", action)
+end
+
+local hint = [[
+  _b_: break point _db_: cond
+  _c_: continue _i_: in _o_: over _O_: out _B_: back
+]]
+
+Hydra({
+  name = 'Debugger',
+  hint = hint,
+  config = {
+    color = 'pink',
+    invoke_on_body = 'true',
+    hint = {
+      position = 'top'
+    }
+  },
+  mode = 'n',
+  body = '<leader>d',
+  heads = {
+    { 'b',  require('dap').toggle_breakpoint },
+    { 'B',  require("dap").step_back },
+    { 'I',  require("dap").step_into },
+    { 'o',  require("dap").step_over },
+    { 'O',  require("dap").step_out },
+    { 'c',  require('dap').continue },
+    { 'e',  require("dapui").eval },
+    { 'db', function() require('dap').set_breakpoint(vim.fn.input "[DAP] Condition > ") end },
+    { 'dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input "[DAP] Log > ") end },
+    { 'E',  function() require("dapui").eval(vim.fn.input "[DAP] Expression > ") end }
+  }
+})
+
 map("<F1>", require("dap").step_back, "step_back")
 map("<F2>", require("dap").step_into, "step_into")
 map("<F3>", require("dap").step_over, "step_over")
@@ -50,17 +86,20 @@ map("<F5>", require("dap").continue, "continue")
 -- TODO:
 -- disconnect vs. terminate
 
-map("<leader>dr", require("dap").repl.open)
+--[[ map("<leader>dr", require("dap").repl.open)
 
 map("<leader>db", require("dap").toggle_breakpoint)
 map("<leader>dB", function()
   require("dap").set_breakpoint(vim.fn.input "[DAP] Condition > ")
 end)
+map("<leader>dl", function()
+  require("dap").set_breakpoint(nil, nil, vim.fn.input "[DAP] Log > ")
+end)
 
 map("<leader>de", require("dapui").eval)
 map("<leader>dE", function()
   require("dapui").eval(vim.fn.input "[DAP] Expression > ")
-end)
+end) ]]
 
 require("nvim-dap-virtual-text").setup {
   enabled = true,
