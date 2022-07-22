@@ -48,7 +48,7 @@ end
 
 local hint = [[
   _b_: break point _db_: cond
-  _c_: continue _i_: in _o_: over _O_: out _B_: back
+  _c_: continue _I_: in _o_: over _O_: out _B_: back
 ]]
 
 Hydra({
@@ -86,7 +86,7 @@ map("<F5>", require("dap").continue, "continue")
 -- TODO:
 -- disconnect vs. terminate
 
---[[ map("<leader>dr", require("dap").repl.open)
+map("<leader>dr", require("dap").repl.open)
 
 map("<leader>db", require("dap").toggle_breakpoint)
 map("<leader>dB", function()
@@ -99,7 +99,7 @@ end)
 map("<leader>de", require("dapui").eval)
 map("<leader>dE", function()
   require("dapui").eval(vim.fn.input "[DAP] Expression > ")
-end) ]]
+end)
 
 require("nvim-dap-virtual-text").setup {
   enabled = true,
