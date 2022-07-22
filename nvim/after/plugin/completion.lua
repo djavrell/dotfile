@@ -216,6 +216,17 @@ _ = vim.cmd [[
 
 -- _ = vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
 
+local null_ls = require("null-ls")
+require("null-ls").setup {
+  source = {
+    null_ls.builtins.code_actions.eslint,
+    null_ls.builtins.diagnostics.eslint,
+    null_ls.builtins.diagnostics.tsc,
+    null_ls.builtins.formatting.jq,
+    null_ls.builtins.formatting.prettier
+  }
+}
+
 ----------------------------------
 -- Metals ------------------------
 ----------------------------------
