@@ -1,5 +1,5 @@
 " clean highlight after a search with /
-nnoremap <silent> <leader><Esc> :nohlsearch<CR>
+nnoremap <silent> <leader><leader> :nohlsearch<CR>
 " When in termianl, remap tu use Esc
 tnoremap <Esc> <C-\><C-n>
 
