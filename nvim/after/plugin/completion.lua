@@ -7,6 +7,7 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 local augroups = require("djavrell.augroups.utils")
 local Tmap = require("djavrell.telescope.mapping")
 
+--TODO: filter out node module for lsp_ref/def/...
 local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
@@ -33,16 +34,7 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true, buffer=bufnr }
 
-  -- map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
-  -- map("n", "<leader>sh", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
-  -- map("n", "<leader>ws", '<cmd>lua require"metals".hover_worksheet()<CR>')
-  -- map("n", "<leader>aa", [[<cmd>lua vim.diagnostic.setqflist()<CR>]]) -- all workspace diagnostics
-  -- map("n", "<leader>ae", [[<cmd>lua vim.diagnostic.setqflist({severity = "E"})<CR>]]) -- all workspace errors
-  -- map("n", "<leader>aw", [[<cmd>lua vim.diagnostic.setqflist({severity = "W"})<CR>]]) -- all workspace warnings
-  -- map("n", "<leader>d", "<cmd>lua vim.diagnostic.setloclist()<CR>") -- buffer diagnostics only
-  -- map("n", "[c", "<cmd>lua vim.diagnostic.goto_prev { wrap = false }<CR>")
-  -- map("n", "]c", "<cmd>lua vim.diagnostic.goto_next { wrap = false }<CR>")
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  --TODO: define a lua table to add keymap if we are not in a specific client ? (like hover for lua)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   Tmap('gd', 'lsp_definitions')
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -52,15 +44,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   Tmap('gr', 'lsp_references')
+  Tmap('<space>s', 'lsp_dynamic_workspace_symbols')
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '<leader>E', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
-  buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', opts)
-  buf_set_keymap('n', '<space>s', ':Telescope lsp_dynamic_workspace_symbols<CR>', opts)
-
-  -- require "lsp-format".on_attach(client)
 
   additionalSetup[client.name](client, bufnr)
 end
