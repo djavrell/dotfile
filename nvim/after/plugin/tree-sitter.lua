@@ -15,6 +15,7 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
     "lua",
     "typescript",
+    "scheme",
   },
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
   ignore_install = {},
