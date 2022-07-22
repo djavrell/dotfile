@@ -27,7 +27,7 @@ function M.commands()
     previewer = false,
     layout_config = {
       width = function(_, col, _)
-        return math.min(col, 200)
+        return math.min(col, 150)
       end,
       height = function(_, _, row)
         return math.min(row, 50)
@@ -54,7 +54,7 @@ function M.lsp_references()
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
-        return math.min(col, 100)
+        return math.min(col, 150)
       end,
       height = function(_, _, row)
         return math.min(row, 50)
@@ -71,7 +71,7 @@ function M.lsp_implementations()
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
-        return math.min(col, 100)
+        return math.min(col, 150)
       end,
       height = function(_, _, row)
         return math.min(row, 50)
@@ -88,7 +88,7 @@ function M.lsp_definitions()
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
-        return math.min(col, 100)
+        return math.min(col, 150)
       end,
       height = function(_, _, row)
         return math.min(row, 50)
