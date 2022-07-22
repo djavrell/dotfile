@@ -67,4 +67,4 @@ autocmd("BufRead", {
   command = "set ft=sh"
 })
 
-augroups.foo = vim.api.nvim_create_augroup('foo', { clear = true})
+-- augroups.foo = vim.api.nvim_create_augroup('foo', { clear = true})
