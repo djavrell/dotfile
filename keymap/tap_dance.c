@@ -1,0 +1,10 @@
+#include QMK_KEYBOARD_H
+#include "tap_dance.h"
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+  [TD_LCPRN] = ACTION_TAP_DANCE_DOUBLE(FR_LPRN, FR_RPRN),
+  [TD_LCCBR] = ACTION_TAP_DANCE_DOUBLE(FR_LCBR, FR_RCBR),
+  [TD_LCBRC] = ACTION_TAP_DANCE_DOUBLE(FR_LBRC, FR_RBRC),
+  [TD_LCABK] = ACTION_TAP_DANCE_DOUBLE(FR_LABK, FR_RABK),
+};
+
