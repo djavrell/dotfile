@@ -30,5 +30,9 @@ ahead = "[⇡$count](green)"
 diverged = "[⇕⇡$ahead_count⇣$behind_count](red bold)"
 behind = "[⇣$count](purple)"
 
+[git_branch]
+format = "[$branch ]($style)"
+style = "bold purple"
+
 [git_commit]
 # tag_disabled = false
