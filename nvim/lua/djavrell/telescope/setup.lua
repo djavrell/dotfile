@@ -101,13 +101,13 @@ Telescope.setup {
       override_file_sorter = true,     -- override the file sorter
     },
     hop = {},
-    ['ui-select'] = {
-      require("telescope.themes").get_cursor {}
-    }
+    --[[ ['ui-select'] = { ]]
+    --[[   require("telescope.themes").get_cursor {} ]]
+    --[[ } ]]
   }
 }
 
 -- extension
 Telescope.load_extension('fzf')
 Telescope.load_extension('hop')
-Telescope.load_extension('ui-select')
+--[[ Telescope.load_extension('ui-select') ]]
