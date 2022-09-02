@@ -59,6 +59,7 @@ alias grbm='git rebase master'
 alias grbs='git rebase --skip'
 
 alias gitAbort="git reset --hard HEAD"
+alias gitRestore='git restore $(git status --porcelain | cut -d" " -f3 | fzf --reverse --multi)'
 
 alias gsps='git show --pretty=short --show-signature'
 alias gs='git show'
