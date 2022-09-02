@@ -64,7 +64,6 @@ return require('packer').startup(function(use)
   use {'iamcco/markdown-preview.nvim', run = 'cd app && yarn install'  }
   use {'rhysd/vim-fixjson', ft = { 'json' } }
   use 'chrisbra/csv.vim'
-  -- use 'dhruvasagar/vim-table-mode'
   use 'AndrewRadev/tagalong.vim'
   use 'jamessan/vim-gnupg'
   use 'diepm/vim-rest-console'
@@ -88,13 +87,10 @@ return require('packer').startup(function(use)
 
   use 'rhysd/committia.vim'
   use 'rhysd/git-messenger.vim'
-  -- use 'airblade/vim-gitgutter'
   use 'TimUntersberger/neogit'
-  -- use 'mhinz/vim-signify'
   use 'lewis6991/gitsigns.nvim'
 
   use 'L3MON4D3/LuaSnip'
-  use 'neovim/nvim-lspconfig'
   use 'wbthomason/lsp-status.nvim'
 
   use 'hrsh7th/nvim-cmp'
