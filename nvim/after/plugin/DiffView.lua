@@ -8,6 +8,12 @@ require'diffview'.setup {
       width = 35,
     },
   },
+  view = {
+    merge_tool = {
+      layout = "diff4_mixed",
+      disable_diagnostics = true,
+    }
+  },
   key_bindings = {
     -- The `view` bindings are active in the diff buffers, only when the current
     -- tabpage is a Diffview.
