@@ -19,6 +19,7 @@ desc_rec = function()
         i(1),
         d(2, desc_rec, {}),
       }),
+      sn(nil, { t(", ..."), i(1) })
     })
   })
 end
