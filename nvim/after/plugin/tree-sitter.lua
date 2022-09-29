@@ -16,8 +16,10 @@ require'nvim-treesitter.configs'.setup {
     "lua",
     "typescript",
     "scheme",
+    "markdown",
+    "markdown_inline",
   },
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,
   ignore_install = {},
   highlight = {
     enable = true,              -- false will disable the whole extension
@@ -100,22 +102,5 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.sql = {
-  install_info = {
-    url = "https://github.com/m-novikov/tree-sitter-sql", -- local path or git repo
-    files = {"src/parser.c"},
-    -- optional entries:
-    branch = "main", -- default branch in case of git repo if different from master
-  },
-  filetype = "sql", -- if filetype does not match the parser name
-}
-
-parser_config.markdown = {
-  install_info = {
-    url = "https://github.com/MDeiml/tree-sitter-markdown",
-    files = {"src/parser.c"},
-    branch = "main",
-  },
-  filetype = "md",
-}
+local TSUtils = require('djavrell.treesitter')
+--[[ TSUtils.add_parser("sql", "https://github.com/derekstride/tree-sitter-sql") ]]
