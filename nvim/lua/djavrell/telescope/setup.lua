@@ -1,6 +1,7 @@
 local Telescope = require('telescope')
 local actions = require('telescope.actions')
 local actions_layout = require('telescope.actions.layout')
+local lga_actions = require("telescope-live-grep-args.actions")
 
 Telescope.setup {
   defaults = {
@@ -100,14 +101,19 @@ Telescope.setup {
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
     },
-    hop = {},
-    --[[ ['ui-select'] = { ]]
-    --[[   require("telescope.themes").get_cursor {} ]]
-    --[[ } ]]
+    live_grep_args = {
+      mappings = { -- extend mappings
+        i = {
+          ["<C-k>"] = lga_actions.quote_prompt({
+            postfix = ' -t'
+          }),
+        }
+      }
+    }
   }
 }
 
 -- extension
 Telescope.load_extension('fzf')
 Telescope.load_extension('hop')
---[[ Telescope.load_extension('ui-select') ]]
+Telescope.load_extension('live_grep_args')

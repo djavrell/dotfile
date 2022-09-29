@@ -100,6 +100,10 @@ function M.lsp_definitions()
   }
 end
 
+function M.live_grep_args()
+  return require('telescope').extensions.live_grep_args.live_grep_args()
+end
+
 return setmetatable({}, {
   __index = function(_, k)
     reloader()

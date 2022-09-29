@@ -16,10 +16,10 @@ local Tmap = function(key, f, option)
 end
 
 Tmap('<leader>f', 'find_files')
-Tmap('<leader>g', 'live_grep')
+Tmap('<leader>g', 'live_grep_args')
 Tmap('<leader>G', 'grep_string')
 Tmap('<leader>b', 'buffers')
--- Tmap('<space>r', 'resume')
+Tmap('<space>r', 'resume')
 Tmap('<space>d', 'commands')
 Tmap('<space>sh', 'search_history')
 Tmap('<space>qh', 'quickfixhistory')
