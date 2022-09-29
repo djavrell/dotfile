@@ -19,6 +19,7 @@ return require('packer').startup(function(use)
 
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
+  use 'rcarriga/nvim-notify'
 
   use 'rebelot/kanagawa.nvim'
   use 'sainnhe/gruvbox-material'
