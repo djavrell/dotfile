@@ -1,3 +1,3 @@
-rvim.notify = require('notify').setup({
+require('notify').setup({
   timeout = 2500,
 })
