@@ -93,7 +93,6 @@ return require('packer').startup(function(use)
   use 'lewis6991/gitsigns.nvim'
 
   use 'L3MON4D3/LuaSnip'
-  use 'wbthomason/lsp-status.nvim'
 
   use 'hrsh7th/nvim-cmp'
   use 'hrsh7th/cmp-buffer'
@@ -102,14 +101,15 @@ return require('packer').startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-cmdline'
   use 'saadparwaiz1/cmp_luasnip'
-  use 'hrsh7th/cmp-nvim-lsp-signature-help'
+  --[[ use 'hrsh7th/cmp-nvim-lsp-signature-help' ]]
   use 'rcarriga/cmp-dap'
 
   use 'onsails/lspkind-nvim'
+  use 'wbthomason/lsp-status.nvim'
+  use 'lukas-reineke/lsp-format.nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
   use 'jose-elias-alvarez/null-ls.nvim'
-  use 'lukas-reineke/lsp-format.nvim'
 
   use 'ryanoasis/vim-devicons'
   use 'kyazdani42/nvim-web-devicons' -- for file icons
