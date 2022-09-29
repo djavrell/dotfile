@@ -38,7 +38,8 @@ return require('packer').startup(function(use)
   use 'scr1pt0r/crease.vim'
   use 'vim-utils/vim-troll-stopper'
   use 'MTDL9/vim-log-highlighting'
-  use 'tpope/vim-surround'
+  --[[ use 'tpope/vim-surround' ]]
+  use 'kylechui/nvim-surround'
   use 'windwp/nvim-autopairs'
   use 'terryma/vim-expand-region'
   use 'romgrk/equal.operator'
