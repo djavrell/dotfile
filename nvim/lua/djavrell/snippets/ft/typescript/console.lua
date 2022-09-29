@@ -9,6 +9,7 @@ local i = ls.insert_node
 local sn = ls.snippet_node
 
 ls.add_snippets("typescript", {
+  pf("log", l("console.log(" .. l.POSTFIX_MATCH .. ")")),
   s("cl", {
     t("console.log("),
     c(1, {
