@@ -6,6 +6,8 @@
 
 enum combo_keys {
   CB_E_ACU,
+  CB_A_ACU,
+  CB_U_ACU,
   COMBO_LENGTH,
 };
 
