@@ -6,7 +6,7 @@
 const uint16_t COMBO_LEN = COMBO_LENGTH;
 
 const uint16_t PROGMEM combos_map[][3] = {
-  [CB_E_ACU] = { R_ACU, FR_E, COMBO_END }
+  [CB_E_ACU] = { LT1_J, FR_E, COMBO_END }
 };
 
 combo_t key_combos[] = {

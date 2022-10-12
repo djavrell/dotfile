@@ -1,23 +1,10 @@
 #include QMK_KEYBOARD_H
 #include "version.h"
+#include "config.h"
 
 #include "keymap_french.h"
 
 #include "tap_dance.h"
-
-enum layers {
-    BASE,  // default layer
-    SYMB,  // symbols
-    MDIA,  // media keys
-};
-
-// Layer switching
-#define LT1_F LT(SYMB, FR_F)
-#define LT1_J LT(SYMB, FR_J)
-
-// Tap-Hold keys
-#define MT1_SHS MT(MOD_LSFT, KC_SPC)
-#define MT1_CBS MT(MOD_LCTL, KC_BSPC)
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -25,7 +12,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_NO,    KC_F1,    KC_F2,  KC_F3,    KC_F4,    KC_F5,  KC_NO,              KC_NO,    KC_F6,  KC_F7,    KC_F8,    KC_F9,    KC_F10,         KC_F11,
   KC_NO,    FR_A,     FR_Z,   FR_E,     FR_R,     FR_T,   TG(SYMB),           TG(SYMB), FR_Y,   FR_U,     FR_I,     FR_O,     FR_P,           KC_NO,
   KC_NO,    FR_Q,     FR_S,   FR_D,     LT1_F,    FR_G,                                 FR_H,   LT1_J,    FR_K,     FR_L,     FR_M,           KC_NO,
-  KC_LSFT,  C(FR_W),  FR_X,   FR_C,     FR_V,     FR_B,   KC_NO,              TG(MDIA), FR_N,   FR_COMM,  FR_SCLN,  FR_COLN,  CTL_T(FR_EXLM), KC_NO,
+  KC_LSFT,  FR_W,     FR_X,   FR_C,     FR_V,     FR_B,   KC_NO,              TG(MDIA), FR_N,   FR_COMM,  FR_SCLN,  FR_COLN,  CTL_T(FR_EXLM), KC_NO,
   KC_NO,    KC_NO,    KC_NO,  KC_LEFT,  KC_RGHT,                                                KC_UP,    KC_DOWN,  KC_NO,    KC_NO,          KC_NO,
                                                 KC_RALT,  KC_DEL,             KC_LALT, KC_NO,
                                                           KC_HOME,            KC_PGUP,
