@@ -1,3 +1,5 @@
+#pragma once
+#include "config.h"
 #include "keymap_french.h"
 
 #define TD_PRN TD(TD_LCPRN)
