@@ -72,7 +72,7 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case CB_O_TRM:
     case CB_U_TRM:
       if (pressed) {
-        const char* x_code = getTapKC(&key_combos[combo_index])
+        const char* x_code = getTapKC(&key_combos[combo_index]);
         SEND_STRING(SS_TAP(X_CIRC));
         send_string(x_code);
       }
@@ -83,8 +83,8 @@ void process_combo_event(uint16_t combo_index, bool pressed) {
     case CB_O_CIR:
     case CB_U_CIR:
       if (pressed) {
-        const char* x_code = getTapKC(&key_combos[combo_index])
-        SEND_STRING(SS_LEFT(SS_TAP(X_CIRC)));
+        const char* x_code = getTapKC(&key_combos[combo_index]);
+        SEND_STRING(SS_LSFT(SS_TAP(X_CIRC)));
         send_string(x_code);
       }
       break;
