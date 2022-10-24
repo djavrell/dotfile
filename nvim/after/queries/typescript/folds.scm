@@ -6,4 +6,5 @@
  (abstract_class_declaration)
  (arguments)
  (enum_body)
+ (template_string)
 ] @fold
