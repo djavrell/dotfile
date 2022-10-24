@@ -32,6 +32,7 @@ return require('packer').startup(function(use)
 
   use { 'psliwka/vim-smoothie', commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }
   use 'liuchengxu/eleline.vim'
+  -- use 'rebelot/heirline.nvim'
 
   use 'scr1pt0r/crease.vim' -- fold customization
   use 'vim-utils/vim-troll-stopper'
@@ -46,6 +47,7 @@ return require('packer').startup(function(use)
 
   use 'kylechui/nvim-surround'
   use 'windwp/nvim-autopairs'
+  use 'AndrewRadev/tagalong.vim'
 
   use 'nacro90/numb.nvim'
   use 'phaazon/hop.nvim'
@@ -57,7 +59,6 @@ return require('packer').startup(function(use)
   use {'rhysd/vim-fixjson', ft = { 'json' } }
   use 'chrisbra/csv.vim'
   use 'jamessan/vim-gnupg'
-  use 'AndrewRadev/tagalong.vim'
   use 'diepm/vim-rest-console'
 
   use 'numToStr/Comment.nvim'

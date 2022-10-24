@@ -44,8 +44,6 @@ Telescope.setup {
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
     mappings = {
       i = {
-        -- IMPORTANT
-        -- either hot-reloaded or `function(prompt_bufnr) telescope.extensions.hop.hop end`
         ["<C-h>"] = R("telescope").extensions.hop.hop,  -- hop.hop_toggle_selection
         -- custom hop loop to multi selects and sending selected entries to quickfix list
         ["<C-space>"] = function(prompt_bufnr)
