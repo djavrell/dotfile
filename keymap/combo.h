@@ -5,15 +5,20 @@
 #define COMB(cb, replace)   COMBO(combos_map[cb], replace)
 #define COMBA(cb)           COMBO_ACTION(combos_map[cb])
 
-#define R_ACU   LT1_J // è
-#define R_GRV   FR_K  // é
-#define R_CIR   FR_L  // ê
-#define R_TRM   FR_M  // ë
+// left   -> use right combo key
+//  a e
+// right  -> use letf combo key
+//  i o u
 
+#define R_CIR   FR_H  // ê
+#define R_ACU   LT1_J // é
+#define R_GRV   FR_K  // è
+#define R_TRM   FR_L  // ë
+
+#define L_CIR   FR_G
 #define L_ACU   LT1_F
-#define L_GRV   FR_D
-#define L_CIR   FR_S
-#define L_TRM   FR_Q
+#define L_GRV   FR_D  // ù
+#define L_TRM   FR_S
 
 #define X_CIRC  X_LBRACKET
 

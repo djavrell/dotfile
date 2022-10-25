@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 
+#include "print.h"
+
 #include "keymap_french.h"
 #include "config.h"
 #include "combo.h"
@@ -46,45 +48,42 @@ combo_t key_combos[] = {
   COMBA(CB_U_CIR),
 };
 
-char* getTapKC(combo_t *combo) {
-  uint16_t key = pgm_read_word(&combo->keys[1]);
-  switch (key) {
-    case FR_A:
-      return SS_TAP(X_A);
-    case FR_E:
-      return SS_TAP(X_E);
-    case FR_I:
-      return SS_TAP(X_I);
-    case FR_O:
-      return SS_TAP(X_O);
-    case FR_U:
-      return SS_TAP(X_U);
-    default:
-      return "\0";
+/* char* tap[] = {
+  [FR_A] = SS_TAP(X_A),
+  [FR_E] = SS_TAP(X_E),
+  [FR_I] = SS_TAP(X_I),
+  [FR_O] = SS_TAP(X_O),
+  [FR_U] = SS_TAP(X_U),
+}*/
+
+const char* getTapKC(combo_t *combo) {
+  uprintf("read word: %s", pgm_read_word(&combo->keys[1]));
+  // char *code = tap[pgm_read_word(&combo->keys[1])];
+
+  // dprintf("get code: %s", code);
+  return "\0";
+  /* if (&code == null) {
+    return "\0";
   }
+  return code; */
 }
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
+  uprintf("combo index: %d", combo_index);
   switch(combo_index) {
-    case CB_A_TRM:
-    case CB_E_TRM:
-    case CB_I_TRM:
-    case CB_O_TRM:
-    case CB_U_TRM:
+    case CB_A_TRM ... CB_U_TRM:
       if (pressed) {
+        print("combo for ¨");
         const char* x_code = getTapKC(&key_combos[combo_index]);
-        SEND_STRING(SS_TAP(X_CIRC));
+        SEND_STRING(SS_LSFT(SS_TAP(X_CIRC)));
         send_string(x_code);
       }
       break;
-    case CB_A_CIR:
-    case CB_E_CIR:
-    case CB_I_CIR:
-    case CB_O_CIR:
-    case CB_U_CIR:
+    case CB_A_CIR ... CB_U_CIR:
       if (pressed) {
+        print("combo for ^");
         const char* x_code = getTapKC(&key_combos[combo_index]);
-        SEND_STRING(SS_LSFT(SS_TAP(X_CIRC)));
+        SEND_STRING(SS_TAP(X_CIRC));
         send_string(x_code);
       }
       break;

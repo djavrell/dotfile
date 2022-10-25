@@ -1,11 +1,5 @@
 #pragma once
 
-/* enum layers {
-    BASE,  // default layer
-    SYMB,  // symbols
-    MDIA,  // media keys
-};
-*/
 #define COMBO_TERM 80
 
 #define POINTING_DEVICE_INVERT_X
