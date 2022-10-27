@@ -15,17 +15,17 @@ const uint16_t PROGMEM combos_map[][3] = {
 
   [CB_E_ACU] = { R_ACU, FR_E, COMBO_END },
 
-  [CB_A_TRM] = { L_TRM, FR_A, COMBO_END },
-  [CB_E_TRM] = { L_TRM, FR_E, COMBO_END },
-  [CB_I_TRM] = { R_TRM, FR_I, COMBO_END },
-  [CB_O_TRM] = { R_TRM, FR_O, COMBO_END },
-  [CB_U_TRM] = { R_TRM, FR_U, COMBO_END },
+  [CB_A_TRM] = { R_TRM, FR_A, COMBO_END },
+  [CB_E_TRM] = { R_TRM, FR_E, COMBO_END },
+  [CB_I_TRM] = { L_TRM, FR_I, COMBO_END },
+  [CB_O_TRM] = { L_TRM, FR_O, COMBO_END },
+  [CB_U_TRM] = { L_TRM, FR_U, COMBO_END },
 
-  [CB_A_CIR] = { L_CIR, FR_A, COMBO_END },
-  [CB_E_CIR] = { L_CIR, FR_E, COMBO_END },
-  [CB_I_CIR] = { R_CIR, FR_I, COMBO_END },
-  [CB_O_CIR] = { R_CIR, FR_O, COMBO_END },
-  [CB_U_CIR] = { R_CIR, FR_U, COMBO_END },
+  [CB_A_CIR] = { R_CIR, FR_A, COMBO_END },
+  [CB_E_CIR] = { R_CIR, FR_E, COMBO_END },
+  [CB_I_CIR] = { L_CIR, FR_I, COMBO_END },
+  [CB_O_CIR] = { L_CIR, FR_O, COMBO_END },
+  [CB_U_CIR] = { L_CIR, FR_U, COMBO_END },
 };
 
 combo_t key_combos[] = {
@@ -48,44 +48,33 @@ combo_t key_combos[] = {
   COMBA(CB_U_CIR),
 };
 
-/* char* tap[] = {
-  [FR_A] = SS_TAP(X_A),
+const char* tap[] = {
+  [FR_A] = SS_TAP(X_Q),
   [FR_E] = SS_TAP(X_E),
   [FR_I] = SS_TAP(X_I),
   [FR_O] = SS_TAP(X_O),
   [FR_U] = SS_TAP(X_U),
-}*/
+};
 
 const char* getTapKC(combo_t *combo) {
-  uprintf("read word: %s", pgm_read_word(&combo->keys[1]));
-  // char *code = tap[pgm_read_word(&combo->keys[1])];
-
-  // dprintf("get code: %s", code);
-  return "\0";
-  /* if (&code == null) {
+  uint16_t code = pgm_read_word(&combo->keys[1]);
+  if (code < FR_A && code > FR_U) {
     return "\0";
   }
-  return code; */
+  return tap[code];
 }
 
 void process_combo_event(uint16_t combo_index, bool pressed) {
-  uprintf("combo index: %d", combo_index);
-  switch(combo_index) {
-    case CB_A_TRM ... CB_U_TRM:
-      if (pressed) {
-        print("combo for ¨");
-        const char* x_code = getTapKC(&key_combos[combo_index]);
+  if (pressed) {
+    switch(combo_index) {
+      case CB_A_TRM ... CB_U_TRM:
         SEND_STRING(SS_LSFT(SS_TAP(X_CIRC)));
-        send_string(x_code);
-      }
-      break;
-    case CB_A_CIR ... CB_U_CIR:
-      if (pressed) {
-        print("combo for ^");
-        const char* x_code = getTapKC(&key_combos[combo_index]);
+        send_string(getTapKC(&key_combos[combo_index]));
+        break;
+      case CB_A_CIR ... CB_U_CIR:
         SEND_STRING(SS_TAP(X_CIRC));
-        send_string(x_code);
-      }
-      break;
+        send_string(getTapKC(&key_combos[combo_index]));
+        break;
+    }
   }
 }
