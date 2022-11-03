@@ -24,17 +24,26 @@ require'diffview'.setup {
       ["<leader>b"] = cb("toggle_files"),       -- Toggle the files panel.
     },
     file_panel = {
-      ["j"]         = cb("next_entry"),         -- Bring the cursor to the next file entry
-      ["<down>"]    = cb("next_entry"),
-      ["k"]         = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
-      ["<up>"]      = cb("prev_entry"),
-      ["<cr>"]      = cb("select_entry"),       -- Open the diff for the selected entry.
-      ["o"]         = cb("select_entry"),
-      ["R"]         = cb("refresh_files"),      -- Update stats and entries in the file list.
-      ["<tab>"]     = cb("select_next_entry"),
-      ["<s-tab>"]   = cb("select_prev_entry"),
-      ["<leader>e"] = cb("focus_files"),
-      ["<leader>b"] = cb("toggle_files"),
+      ["j"]           = cb("next_entry"),         -- Bring the cursor to the next file entry
+      ["<down>"]      = cb("next_entry"),
+      ["k"]           = cb("prev_entry"),         -- Bring the cursor to the previous file entry.
+      ["<up>"]        = cb("prev_entry"),
+      ["<cr>"]        = cb("select_entry"),       -- Open the diff for the selected entry.
+      ["o"]           = cb("select_entry"),
+      ["R"]           = cb("refresh_files"),      -- Update stats and entries in the file list.
+      ["<tab>"]       = cb("select_next_entry"),
+      ["<s-tab>"]     = cb("select_prev_entry"),
+      ["<leader>e"]   = cb("focus_files"),
+      ["<leader>b"]   = cb("toggle_files")
+    },
+    diff4 = {
+      { { "n", "x" }, "<leader>co", cb("conflict_choose")("ours") },
+      { { "n", "x" }, "<leader>ct", cb("conflict_choose")("theirs") },
+      { { "n", "x" }, "<leader>cb", cb("conflict_choose")("base") },
+      { { "n", "x" }, "<leader>ca", cb("conflict_choose")("all") },
+      { { "n", "x" }, "dx",         cb("conflict_choose")("none") },
+      { { "n", "x" }, "<leader>n",  cb("next_conflict") },
+      { { "n", "x" }, "<leader>p",  cb("prev_conflict") }
     }
   }
 }
