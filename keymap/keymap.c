@@ -50,9 +50,7 @@ void keyboard_post_init_user(void) {
 #ifdef RGBLIGHT_COLOR_LAYER_0
     rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
 #endif
-    // Customise these values to desired behaviour
-    debug_enable=true;
-    debug_keyboard=true;
-    debug_matrix=true;
-    // debug_mouse=true;
+    // debug_enable=true;
+    // debug_keyboard=true;
+    // debug_matrix=true;
 };

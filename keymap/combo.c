@@ -26,6 +26,8 @@ const uint16_t PROGMEM combos_map[][3] = {
   [CB_I_CIR] = { L_CIR, FR_I, COMBO_END },
   [CB_O_CIR] = { L_CIR, FR_O, COMBO_END },
   [CB_U_CIR] = { L_CIR, FR_U, COMBO_END },
+
+  [CB_C_CED] = { R_ACU, FR_C, COMBO_END},
 };
 
 combo_t key_combos[] = {
@@ -46,22 +48,25 @@ combo_t key_combos[] = {
   COMBA(CB_I_CIR),
   COMBA(CB_O_CIR),
   COMBA(CB_U_CIR),
-};
 
-const char* tap[] = {
-  [FR_A] = SS_TAP(X_Q),
-  [FR_E] = SS_TAP(X_E),
-  [FR_I] = SS_TAP(X_I),
-  [FR_O] = SS_TAP(X_O),
-  [FR_U] = SS_TAP(X_U),
+  COMB(CB_C_CED, FR_CCED),
 };
 
 const char* getTapKC(combo_t *combo) {
-  uint16_t code = pgm_read_word(&combo->keys[1]);
-  if (code < FR_A && code > FR_U) {
-    return "\0";
+  switch (pgm_read_word(&combo->keys[1])) {
+    case FR_A:
+      return SS_TAP(X_Q);
+    case FR_E:
+      return SS_TAP(X_E);
+    case FR_I:
+      return SS_TAP(X_I);
+    case FR_O:
+      return SS_TAP(X_O);
+    case FR_U:
+      return SS_TAP(X_U);
+    default:
+      return "\0";
   }
-  return tap[code];
 }
 
 void process_combo_event(uint16_t combo_index, bool pressed) {

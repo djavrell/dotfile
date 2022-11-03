@@ -5,11 +5,6 @@
 #define COMB(cb, replace)   COMBO(combos_map[cb], replace)
 #define COMBA(cb)           COMBO_ACTION(combos_map[cb])
 
-// left   -> use right combo key
-//  a e
-// right  -> use letf combo key
-//  i o u
-
 #define R_CIR   FR_H  // ê
 #define R_ACU   LT1_J // é
 #define R_GRV   FR_K  // è
@@ -46,6 +41,7 @@ enum combo_keys {
   CB_U_CIR,
 
   // ç
+  CB_C_CED,
 
   COMBO_LENGTH,
 };
