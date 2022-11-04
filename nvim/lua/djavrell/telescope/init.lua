@@ -11,15 +11,14 @@ local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
 
-local dropdown = themes.get_dropdown {
-  previewer = false,
-  layout_config = {
-    prompt_position = "top"
-  }
-}
-
 function M.buffers()
-  return require('telescope.builtin').buffers(dropdown)
+  return require('telescope.builtin').buffers({
+    layout_strategy = "center",
+    layout_config = {
+      anchor = "N",
+      height = function(_, _, row) return math.min(row, 15) end,
+    },
+  })
 end
 
 function M.commands()
@@ -38,7 +37,12 @@ function M.commands()
 end
 
 function M.search_history()
-  return require('telescope.builtin').search_history(dropdown)
+  return require('telescope.builtin').search_history(themes.get_dropdown {
+  previewer = false,
+  layout_config = {
+    prompt_position = "top"
+  }
+})
 end
 
 function M.quickfixhistory()
