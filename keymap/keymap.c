@@ -1,9 +1,14 @@
 #include QMK_KEYBOARD_H
+
 #include "version.h"
 #include "keymap_french.h"
 
+#include "features/mouse_turbo_click.h"
 #include "config.h"
-#include "tap_dance.h"
+
+enum custom_keycodes {
+    RP_FIRE = SAFE_RANGE,
+};
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -30,9 +35,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [2] = LAYOUT_ergodox_pretty(
   _______, _______, _______, _______, _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, KC_UP  , _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,                       KC_BTN1, KC_BTN1, KC_BTN2, _______, _______, KC_MPLY,
+  _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, _______,                       KC_BTN1, KC_BTN1, KC_BTN2, RP_FIRE, _______, KC_MPLY,
   _______, _______, _______, _______, _______,  _______, _______,     _______, _______, _______, _______, _______, _______, _______,
-  _______, _______, _______, KC_BTN1, KC_BTN2,                                         _______, _______, _______, _______, _______,
+  _______, _______, _______, KC_BTN1, KC_BTN2,                                          _______, _______, _______, _______, _______,
 
                                                _______, RESET  ,     _______, _______,
                                                         _______,     _______,
@@ -42,7 +47,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    return true;
+  if (!process_mouse_turbo_click(keycode, record, RP_FIRE)) { return false; }
+  return true;
 }
 
 // Runs just one time when the keyboard initializes.
