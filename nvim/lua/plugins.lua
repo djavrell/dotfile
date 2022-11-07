@@ -30,7 +30,8 @@ return require('packer').startup(function(use)
   use 'hsanson/vim-openapi'
   -- use 'pedrohdz/vim-yaml-folds'
 
-  use { 'psliwka/vim-smoothie', commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }
+  -- use { 'psliwka/vim-smoothie', commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }
+  use 'karb94/neoscroll.nvim'
   use 'liuchengxu/eleline.vim'
   -- use 'rebelot/heirline.nvim'
 
@@ -38,6 +39,7 @@ return require('packer').startup(function(use)
   use 'vim-utils/vim-troll-stopper'
   use 'ntpeters/vim-better-whitespace'
 
+  -- utils
   use 'benknoble/vimpbcopy'
   use 'andrewradev/splitjoin.vim'
   use 'christianrondeau/vim-base64'
@@ -52,6 +54,7 @@ return require('packer').startup(function(use)
   use 'nacro90/numb.nvim'
   use 'phaazon/hop.nvim'
 
+  -- Typescript
   use 'ianks/vim-tsx'
   use 'maxmellon/vim-jsx-pretty'
   use 'leafgarland/typescript-vim'
@@ -96,6 +99,7 @@ return require('packer').startup(function(use)
   use 'lukas-reineke/lsp-format.nvim'
   use 'jose-elias-alvarez/nvim-lsp-ts-utils'
   -- use 'Issafalcon/lsp-overloads.nvim'
+  -- use 'folke/neodev.nvim'
 
   -- Wrapper around some LSP for particular language
   use 'scalameta/nvim-metals'
