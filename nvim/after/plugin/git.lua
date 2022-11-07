@@ -22,7 +22,6 @@ Hydra({
          border = 'rounded'
       },
       on_enter = function()
-         vim.bo.modifiable = false
          gitsigns.toggle_linehl(true)
       end,
       on_exit = function()
