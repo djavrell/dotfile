@@ -133,32 +133,24 @@ vim.api.nvim_create_autocmd("FileType", {
 
 local dap_ui = require "dapui"
 
---[[
-require('dapui').setup(
+dap_ui.setup {
   layouts = {
     {
       elements = {
-        'scopes',
-        'breakpoints',
-        'stacks',
-        'watches',
+        { id = "watches", size = 0.5 },
+        "scopes",
+        { id = "breakpoints", size = 0.10 }
       },
-      size = 40,
-      position = 'left',
+      size = 0.25,
+      position = "left"
     },
     {
-      elements = {
-        'repl',
-        'console',
-      },
-      size = 10,
-      position = 'bottom',
+      elements = { "repl", "console" },
+      size = 0.15,
+      position = "bottom"
     },
-  },
-)
---]]
-
-dap_ui.setup {}
+  }
+}
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
   dap_ui.open()
