@@ -15,7 +15,10 @@ function zvm_after_init() {
 
   load "~/.fzf.zsh"
 
-  eval "$(direnv hook zsh)"
-  eval "$(starship init zsh)"
-  eval "$(fnm env --use-on-cd)"
+  load "$DOTFILE/starship.sh"
+  # check_eval starship init zsh
+
+  check_eval direnv hook zsh
+  check_eval fnm env --use-on-cd
+  check_eval scala-cli install completions --env --shell zsh
 }

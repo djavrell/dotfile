@@ -53,6 +53,9 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 export GOPATH="$HOME/go"
 path=( "$GOPATH/bin" $path )
 
+# PostgresSQL
+path=( "/opt/homebrew/opt/postgresql@12/bin" $path )
+
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 path=( "$HOME/.rvm/bin" $path )
 load "$HOME/.rvm/scripts/rvm"
