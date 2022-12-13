@@ -1,8 +1,7 @@
 local reloader = function()
   RELOAD "plenary"
   RELOAD "telescope"
-  RELOAD "tj.telescope.setup"
-  RELOAD "tj.telescope.custom"
+  RELOAD "djavrell.telescope.setup"
 end
 
 local M = {}
@@ -10,6 +9,12 @@ local M = {}
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
+
+function M.find_files()
+  return require('telescope.builtin').find_files {
+    fname_width = 80,
+  }
+end
 
 function M.buffers()
   return require('telescope.builtin').buffers({
@@ -67,6 +72,8 @@ function M.lsp_references()
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
+    show_line = false,
+    include_declaration = false,
   }
 end
 
@@ -84,6 +91,7 @@ function M.lsp_implementations()
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
+    show_line = false,
   }
 end
 
@@ -101,6 +109,13 @@ function M.lsp_definitions()
     },
     sorting_strategy = "ascending",
     ignore_filename = false,
+    show_line = false,
+  }
+end
+
+function M.lsp_dynamic_workspace_symbols()
+  return require('telescope.builtin').lsp_dynamic_workspace_symbols {
+    fname_width = 80,
   }
 end
 
