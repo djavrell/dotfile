@@ -1,5 +1,11 @@
 require("todo-comments").setup {}
-require('neoscroll').setup()
+require('neoscroll').setup({
+  mappings = {
+    '<C-u>',
+    '<C-d>',
+    'zz',
+  }
+})
 
 -- nuuid.vim
 vim.g.nuuid_no_mappings = 1
