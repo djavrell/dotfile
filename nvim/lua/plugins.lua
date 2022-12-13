@@ -25,6 +25,7 @@ return require('packer').startup(function(use)
   use 'lifepillar/vim-colortemplate'
   use 'ryanoasis/vim-devicons'
   use 'kyazdani42/nvim-web-devicons' -- for file icons
+  use 'mortepau/codicons.nvim'
 
   -- detect openapi 3
   use 'hsanson/vim-openapi'
