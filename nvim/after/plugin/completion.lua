@@ -98,10 +98,6 @@ local kind_icons = {
 }
 
 cmp.setup({
-  --[[ enabled = function ()
-    return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
-      or require("cmp_dap").is_dap_buffer()
-  end, ]]
   snippet = {
     expand = function(args)
       require('luasnip').lsp_expand(args.body)
@@ -118,7 +114,6 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
-    --[[ { name = 'nvim_lsp_signature_help' }, ]]
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
     { name = 'luasnip' },
@@ -172,11 +167,11 @@ cmp.setup.filetype('prompt', {
 })
 
 local servers = {
-  'metals',
   'tsserver',
   'bashls',
   'sumneko_lua',
   'clangd',
+  'jsonls'
 }
 
 for _, lsp in ipairs(servers) do
@@ -238,5 +233,5 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
     require("metals").initialize_or_attach(metals_config)
   end,
-  group = augroups["nvimMetals"],
+  group = augroups["nvim-metals"],
 })
