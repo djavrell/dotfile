@@ -20,7 +20,7 @@ autocmd("TextYankPost", {
 
 autocmd({"BufRead", "BufNewFile"}, {
   group = augroups["scala"],
-  pattern = "*.sbt",
+  pattern = { "*.sbt", "*.sc" },
   command = "set filetype=scala"
 })
 
