@@ -1,6 +1,18 @@
-if require "djavrell.init_config"() then
-  return
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    lazypath,
+  })
 end
+vim.opt.rtp:prepend(lazypath)
+
+--[[ if require "djavrell.init_config"() then
+  return
+end ]]
 
 vim.cmd([[
   try
@@ -13,7 +25,7 @@ vim.cmd([[
 ]])
 
 require('djavrell.globals')
-require('plugins')
+require('lazy').setup('plugins')
 
 require('djavrell.augroups')
 

@@ -1,139 +1,134 @@
-return require('packer').startup(function(use)
+return {
+  -- 'wbthomason/packer.nvim',
 
-  local local_use = function(plug, github, opts)
-    opts = opts or {}
+  'nvim-lua/popup.nvim',
+  'nvim-lua/plenary.nvim',
+  'rcarriga/nvim-notify',
 
-    if vim.fn.isdirectory(vim.fn.expand("~/nvimPlugins/" .. plug)) then
-      opts[1] = "~/nvimPlugins/" .. plug
-    else
-      opts[1] = vim.fn.expand("%s/%s", github, plug)
-    end
+  'rebelot/kanagawa.nvim',
+  'sainnhe/gruvbox-material',
+  'lifepillar/vim-colortemplate',
+  'ryanoasis/vim-devicons',
+  'kyazdani42/nvim-web-devicons', -- for file icons
+  'mortepau/codicons.nvim',
 
-    use(opts)
-  end
+  'hsanson/vim-openapi',
 
-  use 'wbthomason/packer.nvim'
+  'karb94/neoscroll.nvim',
+  'liuchengxu/eleline.vim',
 
-  -- Plugin for plugins
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'rcarriga/nvim-notify'
-
-  -- styling
-  use 'rebelot/kanagawa.nvim'
-  use 'sainnhe/gruvbox-material'
-  use 'lifepillar/vim-colortemplate'
-  use 'ryanoasis/vim-devicons'
-  use 'kyazdani42/nvim-web-devicons' -- for file icons
-  use 'mortepau/codicons.nvim'
-
-  -- detect openapi 3
-  use 'hsanson/vim-openapi'
-  -- use 'pedrohdz/vim-yaml-folds'
-
-  -- use { 'psliwka/vim-smoothie', commit = "10fd0aa57d176718bc2c570f121ab523c4429a25" }
-  use 'karb94/neoscroll.nvim'
-  use 'liuchengxu/eleline.vim'
-  -- use 'rebelot/heirline.nvim'
-
-  use 'scr1pt0r/crease.vim' -- fold customization
-  use 'vim-utils/vim-troll-stopper'
-  use 'ntpeters/vim-better-whitespace'
+  'scr1pt0r/crease.vim', -- fold customization
+  'vim-utils/vim-troll-stopper',
+  'ntpeters/vim-better-whitespace',
 
   -- utils
-  use 'benknoble/vimpbcopy'
-  use 'andrewradev/splitjoin.vim'
-  use 'christianrondeau/vim-base64'
-  use 'kburdett/vim-nuuid'
+  'benknoble/vimpbcopy',
+  'andrewradev/splitjoin.vim',
+  'christianrondeau/vim-base64',
+  'kburdett/vim-nuuid',
 
-  use 'kyazdani42/nvim-tree.lua'
+  'kyazdani42/nvim-tree.lua',
 
-  use 'kylechui/nvim-surround'
-  use 'windwp/nvim-autopairs'
-  use 'AndrewRadev/tagalong.vim'
+  'kylechui/nvim-surround',
+  'windwp/nvim-autopairs',
+  'AndrewRadev/tagalong.vim',
 
-  use 'nacro90/numb.nvim'
-  use 'phaazon/hop.nvim'
+  'nacro90/numb.nvim',
+  'phaazon/hop.nvim',
 
   -- Typescript
-  use 'ianks/vim-tsx'
-  use 'maxmellon/vim-jsx-pretty'
-  use 'leafgarland/typescript-vim'
+  'ianks/vim-tsx',
+  'maxmellon/vim-jsx-pretty',
+  'leafgarland/typescript-vim',
 
-  use {'rhysd/vim-fixjson', ft = { 'json' } }
-  use 'chrisbra/csv.vim'
-  use 'jamessan/vim-gnupg'
-  use 'diepm/vim-rest-console'
+  {'rhysd/vim-fixjson', ft = 'json' },
+  {'chrisbra/csv.vim', ft = 'csv'},
+  'jamessan/vim-gnupg',
+  {'diepm/vim-rest-console', ft = 'rest'},
 
-  use 'numToStr/Comment.nvim'
-  use 'JoosepAlviste/nvim-ts-context-commentstring'
+  'numToStr/Comment.nvim',
+  'JoosepAlviste/nvim-ts-context-commentstring',
 
-  use 'folke/trouble.nvim'
-  use 'folke/todo-comments.nvim'
+  {
+    'folke/trouble.nvim',
+    cmd = {
+      'Trouble',
+      'TroubleToggle',
+      'TodoTrouble'
+    }
+  },
+  'folke/todo-comments.nvim',
 
-  use 'nvim-telescope/telescope.nvim'
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-  use 'nvim-telescope/telescope-hop.nvim'
-  use 'nvim-telescope/telescope-ui-select.nvim'
-  use 'nvim-telescope/telescope-live-grep-args.nvim'
-  use 'nvim-telescope/telescope-dap.nvim'
-  use 'doums/suit.nvim'
+  'nvim-telescope/telescope.nvim',
+  {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  'nvim-telescope/telescope-hop.nvim',
+  'nvim-telescope/telescope-ui-select.nvim',
+  'nvim-telescope/telescope-live-grep-args.nvim',
+  'nvim-telescope/telescope-dap.nvim',
+  'doums/suit.nvim',
 
-  use { 'anuvyklack/hydra.nvim',
-    requires = 'anuvyklack/keymap-layer.nvim' -- needed only for pink hydras
-  }
+  'DNLHC/glance.nvim',
 
-  use 'TimUntersberger/neogit'
-  use 'lewis6991/gitsigns.nvim'
-  use 'sindrets/diffview.nvim'
+  {
+    'anuvyklack/hydra.nvim',
+    dependencies = { 'anuvyklack/keymap-layer.nvim' } -- needed only for pink hydras
+  },
 
-  use 'pwntester/octo.nvim'
-  use 'rhysd/committia.vim'
-  use 'rhysd/git-messenger.vim'
+  {'TimUntersberger/neogit', cmd = 'Neogit'},
+  'lewis6991/gitsigns.nvim',
+  'sindrets/diffview.nvim',
 
-  use 'L3MON4D3/LuaSnip'
+  {'pwntester/octo.nvim', cmd = 'Octo'},
+  'rhysd/committia.vim',
+  'rhysd/git-messenger.vim',
+
+  'L3MON4D3/LuaSnip',
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
-  use 'onsails/lspkind-nvim'
-  use 'wbthomason/lsp-status.nvim'
-  use 'lukas-reineke/lsp-format.nvim'
-  use 'jose-elias-alvarez/nvim-lsp-ts-utils'
-  -- use 'Issafalcon/lsp-overloads.nvim'
-  -- use 'folke/neodev.nvim'
+  'neovim/nvim-lspconfig',
+  'onsails/lspkind-nvim',
+  'wbthomason/lsp-status.nvim',
+  'lukas-reineke/lsp-format.nvim',
+  'jose-elias-alvarez/nvim-lsp-ts-utils',
+  --  'Issafalcon/lsp-overloads.nvim',
+  --  'folke/neodev.nvim',
 
   -- Wrapper around some LSP for particular language
-  use 'scalameta/nvim-metals'
-  use 'tpope/vim-dadbod'
-  use 'kristijanhusak/vim-dadbod-ui'
-  use 'kristijanhusak/vim-dadbod-completion'
-  use 'SidOfc/mkdx'
+  'scalameta/nvim-metals',
+  'tpope/vim-dadbod',
+  'kristijanhusak/vim-dadbod-ui',
+  'kristijanhusak/vim-dadbod-completion',
+  'SidOfc/mkdx',
 
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-nvim-lua'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-cmdline'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'rcarriga/cmp-dap'
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-nvim-lua',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-cmdline',
+  'saadparwaiz1/cmp_luasnip',
+  'rcarriga/cmp-dap',
 
-  use 'jose-elias-alvarez/null-ls.nvim'
+  'jose-elias-alvarez/null-ls.nvim',
 
-  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
-  use { 'nvim-treesitter/playground' }
-  use { 'RRethy/nvim-treesitter-textsubjects' }
-  use { 'nvim-treesitter/nvim-treesitter-textobjects' }
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate'
+  },
+  'nvim-treesitter/playground',
+  'RRethy/nvim-treesitter-textsubjects',
+  'nvim-treesitter/nvim-treesitter-textobjects',
 
   -- DAP
-  use 'mfussenegger/nvim-dap'
-  use 'rcarriga/nvim-dap-ui'
-  use 'theHamsta/nvim-dap-virtual-text'
+  'mfussenegger/nvim-dap',
+  'rcarriga/nvim-dap-ui',
+  'theHamsta/nvim-dap-virtual-text',
 
-  use 'kevinhwang91/nvim-bqf'
-  use {'junegunn/fzf', run = function()
+  'kevinhwang91/nvim-bqf',
+  {
+    'junegunn/fzf',
+    build = function()
       vim.fn['fzf#install']()
-  end
-  }
-
-end)
+    end
+  },
+}
