@@ -17,11 +17,23 @@ local download_packer = function()
 end
 
 return function()
-  if not pcall(require, "packer") then
+  --[[ if not pcall(require, "packer") then
     download_packer()
 
     return true
   end
 
-  return false
+  return false ]]
+  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      lazypath,
+    })
+  end
+  vim.opt.rtp:prepend(lazypath)
+  return true
 end

@@ -1,9 +1,6 @@
 return {
-  -- 'wbthomason/packer.nvim',
-
   'nvim-lua/popup.nvim',
   'nvim-lua/plenary.nvim',
-  'rcarriga/nvim-notify',
 
   'rebelot/kanagawa.nvim',
   'sainnhe/gruvbox-material',
@@ -33,7 +30,6 @@ return {
   'windwp/nvim-autopairs',
   'AndrewRadev/tagalong.vim',
 
-  'nacro90/numb.nvim',
   'phaazon/hop.nvim',
 
   -- Typescript
@@ -63,8 +59,8 @@ return {
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   'nvim-telescope/telescope-hop.nvim',
   'nvim-telescope/telescope-ui-select.nvim',
-  'nvim-telescope/telescope-live-grep-args.nvim',
   'nvim-telescope/telescope-dap.nvim',
+  'nvim-telescope/telescope-live-grep-args.nvim',
   'doums/suit.nvim',
 
   'DNLHC/glance.nvim',
@@ -90,8 +86,6 @@ return {
   'wbthomason/lsp-status.nvim',
   'lukas-reineke/lsp-format.nvim',
   'jose-elias-alvarez/nvim-lsp-ts-utils',
-  --  'Issafalcon/lsp-overloads.nvim',
-  --  'folke/neodev.nvim',
 
   -- Wrapper around some LSP for particular language
   'scalameta/nvim-metals',
