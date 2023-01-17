@@ -8,7 +8,7 @@
 - [desk](https://github.com/jamesob/desk)
 - [pgcli](https://www.pgcli.com/)
 - [mycli](https://www.mycli.net/)
-- [http-propt](https://github.com/eliangcs/http-prompt)
+- [http-prompt](https://github.com/eliangcs/http-prompt)
 - [dry](https://moncho.github.io/dry/)
 - [Fzf](https://github.com/junegunn/fzf)
 - [shellcheck](https://github.com/koalaman/shellcheck)
@@ -20,34 +20,12 @@
   - [fd](https://github.com/sharkdp/fd)
   - [exa](https://github.com/ogham/exa)
 
-### Powerd by Go
-
-- [Go](https://golang.org/)
-  - [wuzz](https://github.com/asciimoo/wuzz)
-  - [csvlint](https://github.com/Clever/csvlint)
-
+> `~/.cargo/.crates.toml`
 
 ## Color theme
 
 - [base16](https://github.com/chriskempson/base16)
   - gruvbox hard (+ palette 256)
-
-## Neovim
-
-- [Metals](https://scalameta.org/metals/docs/editors/vim.html)
-
-### Coc Extensions
-
-- highlight
-- sql
-- marketplace
-- utilsnips
-- yank
-- lists
-- tslint-plugin
-- tsserver
-- json
-- git
 
 
 ## GIT
