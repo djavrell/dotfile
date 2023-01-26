@@ -4,6 +4,15 @@ return {
 
   'rebelot/kanagawa.nvim',
   'sainnhe/gruvbox-material',
+  {
+    'AlexvZyl/nordic.nvim',
+    opts = {
+      telescope = {
+        style = 'flat'
+      }
+    }
+  },
+
   'lifepillar/vim-colortemplate',
   'ryanoasis/vim-devicons',
   'kyazdani42/nvim-web-devicons', -- for file icons
