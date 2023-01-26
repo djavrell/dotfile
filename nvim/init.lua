@@ -10,10 +10,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
---[[ if require "djavrell.init_config"() then
-  return
-end ]]
-
 vim.cmd([[
   try
     source $XDG_CONFIG_HOME/local_nvim.vim
