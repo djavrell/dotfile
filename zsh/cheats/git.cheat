@@ -7,3 +7,8 @@ git rebase --onto <new_base> <old_base> $(git_current_branch)
 $ old_base: git branch | awk '{print $NF}'
 # select the branch you want as the new base
 $ new_base: git branch | awk '{print $NF}'
+
+% git, rename, branch
+# rename the current branch
+
+git branch -m $(git_current_branch) <new_branch>
