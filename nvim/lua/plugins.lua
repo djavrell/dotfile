@@ -20,8 +20,18 @@ return {
 
   'hsanson/vim-openapi',
 
-  'karb94/neoscroll.nvim',
-  'liuchengxu/eleline.vim',
+  {
+    'karb94/neoscroll.nvim',
+    config = function()
+      require('neoscroll').setup({
+        mappings = {
+          '<C-u>',
+          '<C-d>',
+          'zz',
+        }
+      })
+    end
+  },
 
   'scr1pt0r/crease.vim', -- fold customization
   'vim-utils/vim-troll-stopper',
@@ -35,7 +45,15 @@ return {
 
   'kyazdani42/nvim-tree.lua',
 
-  'kylechui/nvim-surround',
+  {
+    'kylechui/nvim-surround',
+    config = function()
+      require("nvim-surround").setup({
+        move_cursor = false,
+        indent_lines = false
+      })
+    end
+  },
   'windwp/nvim-autopairs',
   'AndrewRadev/tagalong.vim',
 
@@ -62,7 +80,12 @@ return {
       'TodoTrouble'
     }
   },
-  'folke/todo-comments.nvim',
+  {
+    'folke/todo-comments.nvim',
+    config = function()
+      require("todo-comments").setup {}
+    end,
+  },
 
   'nvim-telescope/telescope.nvim',
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
@@ -127,7 +150,15 @@ return {
   'rcarriga/nvim-dap-ui',
   'theHamsta/nvim-dap-virtual-text',
 
-  'kevinhwang91/nvim-bqf',
+  {
+    'kevinhwang91/nvim-bqf',
+    config = function()
+      require('bqf').setup({
+        auto_enable = true,
+        auto_resize_height = true
+      })
+    end
+  },
   {
     'junegunn/fzf',
     build = function()
