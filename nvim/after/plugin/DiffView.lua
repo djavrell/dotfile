@@ -1,4 +1,38 @@
+local Hydra = require('hydra')
 local cb = require'diffview.config'.diffview_callback
+local conflictChoose = cb("conflict_choose")
+
+local hint = [[
+  ^ ^         Git Conflicts
+  _o_: ours   _t_: theirs   _b_: base
+  _a_: all    _x_: none
+
+  _n_: next   _p_: prev
+  ^ ^         _q_ quit
+]]
+
+local h = Hydra({
+  hint = hint,
+  config = {
+    color = 'pink',
+    invoke_on_body = true,
+    hint = {
+      position = 'bottom'
+    }
+  },
+  mode = { 'n', 'x', },
+  -- body = '<leader>c',
+  heads = {
+    { 'o', conflictChoose('ours') },
+    { 't', conflictChoose('theirs') },
+    { 'b', conflictChoose('base') },
+    { 'a', conflictChoose('all') },
+    { 'x', conflictChoose('none') },
+    { 'n', cb('next_conflict') },
+    { 'p', cb('prev_conflict') },
+    { 'q', nil, { exit = true, nowait = true } }
+  }
+})
 
 require'diffview'.setup {
   diff_binaries = false,    -- Show diffs for binaries
@@ -13,6 +47,14 @@ require'diffview'.setup {
       layout = "diff4_mixed",
       disable_diagnostics = true,
     }
+  },
+  hooks = {
+    view_opened = function(bufnr)
+      h:activate()
+    end,
+    view_closed = function(bufnr)
+      h:exit()
+    end,
   },
   key_bindings = {
     -- The `view` bindings are active in the diff buffers, only when the current
@@ -47,3 +89,4 @@ require'diffview'.setup {
     }
   }
 }
+
