@@ -36,6 +36,12 @@ return {
   'scr1pt0r/crease.vim', -- fold customization
   'vim-utils/vim-troll-stopper',
   'ntpeters/vim-better-whitespace',
+  {
+    'm4xshen/smartcolumn.nvim',
+    config = function()
+      require('smartcolumn').setup()
+    end
+  },
 
   -- utils
   'benknoble/vimpbcopy',
@@ -99,7 +105,7 @@ return {
 
   {
     'anuvyklack/hydra.nvim',
-    dependencies = { 'anuvyklack/keymap-layer.nvim' } -- needed only for pink hydras
+    dependencies = { 'anuvyklack/keymap-layer.nvim' } -- only for pink hydras
   },
 
   {'TimUntersberger/neogit', cmd = 'Neogit'},
