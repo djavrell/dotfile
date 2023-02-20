@@ -90,19 +90,17 @@ Telescope.setup {
       override_generic_sorter = true,  -- override the generic sorter
       override_file_sorter = true,     -- override the file sorter
     },
-    live_grep_args = {
-      mappings = { -- extend mappings
-        i = {
-          ["<C-k>"] = lga_actions.quote_prompt({
-            postfix = ' -t'
-          }),
+    menufacture = {
+      mappings = {
+        main_menu = {
+          [{ 'i', 'n'}] = '<C-k>'
         }
       }
-    }
+    },
   }
 }
 
 -- extension
 Telescope.load_extension('fzf')
 Telescope.load_extension('hop')
-Telescope.load_extension('live_grep_args')
+Telescope.load_extension('menufacture')

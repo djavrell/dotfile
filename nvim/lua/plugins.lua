@@ -92,7 +92,7 @@ return {
   'nvim-telescope/telescope-hop.nvim',
   'nvim-telescope/telescope-ui-select.nvim',
   'nvim-telescope/telescope-dap.nvim',
-  'nvim-telescope/telescope-live-grep-args.nvim',
+  'molecule-man/telescope-menufacture',
   'doums/suit.nvim',
 
   'DNLHC/glance.nvim',

@@ -10,14 +10,17 @@ local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
 
+local builtin = require('telescope.builtin')
+local menufacture = require('telescope').extensions.menufacture
+
 function M.find_files()
-  return require('telescope.builtin').find_files {
+  return menufacture.find_files {
     fname_width = 80,
   }
 end
 
 function M.buffers()
-  return require('telescope.builtin').buffers({
+  return builtin.buffers({
     layout_strategy = "center",
     layout_config = {
       anchor = "N",
@@ -27,7 +30,7 @@ function M.buffers()
 end
 
 function M.commands()
-  return require('telescope.builtin').commands(themes.get_dropdown {
+  return builtin.commands(themes.get_dropdown {
     previewer = false,
     layout_config = {
       width = function(_, col, _)
@@ -42,7 +45,7 @@ function M.commands()
 end
 
 function M.search_history()
-  return require('telescope.builtin').search_history(themes.get_dropdown {
+  return builtin.search_history(themes.get_dropdown {
   previewer = false,
   layout_config = {
     prompt_position = "top"
@@ -51,7 +54,7 @@ function M.search_history()
 end
 
 function M.quickfixhistory()
-  return require('telescope.builtin').quickfixhistory(themes.get_dropdown {
+  return builtin.quickfixhistory(themes.get_dropdown {
     layout_config = {
       prompt_position = "top"
     }
@@ -59,7 +62,7 @@ function M.quickfixhistory()
 end
 
 function M.lsp_references()
-  return require('telescope.builtin').lsp_references {
+  return builtin.lsp_references {
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
@@ -78,7 +81,7 @@ function M.lsp_references()
 end
 
 function M.lsp_implementations()
-  return require('telescope.builtin').lsp_references {
+  return builtin.lsp_references {
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
@@ -96,7 +99,7 @@ function M.lsp_implementations()
 end
 
 function M.lsp_definitions()
-  return require('telescope.builtin').lsp_references {
+  return builtin.lsp_references {
     layout_strategy = "vertical",
     layout_config = {
       width = function(_, col, _)
@@ -114,14 +117,17 @@ function M.lsp_definitions()
 end
 
 function M.lsp_dynamic_workspace_symbols()
-  return require('telescope.builtin').lsp_dynamic_workspace_symbols {
+  return builtin.lsp_dynamic_workspace_symbols {
     fname_width = 80,
   }
 end
 
 function M.live_grep_args()
-  -- return require('telescope.builtin').live_grep()
-  return require('telescope').extensions.live_grep_args.live_grep_args()
+  return menufacture.live_grep()
+end
+
+function M.grep_string()
+  return menufacture.grep_string()
 end
 
 return setmetatable({}, {
