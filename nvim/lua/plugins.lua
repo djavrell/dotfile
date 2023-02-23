@@ -39,7 +39,10 @@ return {
   {
     'm4xshen/smartcolumn.nvim',
     config = function()
-      require('smartcolumn').setup()
+      require('smartcolumn').setup({
+        disabled_filetypes = { "help", "text", "markdown", "dbout" },
+        limit_to_line = true,
+      })
     end
   },
 
