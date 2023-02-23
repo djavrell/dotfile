@@ -16,7 +16,7 @@ set shortmess+=c
 " disable automatic commenting on newline
 set formatoptions-=c, formatoptions-=r, formatoptions-=o
 set signcolumn=yes
-set cmdheight=2
+set cmdheight=1
 set spelllang=en_us,fr_fr
 
 set nocompatible
