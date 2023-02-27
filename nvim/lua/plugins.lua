@@ -40,7 +40,13 @@ return {
     'm4xshen/smartcolumn.nvim',
     config = function()
       require('smartcolumn').setup({
-        disabled_filetypes = { "help", "text", "markdown", "dbout" },
+        disabled_filetypes = {
+          "help",
+          "text",
+          "markdown",
+          "dbout",
+          "man",
+        },
         limit_to_line = true,
       })
     end
@@ -115,7 +121,6 @@ return {
   'lewis6991/gitsigns.nvim',
   'sindrets/diffview.nvim',
 
-  {'pwntester/octo.nvim', cmd = 'Octo'},
   'rhysd/committia.vim',
   'rhysd/git-messenger.vim',
 
