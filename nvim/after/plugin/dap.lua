@@ -3,7 +3,6 @@ if not has_dap then
   return
 end
 
-local dap = require('dap')
 local Hydra = require('hydra')
 local augroups = require('djavrell.augroups.utils')
 
