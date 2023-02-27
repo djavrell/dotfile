@@ -176,7 +176,7 @@ local servers = {
   'tsserver',
   'bashls',
   'clangd',
-  'jsonls'
+  -- 'jsonls'
 }
 
 for _, lsp in ipairs(servers) do
