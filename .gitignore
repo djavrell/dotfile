@@ -1,8 +1,7 @@
 tmux/resurrect
 tmux/plugins
 
-nvim/.config/nvim/local_nvim.vim
-nvim/.config/nvim/spell/
+nvim/lazy-lock.json
 
 pgcli/.config/pgcli/log
 pgcli/.config/pgcli/history
