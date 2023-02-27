@@ -42,8 +42,9 @@ export FNM_DIR="$XDG_DATA_HOME/fnm"
 export FNM_LOGLEVEL=quiet
 
 # SCALA
-export SCALA_HOME="/usr/local/share/scala-2.12.6"
-path=( "$SCALA_HOME/bin" $path)
+# export SCALA_HOME="/usr/local/share/scala-2.12.6"
+# path=( "$SCALA_HOME/bin" $path)
+path=( "/Users/kpr/Library/Application Support/Coursier/bin" $path )
 
 # Rust
 path=( "$HOME/.cargo/bin" $path )
