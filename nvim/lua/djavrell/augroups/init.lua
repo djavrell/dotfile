@@ -49,22 +49,9 @@ vim.cmd [[
     autocmd BufWritePre * :%s/\s\+$//e
   augroup END
 ]]
--- autocmd("BufWritePre", {
---   group = M.global,
---   pattern = "*",
---   command = ":%s/\s\+$//e"
--- })
 
 autocmd("BufEnter", {
   group = augroups["help"],
   pattern = "*",
   command = "if &buftype ==# 'help' | nnoremap gd <C-]> | endif"
 })
-
-autocmd("BufRead", {
-  group = augroups["envRC"],
-  pattern = { ".envrc", ".env.*", ".env" },
-  command = "set ft=sh"
-})
-
--- augroups.foo = vim.api.nvim_create_augroup('foo', { clear = true})
