@@ -46,7 +46,6 @@ alias gfa='git fetch --all --prune'
 alias gfo='git fetch origin'
 
 alias ggpull='git pull origin $(git_current_branch)'
-alias ggpush='git push origin $(git_current_branch) --follow-tags'
 
 alias gignore='git update-index --assume-unchanged'
 alias gignored='git ls-files -v | grep "^[[:lower:]]"'
