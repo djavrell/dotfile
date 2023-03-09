@@ -4,7 +4,7 @@ function zvm_after_init() {
   load "$DOTFILE/zsh/env.sh"
   load "$DOTFILE/zsh/zsh_conf.zsh"
   load "$DOTFILE/zsh/key_biding.zsh"
-  load "$DOTFILE/zsh/alias.zsh"
+  load_alias "zsh"
 
   load "$DOTFILE/zsh/sub_modules.zsh"
 

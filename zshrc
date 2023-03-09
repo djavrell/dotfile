@@ -25,15 +25,15 @@ export SUB_MODULES="$DOTFILE/submodules"
 
 # load all core function
 load_func "core"
-load_module "core"
+load_func "zsh"
 
 # load modules (env var, alias, ...)
-load_module "zsh"
-load_func "zsh"
-load_module "git"
-load_module "tmux"
-load_module "navi"
-load_module "nvim"
+module "core"
+module "zsh"
+module "git"
+module "tmux"
+module "navi"
+module "nvim"
 
 # uncomment to know what take to much time at the load and init time
 # DOn't forget to uncomment the 'import' at the top of the file

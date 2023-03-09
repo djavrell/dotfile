@@ -1,4 +1,4 @@
 # vim: ft=zsh
-function load_module {
+function module {
   load "$DOTFILE/$1/init.zsh"
 }

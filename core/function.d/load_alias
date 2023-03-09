@@ -1,0 +1,4 @@
+# vim: ft=zsh
+function load_alias {
+  load "$DOTFILE/$1/alias.zsh"
+}
