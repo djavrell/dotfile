@@ -1,4 +1,5 @@
 # vim: ft=zsh
 function load {
+  echo "$1"
   test -f "$1" && . "$1"
 }

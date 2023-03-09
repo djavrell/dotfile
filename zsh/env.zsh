@@ -20,13 +20,6 @@ export DISABLE_UNTRACKED_FILES_DIRTY="true"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 
-# tmuxinator
-path=( "$DOTFILE/tmuxinator/tmuxinator.zsh" $path )
-
-# Vim mode
-export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
-export ZVM_CURSOR_STYLE_ENABLED=false
-
 # FZF fuzzy finder
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'

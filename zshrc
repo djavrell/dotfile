@@ -9,7 +9,7 @@ function load_func() {
   local new_path="$DOTFILE/$1/function.d"
 
   fpath=( "$new_path" $fpath )
-  autoload -Uz echo $(ls "$new_path")
+  autoload -Uz $(ls "$new_path")
 }
 autoload -Uz load_func
 
