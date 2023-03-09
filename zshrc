@@ -6,7 +6,12 @@ autoload -Uz compinit
 zmodload -i zsh/complist
 
 function load_func() {
-  for func in $(ls "$1"); do
+  local new_path="$DOTFILE/$1/function.d"
+
+  fpath=( "$new_path" $fpath )
+
+  for func in $(ls "$new_path"); do
+    echo "$func"
     autoload -Uz $func
   done
 }
@@ -19,19 +24,17 @@ DOTFOLDER=".bashrc.d"
 export DOTFILE="$HOME/$DOTFOLDER"
 export SUB_MODULES="$DOTFILE/submodules"
 
-SYSTEM_FILE=$(uname -s | tr '[:upper:]' '[:lower:]')
-export SYSFILE="$DOTFILE/$SYSTEM_FILE"
-
 # load all core function
-fpath=( "$DOTFILE/function.d" $fpath )
-load_func "$DOTFILE/function.d"
+load_func "core"
+load_module "core"
 
-# export all environement variables
-load "$DOTFILE/zsh/init.zsh"
-load "$DOTFILE/git/init.zsh"
-
-load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
-load "$DOTFILE/local.sh"
+# load modules (env var, alias, ...)
+load_module "zsh"
+load_func "zsh"
+load_module "git"
+load_module "tmux"
+load_module "navi"
+load_module "nvim"
 
 # uncomment to know what take to much time at the load and init time
 # DOn't forget to uncomment the 'import' at the top of the file

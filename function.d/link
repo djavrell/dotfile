@@ -1,4 +1,0 @@
-# vim: ft=zsh
-function link {
-  test -f "$1" && ln -s "$1" "$2"
-}
