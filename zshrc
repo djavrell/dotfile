@@ -11,7 +11,6 @@ function load_func() {
   fpath=( "$new_path" $fpath )
 
   for func in $(ls "$new_path"); do
-    echo "$func"
     autoload -Uz $func
   done
 }
