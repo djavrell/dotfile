@@ -9,18 +9,14 @@ function load_func() {
   local new_path="$DOTFILE/$1/function.d"
 
   fpath=( "$new_path" $fpath )
-
-  for func in $(ls "$new_path"); do
-    autoload -Uz $func
-  done
+  autoload -Uz echo $(ls "$new_path")
 }
 autoload -Uz load_func
 
 # prevent the global variable PATH to have duplicate
 typeset -U path
 
-DOTFOLDER=".bashrc.d"
-export DOTFILE="$HOME/$DOTFOLDER"
+export DOTFILE="$HOME/.bashrc.d"
 export SUB_MODULES="$DOTFILE/submodules"
 
 # load all core function
