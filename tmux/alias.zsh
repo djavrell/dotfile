@@ -1,5 +1,3 @@
-alias mux='tmuxinator'
-
 alias tl='tmux list-sessions'      # list all tmux session
 alias ta='tmux a -t $*'            # go into a tmux session
 alias tla='ta $(tl | cut -d":" -f 1 | fzf-tmux -r 30% --reverse)'

@@ -12,9 +12,7 @@ function zvm_after_init() {
   load_alias "zsh"
 
   load "$DOTFILE/zsh/sub_modules.zsh"
-
-  # load "~/.fzf.zsh"
-  # check_eval starship init zsh
+  zsh_after_init
 
   check_eval direnv hook zsh
   check_eval fnm env --use-on-cd

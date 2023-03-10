@@ -28,16 +28,19 @@ export XDG_DATA_HOME="$HOME/.local/share"
 load_func "core"
 load_func "zsh"
 
+function zsh_after_init() {
+  module "git"
+  module "starship"
+  module "fzf"
+  module "tmux"
+  module "tmuxinator"
+  module "navi"
+  module "nvim"
+}
+
 # load modules (env var, alias, ...)
 module "core"
 module "zsh"
-module "git"
-module "starship"
-module "tmux"
-module "tmuxinator"
-module "navi"
-module "nvim"
-module "fzf"
 
 # uncomment to know what take to much time at the load and init time
 # DOn't forget to uncomment the 'import' at the top of the file
