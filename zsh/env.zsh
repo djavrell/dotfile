@@ -16,10 +16,6 @@ path=( "$HOME/bin" $path )
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# XDG spec
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-
 # FZF fuzzy finder
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file ~/.bashrc.d/fdignore"
 export FZF_COMPLETION_TRIGGER='%'

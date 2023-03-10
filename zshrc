@@ -16,8 +16,13 @@ autoload -Uz load_func
 # prevent the global variable PATH to have duplicate
 typeset -U path
 
+# dotfiles
 export DOTFILE="$HOME/.bashrc.d"
 export SUB_MODULES="$DOTFILE/submodules"
+
+# XDG spec
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
 
 # load all core function
 load_func "core"
@@ -28,6 +33,7 @@ module "core"
 module "zsh"
 module "git"
 module "tmux"
+module "tmuxinator"
 module "navi"
 module "nvim"
 

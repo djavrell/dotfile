@@ -6,7 +6,7 @@ export ZVM_CURSOR_STYLE_ENABLED=false
 
 
 function zvm_after_init() {
-  load "$DOTFILE/zsh/env.sh"
+  load "$DOTFILE/zsh/env.zsh"
   load "$DOTFILE/zsh/zsh_conf.zsh"
   load "$DOTFILE/zsh/key_biding.zsh"
   load_alias "zsh"
