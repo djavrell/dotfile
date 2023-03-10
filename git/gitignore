@@ -21,6 +21,9 @@ project/project/project/metals.sbt
 ## direnv
 .envrc
 
+## node
+.nvmrc
+
 ## global
 *.tmp
 *.log
