@@ -2,6 +2,7 @@ tmux/resurrect
 tmux/plugins
 
 nvim/lazy-lock.json
+nvim/lua/.luarc.json
 
 pgcli/.config/pgcli/log
 pgcli/.config/pgcli/history
