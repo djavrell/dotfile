@@ -13,9 +13,7 @@ function zvm_after_init() {
 
   load "$DOTFILE/zsh/sub_modules.zsh"
 
-  load "~/.fzf.zsh"
-
-  load "$DOTFILE/starship.sh"
+  # load "~/.fzf.zsh"
   # check_eval starship init zsh
 
   check_eval direnv hook zsh

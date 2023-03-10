@@ -32,10 +32,12 @@ load_func "zsh"
 module "core"
 module "zsh"
 module "git"
+module "starship"
 module "tmux"
 module "tmuxinator"
 module "navi"
 module "nvim"
+module "fzf"
 
 # uncomment to know what take to much time at the load and init time
 # DOn't forget to uncomment the 'import' at the top of the file
