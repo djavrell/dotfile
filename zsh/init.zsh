@@ -4,8 +4,8 @@ load "$SUB_MODULES/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
 export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
 export ZVM_CURSOR_STYLE_ENABLED=false
 
-
 function zvm_after_init() {
+  load_func "zsh"
   load "$DOTFILE/zsh/env.zsh"
   load "$DOTFILE/zsh/zsh_conf.zsh"
   load "$DOTFILE/zsh/key_biding.zsh"

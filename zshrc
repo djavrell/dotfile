@@ -1,4 +1,4 @@
-# zmodload zsh/zprof # top of your .zshrc file
+# zmodload zsh/zprof
 
 autoload -Uz colors && colors
 autoload -Uz compinit
@@ -16,18 +16,14 @@ autoload -Uz load_func
 # prevent the global variable PATH to have duplicate
 typeset -U path
 
-# dotfiles
 export DOTFILE="$HOME/.bashrc.d"
 export SUB_MODULES="$DOTFILE/submodules"
 
-# XDG spec
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-
 # load all core function
 load_func "core"
-load_func "zsh"
 
+# this function will be called in the ZSH module (zvm after init)
+# due to the vim mode plugin.
 function zsh_after_init() {
   module "git"
   module "starship"
@@ -38,10 +34,9 @@ function zsh_after_init() {
   module "nvim"
 }
 
-# load modules (env var, alias, ...)
 module "core"
 module "zsh"
 
 # uncomment to know what take to much time at the load and init time
-# DOn't forget to uncomment the 'import' at the top of the file
+# Don't forget to uncomment the 'import' at the top of the file
 # zprof
