@@ -8,10 +8,6 @@ export HISTFILE=~/.zsh_history
 export HISTSIZE=1024
 export SAVEHIST=1024
 
-path=( "$HOME/.local/bin" $path )
-path=( "$DOTFILE/bin" "$DOTFILE"/bin/**/*(N/) $path )
-path=( "$HOME/bin" $path )
-
 # ZSH config
 export COMPLETION_WAITING_DOTS="true"
 export DISABLE_UNTRACKED_FILES_DIRTY="true"
