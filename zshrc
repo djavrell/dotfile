@@ -13,6 +13,9 @@ function zsh_after_init() {
   module "kitty"
 }
 
+# load all core function
+load_func "core"
+
 module "core"
 module "zsh"
 

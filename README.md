@@ -22,11 +22,6 @@
 
 > `~/.cargo/.crates.toml`
 
-## Color theme
-
-- [base16](https://github.com/chriskempson/base16)
-  - gruvbox hard (+ palette 256)
-
 
 ## GIT
 ### Git credantial with gpg
@@ -47,6 +42,7 @@ conf file: gh-config.yaml -> `~/.config/gh-dash/config.yml`
 | source          | destination                                 |
 |-----------------|---------------------------------------------|
 | bin folder      | a folder add in your PATH                   |
+| zprofile        | $HOME                                       |
 | zshrc           | $HOME                                       |
 | profile         | $HOME                                       |
 | gitconfig       | $HOME                                       |

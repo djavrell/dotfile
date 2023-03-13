@@ -31,6 +31,3 @@ function load_func() {
   autoload -Uz $(ls "$new_path")
 }
 autoload -Uz load_func
-
-# load all core function
-load_func "core"
