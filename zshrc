@@ -37,6 +37,16 @@ function zsh_after_init() {
 module "core"
 module "zsh"
 
+# The globbing is a little complicated here:
+# - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
+# - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
+# - '.' matches "regular files"
+# - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
+else
+  compinit -C
+fi
+
 # uncomment to know what take to much time at the load and init time
 # Don't forget to uncomment the 'import' at the top of the file
 # zprof
