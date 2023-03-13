@@ -10,6 +10,7 @@ function zsh_after_init() {
   module "tmuxinator"
   module "navi"
   module "nvim"
+  module "kitty"
 }
 
 module "core"
