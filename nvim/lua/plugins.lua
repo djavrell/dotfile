@@ -46,6 +46,7 @@ return {
           "markdown",
           "dbout",
           "man",
+          "lazy"
         },
         limit_to_line = true,
       })
