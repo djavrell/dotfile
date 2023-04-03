@@ -19,6 +19,8 @@ load_func "core"
 module "core"
 module "zsh"
 
+load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
+load "$DOTFILE/local.zsh"
 # The globbing is a little complicated here:
 # - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
 # - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)

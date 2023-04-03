@@ -18,6 +18,3 @@ function zvm_after_init() {
   check_eval fnm env --use-on-cd
   check_eval scala-cli install completions --env --shell zsh
 }
-
-load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
-load "$DOTFILE/local.sh"
