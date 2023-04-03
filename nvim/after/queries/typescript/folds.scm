@@ -1,3 +1,4 @@
+;; extends
 ; inherits: ecma
 
 [
