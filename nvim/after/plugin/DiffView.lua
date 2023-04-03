@@ -8,6 +8,7 @@ local hint = [[
   _a_: all    _x_: none
 
   _n_: next   _p_: prev
+  _N_: next   _P_: prev
   ^ ^         _q_ quit
 ]]
 
@@ -29,8 +30,10 @@ local h = Hydra({
     { 'a', conflictChoose('all') },
     { 'x', conflictChoose('none') },
     { 'n', cb('next_conflict') },
+    { 'N', cb('next_entry') },
     { 'p', cb('prev_conflict') },
-    { 'q', nil, { exit = true, nowait = true } }
+    { 'P', cb('prev_entry') },
+    { 'q', cb('close') }
   }
 })
 
@@ -49,10 +52,10 @@ require'diffview'.setup {
     }
   },
   hooks = {
-    view_opened = function(bufnr)
+    view_opened = function()
       h:activate()
     end,
-    view_closed = function(bufnr)
+    view_closed = function()
       h:exit()
     end,
   },
