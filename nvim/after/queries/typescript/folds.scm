@@ -8,4 +8,5 @@
  (arguments)
  (enum_body)
  (template_string)
+ (object_type)
 ] @fold
