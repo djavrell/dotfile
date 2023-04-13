@@ -15,7 +15,7 @@
 #define L_GRV   FR_D  // ù
 #define L_TRM   FR_S
 
-#define X_CIRC  X_LBRACKET
+#define X_CIRC  X_LBRC
 
 enum combo_keys {
   // à, è, ù

@@ -12,3 +12,5 @@
 // Tap-Hold keys
 #define MT1_SHS MT(MOD_LSFT, KC_SPC)
 #define MT1_CBS MT(MOD_LCTL, KC_BSPC)
+#define MT1_ABS MT(MOD_LALT, KC_BSPC)
+#define MT2_CTB MT(MOD_LCTL, KC_TAB)
