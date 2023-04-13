@@ -3,10 +3,9 @@ local map = vim.keymap.set
 require('nvim-tree').setup {
   disable_netrw       = true,
   hijack_netrw        = true,
-  open_on_setup       = false,
-  -- update_focused_file = {
-  --   enable = true,
-  -- },
+  update_focused_file = {
+    enable = true,
+  },
   hijack_cursor       = true,
   update_cwd          = false,
   diagnostics = {
