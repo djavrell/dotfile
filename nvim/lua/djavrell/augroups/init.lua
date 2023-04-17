@@ -42,14 +42,6 @@ autocmd("BufRead", {
   command = "set ft=conf"
 })
 
-vim.cmd [[
-  augroup Global
-    autocmd!
-    autocmd BufRead *.conf set ft=conf
-    autocmd BufWritePre * :%s/\s\+$//e
-  augroup END
-]]
-
 autocmd("BufEnter", {
   group = augroups["help"],
   pattern = "*",
