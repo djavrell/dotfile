@@ -1,0 +1,5 @@
+# vim: ft=zsh
+function link_git() {
+  link "$DOTFILE/git/gitconfig" "$HOME/.gitconfig"
+  link "$DOTFILE/git/gitignore" "$HOME/.gitignore"
+}

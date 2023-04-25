@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link() {
+  if [ -f "$1" ]; then
+    ln -s $1 $2
+  fi
+}

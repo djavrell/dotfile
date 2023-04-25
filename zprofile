@@ -1,3 +1,5 @@
+#! /usr/bin/env zsh
+
 autoload -Uz colors && colors
 autoload -Uz compinit
 

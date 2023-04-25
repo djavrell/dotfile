@@ -1,0 +1,5 @@
+# vim: ft=zsh
+function link_zsh() {
+  link "$DOTFILE/zshrc" "$HOME/.zshrc"
+  link "$DOTFILE/zprofile" "$HOME/.zprofile"
+}
