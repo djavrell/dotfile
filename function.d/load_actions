@@ -5,6 +5,7 @@
 function load_actions() {
   # ensure that reply is empty
   reply=()
+
   local action="$1"
   shift
   local array="$1"
@@ -13,8 +14,7 @@ function load_actions() {
     local loaders="$DOTFILE/$module/module.d/${action}_${module}"
 
     if [ -f "$loaders" ]; then
-      fpath=( $loaders $fpath )
-      reply+=( "${action}_${module}" $actions )
+      reply+=( "${action}_${module}" )
       autoload -Uz $loaders
     fi
   done
