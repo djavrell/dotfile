@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_pgcli() {
+  reply=(
+    "$DOTFILE/pgcli" "$XDG_CONFIG_HOME/pgcli"
+  )
+}

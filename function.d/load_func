@@ -1,0 +1,8 @@
+# vim: ft=zsh
+
+function load_func() {
+  local new_path="$DOTFILE/$1/function.d"
+
+  fpath=( "$new_path" $fpath )
+  autoload -Uz $(ls "$new_path")
+}

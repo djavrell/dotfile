@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_nvim() {
+  reply=(
+    "$DOTFILE/nvim" "$XDG_CONFIG_HOME/nvim"
+  )
+}

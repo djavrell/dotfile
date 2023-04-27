@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_gh-dash() {
+  reply=(
+    "$DOTFILE/gh-dash" "$XDG_CONFIG_HOME/gh-dash"
+  )
+}

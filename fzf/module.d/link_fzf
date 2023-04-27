@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_fzf() {
+  reply=(
+    "$DOTFILE/fzf/fzf.zsh" "$HOME/.fzf.zsh"
+  )
+}

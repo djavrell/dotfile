@@ -1,0 +1,7 @@
+# vim: ft=zsh
+function link_tmux() {
+  reply=(
+    "$DOTFILE/tmux" "$HOME/.tmux"
+    "$DOTFILE/tmux/tmux.conf" "$HOME/.tmux.conf"
+  )
+}

@@ -3,18 +3,19 @@
 # $1: modules array
 # $2: action to load (should be a file in the module)
 function load_actions() {
+  # ensure that reply is empty
+  reply=()
   local action="$1"
   shift
   local array="$1"
 
   for module in "${(ps. .)array}"; do
     local loaders="$DOTFILE/$module/module.d/${action}_${module}"
-    echo "$loaders"
+
     if [ -f "$loaders" ]; then
-      # fpath=( $loaders $fpath )
-      # actions=( "${action}_${module}" $actions )
-      # autoload -Uz $loaders
-      echo "$loaders"
+      fpath=( $loaders $fpath )
+      reply+=( "${action}_${module}" $actions )
+      autoload -Uz $loaders
     fi
   done
 }

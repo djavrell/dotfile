@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_starship() {
+  reply=(
+    "$DOTFILE/starship/starship.toml" "$XDG_CONFIG_HOME/starship.toml"
+  )
+}

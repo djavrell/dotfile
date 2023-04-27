@@ -1,23 +1,25 @@
+#! /usr/bin/env zsh
 # zmodload zsh/zprof
+
+function loadMod() {
+  local mods=$1
+  shift
+
+  for key in "${(ps. .)mods}"; do
+    module "$key"
+  done
+}
 
 # this function will be called in the ZSH module (zvm after init)
 # due to the vim mode plugin.
 function zsh_after_init() {
-  module "git"
-  module "starship"
-  module "fzf"
-  module "tmux"
-  module "tmuxinator"
-  module "navi"
-  module "nvim"
-  module "kitty"
+  loadMod "$postMod"
 }
 
 # load all core function
 load_func "core"
 
-module "core"
-module "zsh"
+loadMod "$preMod"
 
 load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/local.zsh"
