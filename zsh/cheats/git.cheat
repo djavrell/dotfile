@@ -1,14 +1,16 @@
 % git, rebase
 # change the base of a branch
-
-git rebase --onto <new_base> <old_base> $(git_current_branch)
-
+#
 # select the actual base of the branch you want to move
 $ old_base: git branch | awk '{print $NF}'
 # select the branch you want as the new base
 $ new_base: git branch | awk '{print $NF}'
 
+git rebase --onto <new_base> <old_base> $(git_current_branch)
+# TODO: add one to rebase current branche onto a specific commit
+
 % git, rename, branch
 # rename the current branch
 
 git branch -m $(git_current_branch) <new_branch>
+

@@ -4,4 +4,10 @@ function link_zsh() {
     "$DOTFILE/zshrc" "$HOME/.zshrc"
     "$DOTFILE/zprofile" "$HOME/.zprofile"
   )
+
+  if [ -d "$NAVI_PATH" ]; then
+    reply+=(
+      "$DOTFILE/zsh/cheats/git.cheat" "$NAVI_PATH/git.cheat"
+    )
+  fi
 }

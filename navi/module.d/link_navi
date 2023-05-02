@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_navi() {
+  if [ ! -d "$NAVI_PATH" ]; then
+    mkdir -p "$NAVI_PATH"
+  fi
+}

@@ -5,7 +5,8 @@ export FZF_COMPLETION_TRIGGER='%'
 # export FZF_CTRL_R_OPTS='--reverse'
 
 load "$DOTFILE/fzf/fzf.zsh"
-load "$SUB_MODULES/fzf-marks/init.zsh"
+# TODO: create module for fzf-mark ?
+load "$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
 fzf-history-widget-accept() {
   fzf-history-widget
