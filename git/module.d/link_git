@@ -4,4 +4,10 @@ function link_git() {
     "$DOTFILE/git/gitconfig" "$HOME/.gitconfig"
     "$DOTFILE/git/gitignore" "$HOME/.gitignore"
   )
+
+  if [ -d "$NAVI_PATH" ]; then
+    reply+=(
+      "$DOTFILE/git/cheats/git.cheat" "$NAVI_PATH/git.cheat"
+    )
+  fi
 }
