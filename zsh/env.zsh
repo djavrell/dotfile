@@ -27,10 +27,6 @@ export FNM_LOGLEVEL=quiet
 # path=( "$SCALA_HOME/bin" $path)
 path=( "/Users/kpr/Library/Application Support/Coursier/bin" $path )
 
-# Rust
-path=( "$HOME/.cargo/bin" $path )
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-
 # Go
 export GOPATH="$HOME/go"
 path=( "$GOPATH/bin" $path )

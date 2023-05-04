@@ -24,6 +24,7 @@ function zsh_after_init() {
   module "navi"
   module "nvim"
   module "kitty"
+  module "rust"
 }
 
 # load all core function

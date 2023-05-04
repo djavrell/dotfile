@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_rust() {
+  reply=(
+    "$DOTFILE/rust/creates.toml" "$HOME/.cargo/.creates.toml"
+  )
+}
