@@ -61,3 +61,9 @@ conf file: gh-config.yaml -> `~/.config/gh-dash/config.yml`
 ## Install
 
 > git submodules init
+
+
+# Mac M1
+
+On M1 mac, homebrew does not link into `/usr/lobal/bin` on its own, so [here a
+way to do it](https://brettterpstra.com/2022/09/28/homebrew-and-slash-usr-slash-local-slash-bin-on-m1-macs/)
