@@ -1,3 +1,5 @@
 # Python
-pythonVersion=$(basename /Users/kpr/Library/Python/* | tail -1)
-path=( "/Users/kpr/Library/Python/$pythonVersion/bin" $path )
+pythonPath="/Library/Frameworks/Python.framework"
+pythonVersion=$(basename $pythonPath/Versions/* | tail -1)
+
+path=( "$pythonPath/Versions/$pythonVersion/bin" $path )

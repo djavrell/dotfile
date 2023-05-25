@@ -26,6 +26,7 @@ typeset -U postMod=(
   "nvim"
   "kitty"
   "rust"
+  "python"
 )
 
 typeset -U mods=(
