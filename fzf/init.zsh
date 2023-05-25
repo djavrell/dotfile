@@ -4,7 +4,9 @@ export FZF_COMPLETION_TRIGGER='%'
 
 # export FZF_CTRL_R_OPTS='--reverse'
 
-load "$DOTFILE/fzf/fzf.zsh"
+# on osx, use this command to generate needed files
+# $(brew --prefix)/opt/fzf/install --xdg --no-bash --no-fish --no-update-rc --key-bindings --completion
+load "$XDG_CONFIG_HOME/fzf/fzf.zsh"
 # TODO: create module for fzf-mark ?
 load "$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
