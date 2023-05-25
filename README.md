@@ -15,11 +15,6 @@
 
 ### Powered by Rust
 
-- [Rust](https://www.rust-lang.org/)
-  - [rg](https://github.com/BurntSushi/ripgrep)
-  - [fd](https://github.com/sharkdp/fd)
-  - [exa](https://github.com/ogham/exa)
-
 > `~/.cargo/.crates.toml`
 
 
@@ -36,27 +31,6 @@ extension: `gh extension install dlvhdr/gh-dash`
 conf file: gh-config.yaml -> `~/.config/gh-dash/config.yml`
 
 ## Installation
-
-### Symlink
-
-| source          | destination                                 |
-|-----------------|---------------------------------------------|
-| bin folder      | a folder add in your PATH                   |
-| zprofile        | $HOME                                       |
-| zshrc           | $HOME                                       |
-| profile         | $HOME                                       |
-| gitconfig       | $HOME                                       |
-| gitignore       | $HOME                                       |
-| wuzz            | $HOME                                       |
-| vifm            | $HOME                                       |
-| tmux            | $HOME                                       |
-| tmux/tmux.conf  | $HOME                                       |
-| nvim            | $XDG_CONFIG_HOME                            |
-| pgcli/config    | $XDG_CONFIG_HOME/pgcli                      |
-| efm-config.yaml | $XDG_CONFIG_HOME/efm-langserver/config.yaml |
-| kitty.conf      | $XDG_CONFIG_HOME/kitty/kitty.conf           |
-|-----------------|---------------------------------------------|
-
 
 ## Install
 

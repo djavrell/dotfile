@@ -3,15 +3,6 @@
 
 # source "./env.zsh"
 
-function loadMod() {
-  local mods=$1
-  shift
-
-  for key in "${(ps. .)mods}"; do
-    module $key
-  done
-}
-
 # this function will be called in the ZSH module (zvm after init)
 # due to the vim mode plugin.
 function zsh_after_init() {
@@ -25,6 +16,7 @@ function zsh_after_init() {
   module "nvim"
   module "kitty"
   module "rust"
+  module "python"
 }
 
 # load all core function

@@ -1,7 +1,7 @@
 # vim: ft=zsh
 function check_eval {
   if [[ $# -lt 3 ]]; then
-    echo "check_eval command args"
+    echo "check_eval command ...args"
   fi
 
   if [[ $+commands[$1] ]]; then
