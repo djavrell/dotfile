@@ -1,2 +1,5 @@
-gitVersion=$(basename /opt/homebrew/Cellar/git/*)
-export PERL5LIB="/opt/homebrew/Cellar/git/$gitVersion/share/perl3:$PERL5LIB"
+gitCellar="$(brew --prefix)/Cellar/git"
+gitVersion=$(basename -a $gitCellar/* | tail -n1)
+perlVersion=$(basename -a $gitCellar/$gitVersion/share/p* | tail -n1)
+
+export PERL5LIB="$gitCellar/$gitVersion/share/$perlVersion:$PERL5LIB"
