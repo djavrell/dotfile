@@ -1,19 +1,10 @@
 #! /usr/bin/env zsh
 
-source "./env.zsh"
+source "./modules.zsh"
 
-autoload -Uz "$DOTFILE/function.d/load_actions"
-autoload -Uz "$DOTFILE/function.d/link"
+function link_file() {
+  echo "link $1 -> $2"
+  link "$1" "$2"
+}
 
-typeset -U linkHash
-
-load_actions "link" "$mods"
-
-for action in "${reply[@]}"; do
-  ${(z)action}
-  linkHash+=($reply)
-done
-
-for source dest in ${(kv)linkHash}; do
-  link "$source" "$dest"
-done
+modules_exec link_file
