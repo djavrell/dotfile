@@ -135,9 +135,7 @@ cmp.setup({
   view = {
     entries = 'native'
   },
-  experimental = {
-    ghost_text = true
-  }
+  experimental = {}
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
