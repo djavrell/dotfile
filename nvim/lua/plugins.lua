@@ -55,7 +55,15 @@ return {
 
   -- utils
   'benknoble/vimpbcopy',
-  'andrewradev/splitjoin.vim',
+  -- 'andrewradev/splitjoin.vim',
+  {
+    'Wansmer/treesj',
+    keys = { '<space>m', '<space>s', '<space>j' },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    config = function()
+      require('treesj').setup()
+    end
+  },
   'christianrondeau/vim-base64',
   'kburdett/vim-nuuid',
 
