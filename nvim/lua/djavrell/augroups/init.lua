@@ -47,3 +47,9 @@ autocmd("BufEnter", {
   pattern = "*",
   command = "if &buftype ==# 'help' | nnoremap gd <C-]> | endif"
 })
+
+autocmd({"BufRead", "BufNewFile"}, {
+  group = augroups["env"],
+  pattern = { "*.env", "*.env.*" },
+  command = "set ft=sh"
+})
