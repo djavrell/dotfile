@@ -13,3 +13,5 @@ local.zsh
 local.d/
 
 **/*.zwc
+
+Brewfile.lock.json
