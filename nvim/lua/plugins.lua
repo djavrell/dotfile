@@ -87,6 +87,7 @@ return {
   'ianks/vim-tsx',
   'maxmellon/vim-jsx-pretty',
   'leafgarland/typescript-vim',
+  'davidosomething/format-ts-errors.nvim',
 
   {'rhysd/vim-fixjson', ft = 'json' },
   {'chrisbra/csv.vim', ft = 'csv'},
