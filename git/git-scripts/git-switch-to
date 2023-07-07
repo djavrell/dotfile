@@ -2,7 +2,7 @@
 
 newBranch=$1
 
-if [ ! -z "$1" ]; then
+if [ -n "$1" ]; then
   git stash
   git checkout -b "$newBranch"
   git stash pop

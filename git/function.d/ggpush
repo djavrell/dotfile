@@ -3,4 +3,4 @@
 local branch=$(git_current_branch)
 
 git log --oneline origin/$branch..$branch
-git push origin "$branch" --follow-tags
+git push origin "$branch" $@
