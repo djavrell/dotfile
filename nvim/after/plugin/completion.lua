@@ -103,6 +103,15 @@ local kind_icons = {
   Variable = " ",
 }
 
+--[[ require("typescript-tools").setup {
+  on_attach = on_attach,
+  settings = {
+    separate_diagnostic_server = true,
+    publish_diagnostic_on = "insert_leave",
+    tsserver_max_memory = "auto",
+  },
+} ]]
+
 cmp.setup({
   snippet = {
     expand = function(args)

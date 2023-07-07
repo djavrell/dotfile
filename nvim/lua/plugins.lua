@@ -83,12 +83,6 @@ return {
 
   'phaazon/hop.nvim',
 
-  -- Typescript
-  'ianks/vim-tsx',
-  'maxmellon/vim-jsx-pretty',
-  'leafgarland/typescript-vim',
-  'davidosomething/format-ts-errors.nvim',
-
   {'rhysd/vim-fixjson', ft = 'json' },
   {'chrisbra/csv.vim', ft = 'csv'},
   'jamessan/vim-gnupg',
@@ -130,7 +124,7 @@ return {
     dependencies = { 'anuvyklack/keymap-layer.nvim' } -- only for pink hydras
   },
 
-  {'TimUntersberger/neogit', cmd = 'Neogit'},
+  {'NeogitOrg/neogit', cmd = 'Neogit'},
   'lewis6991/gitsigns.nvim',
   'sindrets/diffview.nvim',
 
