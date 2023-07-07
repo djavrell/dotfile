@@ -53,3 +53,9 @@ autocmd({"BufRead", "BufNewFile"}, {
   pattern = { "*.env", "*.env.*" },
   command = "set ft=sh"
 })
+
+autocmd({"BufRead", "BufNewFile"}, {
+  group = augroups["zsh"],
+  pattern = { "*.zsh" },
+  command = "set ft=sh"
+})
