@@ -7,6 +7,10 @@ return {
     },
     telescope = {
       style = 'flat'
+    },
+    override = {
+      ['@keyword.coroutine'] = { link = 'Keyword' }
+      -- Macro = { link = 'Keyword' }
     }
   }
 }

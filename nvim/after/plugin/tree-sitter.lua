@@ -1,4 +1,6 @@
 require'nvim-treesitter.configs'.setup {
+  auto_install = true,
+  modules = {},
   ensure_installed = {
     "bash",
     "c",
@@ -102,5 +104,5 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 
-local TSUtils = require('djavrell.treesitter')
+-- local TSUtils = require('djavrell.treesitter')
 --[[ TSUtils.add_parser("sql", "https://github.com/derekstride/tree-sitter-sql") ]]
