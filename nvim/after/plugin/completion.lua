@@ -5,9 +5,9 @@ local ts_utils_lsp = require("nvim-lsp-ts-utils")
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local augroups = require("djavrell.augroups.utils")
-local Tmap = require("djavrell.telescope.mapping")
 
---TODO: filter out node module for lsp_ref/def/...
+local U = require('djavrell.utils.ui')
+
 local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
@@ -26,21 +26,12 @@ local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.keymap.set(...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  -- require "lsp-format".on_attach(client)
-
   -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true, buffer=bufnr }
 
-  --TODO: define a lua table to add keymap if we are not in a specific client ? (like hover for lua)
-
-  -- Tmap('gd', 'lsp_definitions')
-  -- Tmap('gi', 'lsp_implementations')
-  -- Tmap('gr', 'lsp_references')
-  -- Tmap('<space>s', 'lsp_dynamic_workspace_symbols')
-  -- buf_set_keymap('n', 'gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>Glance definitions<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>Glance implementations<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>Glance references<CR>', opts)
@@ -68,49 +59,6 @@ local kind_names = {
   buffer = "[Buffer]",
   ['vim-dadbod-completion'] = "[DB]",
 }
-local kind_dup = {
-  buffer = 1,
-  path = 1,
-  nvim_lsp = 0,
-  luasnip = 1,
-}
-local kind_dup_default = 0
-local kind_icons = {
-  Class = " ",
-  Color = " ",
-  Constant = "ﲀ ",
-  Constructor = " ",
-  Enum = "練",
-  EnumMember = " ",
-  Event = " ",
-  Field = " ",
-  File = "",
-  Folder = " ",
-  Function = " ",
-  Interface = "ﰮ ",
-  Keyword = " ",
-  Method = " ",
-  Module = " ",
-  Operator = "",
-  Property = " ",
-  Reference = " ",
-  Snippet = " ",
-  Struct = " ",
-  Text = " ",
-  TypeParameter = " ",
-  Unit = "塞",
-  Value = " ",
-  Variable = " ",
-}
-
---[[ require("typescript-tools").setup {
-  on_attach = on_attach,
-  settings = {
-    separate_diagnostic_server = true,
-    publish_diagnostic_on = "insert_leave",
-    tsserver_max_memory = "auto",
-  },
-} ]]
 
 cmp.setup({
   snippet = {
@@ -137,8 +85,9 @@ cmp.setup({
   formatting = {
     format = lspkind.cmp_format({
       mode = 'symbol_text',
+      menu = kind_names,
       maxwidth = 50,
-      symbol_map = kind_icons,
+      symbol_map = U.kind_icons,
     })
   },
   view = {
@@ -183,7 +132,6 @@ local servers = {
   'tsserver',
   'bashls',
   'clangd',
-  -- 'jsonls'
 }
 
 for _, lsp in ipairs(servers) do

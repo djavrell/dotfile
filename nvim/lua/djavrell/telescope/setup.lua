@@ -1,3 +1,5 @@
+local U = require('djavrell.utils.ui')
+
 local Telescope = require('telescope')
 local actions = require('telescope.actions')
 local actions_layout = require('telescope.actions.layout')
@@ -33,8 +35,12 @@ Telescope.setup {
     file_ignore_patterns = {},
     generic_sorter =  require'telescope.sorters'.get_generic_fuzzy_sorter,
     path_display = {},
-    border = {},
-    borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
+    border = true,
+    borderchars = {
+      prompt = { '▔', '▕', ' ', '▏', '🭽', '🭾', '▕', '▏' },
+      results = U.border_chars_outer_thin_telescope,
+      preview = U.border_chars_outer_thin_telescope,
+    },
     color_devicons = true,
     use_less = true,
     set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,

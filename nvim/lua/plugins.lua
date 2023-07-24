@@ -4,14 +4,6 @@ return {
 
   'rebelot/kanagawa.nvim',
   'sainnhe/gruvbox-material',
-  {
-    'AlexvZyl/nordic.nvim',
-    opts = {
-      telescope = {
-        style = 'flat'
-      }
-    }
-  },
 
   'lifepillar/vim-colortemplate',
   'ryanoasis/vim-devicons',
@@ -74,7 +66,7 @@ return {
     config = function()
       require("nvim-surround").setup({
         move_cursor = false,
-        indent_lines = false
+        indent_lines = false,
       })
     end
   },

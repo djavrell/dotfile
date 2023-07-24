@@ -23,7 +23,13 @@ vim.cmd([[
 ]])
 
 require('djavrell.globals')
-require('lazy').setup('plugins')
+local U = require('djavrell.utils.ui')
+
+require('lazy').setup('plugins', {
+  ui = {
+    border = U.border_chars_outer_thin,
+  }
+})
 
 require('djavrell.augroups')
 
