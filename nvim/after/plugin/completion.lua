@@ -6,7 +6,8 @@ local ts_utils_lsp = require("nvim-lsp-ts-utils")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local augroups = require("djavrell.augroups.utils")
 
-local U = require('djavrell.utils.ui')
+local U = require("djavrell.utils.ui")
+local Tmap = require("djavrell.telescope.mapping")
 
 local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
@@ -31,6 +32,8 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap=true, silent=true, buffer=bufnr }
+
+  Tmap('<leader>s', 'lsp_dynamic_workspace_symbols')
 
   buf_set_keymap('n', 'gd', '<cmd>Glance definitions<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>Glance implementations<CR>', opts)

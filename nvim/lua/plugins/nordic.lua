@@ -9,8 +9,8 @@ return {
       style = 'flat'
     },
     override = {
-      ['@keyword.coroutine'] = { link = 'Keyword' }
-      -- Macro = { link = 'Keyword' }
+      ['@keyword.coroutine'] = { link = 'Keyword' },
+      ['@lsp.type.interface'] = { link = 'Type' }
     }
   }
 }
