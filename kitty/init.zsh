@@ -1,1 +1,1 @@
-load_alias "kitty"
+alias icat="kitty +kitten icat"

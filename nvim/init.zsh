@@ -1,1 +1,2 @@
-load_alias "nvim"
+alias vim="nvim"
+alias vimdb="vim +DBUIToggle"
