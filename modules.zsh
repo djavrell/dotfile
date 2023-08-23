@@ -2,6 +2,22 @@
 
 source "./env.zsh"
 
+typeset -U mods=(
+  "core"
+  "zsh"
+  "git"
+  "starship"
+  "fzf"
+  "tmux"
+  "tmuxinator"
+  "navi"
+  "nvim"
+  "kitty"
+  "rust"
+  "python"
+  "wezterm"
+)
+
 autoload -Uz "$DOTFILE/function.d/load_actions"
 
 function modules_exec() {
