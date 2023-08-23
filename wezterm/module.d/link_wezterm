@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_wezterm() {
+  reply=(
+    "$DOTFILE/wezterm" "$XDG_CONFIG_HOME/wezterm"
+  )
+}
