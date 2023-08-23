@@ -20,6 +20,9 @@ return function(config)
     leader('c', actions.ActivateCopyMode),
     leader('s', actions.ShowLauncherArgs( { flags = 'FUZZY|WORKSPACES' } )),
     leader('t', actions.ShowLauncherArgs( { flags = 'FUZZY|TABS' } )),
+    ctrl('+', actions.IncreaseFontSize),
+    ctrl('-', actions.DecreaseFontSize),
+    ctrl('0', actions.ResetFontSize),
   }
 
   config.key_tables = {
