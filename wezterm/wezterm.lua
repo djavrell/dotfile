@@ -1,9 +1,10 @@
 local wezterm = require 'wezterm'
 
 local config = {}
+local U = require('utils.utils')
+
 local Conf = require('djavrell.options')
 local Mappings = require('djavrell.mappings')
-local U = require('utils.utils')
 
 if wezterm.config_builder then
   config = wezterm.config_builder()
@@ -14,5 +15,7 @@ config = U.pipe(
   Conf,
   Mappings
 )
+
+require('djavrell.events')
 
 return config
