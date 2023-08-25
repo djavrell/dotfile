@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
 
+--- @type table
 local config = {}
 local U = require('utils.utils')
 

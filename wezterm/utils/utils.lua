@@ -1,5 +1,9 @@
 local M = {}
 
+--- @generic T
+--- @param data `T`
+--- @param ... fun(data: T): T
+--- @return T
 M.pipe = function(data, ...)
   local func = { ... }
   local res = data

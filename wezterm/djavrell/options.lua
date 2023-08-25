@@ -1,5 +1,7 @@
 local wezterm = require 'wezterm'
 
+--- @param config table
+--- @return table
 return function(config)
   if wezterm == nil then
     return config
