@@ -51,6 +51,7 @@ load_func "core"
 module "core"
 module "zsh"
 
+load "$DOTFILE/osc-integration.sh"
 load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/local.zsh"
 # The globbing is a little complicated here:
