@@ -4,9 +4,7 @@ load "$SUB_MODULES/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
 export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
 export ZVM_CURSOR_STYLE_ENABLED=false
 
-function zvm_after_init() {
-  load_func "zsh"
-
+function export_zsh_conf() {
   # ZSH Conf
   ## History
   unsetopt hist_ignore_space      # ignore space prefixed commands
@@ -34,7 +32,9 @@ function zvm_after_init() {
   zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
   zstyle ':completion:*' list-colors ''
   zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+}
 
+function export_env() {
   # Env
   export LC_ALL=fr_FR.UTF-8
   export EDITOR="nvim"
@@ -76,16 +76,9 @@ function zvm_after_init() {
   ## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
   path=( "$HOME/.rvm/bin" $path )
   load "$HOME/.rvm/scripts/rvm"
+}
 
-  load "$DOTFILE/zsh/zsh_conf.zsh"
-  load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
-  load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
-
-  # Binding
-  bindkey '^[[A' history-substring-search-up
-  bindkey '^[[B' history-substring-search-down
-
+function export_alias() {
   # Alias
   alias -- -='cd -'
   alias ..='cd ..'
@@ -109,8 +102,28 @@ function zvm_after_init() {
   alias ping='prettyping'
 
   alias dstop='docker stop $(docker ps | rev | cut -d" " -f1 | rev | tail -n +2 | fzf-tmux -r 30% --reverse --multi)'
+}
 
+function export_binding() {
+  # Binding
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+}
+
+function zvm_after_init() {
+  load_func "zsh"
+
+  export_zsh_conf
+  export_env
+
+  load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
+  load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
+
+  # from zshrc
   zsh_after_init
+  export_alias
+  export_binding
 
   check_eval direnv hook zsh
   check_eval fnm env --use-on-cd

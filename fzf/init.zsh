@@ -7,7 +7,6 @@ export FZF_COMPLETION_TRIGGER='%'
 # on osx, use this command to generate needed files
 # $(brew --prefix)/opt/fzf/install --xdg --no-bash --no-fish --no-update-rc --key-bindings --completion
 load "$XDG_CONFIG_HOME/fzf/fzf.zsh"
-# TODO: create module for fzf-mark ?
 load "$SUB_MODULES/fzf-marks/fzf-marks.plugin.zsh"
 
 fzf-history-widget-accept() {
