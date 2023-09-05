@@ -138,6 +138,7 @@ return {
   'kristijanhusak/vim-dadbod-ui',
   'kristijanhusak/vim-dadbod-completion',
   'SidOfc/mkdx',
+  'mfussenegger/nvim-jdtls',
 
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-buffer',
