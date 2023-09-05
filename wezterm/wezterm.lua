@@ -1,11 +1,12 @@
 local wezterm = require 'wezterm'
 
---- @type table
-local config = {}
 local U = require('utils.utils')
-
 local Conf = require('djavrell.options')
 local Mappings = require('djavrell.mappings')
+
+
+--- @type table
+local config = {}
 
 if wezterm.config_builder then
   config = wezterm.config_builder()
