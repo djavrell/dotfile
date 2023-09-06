@@ -1,4 +1,6 @@
 local wezterm = require('wezterm')
+
+local G = wezterm.GLOBAL
 local cb = wezterm.action_callback
 local act = wezterm.action
 
@@ -28,15 +30,17 @@ function M.switchTo()
     win:perform_action(
       act.InputSelector({
         title = 'Switch to project',
-        choices = getFileSplitBy(os.getenv('HOME') .. '/.fzf-marks', ':'),
+        choices = getFileSplitBy(G.marksFile, ':'),
         action = cb(function(_, _, id, label)
-          win:perform_action(
-            act.SwitchToWorkspace({
-              name = label,
-              spawn = { cwd = id }
-            }),
-            pane
-          )
+          if id and label then
+            win:perform_action(
+              act.SwitchToWorkspace({
+                name = label,
+                spawn = { cwd = id }
+              }),
+              pane
+            )
+          end
         end)
       }),
       pane
