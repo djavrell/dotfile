@@ -9,7 +9,7 @@ return function(config)
 
   wezterm.GLOBAL.marksFile = os.getenv('HOME') .. '/.fzf-marks'
 
-  config.color_scheme = 'nord'
+  config.color_scheme = 'nordic'
   config.font = wezterm.font 'Hasklug Nerd Font'
 
   config.window_padding = {
