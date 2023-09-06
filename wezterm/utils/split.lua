@@ -1,20 +1,4 @@
-local wezterm = require('wezterm')
 local M = {}
-
---- @generic T
---- @param data `T`
---- @param ... fun(data: T): T
---- @return T
-M.pipe = function(data, ...)
-  local func = { ... }
-  local res = data
-
-  for i=1, #func do
-    res = func[i](res)
-  end
-
-  return res
-end
 
 ---@param str string string to split
 ---@param sep string separator use to split str

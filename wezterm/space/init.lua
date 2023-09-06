@@ -4,10 +4,9 @@ local G = wezterm.GLOBAL
 local cb = wezterm.action_callback
 local act = wezterm.action
 
-local U = require('utils.utils')
+local split = require('utils.split').split
 
 local M = {}
-
 
 ---@param path string file to read
 ---@param sep string line separator
@@ -15,7 +14,7 @@ local function getFileSplitBy(path, sep)
   local choices = {}
 
   for line in io.lines(path) do
-    local tok = U.split(line, sep)
+    local tok = split(line, sep)
     table.insert(choices, {
       label = tok[1],
       id = tok[2]
