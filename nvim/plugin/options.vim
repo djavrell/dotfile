@@ -36,7 +36,7 @@ set guifont=Hasklug_Nerd_Font:h11
 
 " global status line
 set laststatus=3
-" set cmdheight=0
+set cmdheight=0
 
 set lazyredraw " Do not redraw screen in the middle of a macro. Makes them complete faster.
 
