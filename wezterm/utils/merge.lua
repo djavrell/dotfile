@@ -25,6 +25,8 @@ function M.merge_all(...)
   for i=1, #tables do
     if type(tables[i]) == "function" then
       result = M.merge(result, tables[i]())
+    elseif type(tables[i]) == "string" then
+      table.insert(result, tables[i])
     else
       local t = tables[i]
 
