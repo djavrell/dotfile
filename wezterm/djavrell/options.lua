@@ -26,5 +26,7 @@ return function(config)
   config.enable_kitty_keyboard = true
   config.disable_default_key_bindings = true
 
+  config.status_update_interval = 500
+
   return config
 end

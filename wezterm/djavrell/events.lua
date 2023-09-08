@@ -17,6 +17,15 @@ local ob = P.pipeC(
   })
 )
 
+local gb = P.pipeC(
+  A.Bold,
+  S.wrapSpace,
+  S.section({
+    { Background = { Color = C.palette.green.bright } },
+    { Foreground = { Color = C.palette.black0 } },
+  })
+)
+
 local time = P.pipeC(
   S.wrapSpace,
   S.section({
@@ -32,10 +41,23 @@ function KeyTable(name)
   )
 end
 
+---@param kt string|nil key table in use
+local function selectSection(kt)
+  if kt ~= nil and kt == 'copy_mode' then
+    return function(txt)
+      return merge(
+        gb(wezterm.nerdfonts.md_content_copy),
+        gb(txt)
+      )
+    end
+  end
+  return ob
+end
+
 wezterm.on('update-status', function(win)
   win:set_left_status(
     wezterm.format(
-      ob(win:active_workspace())
+      selectSection(win:active_key_table())(win:active_workspace())
     )
   )
 
