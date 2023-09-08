@@ -35,7 +35,8 @@ return function(config)
       { key = 'h', action = actions.ActivateTabRelative(-1) },
       { key = 'l', action = actions.ActivateTabRelative(1) },
       { key = '-', action = actions.SplitVertical({ domain = 'CurrentPaneDomain' })},
-      { key = '+', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })}
+      { key = '+', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })},
+      { key = 'o', action = actions.ActivateLastTab }
     },
     pane = {
       { key = 'l', action = actions.ActivatePaneDirection('Next') },
