@@ -6,7 +6,30 @@ local act = wezterm.action
 
 local split = require('utils.split').split
 
+local T = require('utils.merge')
+
 local M = {}
+local namespace = "WorkspaceSwitcher"
+
+---@class WorkspaceSwitcherOpt
+---@field filePath string|nil location of the file that store all workspace pwd
+---@field title string|nil
+
+---@class WorkspaceSwitcherConfig
+---@field filePath string location of the file that store all workspace pwd
+---@field title string
+
+---@type WorkspaceSwitcherConfig
+local defaultConfig = {
+    title = "Switch to workspace",
+    filePath = os.getenv('HOME') .. '/.fzf-marks'
+}
+
+---@param opt WorkspaceSwitcherOpt|nil
+function M.config(opt)
+  G[namespace] = T.tbl_extend(defaultConfig, opt or {})
+end
+
 
 ---@param path string file to read
 ---@param sep string line separator
@@ -25,11 +48,14 @@ local function getFileSplitBy(path, sep)
 end
 
 function M.switchTo()
+  ---@type WorkspaceSwitcherConfig
+  local opt = G[namespace]
+
   return cb(function(win, pane)
     win:perform_action(
       act.InputSelector({
-        title = 'Switch to project',
-        choices = getFileSplitBy(G.marksFile, ':'),
+        title = opt.title,
+        choices = getFileSplitBy(opt.filePath, ':'),
         action = cb(function(_, _, id, label)
           if id and label then
             win:perform_action(
@@ -46,5 +72,4 @@ function M.switchTo()
     )
   end)
 end
-
 return M

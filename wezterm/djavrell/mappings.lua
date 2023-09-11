@@ -1,6 +1,6 @@
 local wezterm = require 'wezterm'
 
-local workspace = require('space')
+local workspace = require('WSSwitcher')
 local map = require('utils.mapping')
 
 ---@param config table

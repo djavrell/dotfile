@@ -7,8 +7,6 @@ return function(config)
     return config
   end
 
-  wezterm.GLOBAL.marksFile = os.getenv('HOME') .. '/.fzf-marks'
-
   config.color_scheme = 'nordic'
   config.font = wezterm.font 'Hasklug Nerd Font'
 
