@@ -38,4 +38,27 @@ function M.merge_all(...)
   return result
 end
 
+---@generic K
+---@generic V
+---@param a table<K, V>
+---@param b table<K, V>
+---@return table<K, V>
+function M.tbl_extend(a, b)
+  local result = {}
+
+  for k,v in pairs(a) do
+    if type(v) == 'table' then
+      if (type(b[k]) or false) == 'table' then
+        result[k] = M.tbl_extend(a[k], b[k])
+      else
+        result[k] = b[k] or v
+      end
+    else
+      result[k] = b[k] or v
+    end
+  end
+
+  return result
+end
+
 return M
