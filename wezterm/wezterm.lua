@@ -6,6 +6,7 @@ local Conf = require('djavrell.options')
 local Mappings = require('djavrell.mappings')
 
 local WSSwitcher = require('WSSwitcher')
+local wezline = require('wezline')
 
 --- @type table
 local config = {}
@@ -21,6 +22,8 @@ config = pipe(
 )
 
 WSSwitcher.config()
+wezline.config()
+
 require('djavrell.events')
 
 return config

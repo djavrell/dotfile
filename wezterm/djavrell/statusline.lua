@@ -5,8 +5,10 @@ local C = require("djavrell.colors")
 local merge = require("utils.merge").merge_all
 local P = require("utils.pipe")
 
-local S = require("statusline.sections")
-local A = require("statusline.attrs")
+local config = require('wezline').getConfig()
+
+local S = require("wezline.sections")
+local A = require("wezline.attrs")
 
 local ob = P.pipeC(
   A.Bold,
@@ -34,37 +36,14 @@ local time = P.pipeC(
   })
 )
 
-local function KeyTableSection(name)
-  return ob(wezterm.nerdfonts.md_table_key .. ' ' .. name)
+local function KeyTableSection(kt)
+  local icone = wezterm.nerdfonts.md_table_key
+  if kt ~= nil and config.key_table_icone[kt] ~= nil then
+    icone = config.key_table_icone[kt]
+  end
+
+  return ob(icone .. ' ' .. kt)
 end
-
---[[ local battery_state = {
-  empty = {
-    icone = "fa_battery_empty",
-    color = C.palette.red.bright,
-  },
-  quarter = {
-    icone = "fa_battery_quarter",
-    color = C.palette.yellow.bright,
-  },
-  half = {
-    icone = "fa_battery_half",
-    color = C.palette.orange.base,
-  },
-  three = {
-    icone = "fa_battery_three_quarter",
-    color = C.palette.green.dim,
-  },
-  full = {
-    icone = "fa_battery_full",
-    color = C.palette.green.bright,
-  }
-}
-
-local function getBattery(level)
-  log("level: ", level)
-  log("step: ", (level * 100) - ((level * 100) % 20 ))
-end ]]
 
 ---@param kt string|nil key table in use
 local function selectSection(kt)
@@ -80,8 +59,8 @@ end
 local function workspaceIcone(kt, txt)
 
   local icone = wezterm.nerdfonts.md_apps
-  if kt ~= nil and kt == 'copy_mode' then
-    icone = wezterm.nerdfonts.md_content_copy
+  if kt ~= nil and config.key_table_icone[kt] ~= nil then
+    icone = config.key_table_icone[kt]
   end
 
   return icone .. ' ' .. txt
