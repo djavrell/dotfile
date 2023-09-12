@@ -22,7 +22,7 @@ return function(config)
     map.leader('s', actions.ShowLauncherArgs( { flags = 'FUZZY|WORKSPACES' } )),
     map.leader('t', actions.ShowLauncherArgs( { flags = 'FUZZY|TABS' } )),
 
-    map.leader('u', workspace.switchTo()),
+    map.leader('w', workspace.switchTo()),
 
     map.ctrl('+', actions.IncreaseFontSize),
     map.ctrl('-', actions.DecreaseFontSize),
