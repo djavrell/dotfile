@@ -85,54 +85,24 @@ cmp.setup.filetype('prompt', {
   },
 })
 
-local servers = {
-  'tsserver',
-  'bashls',
-  'clangd',
-}
+nvim_lsp.tsserver.setup(lsp_conf.setup())
+nvim_lsp.bashls.setup(lsp_conf.setup())
 
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup(lsp_conf.setup())
-end
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = { "sql", "mysql", "plsql" },
+  callback = function()
+    require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
+  end,
+  group = augroups["DadbodSql"]
+})
 
-nvim_lsp.lua_ls.setup {
-  settings = {
-    Lua = {
-      runtime = {
-        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
-      },
-      workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      -- Do not send telemetry data containing a randomized but unique identifier
-      telemetry = {
-        enable = false,
-      },
-    },
-  },
-}
-
-_ = vim.cmd [[
-  augroup DadbodSql
-    au!
-    autocmd FileType sql,mysql,plsql lua require('cmp').setup.buffer { sources = { { name = 'vim-dadbod-completion' } } }
-  augroup END
-]]
-
-_ = vim.cmd [[
-  augroup CmpZsh
-    au!
-    autocmd Filetype zsh lua require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
-  augroup END
-]]
-
--- _ = vim.cmd([[autocmd FileType scala,sbt lua require("metals").initialize_or_attach({})]])
+vim.api.nvim_create_autocmd("Filetype", {
+  pattern = { "zsh" },
+  callback = function()
+    require'cmp'.setup.buffer { sources = { { name = "zsh" }, } }
+  end,
+  group = augroups["CmpZsh"]
+})
 
 local null_ls = require("null-ls")
 require("null-ls").setup {
@@ -151,7 +121,6 @@ require("null-ls").setup {
 
 local metals_config = require("metals").bare_config()
 
--- Example of settings
 metals_config.settings = {
   showImplicitArguments = true,
   showImplicitConversionsAndClasses = true,
@@ -160,8 +129,6 @@ metals_config.settings = {
 
 metals_config.capabilities = capabilities
 
--- Autocmd that will actually be in charging of starting the whole thing
--- local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "scala", "sbt" },
   callback = function()

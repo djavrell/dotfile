@@ -8,7 +8,7 @@ else
 end
 
 P = function(v)
-  vim.pretty_print(v)
+  vim.inspect(v)
   return v
 end
 

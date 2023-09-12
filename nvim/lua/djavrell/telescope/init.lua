@@ -6,8 +6,6 @@ end
 
 local M = {}
 
-local actions = require "telescope.actions"
-local action_state = require "telescope.actions.state"
 local themes = require "telescope.themes"
 
 local builtin = require('telescope.builtin')

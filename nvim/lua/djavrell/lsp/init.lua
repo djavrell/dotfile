@@ -6,10 +6,10 @@ local Tmap = require("djavrell.telescope.mapping")
 local M = {}
 
 local additionalSetup = setmetatable({
+---@diagnostic disable-next-line: unused-local
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
-    -- client.server_capabilities.document_formatting = false
   end
 }, {
   __index = function()
@@ -17,16 +17,12 @@ local additionalSetup = setmetatable({
   end
 })
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.keymap.set(...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  -- Enable completion triggered by <c-x><c-o>
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-  -- Mappings.
   local opts = { noremap=true, silent=true, buffer=bufnr }
 
   Tmap('<leader>s', 'lsp_dynamic_workspace_symbols')
@@ -58,8 +54,10 @@ local config = {
   },
 }
 
-function M.setup()
-  return config
+---@param opt lsp.ClientConfig|nil
+---@return lsp.ClientConfig
+function M.setup(opt)
+  return vim.tbl_extend("force", config, opt or {})
 end
 
 return M

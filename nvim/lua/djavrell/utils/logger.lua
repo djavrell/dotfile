@@ -22,8 +22,3 @@ function M.err(...)
 end
 
 return M
-
--- return require('vlog').new({
---     plugin = "conf",
---     level = "warn"
--- }, true)
