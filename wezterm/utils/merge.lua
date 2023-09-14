@@ -40,9 +40,9 @@ end
 
 ---@generic K
 ---@generic V
----@param a table<K, V>
----@param b table<K, V>
----@return table<K, V>
+---@param a table<`K`, `V`>
+---@param b table<`K`, `V`>
+---@return table<`K`, `V`>
 function M.tbl_extend(a, b)
   local result = {}
 

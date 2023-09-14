@@ -7,8 +7,9 @@ local P = require("utils.pipe")
 
 local config = require('wezline').getConfig()
 
-local S = require("wezline.sections")
+local S = require("wezline.nodes")
 local A = require("wezline.attrs")
+local B = require("wezline.battery")
 
 local ob = P.pipeC(
   A.Bold,
@@ -36,6 +37,8 @@ local time = P.pipeC(
   })
 )
 
+---@param kt? string
+---@return wezline.Attr[]
 local function KeyTableSection(kt)
   local icone = wezterm.nerdfonts.md_table_key
   if kt ~= nil and config.key_table_icone[kt] ~= nil then
@@ -77,6 +80,15 @@ end
 
 function M.left(win)
   local key_table = win:active_key_table()
+  -- B.section()
+
+  --[[ wezterm.log_info(A.Nodes.Attributes.Intensity.Bold)
+  wezterm.log_info(A.Nodes.Attributes.Italic.True)
+  wezterm.log_info(A.Nodes.Attributes.Underline.Single)
+  wezterm.log_info(A.Nodes.Text("test"))
+  wezterm.log_info(A.Nodes.Foreground.ColorAnsi("Red"))
+  wezterm.log_info(A.Nodes.Background.Color(C.palette.black0))
+  wezterm.log_info(A.Nodes.ResetAttributes) ]]
 
   return selectSection(key_table)(
     workspaceIcone(key_table, win:active_workspace())
