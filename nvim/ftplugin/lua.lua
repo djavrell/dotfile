@@ -1,8 +1,7 @@
 local nvim_lsp = require('lspconfig')
 local lsp_conf = require('djavrell.lsp')
 
-local lua_conf = {
-  settings = {
+local common = {
     Lua = {
       runtime = {
         version = 'LuaJIT'
@@ -19,7 +18,21 @@ local lua_conf = {
         enable = false
       },
     }
-  },
 }
 
-nvim_lsp.lua_ls.setup(lsp_conf.setup(lua_conf))
+---@diagnostic disable-next-line: missing-fields
+nvim_lsp.lua_ls.setup(lsp_conf.setup({
+  ---@param client lsp.Client
+  on_init = function(client)
+    local path = client.workspace_folders[1].name
+    local has_luarc = vim.uv.fs_stat(path .. '/.luarc.json') ~= nil and vim.uv.fs_stat(path .. '/.luarc.jsonc') ~= nil
+
+    P(has_luarc)
+    if has_luarc == true then
+      return true
+    end
+
+    client.config.settings = vim.tbl_deep_extend('force', client.config.settings, common)
+    client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+  end
+}))
