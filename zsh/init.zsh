@@ -1,8 +1,4 @@
-load "$SUB_MODULES/zsh-vi-mode/zsh-vi-mode.plugin.zsh"
-
-# Vim mode
-export ZVM_VI_HIGHLIGHT_BACKGROUND=grey
-export ZVM_CURSOR_STYLE_ENABLED=false
+load_func "zsh"
 
 function export_zsh_conf() {
   # ZSH Conf
@@ -32,25 +28,13 @@ function export_zsh_conf() {
   zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
   zstyle ':completion:*' list-colors ''
   zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-}
-
-function export_env() {
-  # Env
-  export LC_ALL=fr_FR.UTF-8
-  export EDITOR="nvim"
-  export VISUAL="nvim"
-  export MANPAGER="nvim +Man!"
-  export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
-  # export TERM='tmux-256color-italic'
-
-  export HISTFILE=~/.zsh_history
-  export HISTSIZE=1024
-  export SAVEHIST=1024
 
   ## ZSH config
   export COMPLETION_WAITING_DOTS="true"
   export DISABLE_UNTRACKED_FILES_DIRTY="true"
+}
 
+function export_env() {
   ## GPG
   export GPG_TTY=$(tty)
 
@@ -110,22 +94,27 @@ function export_binding() {
   bindkey '^[[B' history-substring-search-down
 }
 
-function zvm_after_init() {
-  load_func "zsh"
+export_zsh_conf
+export_env
 
-  export_zsh_conf
-  export_env
+load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
+load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
+load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
-  load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
-  load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
-  load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
+module "git"
+module "starship"
+module "fzf"
+module "tmux"
+module "tmuxinator"
+module "navi"
+module "nvim"
+module "kitty"
+module "rust"
+module "python"
 
-  # from zshrc
-  zsh_after_init
-  export_alias
-  export_binding
+export_alias
+export_binding
 
-  check_eval direnv hook zsh
-  check_eval fnm env --use-on-cd
-  check_eval scala-cli install completions --env --shell zsh
-}
+check_eval direnv hook zsh
+check_eval fnm env --use-on-cd
+check_eval scala-cli install completions --env --shell zsh

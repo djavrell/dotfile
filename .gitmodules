@@ -10,6 +10,3 @@
 [submodule "submodules/zsh-history-substring-search"]
 	path = submodules/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search
-[submodule "submodules/zsh-vi-mode"]
-	path = submodules/zsh-vi-mode
-	url = https://github.com/jeffreytse/zsh-vi-mode.git

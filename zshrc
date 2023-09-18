@@ -18,6 +18,17 @@ export SYSTEM_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
 export SYSTEM_HARDWARE=$(uname -m | tr '[:upper:]' '[:lower:]')
 export SYSFILE="$DOTFILE/$SYSTEM_NAME"
 
+export LC_ALL=fr_FR.UTF-8
+export EDITOR="nvim"
+export VISUAL="nvim"
+export MANPAGER="nvim +Man!"
+export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+# export TERM='tmux-256color-italic'
+
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1024
+export SAVEHIST=1024
+
 # prevent the global variable PATH to have duplicate
 typeset -U path
 path=(
@@ -29,31 +40,16 @@ path=(
 
 autoload -Uz "$DOTFILE/function.d/load_func"
 
-# this function will be called in the ZSH module (zvm after init)
-# due to the vim mode plugin.
-function zsh_after_init() {
-  module "git"
-  module "starship"
-  module "fzf"
-  module "tmux"
-  module "tmuxinator"
-  module "navi"
-  module "nvim"
-  module "kitty"
-  module "rust"
-  module "python"
-}
-
 # load all core function
 load_func "core"
-
-# loadMod "$preMod"
 module "core"
+
+load "$DOTFILE/local.zsh"
+load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
+load "$DOTFILE/osc-integration.sh"
+
 module "zsh"
 
-load "$DOTFILE/osc-integration.sh"
-load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
-load "$DOTFILE/local.zsh"
 # The globbing is a little complicated here:
 # - '#q' is an explicit glob qualifier that makes globbing work within zsh's [[ ]] construct.
 # - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
