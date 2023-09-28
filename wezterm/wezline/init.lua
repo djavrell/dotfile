@@ -1,11 +1,12 @@
 local wezterm = require('wezterm')
-local G = wezterm.GLOBAL
 local NF = wezterm.nerdfonts
 local T = require('utils.merge')
 
-local M = {}
+---@type StatuslineConfig
+local conf = {}
 
-local namespace = 'wezline'
+---@type Wezline
+local M = {}
 
 ---@type StatuslineConfig
 local defaultConfig = {
@@ -41,12 +42,13 @@ local defaultConfig = {
 
 ---@param opt StatuslineOpt|nil
 function M.config(opt)
-  G[namespace] = T.tbl_extend(defaultConfig, opt or {})
+  conf = T.tbl_extend(defaultConfig, opt or {})
+end
 end
 
 ---@return StatuslineConfig
 function M.getConfig()
-  return G[namespace]
+  return conf
 end
 
 return M

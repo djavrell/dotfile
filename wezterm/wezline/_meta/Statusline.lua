@@ -9,3 +9,8 @@
 ---@class StatuslineConfig
 ---@field key_table_icone IconeTable
 ---@field battery wezline.battery.BatteryConfig
+
+---@class Wezline
+---@field config fun(opt?: StatuslineOpt): nil
+---@field updateConfig fun(opt: StatuslineOpt): StatuslineConfig
+---@field getConfig fun(): StatuslineConfig

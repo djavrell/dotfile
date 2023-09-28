@@ -1,6 +1,5 @@
 local wezterm = require('wezterm')
 
-local G = wezterm.GLOBAL
 local cb = wezterm.action_callback
 local act = wezterm.action
 
@@ -8,6 +7,7 @@ local split = require('utils.split').split
 
 local T = require('utils.merge')
 
+local conf = {}
 local M = {}
 local namespace = "WorkspaceSwitcher"
 
@@ -27,7 +27,7 @@ local defaultConfig = {
 
 ---@param opt WorkspaceSwitcherOpt|nil
 function M.config(opt)
-  G[namespace] = T.tbl_extend(defaultConfig, opt or {})
+  conf = T.tbl_extend(defaultConfig, opt or {})
 end
 
 
@@ -49,7 +49,7 @@ end
 
 function M.switchTo()
   ---@type WorkspaceSwitcherConfig
-  local opt = G[namespace]
+  local opt = conf
 
   return cb(function(win, pane)
     win:perform_action(
