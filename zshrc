@@ -44,10 +44,6 @@ autoload -Uz "$DOTFILE/function.d/load_func"
 load_func "core"
 module "core"
 
-load "$DOTFILE/local.zsh"
-load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
-load "$DOTFILE/osc-integration.sh"
-
 module "zsh"
 
 # The globbing is a little complicated here:

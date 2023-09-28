@@ -101,14 +101,19 @@ load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
 load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
+load "$DOTFILE/local.zsh"
+load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
+load "$DOTFILE/osc-integration.sh"
+
+
 module "git"
 module "starship"
 module "fzf"
-module "tmux"
-module "tmuxinator"
+# module "tmux"
+# module "tmuxinator"
 module "navi"
 module "nvim"
-module "kitty"
+# module "kitty"
 module "rust"
 module "python"
 
