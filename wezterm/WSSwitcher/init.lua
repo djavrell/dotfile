@@ -5,11 +5,10 @@ local act = wezterm.action
 
 local split = require('utils.split').split
 
-local T = require('utils.merge')
+local T = require('utils.tables')
 
 local conf = {}
 local M = {}
-local namespace = "WorkspaceSwitcher"
 
 ---@class WorkspaceSwitcherOpt
 ---@field filePath string|nil location of the file that store all workspace pwd

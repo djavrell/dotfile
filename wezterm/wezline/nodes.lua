@@ -1,4 +1,4 @@
-local mergeAll = require("utils.merge").merge_all
+local T = require("utils.tables")
 
 local S = {}
 
@@ -18,7 +18,7 @@ end
 ---@return wezline.Attr[]
 function S.wrap(nodes, sep)
   if sep ~= nil then
-    return mergeAll(
+    return T.merge_all(
       {{ Text = sep }},
       nodes,
       {{ Text = sep }}
@@ -42,7 +42,7 @@ function S.section(attr)
 ---@param data wezline.Attr[]
 ---@return wezline.Attr[]
   return function(data)
-    return mergeAll(
+    return T.merge_all(
       attr,
       data,
       "ResetAttributes"

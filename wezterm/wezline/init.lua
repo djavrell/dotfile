@@ -1,6 +1,6 @@
 local wezterm = require('wezterm')
 local NF = wezterm.nerdfonts
-local T = require('utils.merge')
+local T = require('utils.tables')
 
 ---@type StatuslineConfig
 local conf = {}
@@ -44,6 +44,12 @@ local defaultConfig = {
 function M.config(opt)
   conf = T.tbl_extend(defaultConfig, opt or {})
 end
+
+---@param opt StatuslineOpt
+---@return StatuslineConfig
+function M.updateConfig(opt)
+  conf = T.tbl_extend(conf, opt or {})
+  return conf
 end
 
 ---@return StatuslineConfig

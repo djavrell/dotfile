@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local M = {}
 
 local C = require("djavrell.colors")
-local merge = require("utils.merge").merge_all
+local T = require("utils.tables")
 local P = require("utils.pipe")
 
 local config = require('wezline').getConfig()
@@ -72,7 +72,7 @@ end
 function M.right(win)
   local key_table = win:active_key_table()
 
-  return merge(
+  return T.merge(
     S.if_def(key_table, KeyTableSection),
     time({{ Text = wezterm.time.now():format("%H:%M %F") }})
   )
