@@ -53,6 +53,7 @@ function M.switchTo()
   return cb(function(win, pane)
     win:perform_action(
       act.InputSelector({
+        fuzzy = true,
         title = opt.title,
         choices = getFileSplitBy(opt.filePath, ':'),
         action = cb(function(_, _, id, label)
@@ -71,4 +72,5 @@ function M.switchTo()
     )
   end)
 end
+
 return M
