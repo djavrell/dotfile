@@ -5,11 +5,19 @@ local C = require("djavrell.colors")
 local T = require("utils.tables")
 local P = require("utils.pipe")
 
-local config = require('wezline').getConfig()
+---@type Wezline
+local line = require('wezline')
+local config = line.getConfig()
+
+wezterm.log_info(type(config))
+wezterm.log_info(type(config.key_table_icone))
+
+local ws_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_apps)
+local kt_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_table_key)
 
 local S = require("wezline.nodes")
 local A = require("wezline.attrs")
-local B = require("wezline.battery")
+-- local B = require("wezline.battery")
 
 local ob = P.pipeC(
   A.Bold,
@@ -40,12 +48,7 @@ local time = P.pipeC(
 ---@param kt? string
 ---@return wezline.Attr[]
 local function KeyTableSection(kt)
-  local icone = wezterm.nerdfonts.md_table_key
-  if kt ~= nil and config.key_table_icone[kt] ~= nil then
-    icone = config.key_table_icone[kt]
-  end
-
-  return ob(icone .. ' ' .. kt)
+  return ob(kt_icone[kt] .. ' ' .. kt)
 end
 
 ---@param kt string|nil key table in use
@@ -60,13 +63,7 @@ end
 ---@param txt string
 ---@return string
 local function workspaceIcone(kt, txt)
-
-  local icone = wezterm.nerdfonts.md_apps
-  if kt ~= nil and config.key_table_icone[kt] ~= nil then
-    icone = config.key_table_icone[kt]
-  end
-
-  return icone .. ' ' .. txt
+  return ws_icone[kt] .. ' ' .. txt
 end
 
 function M.right(win)
@@ -81,14 +78,6 @@ end
 function M.left(win)
   local key_table = win:active_key_table()
   -- B.section()
-
-  --[[ wezterm.log_info(A.Nodes.Attributes.Intensity.Bold)
-  wezterm.log_info(A.Nodes.Attributes.Italic.True)
-  wezterm.log_info(A.Nodes.Attributes.Underline.Single)
-  wezterm.log_info(A.Nodes.Text("test"))
-  wezterm.log_info(A.Nodes.Foreground.ColorAnsi("Red"))
-  wezterm.log_info(A.Nodes.Background.Color(C.palette.black0))
-  wezterm.log_info(A.Nodes.ResetAttributes) ]]
 
   return selectSection(key_table)(
     workspaceIcone(key_table, win:active_workspace())
