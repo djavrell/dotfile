@@ -12,8 +12,10 @@ return function(config)
 
   config.keys = {
     map.alt('w', actions.ActivateKeyTable { name = 'win', timeout_millisecond = 500 }),
+    map.Alt('w', actions.ActivateKeyTable { name = 'win2', one_shot = false, until_unknown = true }),
     map.alt('p', actions.ActivateKeyTable { name = 'pane', timeout_millisecond = 500 }),
     map.Alt('p', actions.ActivateKeyTable { name = 'resize_pane', one_shot = false }),
+    map.Alt('d', actions.ActivateKeyTable { name = 'debug', timeout_millisecond = 1000 }),
 
     map.cm('v', actions.PasteFrom('Clipboard')),
     map.cm('v', actions.PasteFrom('PrimarySelection')),
@@ -38,6 +40,11 @@ return function(config)
       { key = '+', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })},
       { key = 'o', action = actions.ActivateLastTab }
     },
+    win2 = {
+      { key = 'H', action = actions.MoveTabRelative(-1) },
+      { key = 'L', action = actions.MoveTabRelative(1) },
+      { key = 'Escape', action = 'PopKeyTable' },
+    },
     pane = {
       { key = 'l', action = actions.ActivatePaneDirection('Next') },
       { key = 'h', action = actions.ActivatePaneDirection('Prev') },
@@ -48,6 +55,9 @@ return function(config)
       { key = 'k', action = actions.AdjustPaneSize { 'Up', 5 } },
       { key = 'j', action = actions.AdjustPaneSize { 'Down', 5 } },
       { key = 'Escape', action = 'PopKeyTable' },
+    },
+    debug = {
+      { key = 'p', action = actions.ShowDebugOverlay }
     }
   }
 
