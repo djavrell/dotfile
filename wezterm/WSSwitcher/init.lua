@@ -10,14 +10,6 @@ local T = require('utils.tables')
 local conf = {}
 local M = {}
 
----@class WorkspaceSwitcherOpt
----@field filePath string|nil location of the file that store all workspace pwd
----@field title string|nil
-
----@class WorkspaceSwitcherConfig
----@field filePath string location of the file that store all workspace pwd
----@field title string
-
 ---@type WorkspaceSwitcherConfig
 local defaultConfig = {
     title = "Switch to workspace",
