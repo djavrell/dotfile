@@ -46,7 +46,7 @@
   ia = !git add $(git ls-files --modified --others --exclude-standard | fzf --revers --multi)
 
 [rebase]
- autostash = true
+  autostash = true
 
 [merge]
   tool = vimdiff
@@ -64,6 +64,7 @@
   navigate = true
   line-numbers = true
   features = decorations
+  light = false
 
 [delta "interactive"]
   keep-plus-minus-markers = false
@@ -93,10 +94,6 @@
   old       = red bold
   new       = green bold
   whitspace = red reverse
-
-[diff-so-fancy]
-  changeHunkIndicator = true
-  stripLeadingSymbols = false
 
 [filter "lfs"]
   smudge = git-lfs smudge -- %f

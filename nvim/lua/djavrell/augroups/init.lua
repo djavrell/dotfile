@@ -59,3 +59,9 @@ autocmd({"BufRead", "BufNewFile"}, {
   pattern = { "*.zsh" },
   command = "set ft=sh"
 })
+
+autocmd({"BufRead", "BufNewFile"}, {
+  group = augroups["git"],
+  pattern = { "*gitconfig*" },
+  command = "set ft=gitconfig"
+})
