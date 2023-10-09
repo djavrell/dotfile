@@ -9,9 +9,6 @@ local P = require("utils.pipe")
 local line = require('wezline')
 local config = line.getConfig()
 
-wezterm.log_info(type(config))
-wezterm.log_info(type(config.key_table_icone))
-
 local ws_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_apps)
 local kt_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_table_key)
 
