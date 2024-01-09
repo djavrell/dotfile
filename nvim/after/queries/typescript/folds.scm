@@ -9,4 +9,5 @@
  (enum_body)
  (template_string)
  (object_type)
+ (type_arguments)
 ] @fold
