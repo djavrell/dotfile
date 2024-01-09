@@ -120,6 +120,6 @@ module "python"
 export_alias
 export_binding
 
-check_eval direnv hook zsh
+# check_eval direnv hook zsh
 check_eval fnm env --use-on-cd
-check_eval scala-cli install completions --env --shell zsh
+# check_eval scala-cli install completions --env --shell zsh
