@@ -104,10 +104,7 @@ return {
   'nvim-telescope/telescope-ui-select.nvim',
   'nvim-telescope/telescope-dap.nvim',
   'molecule-man/telescope-menufacture',
-  {
-    'doums/suit.nvim',
-    commit = '25b1b038791db1f19a8948b1fd43e7d6873179b8',
-  },
+  'doums/suit.nvim',
 
   'DNLHC/glance.nvim',
 
