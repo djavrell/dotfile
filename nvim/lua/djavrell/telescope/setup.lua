@@ -49,20 +49,8 @@ Telescope.setup {
     qflist_previewer = require'telescope.previewers'.vim_buffer_qflist.new,
     mappings = {
       i = {
-        ['<c-a>'] = function(bufnr)
-          actions.add_to_qflist(bufnr)
-          actions.open_qflist(bufnr)
-        end,
-        ['<c-A>'] = function(bufnr)
-          actions.add_selected_to_qflist(bufnr)
-          actions.open_qflist(bufnr)
-        end,
         ['<c-q>'] = function(bufnr)
-          actions.send_to_qflist(bufnr)
-          actions.open_qflist(bufnr)
-        end,
-        ['<c-Q>'] = function(bufnr)
-          actions.send_selected_to_qflist(bufnr)
+          actions.smart_add_to_qflist(bufnr)
           actions.open_qflist(bufnr)
         end,
         ['<c-d>'] = actions.delete_buffer,
@@ -74,12 +62,8 @@ Telescope.setup {
       },
       n = {
         ['d'] = actions.delete_buffer,
-        ['a'] = function(bufnr)
-          actions.add_selected_to_qflist(bufnr)
-          actions.open_qflist(bufnr)
-        end,
         ['q'] = function(bufnr)
-          actions.send_to_qflist(bufnr)
+          actions.smart_add_to_qflist(bufnr)
           actions.open_qflist(bufnr)
         end,
         ['p'] = actions_layout.toggle_preview,
