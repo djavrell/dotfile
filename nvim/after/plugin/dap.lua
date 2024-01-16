@@ -6,31 +6,27 @@ end
 local Hydra = require('hydra')
 local augroups = require('djavrell.augroups.utils')
 
-dap.adapters.node2 = {
-  type = 'executable',
-  command = 'node',
-  args = {os.getenv('HOME') .. '/bin/vscode-node-debug2/out/src/nodeDebug.js'},
+dap.adapters['pwa-node'] = {
+        type = "server",
+      host = "localhost",
+      port = "${port}",
+      executable = {
+        command = "node",
+        args = {
+          os.getenv("HOME") .. "/bin/js-debug/src/dapDebugServer.js",
+          "${port}",
+        },
+      },
 }
 
-dap.configurations.typescript = {
+require("dap").configurations.typescript = {
   {
-    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
-    name = 'Attach to process',
-    type = 'node2',
-    request = 'attach',
+    type = "pwa-node",
+    request = "attach",
+    name = "Attach",
     processId = require'dap.utils'.pick_process,
-  },
-  {
-    name = 'Launch Node TS',
-    type = 'node2',
-    request = 'launch',
-    program = '${file}',
-    cwd = vim.fn.getcwd(),
-    sourceMaps = true,
-    protocol = 'inspector',
-    console = 'integratedTerminal',
-    outFiles = { "${workspaceFolder}/out/**/*.js", "${workspaceFolder}/dist/**/*.js" },
-  },
+    cwd = "${workspaceFolder}",
+  }
 }
 
 local map = function(lhs, rhs, desc)
