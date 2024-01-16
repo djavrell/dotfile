@@ -142,6 +142,12 @@ return {
   'kristijanhusak/vim-dadbod-completion',
   'SidOfc/mkdx',
   'mfussenegger/nvim-jdtls',
+  {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup {}
+    end
+  },
 
   'hrsh7th/nvim-cmp',
   'hrsh7th/cmp-buffer',
