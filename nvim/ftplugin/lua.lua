@@ -14,9 +14,8 @@ local common = {
           vim.env.VIMRUNTIME,
         }
       },
-      telemetry = {
-        enable = false
-      },
+      telemetry = { enable = false },
+      hint = { enable = true }
     }
 }
 
@@ -27,7 +26,6 @@ nvim_lsp.lua_ls.setup(lsp_conf.setup({
     local path = client.workspace_folders[1].name
     local has_luarc = vim.uv.fs_stat(path .. '/.luarc.json') ~= nil and vim.uv.fs_stat(path .. '/.luarc.jsonc') ~= nil
 
-    P(has_luarc)
     if has_luarc == true then
       return true
     end
