@@ -53,10 +53,10 @@ require'diffview'.setup {
   },
   hooks = {
     view_opened = function()
-      h:activate()
+      -- h:activate()
     end,
     view_closed = function()
-      h:exit()
+      -- h:exit()
     end,
   },
   key_bindings = {
