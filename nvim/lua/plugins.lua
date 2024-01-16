@@ -97,6 +97,12 @@ return {
       require("todo-comments").setup {}
     end,
   },
+  {
+    'gregorias/coerce.nvim',
+    config = function()
+      require("coerce").setup {}
+    end,
+  },
 
   'nvim-telescope/telescope.nvim',
   {'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
