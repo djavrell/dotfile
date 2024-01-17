@@ -38,7 +38,8 @@ return function(config)
       { key = 'l', action = actions.ActivateTabRelative(1) },
       { key = '-', action = actions.SplitVertical({ domain = 'CurrentPaneDomain' })},
       { key = '+', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })},
-      { key = 'o', action = actions.ActivateLastTab }
+      { key = 'o', action = actions.ActivateLastTab },
+      { key = '0', action = actions.ActivatePaneByIndex(0) }
     },
     win2 = {
       { key = 'H', action = actions.MoveTabRelative(-1) },

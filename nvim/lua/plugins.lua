@@ -25,9 +25,27 @@ return {
     end
   },
 
-  'scr1pt0r/crease.vim', -- fold customization
+  {
+    'scr1pt0r/crease.vim',
+    config = function()
+      vim.cmd [[
+        set fillchars=fold:\    " space
+        let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
+      ]]
+    end
+  },
   'vim-utils/vim-troll-stopper',
-  'ntpeters/vim-better-whitespace',
+  {
+    'ntpeters/vim-better-whitespace',
+    config = function()
+      vim.cmd[[
+        let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'dashboard']
+        let g:better_whitespace_operator=''
+
+        nmap <silent> <C-Space> :StripWhitespace<CR>
+      ]]
+    end
+  },
   {
     'm4xshen/smartcolumn.nvim',
     config = function()
@@ -57,9 +75,12 @@ return {
     end
   },
   'christianrondeau/vim-base64',
-  'kburdett/vim-nuuid',
-
-  'kyazdani42/nvim-tree.lua',
+  {
+    'kburdett/vim-nuuid',
+    config = function()
+      vim.g.nuuid_no_mappings = 1
+    end
+  },
 
   {
     'kylechui/nvim-surround',
@@ -70,17 +91,51 @@ return {
       })
     end
   },
-  'windwp/nvim-autopairs',
   'AndrewRadev/tagalong.vim',
 
-  'phaazon/hop.nvim',
-
-  {'rhysd/vim-fixjson', ft = 'json' },
-  {'chrisbra/csv.vim', ft = 'csv'},
+  {
+    'rhysd/vim-fixjson',
+    ft = 'json',
+    config = function()
+      vim.g.fixjson_fix_on_save = 0
+    end
+  },
+  {
+    'chrisbra/csv.vim',
+    ft = 'csv',
+    config = function()
+      vim.cmd[[
+        let g:csv_delim=';'
+        let g:csv_table_leftalign=1
+      ]]
+    end
+  },
   'jamessan/vim-gnupg',
-  {'diepm/vim-rest-console', ft = 'rest'},
+  {
+    'diepm/vim-rest-console',
+    ft = 'rest',
+    config = function()
+      vim.cmd [[
+        let s:vrc_auto_format_response_patterns = {
+              \ 'json': 'python -m json.tool',
+              \ 'xml': 'xmllint --format -',
+            \}
 
-  'numToStr/Comment.nvim',
+        let g:vrc_curl_opts = { '-sS': '', '-i': '' }
+
+        let g:vrc_allow_get_request_body = 1
+      ]]
+    end
+  },
+
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup {
+          pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      }
+    end
+  },
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   {
@@ -89,7 +144,15 @@ return {
       'Trouble',
       'TroubleToggle',
       'TodoTrouble'
-    }
+    },
+    config = function()
+      require("trouble").setup {
+        mode = "workspace_diagnostics",
+        height = 20,
+        auto_preview = false,
+        auto_jump = {"lsp_definitions", "workspace_diagnostics", "document_diagnostics"}
+      }
+    end
   },
   {
     'folke/todo-comments.nvim',
@@ -110,23 +173,11 @@ return {
   'nvim-telescope/telescope-ui-select.nvim',
   'nvim-telescope/telescope-dap.nvim',
   'molecule-man/telescope-menufacture',
-  'doums/suit.nvim',
-
-  'DNLHC/glance.nvim',
 
   {
     'anuvyklack/hydra.nvim',
     dependencies = { 'anuvyklack/keymap-layer.nvim' } -- only for pink hydras
   },
-
-  {'NeogitOrg/neogit', cmd = 'Neogit'},
-  'lewis6991/gitsigns.nvim',
-  'sindrets/diffview.nvim',
-
-  'rhysd/committia.vim',
-  'rhysd/git-messenger.vim',
-
-  'L3MON4D3/LuaSnip',
 
   -- LSP
   'neovim/nvim-lspconfig',
@@ -137,9 +188,6 @@ return {
 
   -- Wrapper around some LSP for particular language
   'scalameta/nvim-metals',
-  'tpope/vim-dadbod',
-  'kristijanhusak/vim-dadbod-ui',
-  'kristijanhusak/vim-dadbod-completion',
   'SidOfc/mkdx',
   'mfussenegger/nvim-jdtls',
   {
@@ -159,20 +207,6 @@ return {
   'rcarriga/cmp-dap',
 
   'jose-elias-alvarez/null-ls.nvim',
-
-  {
-    'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate'
-  },
-  'nvim-treesitter/playground',
-  'RRethy/nvim-treesitter-textsubjects',
-  'nvim-treesitter/nvim-treesitter-textobjects',
-
-  -- DAP
-  'mfussenegger/nvim-dap',
-  'rcarriga/nvim-dap-ui',
-  'theHamsta/nvim-dap-virtual-text',
-  'mxsdev/nvim-dap-vscode-js',
 
   {
     'kevinhwang91/nvim-bqf',

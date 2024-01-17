@@ -49,6 +49,7 @@ function M.switchTo()
   local opt = M.getConfig()
 
   return cb(function(win, pane)
+    wezterm.log_info("call switcher")
     win:perform_action(
       act.InputSelector({
         fuzzy = true,
