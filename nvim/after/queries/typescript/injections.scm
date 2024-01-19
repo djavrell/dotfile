@@ -1,12 +1,30 @@
 ;; extends
 ; inherits: ecma
 
-; ((call_expression
-;   function: (
-;     (_)
-;     (property: (property_identifier) @identifier)
-;   )
-;   arguments: (arguments (template_string content: _ @sql))
-; )
-;  (#eq? @identifier "query")
-; )
+(
+  ( call_expression
+    (call_expression
+      (member_expression
+        ( identifier ) @id
+        ( property_identifier) @props
+        ))
+    (template_string) @injection.content
+    (#set! injection.language "sql")
+  )
+  (#match? @id "sql")
+  (#any-of? @props "type" "typeAlias")
+)
+
+(
+  (call_expression
+    (member_expression (
+      (identifier) @id
+      (property_identifier) @props
+    ))
+    (template_string) @injection.content
+    (#set! injection.language "sql")
+  )
+  (#match? @id "sql")
+  (#any-of? @props "fragment")
+)
+
