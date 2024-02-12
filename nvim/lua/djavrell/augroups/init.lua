@@ -1,16 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroups = require('djavrell.augroups.utils')
 
-autocmd("BufEnter", {
-  group = augroups["nvimTree"],
-  nested = true,
-  callback = function()
-    if #vim.api.nvim_tabpage_list_wins(0) == 1 and vim.api.nvim_buf_get_name(0):match('NvimTree_') ~= nil then
-      vim.cmd "quit"
-    end
-  end,
-})
-
 autocmd("TextYankPost", {
   group = augroups["yank"],
   callback = function()
