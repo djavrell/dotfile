@@ -1,4 +1,3 @@
-
 return {
   'rcarriga/nvim-dap-ui',
   'theHamsta/nvim-dap-virtual-text',
@@ -29,7 +28,7 @@ return {
           type = "pwa-node",
           request = "attach",
           name = "Attach",
-          processId = require'dap.utils'.pick_process,
+          processId = "${command:pickProcess}",
           cwd = "${workspaceFolder}",
         }
       }
