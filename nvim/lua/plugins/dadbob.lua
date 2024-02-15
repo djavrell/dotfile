@@ -12,9 +12,23 @@ return {
     'kristijanhusak/vim-dadbod-ui',
     config = function()
       vim.cmd[[
+        let query = "
+        \SELECT\n
+        \  conrelid::regclass AS table_from,\n
+        \  conname,\n
+        \  pg_get_constraintdef(oid)\n
+        \FROM pg_constraint\n
+        \WHERE contype IN ('f', 'p')\n
+        \  AND conrelid = '{table}'::regclass\n
+        \  AND connamespace = 'public'::regnamespace\n
+        \ORDER\n
+        \  BY conrelid::regclass::text,\n
+        \  contype DESC;\n
+        \"
+
         let g:db_ui_table_helpers = {
         \   'postgresql': {
-        \     'Constraints': "SELECT conrelid::regclass AS table_from, conname, pg_get_constraintdef(oid) FROM  pg_constraint WHERE contype IN ('f', 'p') AND conrelid = '{table}'::regclass AND connamespace = 'public'::regnamespace ORDER BY conrelid::regclass::text, contype DESC;"
+        \     'Constraints': query
         \   }
         \ }
       ]]
