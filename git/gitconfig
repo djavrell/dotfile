@@ -112,3 +112,6 @@
 
 [checkout]
   defaultRemote = origin
+
+[rerere]
+  enable = true
