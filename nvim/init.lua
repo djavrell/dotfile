@@ -2,7 +2,7 @@ vim.cmd([[
   try
     source $XDG_CONFIG_HOME/local_nvim.vim
   catch
-    let mapleader = '='
+    let mapleader = '!'
   endtry
 
   filetype plugin indent on
