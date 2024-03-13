@@ -1,6 +1,6 @@
 #! /usr/bin/env zsh
 
-source "./env.zsh"
+# source "./env.zsh"
 
 typeset -U mods=(
   "core"
@@ -8,13 +8,10 @@ typeset -U mods=(
   "git"
   "starship"
   "fzf"
-  "tmux"
-  "tmuxinator"
   "navi"
   "nvim"
-  "kitty"
-  "rust"
-  "python"
+  # "rust"
+  # "python"
   "wezterm"
 )
 
