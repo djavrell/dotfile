@@ -25,15 +25,6 @@ return {
     end
   },
 
-  {
-    'scr1pt0r/crease.vim',
-    config = function()
-      vim.cmd [[
-        set fillchars=fold:\    " space
-        let g:crease_foldtext = { 'default': '%{repeat("-", v:foldlevel)} %l lines: %t ' }
-      ]]
-    end
-  },
   'vim-utils/vim-troll-stopper',
   {
     'ntpeters/vim-better-whitespace',
