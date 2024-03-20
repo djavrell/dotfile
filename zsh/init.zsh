@@ -105,17 +105,14 @@ load "$DOTFILE/local.zsh"
 load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/osc-integration.sh"
 
-
 module "git"
 module "starship"
 module "fzf"
-# module "tmux"
-# module "tmuxinator"
 module "navi"
 module "nvim"
-# module "kitty"
 module "rust"
-module "python"
+module "java"
+module "scala"
 
 export_alias
 export_binding
