@@ -2,6 +2,7 @@ return {
   'rcarriga/nvim-dap-ui',
   'theHamsta/nvim-dap-virtual-text',
   'mxsdev/nvim-dap-vscode-js',
+  'nvim-neotest/nvim-nio',
   {
     'mfussenegger/nvim-dap',
     config = function()
