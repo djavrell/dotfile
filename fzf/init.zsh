@@ -2,6 +2,7 @@
 export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --ignore-file $DOTFILE/fdignore"
 export FZF_COMPLETION_TRIGGER='%'
 
+export FZF_MARKS_FILE="$W_XDG_DATA_HOME/.fzf-marks"
 # export FZF_CTRL_R_OPTS='--reverse'
 
 # on osx, use this command to generate needed files
