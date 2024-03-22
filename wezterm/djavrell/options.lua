@@ -26,5 +26,15 @@ return function(config)
 
   config.status_update_interval = 500
 
+  config.wsl_domains = {
+    {
+      name = "arch",
+      distribution = "Arch",
+      default_cwd = "/home/kpr"
+    }
+  }
+
+  config.default_domain = 'arch'
+
   return config
 end
