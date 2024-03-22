@@ -39,7 +39,7 @@ return function(config)
       { key = 'h', action = actions.ActivateTabRelative(-1) },
       { key = 'l', action = actions.ActivateTabRelative(1) },
       { key = '-', action = actions.SplitVertical({ domain = 'CurrentPaneDomain' })},
-      { key = '+', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })},
+      { key = '=', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' })},
       { key = 'o', action = actions.ActivateLastTab },
       { key = '0', action = actions.ActivatePaneByIndex(0) }
     },
