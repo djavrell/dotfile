@@ -9,6 +9,7 @@ return function(config)
 
   config.color_scheme = 'nordic'
   config.font = wezterm.font 'Hasklug Nerd Font'
+  config.font_size = 10.5
 
   config.window_padding = {
     left = 0,
@@ -25,6 +26,8 @@ return function(config)
   config.disable_default_key_bindings = true
 
   config.status_update_interval = 500
+
+  config.audible_bell = "Disabled"
 
   config.wsl_domains = {
     {
