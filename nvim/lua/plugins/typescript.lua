@@ -11,4 +11,10 @@ return {
   },
   -- 'leafgarland/typescript-vim',
   'davidosomething/format-ts-errors.nvim',
+  {
+    'dmmulroy/ts-error-translator.nvim',
+    config = function()
+      require('ts-error-translator').setup()
+    end
+  },
 }
