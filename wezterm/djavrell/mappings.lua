@@ -11,6 +11,8 @@ return function(config)
   config.leader = { key = 'x', mods = 'CTRL' }
 
   config.keys = {
+    map.alt('Enter', actions.ToggleFullScreen),
+
     map.alt('w', actions.ActivateKeyTable { name = 'win', timeout_millisecond = 500 }),
     map.Alt('w', actions.ActivateKeyTable { name = 'win2', one_shot = false, until_unknown = true }),
     map.alt('p', actions.ActivateKeyTable { name = 'pane', timeout_millisecond = 500 }),
