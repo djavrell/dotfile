@@ -15,7 +15,7 @@ local M = {}
 ---@type WorkspaceSwitcherConfig
 local defaultConfig = {
     title = "Switch to workspace",
-    filePath = os.getenv('HOME') .. '/.fzf-marks'
+    filePath = os.getenv('HOMEPATH') .. '\\.local\\share\\.fzf-marks'
 }
 
 ---@param opt WorkspaceSwitcherOpt|nil
@@ -32,7 +32,6 @@ end
 local function getFileSplitBy(path, sep)
   local choices = {}
 
-  wezterm.log_info(path)
   for line in io.lines(path) do
     local tok = split(line, sep)
     table.insert(choices, {
@@ -49,7 +48,6 @@ function M.switchTo()
   local opt = M.getConfig()
 
   return cb(function(win, pane)
-    wezterm.log_info("call switcher")
     win:perform_action(
       act.InputSelector({
         fuzzy = true,
