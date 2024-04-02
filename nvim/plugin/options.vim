@@ -34,6 +34,20 @@ set expandtab       " use space instead of tab characters
 set smarttab        " "tab" inserts "indents" instead of tab at the beginning of line
 set guifont=Hasklug_Nerd_Font:h11
 
+set clipboard+=unnamedplus
+let g:clipboard = {
+  \   'name': 'WslClipboard',
+  \   'copy': {
+  \      '+': 'clip.exe',
+  \      '*': 'clip.exe',
+  \    },
+  \   'paste': {
+  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  \   },
+  \   'cache_enabled': 0,
+  \ }
+
 " global status line
 set laststatus=3
 set cmdheight=1

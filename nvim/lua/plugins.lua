@@ -55,7 +55,7 @@ return {
   },
 
   -- utils
-  'benknoble/vimpbcopy',
+  -- 'benknoble/vimpbcopy',
   -- 'andrewradev/splitjoin.vim',
   {
     'Wansmer/treesj',
