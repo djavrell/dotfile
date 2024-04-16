@@ -170,6 +170,7 @@ return {
   'wbthomason/lsp-status.nvim',
   'lukas-reineke/lsp-format.nvim',
   'jose-elias-alvarez/nvim-lsp-ts-utils',
+  'ray-x/lsp_signature.nvim',
   {'artemave/workspace-diagnostics.nvim'},
 
   -- Wrapper around some LSP for particular language

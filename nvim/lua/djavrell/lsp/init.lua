@@ -1,6 +1,9 @@
+local lsp_signature = require('lsp_signature')
 local ts_utils_lsp = require('nvim-lsp-ts-utils')
+
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+local U = require("djavrell.utils.ui")
 local Tmap = require("djavrell.telescope.mapping")
 
 local M = {}
@@ -37,6 +40,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>k', function() lsp_signature.toggle_float_win() end, opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -44,6 +48,21 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
+
+  lsp_signature.on_attach({
+    max_height = 50,
+    max_width = 200,
+    wrap = false,
+    timer_interval = 50,
+    floating_window = false,
+    hint_prefix = "",
+    handler_opt = {
+      border = U.border_chars_outer_thin,
+    },
+    toggle_key = '<M-x>',
+    toggle_key_flip_floatwin_setting = false,
+    select_signature_key = '<M-n>'
+  }, bufnr)
 
   additionalSetup[client.name](client, bufnr)
 end
