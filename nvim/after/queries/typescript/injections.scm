@@ -10,6 +10,7 @@
         ))
     (template_string) @injection.content
     (#set! injection.language "sql")
+    (#set! injection.include-children)
   )
   (#match? @id "sql")
   (#any-of? @props "type" "typeAlias")
@@ -23,6 +24,7 @@
     ))
     (template_string) @injection.content
     (#set! injection.language "sql")
+    (#set! injection.include-children)
   )
   (#match? @id "sql")
   (#any-of? @props "fragment")
