@@ -103,7 +103,11 @@ return {
   },
   {
     'SuperBo/fugit2.nvim',
-    opts = {},
+    opts = {
+      width = "80%",
+      max_width = "80%",
+      height = "90%",
+    },
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-tree/nvim-web-devicons',
