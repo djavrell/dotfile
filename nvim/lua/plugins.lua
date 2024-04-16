@@ -192,7 +192,7 @@ return {
   'saadparwaiz1/cmp_luasnip',
   'rcarriga/cmp-dap',
 
-  'jose-elias-alvarez/null-ls.nvim',
+  'nvimtools/none-ls.nvim',
 
   {
     'kevinhwang91/nvim-bqf',

@@ -86,6 +86,7 @@ cmp.setup.filetype('prompt', {
 })
 
 nvim_lsp.tsserver.setup(lsp_conf.setup())
+nvim_lsp.eslint.setup(lsp_conf.setup())
 nvim_lsp.bashls.setup(lsp_conf.setup())
 
 vim.api.nvim_create_autocmd("Filetype", {
@@ -107,10 +108,7 @@ vim.api.nvim_create_autocmd("Filetype", {
 local null_ls = require("null-ls")
 require("null-ls").setup {
   source = {
-    null_ls.builtins.code_actions.eslint,
-    null_ls.builtins.diagnostics.eslint,
-    null_ls.builtins.diagnostics.tsc,
-    null_ls.builtins.formatting.jq,
+    null_ls.builtins.code_actions.gitsigns,
     null_ls.builtins.formatting.prettier
   }
 }
