@@ -9,7 +9,6 @@ local Tmap = require("djavrell.telescope.mapping")
 local M = {}
 
 local additionalSetup = setmetatable({
----@diagnostic disable-next-line: unused-local
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
@@ -24,11 +23,12 @@ local additionalSetup = setmetatable({
 
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.keymap.set(...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
+    buf = bufnr,
+  })
 
-  local opts = { noremap=true, silent=true, buffer=bufnr }
+  local opts = { noremap = true, silent = true, buffer = bufnr }
 
   Tmap('<leader>s', 'lsp_dynamic_workspace_symbols')
 
@@ -75,8 +75,8 @@ local config = {
   },
 }
 
----@param opt lsp.ClientConfig|nil
----@return lsp.ClientConfig
+---@param opt vim.lsp.ClientConfig|nil
+---@return vim.lsp.ClientConfig
 function M.setup(opt)
   return vim.tbl_extend("force", config, opt or {})
 end
