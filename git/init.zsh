@@ -7,9 +7,6 @@ load "$DOTFILE/git/$SYSTEM_NAME/init.zsh"
 # git rev-parse --show-superproject-working-tree
 alias groot='cd $(git rev-parse --show-toplevel)'
 
-alias vadd='vim +Neogit'
-alias vdiff='vim +DiffviewOpen'
-
 alias gd='git diff'
 
 alias sync='ggpull && gfo --prune && git fetch --tags'
