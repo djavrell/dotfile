@@ -12,17 +12,19 @@ ls.add_snippets("typescript", {
   s("dol-error", fmt([[
       import { z } from 'zod';
 
+      const CODE = '[err_name]-error'
+
       const schema = z.object({
-        code: z.literal('[err_name]-error'),
+        code: z.literal(CODE),
       });
 
       export type [err_type_name]Error = z.infer<typeof schema>;
 
       function build(): [err_type_name]Error {
-        return { code: '[err_name]-error' };
+        return { code: CODE };
       }
 
-      export const [err_type_name]Error = { build, schema };
+      export const [err_type_name]Error = { CODE, build, schema };
     ]], {
       err_name = i(1),
       err_type_name = i(2)
