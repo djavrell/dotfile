@@ -86,7 +86,11 @@ cmp.setup.filetype('prompt', {
 })
 
 nvim_lsp.tsserver.setup(lsp_conf.setup())
-nvim_lsp.eslint.setup(lsp_conf.setup())
+nvim_lsp.eslint.setup(lsp_conf.setup({
+  settings = {
+    run = "onSave"
+  }
+}))
 nvim_lsp.bashls.setup(lsp_conf.setup())
 
 vim.api.nvim_create_autocmd("Filetype", {
