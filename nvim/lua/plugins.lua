@@ -55,8 +55,6 @@ return {
   },
 
   -- utils
-  -- 'benknoble/vimpbcopy',
-  -- 'andrewradev/splitjoin.vim',
   {
     'Wansmer/treesj',
     keys = { '<space>m', '<space>s', '<space>j' },
@@ -102,22 +100,22 @@ return {
     end
   },
   'jamessan/vim-gnupg',
-  {
-    'diepm/vim-rest-console',
-    ft = 'rest',
-    config = function()
-      vim.cmd [[
-        let s:vrc_auto_format_response_patterns = {
-              \ 'json': 'python -m json.tool',
-              \ 'xml': 'xmllint --format -',
-            \}
-
-        let g:vrc_curl_opts = { '-sS': '', '-i': '' }
-
-        let g:vrc_allow_get_request_body = 1
-      ]]
-    end
-  },
+  -- {
+  --   'diepm/vim-rest-console',
+  --   ft = 'rest',
+  --   config = function()
+  --     vim.cmd [[
+  --       let s:vrc_auto_format_response_patterns = {
+  --             \ 'json': 'python -m json.tool',
+  --             \ 'xml': 'xmllint --format -',
+  --           \}
+  --
+  --       let g:vrc_curl_opts = { '-sS': '', '-i': '' }
+  --
+  --       let g:vrc_allow_get_request_body = 1
+  --     ]]
+  --   end
+  -- },
 
   {
     'numToStr/Comment.nvim',
@@ -176,7 +174,7 @@ return {
   -- Wrapper around some LSP for particular language
   'scalameta/nvim-metals',
   'SidOfc/mkdx',
-  'mfussenegger/nvim-jdtls',
+  -- 'mfussenegger/nvim-jdtls',
   {
     'j-hui/fidget.nvim',
     config = function()

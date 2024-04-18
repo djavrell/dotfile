@@ -78,7 +78,7 @@ local config = {
   },
 }
 
----@param opt vim.lsp.ClientConfig|nil
+-- ---@param opt vim.lsp.ClientConfig|nil
 ---@return vim.lsp.ClientConfig
 function M.setup(opt)
   return vim.tbl_extend("force", config, opt or {})
