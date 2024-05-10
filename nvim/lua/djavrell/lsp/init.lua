@@ -8,6 +8,8 @@ local Tmap = require("djavrell.telescope.mapping")
 
 local M = {}
 
+local function buf_set_keymap(...) vim.keymap.set(...) end
+
 local additionalSetup = setmetatable({
   tsserver = function(client, bufnr)
     ts_utils_lsp.setup({})
@@ -22,14 +24,11 @@ local additionalSetup = setmetatable({
 })
 
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.keymap.set(...) end
-
   vim.api.nvim_set_option_value('omnifunc', 'v:lua.vim.lsp.omnifunc', {
     buf = bufnr,
   })
 
   local opts = { noremap = true, silent = true, buffer = bufnr }
-
   Tmap('<leader>s', 'lsp_dynamic_workspace_symbols')
 
   buf_set_keymap('n', 'gd', '<cmd>Glance definitions<CR>', opts)
