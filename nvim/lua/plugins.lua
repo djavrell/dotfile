@@ -66,6 +66,7 @@ return {
   'christianrondeau/vim-base64',
   {
     'kburdett/vim-nuuid',
+    keys = { '<leader>u' },
     config = function()
       vim.g.nuuid_no_mappings = 1
     end
@@ -99,23 +100,10 @@ return {
       ]]
     end
   },
-  'jamessan/vim-gnupg',
-  -- {
-  --   'diepm/vim-rest-console',
-  --   ft = 'rest',
-  --   config = function()
-  --     vim.cmd [[
-  --       let s:vrc_auto_format_response_patterns = {
-  --             \ 'json': 'python -m json.tool',
-  --             \ 'xml': 'xmllint --format -',
-  --           \}
-  --
-  --       let g:vrc_curl_opts = { '-sS': '', '-i': '' }
-  --
-  --       let g:vrc_allow_get_request_body = 1
-  --     ]]
-  --   end
-  -- },
+  {
+    'jamessan/vim-gnupg',
+    ft = { 'gpg', 'pgp', 'asc' }
+  },
 
   {
     'numToStr/Comment.nvim',
