@@ -21,7 +21,10 @@ return {
         FloatBorder = {
           fg = C.fg_sidebar,
           bg = C.bg
-        }
+        },
+        LazyNormal = {
+          bg = C.bg,
+        },
       }
     }
   end
