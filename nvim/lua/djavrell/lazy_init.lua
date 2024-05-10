@@ -12,10 +12,9 @@ if not vim.uv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local U = require('djavrell.utils.ui')
 require('lazy').setup('plugins', {
   ui = {
-    border = U.border_chars_outer_thin,
+    border = 'none'
   }
 })
 
