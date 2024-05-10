@@ -182,6 +182,17 @@ return {
   'nvimtools/none-ls.nvim',
 
   {
+    'ptdewey/yankbank-nvim',
+    cmd = { 'YankBank' },
+    keys = {
+      { '<leader>y', '<cmd>YankBank<cr>', { noremap = true, silent = true} }
+    },
+    config = function()
+        require('yankbank').setup()
+    end,
+  },
+
+  {
     'kevinhwang91/nvim-bqf',
     config = function()
       require('bqf').setup({
