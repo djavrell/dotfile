@@ -50,6 +50,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
 
   vim.api.nvim_create_user_command('Format', vim.lsp.buf.format, {})
+  vim.api.nvim_create_user_command('ResetDiagnostic', function() vim.diagnostic.reset() end, {})
 
   lsp_signature.on_attach({
     max_height = 50,
