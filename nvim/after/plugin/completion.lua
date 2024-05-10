@@ -130,6 +130,8 @@ metals_config.settings = {
 }
 
 metals_config.capabilities = capabilities
+metals_config.init_options.statusBarProvider = "off"
+metals_config.on_attach = lsp_conf.setup().on_attach
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "scala", "sbt" },
