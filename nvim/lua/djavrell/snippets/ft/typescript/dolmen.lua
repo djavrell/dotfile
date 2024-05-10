@@ -12,7 +12,7 @@ ls.add_snippets("typescript", {
   s("dol-error", fmt([[
       import { z } from 'zod';
 
-      const CODE = '[err_name]-error'
+      const CODE = '[err_name]-error' as const;
 
       const schema = z.object({
         code: z.literal(CODE),
