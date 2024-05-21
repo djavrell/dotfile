@@ -2,7 +2,7 @@
 ; inherits: ecma
 
 [
- (array)
+ (array)+
  (comment)
  (abstract_class_declaration)
  (arguments)
@@ -10,4 +10,6 @@
  (template_string)
  (object_type)
  (type_arguments)
+ (object_pattern)+
+ (named_imports)
 ] @fold
