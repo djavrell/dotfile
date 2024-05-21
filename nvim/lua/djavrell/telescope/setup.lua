@@ -91,5 +91,5 @@ Telescope.setup {
 
 -- extension
 Telescope.load_extension('fzf')
-Telescope.load_extension('hop')
+-- Telescope.load_extension('hop')
 Telescope.load_extension('menufacture')
