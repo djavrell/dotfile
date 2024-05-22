@@ -86,6 +86,21 @@ cmp.setup.filetype('prompt', {
 })
 
 nvim_lsp.tsserver.setup(lsp_conf.setup())
+-- nvim_lsp.tsserver.setup(lsp_conf.setup())
+nvim_lsp.vtsls.setup(lsp_conf.setup({
+  settings = {
+    typescript = {
+      inlayHints = {
+        parameterNames = { enabled = "all" },
+        parameterTypes = { enabled = true },
+        variableTypes = { enabled = true },
+        propertyDeclarationTypes = { enabled = true },
+        functionLikeReturnTypes = { enabled = true },
+        enumMemberValues = { enabled = true },
+      }
+    },
+  }
+}))
 nvim_lsp.eslint.setup(lsp_conf.setup({
   settings = {
     run = "onSave"

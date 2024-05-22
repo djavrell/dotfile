@@ -16,6 +16,12 @@ local additionalSetup = setmetatable({
     ts_utils_lsp.setup_client(client)
 
     require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+  vtsls = function(client, bufnr)
+    ts_utils_lsp.setup({})
+    ts_utils_lsp.setup_client(client)
+
+    require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+  end,
   end
 }, {
   __index = function()
