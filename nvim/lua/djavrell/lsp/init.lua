@@ -28,6 +28,12 @@ local additionalSetup = setmetatable({
   metals = function(client, bufnr)
     require("metals").setup_dap()
   end,
+---@diagnostic disable-next-line: unused-local
+  eslint = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
   end
 }, {
   __index = function()
