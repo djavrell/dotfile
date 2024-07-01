@@ -102,7 +102,6 @@ return {
   },
   {
     'jamessan/vim-gnupg',
-    ft = { 'gpg', 'pgp', 'asc' }
   },
 
   {

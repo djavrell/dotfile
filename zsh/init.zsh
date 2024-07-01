@@ -35,7 +35,7 @@ function export_zsh_conf() {
 }
 
 function export_env() {
-  ## GPG
+  # GPG (need for nvim plugin)
   export GPG_TTY=$(tty)
 
   ## SSH
