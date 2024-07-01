@@ -37,7 +37,7 @@ Telescope.setup {
     path_display = {},
     border = true,
     borderchars = {
-      prompt = { '▔', '▕', ' ', '▏', '🭽', '🭾', '▕', '▏' },
+      prompt = U.border_chars_outer_thin_telescope,
       results = U.border_chars_outer_thin_telescope,
       preview = U.border_chars_outer_thin_telescope,
     },
