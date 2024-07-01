@@ -1,4 +1,5 @@
 vim.loader.enable()
+local ui = require("djavrell.utils.ui")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -13,8 +14,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup('plugins', {
+  spec = {
+    { import = "plugins" }
+  },
   ui = {
-    border = 'none'
+    border = ui.border_thin,
+    backdrop = 100,
   }
 })
 
