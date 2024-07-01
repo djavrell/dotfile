@@ -1,5 +1,6 @@
 local lsp_signature = require('lsp_signature')
 local ts_utils_lsp = require('nvim-lsp-ts-utils')
+local metals_tvp = require("metals.tvp")
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
@@ -16,11 +17,16 @@ local additionalSetup = setmetatable({
     ts_utils_lsp.setup_client(client)
 
     require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+  end,
   vtsls = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
 
     require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+  end,
+  ---@diagnostic disable-next-line: unused-local
+  metals = function(client, bufnr)
+    require("metals").setup_dap()
   end,
   end
 }, {
