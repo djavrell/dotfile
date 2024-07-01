@@ -12,6 +12,8 @@ return {
 
   'hsanson/vim-openapi',
 
+  'mtdl9/vim-log-highlighting',
+
   {
     'karb94/neoscroll.nvim',
     config = function()
