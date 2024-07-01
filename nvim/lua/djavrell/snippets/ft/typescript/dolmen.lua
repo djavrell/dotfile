@@ -33,6 +33,22 @@ ls.add_snippets("typescript", {
       repeat_duplicates = true,
     })
   ),
+  s("dol-module", fmt([[
+      export interface [module_name] {}
+      interface [module_name]Deps {}
+
+      function build({}: [module_name]Deps): [module_name] {
+        return {};
+      }
+
+      export const [module_name] = { build };
+    ]], {
+      module_name = i(1),
+    }, {
+      delimiters = "[]",
+      repeat_duplicates = true,
+    })
+  ),
   s("ret", fmt([[
     return {
       [kind]: [err],
