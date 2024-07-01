@@ -2,7 +2,6 @@ local nvim_lsp = require('lspconfig')
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 local augroups = require('djavrell.augroups.utils')
 local lsp_conf = require('djavrell.lsp')
 
@@ -36,6 +35,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
+    -- { name = 'lazydev', group_index = 0 },
     { name = 'luasnip' },
     { name = 'path' },
   }),
@@ -85,7 +85,6 @@ cmp.setup.filetype('prompt', {
   },
 })
 
-nvim_lsp.tsserver.setup(lsp_conf.setup())
 -- nvim_lsp.tsserver.setup(lsp_conf.setup())
 nvim_lsp.vtsls.setup(lsp_conf.setup({
   settings = {
