@@ -123,13 +123,6 @@ vim.api.nvim_create_autocmd("Filetype", {
   group = augroups["CmpZsh"]
 })
 
-local null_ls = require("null-ls")
-require("null-ls").setup {
-  source = {
-    null_ls.builtins.code_actions.gitsigns,
-    null_ls.builtins.formatting.prettier
-  }
-}
 
 ----------------------------------
 -- Metals ------------------------

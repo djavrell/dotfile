@@ -165,8 +165,6 @@ return {
   'saadparwaiz1/cmp_luasnip',
   'rcarriga/cmp-dap',
 
-  'nvimtools/none-ls.nvim',
-
   {
     'ptdewey/yankbank-nvim',
     cmd = { 'YankBank' },
