@@ -109,9 +109,6 @@ return {
           },
         }
       }
-
-      -- local TSUtils = require('djavrell.treesitter')
-      --[[ TSUtils.add_parser("sql", "https://github.com/derekstride/tree-sitter-sql") ]]
     end
   },
 }
