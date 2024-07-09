@@ -22,7 +22,5 @@ Tmap('<leader>b', 'buffers')
 Tmap('<space>r', 'resume')
 Tmap('<space>d', 'commands')
 Tmap('<space>sh', 'search_history')
-Tmap('<space>qh', 'quickfixhistory')
-Tmap('<space>g', 'git_commits')
 
 return Tmap
