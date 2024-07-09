@@ -1,5 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
+
 local augroups = require('djavrell.augroups.utils')
+local metals = require('djavrell.lsp.scala')
 
 autocmd("TextYankPost", {
   group = augroups["yank"],
@@ -54,4 +56,12 @@ autocmd({"BufRead", "BufNewFile"}, {
   group = augroups["git"],
   pattern = { "*gitconfig*" },
   command = "set ft=gitconfig"
+})
+
+autocmd("FileType", {
+  pattern = { "scala", "sbt" },
+  callback = function()
+    require("metals").initialize_or_attach(metals.config)
+  end,
+  group = augroups["nvim-metals"],
 })
