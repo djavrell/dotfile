@@ -38,3 +38,5 @@ nnoremap <silent> <c-c> :cclose<cr>
 nnoremap <silent> <c-q> :copen<cr>
 
 noremap <leader>r :%s/\<<C-r><C-w>\>/
+
+noremap <BS> ciw
