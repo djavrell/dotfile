@@ -16,7 +16,7 @@ return {
         ^ ^         _q_ quit
       ]]
 
-      local h = Hydra({
+      --[[ local h = Hydra({
         hint = hint,
         config = {
           color = 'pink',
@@ -39,7 +39,7 @@ return {
           { 'P', cb('prev_entry') },
           { 'q', cb('close') }
         }
-      })
+      }) ]]
 
       require'diffview'.setup {
         diff_binaries = false,    -- Show diffs for binaries

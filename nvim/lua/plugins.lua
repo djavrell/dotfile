@@ -131,10 +131,7 @@ return {
 
   {'OXY2DEV/markview.nvim'},
 
-  {
-    'anuvyklack/hydra.nvim',
-    dependencies = { 'anuvyklack/keymap-layer.nvim' } -- only for pink hydras
-  },
+  'nvimtools/hydra.nvim',
 
   -- LSP
   'neovim/nvim-lspconfig',

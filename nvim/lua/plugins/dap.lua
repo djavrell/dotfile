@@ -47,7 +47,7 @@ return {
       _c_: continue _I_: in _o_: over _O_: out _B_: back
       ]]
 
-      Hydra({
+      --[[ Hydra({
         name = 'Debugger',
         hint = hint,
         config = {
@@ -71,7 +71,7 @@ return {
           { 'dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input "[DAP] Log > ") end },
           { 'E',  function() require("dapui").eval(vim.fn.input "[DAP] Expression > ") end }
         }
-      })
+      }) ]]
 
       map("<F1>", require("dap").step_back, "step_back")
       map("<F2>", require("dap").step_into, "step_into")

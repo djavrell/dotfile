@@ -43,7 +43,7 @@ return {
       ^ ^              _<Enter>_: Neogit              _q_: exit
       ]]
 
-      Hydra({
+      --[[ Hydra({
         hint = hint,
         config = {
             color = 'pink',
@@ -85,7 +85,7 @@ return {
             { '<Enter>', '<cmd>Neogit<CR>', { exit = true } },
             { 'q', nil, { exit = true, nowait = true } },
         }
-      })
+      }) ]]
     end
   },
   {
