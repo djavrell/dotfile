@@ -85,8 +85,8 @@ cmp.setup.filetype('prompt', {
   },
 })
 
--- nvim_lsp.tsserver.setup(lsp_conf.setup())
-nvim_lsp.vtsls.setup(lsp_conf.setup({
+nvim_lsp.ts_ls.setup(lsp_conf.setup())
+--[[ nvim_lsp.vtsls.setup(lsp_conf.setup({
   settings = {
     typescript = {
       inlayHints = {

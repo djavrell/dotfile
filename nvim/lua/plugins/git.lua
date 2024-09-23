@@ -91,9 +91,9 @@ return {
   {
     'SuperBo/fugit2.nvim',
     opts = {
-      width = "80%",
-      max_width = "80%",
-      height = "90%",
+      width = "95%",
+      max_width = "95%",
+      height = "95%",
       external_diffview = true,
     },
     dependencies = {

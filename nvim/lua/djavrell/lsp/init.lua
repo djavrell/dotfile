@@ -12,7 +12,7 @@ local M = {}
 local function buf_set_keymap(...) vim.keymap.set(...) end
 
 local additionalSetup = setmetatable({
-  tsserver = function(client, bufnr)
+  ts_ls = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
 
