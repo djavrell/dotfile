@@ -9,7 +9,7 @@ alias groot='cd $(git rev-parse --show-toplevel)'
 
 alias gd='git diff'
 
-alias sync='ggpull && gfo --prune && git fetch --tags'
+alias sync='ggpull && gfo --prune && git fetch --tags --force'
 alias brute='ggpush --force-with-lease'
 
 alias gw='git worktree'
