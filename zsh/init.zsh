@@ -39,27 +39,11 @@ function export_env() {
   export GPG_TTY=$(tty)
 
   ## SSH
-  export SSH_KEY_PATH="~/.ssh/rsa_id"
+  export SSH_KEY_PATH="$W_HOME/.ssh/id_rsa"
 
   ## FNM Node version manager
   export FNM_DIR="$XDG_DATA_HOME/fnm"
   export FNM_LOGLEVEL=quiet
-
-  ## SCALA
-  # export SCALA_HOME="/usr/local/share/scala-2.12.6"
-  # path=( "$SCALA_HOME/bin" $path)
-  path=( "/Users/kpr/Library/Application Support/Coursier/bin" $path )
-
-  ## Go
-  export GOPATH="$HOME/go"
-  path=( "$GOPATH/bin" $path )
-
-  ## PostgresSQL
-  path=( "/opt/homebrew/opt/postgresql@12/bin" $path )
-
-  ## Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-  path=( "$HOME/.rvm/bin" $path )
-  load "$HOME/.rvm/scripts/rvm"
 }
 
 function export_alias() {
