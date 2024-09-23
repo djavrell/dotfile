@@ -7,8 +7,6 @@ return {
     'mfussenegger/nvim-dap',
     config = function()
       local dap = require('dap')
-
-      local Hydra = require('hydra')
       local augroups = require('djavrell.augroups.utils')
 
       dap.adapters['pwa-node'] = {
@@ -41,37 +39,6 @@ return {
 
         vim.keymap.set("n", lhs, rhs, { silent = true, desc = desc })
       end
-
-      local hint = [[
-      _b_: break point _db_: cond
-      _c_: continue _I_: in _o_: over _O_: out _B_: back
-      ]]
-
-      --[[ Hydra({
-        name = 'Debugger',
-        hint = hint,
-        config = {
-          color = 'pink',
-          invoke_on_body = 'true',
-          hint = {
-            position = 'top'
-          }
-        },
-        mode = 'n',
-        body = '<leader>d',
-        heads = {
-          { 'b',  require('dap').toggle_breakpoint },
-          { 'B',  require("dap").step_back },
-          { 'I',  require("dap").step_into },
-          { 'o',  require("dap").step_over },
-          { 'O',  require("dap").step_out },
-          { 'c',  require('dap').continue },
-          { 'e',  require("dapui").eval },
-          { 'db', function() require('dap').set_breakpoint(vim.fn.input "[DAP] Condition > ") end },
-          { 'dl', function() require('dap').set_breakpoint(nil, nil, vim.fn.input "[DAP] Log > ") end },
-          { 'E',  function() require("dapui").eval(vim.fn.input "[DAP] Expression > ") end }
-        }
-      }) ]]
 
       map("<F1>", require("dap").step_back, "step_back")
       map("<F2>", require("dap").step_into, "step_into")
