@@ -5,7 +5,6 @@ local metals_tvp = require("metals.tvp")
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local U = require("djavrell.utils.ui")
-local Tmap = require("djavrell.telescope.mapping")
 
 local M = {}
 
@@ -47,7 +46,6 @@ local on_attach = function(client, bufnr)
   })
 
   local opts = { noremap = true, silent = true, buffer = bufnr }
-  Tmap('<leader>s', 'lsp_dynamic_workspace_symbols')
 
   buf_set_keymap('n', 'gd', '<cmd>Glance definitions<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>Glance implementations<CR>', opts)

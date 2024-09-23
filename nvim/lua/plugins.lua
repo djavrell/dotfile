@@ -131,37 +131,6 @@ return {
 
   {'OXY2DEV/markview.nvim'},
 
-  'nvimtools/hydra.nvim',
-
-  -- LSP
-  'neovim/nvim-lspconfig',
-  'onsails/lspkind-nvim',
-  'wbthomason/lsp-status.nvim',
-  'lukas-reineke/lsp-format.nvim',
-  'jose-elias-alvarez/nvim-lsp-ts-utils',
-  'ray-x/lsp_signature.nvim',
-  'artemave/workspace-diagnostics.nvim',
-
-  -- Wrapper around some LSP for particular language
-  'scalameta/nvim-metals',
-  'SidOfc/mkdx',
-  -- 'mfussenegger/nvim-jdtls',
-  {
-    'j-hui/fidget.nvim',
-    config = function()
-      require('fidget').setup {}
-    end
-  },
-
-  'hrsh7th/nvim-cmp',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-nvim-lua',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-cmdline',
-  'saadparwaiz1/cmp_luasnip',
-  'rcarriga/cmp-dap',
-
   {
     'ptdewey/yankbank-nvim',
     cmd = { 'YankBank' },
