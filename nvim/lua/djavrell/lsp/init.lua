@@ -1,6 +1,5 @@
 local lsp_signature = require('lsp_signature')
 local ts_utils_lsp = require('nvim-lsp-ts-utils')
-local metals_tvp = require("metals.tvp")
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 

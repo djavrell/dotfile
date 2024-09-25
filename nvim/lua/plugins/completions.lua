@@ -6,7 +6,6 @@ return {
       local nvim_lsp = require('lspconfig')
       local lsp_conf = require('djavrell.lsp')
 
-      -- nvim_lsp.ts_ls.setup(lsp_conf.setup())
       nvim_lsp.vtsls.setup(lsp_conf.setup({
         settings = {
           typescript = {
@@ -29,6 +28,7 @@ return {
       }))
 
       nvim_lsp.bashls.setup(lsp_conf.setup())
+      nvim_lsp.lua_ls.setup(lsp_conf.setup())
     end
   },
   'onsails/lspkind-nvim',
