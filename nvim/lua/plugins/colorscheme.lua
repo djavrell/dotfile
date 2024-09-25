@@ -16,17 +16,17 @@ return {
         ts_context = {
           dark_background = true,
         },
-        override = {
-          ['@keyword.coroutine'] = { link = 'Keyword' },
-          ['@lsp.type.interface'] = { link = 'Type' },
-          FloatBorder = {
+        on_highlight = function(highlights, palette)
+          highlights.FloatBorder = {
             fg = C.fg_sidebar,
             bg = C.bg
-          },
-          LazyNormal = {
+          }
+          highlights.LazyNormal = {
             bg = C.bg,
-          },
-        }
+          }
+          highlights['@keyword.coroutine'] = { link = 'Keyword' }
+          highlights['@lsp.type.interface'] = { link = 'Type' }
+        end
       }
     end
   },
