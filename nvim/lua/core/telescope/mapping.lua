@@ -9,7 +9,7 @@ local Tmap = function(key, f, option)
 
   TelescopeArgs[map_key] = option or {}
 
-  local rhs = string.format("<cmd>lua R('djavrell.telescope')['%s'](TelescopeArgs['%s'])<cr>", f, map_key)
+  local rhs = string.format("<cmd>lua R('core.telescope')['%s'](TelescopeArgs['%s'])<cr>", f, map_key)
 
   local opt = { silent = true, noremap = true }
   vim.keymap.set('n', key, rhs, opt)

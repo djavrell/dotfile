@@ -1,7 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-local augroups = require('djavrell.augroups.utils')
-local metals = require('djavrell.lsp.scala')
+local augroups = require('core.augroups.utils')
+local metals = require('core.lsp.scala')
 
 autocmd("TextYankPost", {
   group = augroups["yank"],

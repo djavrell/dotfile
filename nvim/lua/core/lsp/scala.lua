@@ -1,4 +1,4 @@
-local lsp_conf = require('djavrell.lsp')
+local lsp_conf = require('core.lsp')
 
 local M = {}
 

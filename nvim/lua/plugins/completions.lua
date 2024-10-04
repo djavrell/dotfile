@@ -4,8 +4,9 @@ return {
     'neovim/nvim-lspconfig',
     config = function()
       local nvim_lsp = require('lspconfig')
-      local lsp_conf = require('djavrell.lsp')
+      local lsp_conf = require('core.lsp')
 
+      -- nvim_lsp.ts_ls.setup(lsp_conf.setup())
       nvim_lsp.vtsls.setup(lsp_conf.setup({
         settings = {
           typescript = {

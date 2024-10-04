@@ -1,7 +1,7 @@
 local reloader = function()
   RELOAD "plenary"
   RELOAD "telescope"
-  RELOAD "djavrell.telescope.setup"
+  RELOAD "core.telescope.setup"
 end
 
 local M = {}

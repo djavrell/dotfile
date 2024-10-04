@@ -1,5 +1,5 @@
 vim.loader.enable()
-local ui = require("djavrell.utils.ui")
+local ui = require("core.utils.ui")
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then

@@ -3,7 +3,7 @@ local ts_utils_lsp = require('nvim-lsp-ts-utils')
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local U = require("djavrell.utils.ui")
+local U = require("core.utils.ui")
 
 local M = {}
 
@@ -26,7 +26,7 @@ local additionalSetup = setmetatable({
   metals = function(client, bufnr)
     require("metals").setup_dap()
   end,
----@diagnostic disable-next-line: unused-local
+  ---@diagnostic disable-next-line: unused-local
   eslint = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       buffer = bufnr,

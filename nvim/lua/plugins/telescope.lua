@@ -7,8 +7,8 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     config = function()
-      require('djavrell.telescope.setup')
-      require('djavrell.telescope.mapping')
+      require('core.telescope.setup')
+      require('core.telescope.mapping')
     end
   },
 }

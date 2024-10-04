@@ -1,6 +1,6 @@
 local ls = require("luasnip")
 
-local u = require('djavrell.utils.snipet')
+local u = require('core.utils.snipet')
 
 local s = ls.snippet
 local t = ls.text_node

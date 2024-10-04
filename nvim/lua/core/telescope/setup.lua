@@ -1,4 +1,4 @@
-local U = require('djavrell.utils.ui')
+local U = require('core.utils.ui')
 
 local Telescope = require('telescope')
 local actions = require('telescope.actions')
@@ -91,5 +91,4 @@ Telescope.setup {
 
 -- extension
 Telescope.load_extension('fzf')
--- Telescope.load_extension('hop')
 Telescope.load_extension('menufacture')

@@ -8,7 +8,8 @@ vim.cmd([[
   filetype plugin indent on
 ]])
 
-require('djavrell.globals')
-require('djavrell.lazy_init')
-require('djavrell.augroups')
-require('djavrell.commands')
+require('core.globals')
+require('core.lazy_init')
+-- require('core.options')
+require('core.augroups')
+require('core.commands')

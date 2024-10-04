@@ -7,7 +7,7 @@ return {
     'mfussenegger/nvim-dap',
     config = function()
       local dap = require('dap')
-      local augroups = require('djavrell.augroups.utils')
+      local augroups = require('core.augroups.utils')
 
       dap.adapters['pwa-node'] = {
         type = "server",

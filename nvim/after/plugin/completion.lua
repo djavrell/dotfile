@@ -1,10 +1,8 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 
-local augroups = require('djavrell.augroups.utils')
-local lsp_conf = require('djavrell.lsp')
+local U = require("core.utils.ui")
 
-local U = require("djavrell.utils.ui")
 
 cmp.setup({
   snippet = {

@@ -39,7 +39,7 @@ return {
       end
     end)
 
-    for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('lua/djavrell/snippets/ft/**/*.lua', true)) do
+    for _, ft_path in ipairs(vim.api.nvim_get_runtime_file('lua/core/snippets/ft/**/*.lua', true)) do
       loadfile(ft_path)()
     end
   end
