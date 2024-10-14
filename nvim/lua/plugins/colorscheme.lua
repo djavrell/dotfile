@@ -5,6 +5,7 @@ return {
       local C = require 'nordic.colors'
       return {
         bold_keywords = true,
+        italic_comments = true,
         reduced_blue = true,
         cursorline = {
           theme = 'light',
@@ -16,6 +17,7 @@ return {
         ts_context = {
           dark_background = true,
         },
+        ---@diagnostic disable-next-line: unused-local
         on_highlight = function(highlights, palette)
           highlights.FloatBorder = {
             fg = C.fg_sidebar,
