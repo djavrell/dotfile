@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 return {
   'nvim-lua/popup.nvim',
   'nvim-lua/plenary.nvim',
@@ -128,8 +129,6 @@ return {
       require("coerce").setup {}
     end,
   },
-
-  {'OXY2DEV/markview.nvim'},
 
   {
     'ptdewey/yankbank-nvim',
