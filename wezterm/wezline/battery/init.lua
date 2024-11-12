@@ -4,7 +4,7 @@ local log = wez.log_info
 local B = {}
 
 ---@type wezline.battery.BatteryConfig
-local config = require("wezline").getConfig().battery
+local config = require('wezline').getConfig().battery
 
 ---@param info wezline.battery.BatteryInfo
 ---@return string
@@ -64,7 +64,6 @@ function B.section()
     log("state : ", get_battery_state(data))
     log("")
   end ]]
-
 end
 
 return B

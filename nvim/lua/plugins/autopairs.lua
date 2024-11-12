@@ -4,7 +4,7 @@ return {
     local nvim_autopairs = require('nvim-autopairs')
 
     nvim_autopairs.setup({
-      disable_filetype = { "TelescopePrompt" , "vim" },
+      disable_filetype = { 'TelescopePrompt', 'vim' },
     })
 
     local cmp_autopairs = require('nvim-autopairs.completion.cmp')
@@ -14,6 +14,6 @@ return {
       return
     end
     -- If you want insert `(` after select function or method item
-    cmp.event:on( 'confirm_done', cmp_autopairs.on_confirm_done())
-  end
+    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+  end,
 }

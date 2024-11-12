@@ -23,38 +23,38 @@ return {
           '<C-u>',
           '<C-d>',
           'zz',
-        }
+        },
       })
-    end
+    end,
   },
 
   'vim-utils/vim-troll-stopper',
   {
     'ntpeters/vim-better-whitespace',
     config = function()
-      vim.cmd[[
+      vim.cmd([[
         let g:better_whitespace_filetypes_blacklist=['<filetype1>', '<filetype2>', '<etc>', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'dashboard']
         let g:better_whitespace_operator=''
 
         nmap <silent> <C-Space> :StripWhitespace<CR>
-      ]]
-    end
+      ]])
+    end,
   },
   {
     'm4xshen/smartcolumn.nvim',
     config = function()
       require('smartcolumn').setup({
         disabled_filetypes = {
-          "help",
-          "text",
-          "markdown",
-          "dbout",
-          "man",
-          "lazy"
+          'help',
+          'text',
+          'markdown',
+          'dbout',
+          'man',
+          'lazy',
         },
         limit_to_line = true,
       })
-    end
+    end,
   },
 
   -- utils
@@ -64,7 +64,7 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     config = function()
       require('treesj').setup()
-    end
+    end,
   },
   'christianrondeau/vim-base64',
   {
@@ -72,36 +72,43 @@ return {
     keys = { '<leader>u' },
     config = function()
       vim.g.nuuid_no_mappings = 1
-    end
+    end,
   },
 
   {
     'kylechui/nvim-surround',
     config = function()
-      require("nvim-surround").setup({
+      require('nvim-surround').setup({
         move_cursor = false,
         indent_lines = false,
       })
-    end
+    end,
   },
   'AndrewRadev/tagalong.vim',
+
+  {
+    'meznaric/key-analyzer.nvim',
+    config = function()
+      require('key-analyzer').setup()
+    end,
+  },
 
   {
     'rhysd/vim-fixjson',
     ft = 'json',
     config = function()
       vim.g.fixjson_fix_on_save = 0
-    end
+    end,
   },
   {
     'chrisbra/csv.vim',
     ft = 'csv',
     config = function()
-      vim.cmd[[
+      vim.cmd([[
         let g:csv_delim=';'
         let g:csv_table_leftalign=1
-      ]]
-    end
+      ]])
+    end,
   },
   {
     'jamessan/vim-gnupg',
@@ -110,23 +117,23 @@ return {
   {
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup {
-          pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-      }
-    end
+      require('Comment').setup({
+        pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      })
+    end,
   },
   'JoosepAlviste/nvim-ts-context-commentstring',
 
   {
     'folke/todo-comments.nvim',
     config = function()
-      require("todo-comments").setup {}
+      require('todo-comments').setup({})
     end,
   },
   {
     'gregorias/coerce.nvim',
     config = function()
-      require("coerce").setup {}
+      require('coerce').setup({})
     end,
   },
 
@@ -134,10 +141,10 @@ return {
     'ptdewey/yankbank-nvim',
     cmd = { 'YankBank' },
     keys = {
-      { '<leader>y', '<cmd>YankBank<cr>', { noremap = true, silent = true} }
+      { '<leader>y', '<cmd>YankBank<cr>', { noremap = true, silent = true } },
     },
     config = function()
-        require('yankbank').setup()
+      require('yankbank').setup()
     end,
   },
 
@@ -146,14 +153,14 @@ return {
     config = function()
       require('bqf').setup({
         auto_enable = true,
-        auto_resize_height = true
+        auto_resize_height = true,
       })
-    end
+    end,
   },
   {
     'junegunn/fzf',
     build = function()
       vim.fn['fzf#install']()
-    end
+    end,
   },
 }

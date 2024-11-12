@@ -10,10 +10,10 @@ return {
     { 'F', '<cmd>HopWordBC<CR>', '', mapOpt },
     { 'T', '<cmd>HopChar1CurrentLineBC<CR>', 'o', mapOpt },
 
-    { '<leader>k', '<cmd>HopLineBC<CR>', 'n', mapOpt},
-    { '<leader>j', '<cmd>HopLineAC<CR>', 'n', mapOpt}
+    { '<leader>k', '<cmd>HopLineBC<CR>', 'n', mapOpt },
+    { '<leader>j', '<cmd>HopLineAC<CR>', 'n', mapOpt },
   },
   config = function()
-    require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-  end
+    require('hop').setup({ keys = 'etovxqpdygfblzhckisuran' })
+  end,
 }

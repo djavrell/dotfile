@@ -1,4 +1,4 @@
-local T = require("utils.tables")
+local T = require('utils.tables')
 
 local S = {}
 
@@ -18,11 +18,7 @@ end
 ---@return wezline.Attr[]
 function S.wrap(nodes, sep)
   if sep ~= nil then
-    return T.merge_all(
-      {{ Text = sep }},
-      nodes,
-      {{ Text = sep }}
-    )
+    return T.merge_all({ { Text = sep } }, nodes, { { Text = sep } })
   else
     return nodes
   end
@@ -31,22 +27,15 @@ end
 ---@param nodes wezline.Attr[]
 ---@return wezline.Attr[]
 function S.wrapSpace(nodes)
-  return S.wrap(
-    nodes,
-    " "
-  )
+  return S.wrap(nodes, ' ')
 end
 
 ---@param attr wezline.Attr[]
 function S.section(attr)
----@param data wezline.Attr[]
----@return wezline.Attr[]
+  ---@param data wezline.Attr[]
+  ---@return wezline.Attr[]
   return function(data)
-    return T.merge_all(
-      attr,
-      data,
-      "ResetAttributes"
-    )
+    return T.merge_all(attr, data, 'ResetAttributes')
   end
 end
 

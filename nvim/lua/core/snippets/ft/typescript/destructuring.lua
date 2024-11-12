@@ -1,6 +1,6 @@
-local ls = require("luasnip")
-local l = require("luasnip.extras").lambda
-local pf = require("luasnip.extras.postfix").postfix
+local ls = require('luasnip')
+local l = require('luasnip.extras').lambda
+local pf = require('luasnip.extras.postfix').postfix
 
 local s = ls.snippet
 local t = ls.text_node
@@ -13,27 +13,27 @@ local desc_rec
 desc_rec = function()
   return sn(nil, {
     c(1, {
-      t(""),
+      t(''),
       sn(nil, {
-        t(", "),
+        t(', '),
         i(1),
         d(2, desc_rec, {}),
       }),
-      sn(nil, { t(", ..."), i(1) })
-    })
+      sn(nil, { t(', ...'), i(1) }),
+    }),
   })
 end
 
-ls.add_snippets("typescript", {
-  pf(".desc", {
-    l("[" .. l.POSTFIX_MATCH),
+ls.add_snippets('typescript', {
+  pf('.desc', {
+    l('[' .. l.POSTFIX_MATCH),
     d(1, desc_rec, {}),
-    t("]"),
+    t(']'),
   }),
-  s("desc", {
-    t("const ["),
+  s('desc', {
+    t('const ['),
     i(1),
     d(2, desc_rec, {}),
-    t("]")
-  })
+    t(']'),
+  }),
 })

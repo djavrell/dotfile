@@ -1,0 +1,6 @@
+# vim: ft=zsh
+function link_lua() {
+  reply=(
+    "$DOTFILE/lua/stylua.toml" "$XDG_CONFIG_HOME/stylua.toml"
+  )
+}

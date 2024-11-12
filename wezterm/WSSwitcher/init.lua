@@ -1,7 +1,7 @@
 local wezterm = require('wezterm')
 
 local G = wezterm.GLOBAL
-local namespace = "WSSwitcher"
+local namespace = 'WSSwitcher'
 
 local cb = wezterm.action_callback
 local act = wezterm.action
@@ -14,8 +14,8 @@ local M = {}
 
 ---@type WorkspaceSwitcherConfig
 local defaultConfig = {
-    title = "Switch to workspace",
-    filePath = os.getenv('HOMEPATH') .. '\\.local\\share\\.fzf-marks'
+  title = 'Switch to workspace',
+  filePath = os.getenv('HOMEPATH') .. '\\.local\\share\\.fzf-marks',
 }
 
 ---@param opt WorkspaceSwitcherOpt|nil
@@ -36,7 +36,7 @@ local function getFileSplitBy(path, sep)
     local tok = split(line, sep)
     table.insert(choices, {
       label = tok[1],
-      id = tok[2]
+      id = tok[2],
     })
   end
 
@@ -58,12 +58,12 @@ function M.switchTo()
             win:perform_action(
               act.SwitchToWorkspace({
                 name = label,
-                spawn = { cwd = id }
+                spawn = { cwd = id },
               }),
               pane
             )
           end
-        end)
+        end),
       }),
       pane
     )

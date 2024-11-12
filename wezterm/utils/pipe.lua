@@ -8,7 +8,7 @@ function M.pipe(data, ...)
   local func = { ... }
   local res = data
 
-  for i=1, #func do
+  for i = 1, #func do
     res = func[i](res)
   end
 
@@ -25,7 +25,7 @@ function M.pipeC(...)
   return function(data)
     local res = data
 
-    for i=1, #func do
+    for i = 1, #func do
       res = func[i](res)
     end
 
@@ -41,7 +41,7 @@ end
 function M.reduce(f, acc, ...)
   local data = { ... }
 
-  for i=1, #data do
+  for i = 1, #data do
     acc = f(acc, data[i])
   end
 

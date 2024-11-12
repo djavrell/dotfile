@@ -42,5 +42,5 @@ return {
         nvim_float_api = nil,
       },
     })
-  end
+  end,
 }

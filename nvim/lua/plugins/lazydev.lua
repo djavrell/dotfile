@@ -2,7 +2,7 @@ return {
   {
     'folke/lazydev.nvim',
     dependencies = {
-      'justinsgithub/wezterm-types'
+      'justinsgithub/wezterm-types',
     },
     ft = 'lua',
     opts = {

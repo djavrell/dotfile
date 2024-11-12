@@ -1,8 +1,9 @@
 local cmp = require('cmp')
 local lspkind = require('lspkind')
 
-local U = require("core.utils.ui")
+local U = require('core.utils.ui')
 
+local compare = cmp.config.compare
 
 cmp.setup({
   snippet = {
@@ -11,8 +12,8 @@ cmp.setup({
     end,
   },
   mapping = {
-    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c', 'n' }),
     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c', 'n' }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
@@ -26,7 +27,7 @@ cmp.setup({
     { name = 'path' },
   }),
   formatting = {
-    fields = { "abbr", "kind", "menu" },
+    fields = { 'abbr', 'kind', 'menu' },
     format = lspkind.cmp_format({
       maxwidth = 50,
       mode = 'symbol',
@@ -38,41 +39,41 @@ cmp.setup({
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'buffer' }
+    { name = 'buffer' },
   }),
   view = {
-    entries = { name = 'custom' }
-  }
+    entries = { name = 'custom' },
+  },
 })
 
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
     { name = 'cmdline' },
-    { name = 'path' }
+    { name = 'path' },
   }),
   view = {
-    entries = { name = 'custom' }
-  }
+    entries = { name = 'custom' },
+  },
 })
 
 cmp.setup.filetype('prompt', {
   sources = cmp.config.sources({
-    { name = 'dap' }
+    { name = 'dap' },
   }),
   view = {
-    entries = 'native'
+    entries = 'native',
   },
 })
 
-cmp.setup.filetype({'sql', 'mysql', 'plsql'}, {
+cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
   sources = {
-    { name = 'vim-dadbod-completion' }
-  }
+    { name = 'vim-dadbod-completion' },
+  },
 })
 
-cmp.setup.filetype({'zsh'}, {
+cmp.setup.filetype({ 'zsh' }, {
   sources = {
-    { name = 'zsh' }
-  }
+    { name = 'zsh' },
+  },
 })

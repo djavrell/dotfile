@@ -7,12 +7,12 @@ M.border_rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
 M.border_thin = { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
 M.none = { '', '', '', '', '', '', '', '' }
 
-
 M.kind_icons = {
   Class = '󰠱',
   Color = '󰏘',
   Constant = '󰏿',
   Constructor = '',
+  Copilot = '',
   Enum = '',
   EnumMember = '',
   Event = '',

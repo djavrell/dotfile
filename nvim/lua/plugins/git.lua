@@ -3,7 +3,7 @@ return {
   {
     'rhysd/committia.vim',
     config = function()
-      vim.cmd[[
+      vim.cmd([[
         let g:committia_edit_window_width = 120
         let g:committia_hooks = {}
         function! g:committia_hooks.edit_open(info)
@@ -23,8 +23,8 @@ return {
             imap <buffer><C-p> <Plug>(committia-scroll-diff-up-half)
             nmap <buffer> ( <Plug>(committia-scroll-diff-up-half)
         endfunction
-      ]]
-    end
+      ]])
+    end,
   },
   {
     'lewis6991/gitsigns.nvim',
@@ -33,15 +33,14 @@ return {
       gitsigns.setup()
 
       vim.api.nvim_create_user_command('Blame', 'Gitsigns blame_line', {})
-
-    end
+    end,
   },
   {
     'SuperBo/fugit2.nvim',
     opts = {
-      width = "95%",
-      max_width = "95%",
-      height = "95%",
+      width = '95%',
+      max_width = '95%',
+      height = '95%',
       external_diffview = true,
     },
     dependencies = {
@@ -50,13 +49,13 @@ return {
       'nvim-lua/plenary.nvim',
       {
         'chrisgrieser/nvim-tinygit',
-        dependencies = { 'stevearc/dressing.nvim' }
-      }
+        dependencies = { 'stevearc/dressing.nvim' },
+      },
     },
     cmd = { 'Fugit2', 'Fugit2Graph' },
     keys = {
-      { '<leader>F', mode = 'n', '<cmd>Fugit2<cr>' }
-    }
+      { '<leader>F', mode = 'n', '<cmd>Fugit2<cr>' },
+    },
   },
   {
     'isakbm/gitgraph.nvim',
@@ -85,11 +84,11 @@ return {
     },
     keys = {
       {
-        "<leader>gl",
+        '<leader>gl',
         function()
           require('gitgraph').draw({}, { all = true, max_count = 5000 })
         end,
-        desc = "GitGraph - Draw",
+        desc = 'GitGraph - Draw',
       },
     },
   },
@@ -100,21 +99,21 @@ return {
       'nvim-telescope/telescope.nvim',
       'nvim-tree/nvim-web-devicons',
     },
-    config = function ()
-      require"octo".setup({
+    config = function()
+      require('octo').setup({
         suppress_missing_scope = {
           projects_v2 = true,
         },
         mappings = {
           review_diff = {
-            select_next_entry = { lhs = "<space>n", desc = "move to next changed file" },
-            select_prev_entry = { lhs = "<space>p", desc = "move to previous changed file" },
-            select_first_entry = { lhs = "<space>N", desc = "move to first changed file" },
-            select_last_entry = { lhs = "<space>P", desc = "move to last changed file" },
-          }
-        }
+            select_next_entry = { lhs = '<space>n', desc = 'move to next changed file' },
+            select_prev_entry = { lhs = '<space>p', desc = 'move to previous changed file' },
+            select_first_entry = { lhs = '<space>N', desc = 'move to first changed file' },
+            select_last_entry = { lhs = '<space>P', desc = 'move to last changed file' },
+          },
+        },
       })
       vim.treesitter.language.register('markdown', 'octo')
-    end
-  }
+    end,
+  },
 }

@@ -1,4 +1,4 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
 local pipe = require('utils.pipe').pipe
 
@@ -15,11 +15,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config = pipe(
-  config,
-  Conf,
-  Mappings
-)
+config = pipe(config, Conf, Mappings)
 
 WSSwitcher.config()
 wezline.config()

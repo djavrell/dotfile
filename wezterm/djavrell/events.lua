@@ -1,6 +1,6 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
-local S = require("djavrell.statusline")
+local S = require('djavrell.statusline')
 
 wezterm.on('update-status', function(win)
   win:set_left_status(wezterm.format(S.left(win)))

@@ -7,4 +7,3 @@
 ---@class WorkspaceSwitcherConfig
 ---@field filePath string location of the file that store all workspace pwd
 ---@field title string
-

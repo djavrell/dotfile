@@ -1,4 +1,4 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 
 --- @param config table
 --- @return table
@@ -8,14 +8,14 @@ return function(config)
   end
 
   config.color_scheme = 'nordic'
-  config.font = wezterm.font 'Hasklug Nerd Font'
+  config.font = wezterm.font('Hasklug Nerd Font')
   config.font_size = 10.5
 
   config.window_padding = {
     left = 0,
     right = 0,
     bottom = 0,
-    top = 0
+    top = 0,
   }
 
   config.enable_scroll_bar = false
@@ -27,14 +27,14 @@ return function(config)
 
   config.status_update_interval = 500
 
-  config.audible_bell = "Disabled"
+  config.audible_bell = 'Disabled'
 
   config.wsl_domains = {
     {
-      name = "arch",
-      distribution = "Arch",
-      default_cwd = "/home/kpr"
-    }
+      name = 'arch',
+      distribution = 'Arch',
+      default_cwd = '/home/kpr',
+    },
   }
 
   config.default_domain = 'arch'

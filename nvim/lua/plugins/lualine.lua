@@ -2,20 +2,21 @@ return {
   {
     'nvim-lualine/lualine.nvim',
     dependencies = {
-      'pnx/lualine-lsp-status'
+      'pnx/lualine-lsp-status',
     },
     config = function()
       require('lualine').setup({
         options = {
-          theme = 'nordic'
+          theme = 'nordic',
         },
         sections = {
           lualine_b = { 'branch', 'diagnostics' },
           lualine_x = {
-            'lsp-status', 'filetype'
-          }
-        }
+            'lsp-status',
+            'filetype',
+          },
+        },
       })
-    end
+    end,
   },
 }

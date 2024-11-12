@@ -1,4 +1,4 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 local log = wezterm.log_info
 
 ---@class TableUtils
@@ -10,10 +10,10 @@ local M = {}
 function M.merge(a, b)
   local c = {}
 
-  for _,v in ipairs(a) do
+  for _, v in ipairs(a) do
     table.insert(c, v)
   end
-  for _,v in ipairs(b) do
+  for _, v in ipairs(b) do
     table.insert(c, v)
   end
 
@@ -26,10 +26,10 @@ function M.merge_all(...)
   local result = {}
   local tables = { ... }
 
-  for i=1, #tables do
-    if type(tables[i]) == "function" then
+  for i = 1, #tables do
+    if type(tables[i]) == 'function' then
       result = M.merge(result, tables[i]())
-    elseif type(tables[i]) == "string" then
+    elseif type(tables[i]) == 'string' then
       table.insert(result, tables[i])
     else
       local t = tables[i]
@@ -49,7 +49,7 @@ end
 function M.tbl_extend(a, b)
   local result = {}
 
-  for k,v in pairs(a) do
+  for k, v in pairs(a) do
     if type(v) == 'table' then
       if (type(b[k]) or false) == 'table' then
         result[k] = M.tbl_extend(a[k], b[k])
@@ -84,18 +84,18 @@ function M.clone(orig, copies)
   copies = copies or {}
   local copy
   if type(orig) == 'table' then
-      if copies[orig] then
-          copy = copies[orig]
-      else
-          copy = {}
-          copies[orig] = copy
-          for orig_key, orig_value in next, orig, nil do
-              copy[M.clone(orig_key, copies)] = M.clone(orig_value, copies)
-          end
-          setmetatable(copy, M.clone(getmetatable(orig), copies))
+    if copies[orig] then
+      copy = copies[orig]
+    else
+      copy = {}
+      copies[orig] = copy
+      for orig_key, orig_value in next, orig, nil do
+        copy[M.clone(orig_key, copies)] = M.clone(orig_value, copies)
       end
+      setmetatable(copy, M.clone(getmetatable(orig), copies))
+    end
   else -- number, string, boolean, etc
-      copy = orig
+    copy = orig
   end
   return copy
 end
@@ -111,7 +111,7 @@ function M.setDefault(t, d)
   return setmetatable(t2, {
     __index = function(_, _)
       return d
-    end
+    end,
   })
 end
 

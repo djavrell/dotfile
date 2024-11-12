@@ -1,4 +1,4 @@
-local ok, plenary_reload = pcall(require, "plenary.reload")
+local ok, plenary_reload = pcall(require, 'plenary.reload')
 local reloader
 
 if not ok then

@@ -5,13 +5,13 @@ return {
   },
   keys = {
     {
-      "<leader>xx",
-      "<cmd>Trouble diagnostics toggle<cr>",
-      desc = "Diagnostics (Trouble)",
+      '<leader>xx',
+      '<cmd>Trouble diagnostics toggle<cr>',
+      desc = 'Diagnostics (Trouble)',
     },
   },
   config = function()
-    require("trouble").setup {
+    require('trouble').setup({
       -- mode = "workspace_diagnostics",
       -- height = 20,
       -- auto_preview = false,
@@ -22,12 +22,12 @@ return {
           focus = true,
           preview = {
             type = 'split',
-            relative = "win",
-            position = "right",
+            relative = 'win',
+            position = 'right',
             size = 0.6,
-          }
-        }
-      }
-    }
-  end
+          },
+        },
+      },
+    })
+  end,
 }

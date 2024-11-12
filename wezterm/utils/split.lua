@@ -5,8 +5,8 @@ local M = {}
 ---@return string[]
 M.split = function(str, sep)
   local result = {}
-  for tok in str.gmatch(str, ("([^%s]+)"):format(sep)) do
-    local trimed = tok:gsub("%s", "")
+  for tok in str.gmatch(str, ('([^%s]+)'):format(sep)) do
+    local trimed = tok:gsub('%s', '')
     table.insert(result, trimed)
   end
 

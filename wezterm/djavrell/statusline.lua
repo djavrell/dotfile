@@ -1,9 +1,9 @@
-local wezterm = require 'wezterm'
+local wezterm = require('wezterm')
 local M = {}
 
-local C = require("djavrell.colors")
-local T = require("utils.tables")
-local P = require("utils.pipe")
+local C = require('djavrell.colors')
+local P = require('utils.pipe')
+local T = require('utils.tables')
 
 ---@type Wezline
 local line = require('wezline')
@@ -12,8 +12,8 @@ local config = line.getConfig()
 local ws_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_apps)
 local kt_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_table_key)
 
-local S = require("wezline.nodes")
-local A = require("wezline.attrs")
+local A = require('wezline.attrs')
+local S = require('wezline.nodes')
 -- local B = require("wezline.battery")
 
 local ob = P.pipeC(
@@ -66,19 +66,14 @@ end
 function M.right(win)
   local key_table = win:active_key_table()
 
-  return T.merge(
-    S.if_def(key_table, KeyTableSection),
-    time({{ Text = wezterm.time.now():format("%H:%M %F") }})
-  )
+  return T.merge(S.if_def(key_table, KeyTableSection), time({ { Text = wezterm.time.now():format('%H:%M %F') } }))
 end
 
 function M.left(win)
   local key_table = win:active_key_table()
   -- B.section()
 
-  return selectSection(key_table)(
-    workspaceIcone(key_table, win:active_workspace())
-  )
+  return selectSection(key_table)(workspaceIcone(key_table, win:active_workspace()))
 end
 
 return M

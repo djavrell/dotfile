@@ -11,26 +11,34 @@ return {
         settings = {
           typescript = {
             inlayHints = {
-              parameterNames = { enabled = "all" },
+              parameterNames = { enabled = 'all' },
               parameterTypes = { enabled = true },
               variableTypes = { enabled = true },
               propertyDeclarationTypes = { enabled = true },
               functionLikeReturnTypes = { enabled = true },
               enumMemberValues = { enabled = true },
-            }
+            },
           },
-        }
+        },
       }))
 
       nvim_lsp.eslint.setup(lsp_conf.setup({
         settings = {
-          run = "onSave"
-        }
+          run = 'onSave',
+        },
       }))
 
       nvim_lsp.bashls.setup(lsp_conf.setup())
-      nvim_lsp.lua_ls.setup(lsp_conf.setup())
-    end
+      nvim_lsp.lua_ls.setup(lsp_conf.setup({
+        settings = {
+          Lua = {
+            format = {
+              enable = false,
+            },
+          },
+        },
+      }))
+    end,
   },
   'onsails/lspkind-nvim',
   'wbthomason/lsp-status.nvim',
@@ -55,7 +63,7 @@ return {
   {
     'j-hui/fidget.nvim',
     config = function()
-      require('fidget').setup {}
-    end
+      require('fidget').setup({})
+    end,
   },
 }

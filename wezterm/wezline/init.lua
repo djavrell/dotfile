@@ -11,7 +11,7 @@ local M = {}
 ---@type StatuslineConfig
 local defaultConfig = {
   key_table_icone = {
-    copy_mode = NF.md_content_copy
+    copy_mode = NF.md_content_copy,
   },
   battery = {
     icons = {
@@ -26,18 +26,18 @@ local defaultConfig = {
         NF.md_battery_70,
         NF.md_battery_80,
         NF.md_battery_90,
-        NF.md_battery
+        NF.md_battery,
       },
       state = {
         Full = NF.md_battery,
         Charging = NF.md_lightning_bolt,
         Discharging = NF.md_lightning_bolt_outline,
-      }
+      },
     },
     colors = {
-      warning = "nope"
-    }
-  }
+      warning = 'nope',
+    },
+  },
 }
 
 ---@param opt StatuslineOpt|nil

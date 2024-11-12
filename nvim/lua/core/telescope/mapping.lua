@@ -1,4 +1,4 @@
-if not pcall(require, "telescope") then
+if not pcall(require, 'telescope') then
   return
 end
 
