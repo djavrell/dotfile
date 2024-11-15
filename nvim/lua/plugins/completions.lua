@@ -7,7 +7,7 @@ return {
       local lsp_conf = require('core.lsp')
 
       -- nvim_lsp.ts_ls.setup(lsp_conf.setup())
-      nvim_lsp.vtsls.setup(lsp_conf.setup({
+      --[[ nvim_lsp.vtsls.setup(lsp_conf.setup({
         settings = {
           typescript = {
             inlayHints = {
@@ -20,7 +20,8 @@ return {
             },
           },
         },
-      }))
+      })) ]]
+      require('typescript-tools').setup(lsp_conf.setup())
 
       nvim_lsp.eslint.setup(lsp_conf.setup({
         settings = {
