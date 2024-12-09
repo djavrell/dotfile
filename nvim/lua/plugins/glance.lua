@@ -1,8 +1,11 @@
 return {
   'DNLHC/glance.nvim',
   config = function()
+    vim.keymap.set('n', '<leader>gr', '<cmd>Glance resume<CR>', { silent = true, noremap = true })
+
     require('glance').setup({
       height = 40,
+      zindex = 50,
       border = {
         enable = true,
       },
