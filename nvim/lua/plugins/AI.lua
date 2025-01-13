@@ -116,6 +116,9 @@ return {
           ---@type string | fun(): any
           list_opener = 'copen',
         },
+        file_selector = {
+          provider = 'telescope',
+        },
       })
     end,
   },
