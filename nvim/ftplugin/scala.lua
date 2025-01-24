@@ -1,1 +1,1 @@
-vim.opt_global.shortmess:remove("F")
+vim.opt_global.shortmess:remove('F')
