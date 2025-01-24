@@ -21,4 +21,13 @@ return {
     end,
   },
   'kristijanhusak/vim-dadbod-completion',
+  {
+    'davesavic/dadbod-ui-yank',
+    dependencies = { 'kristijanhusak/vim-dadbod-ui' },
+    config = function()
+      require('dadbod-ui-yank').setup({
+        with_headers = true,
+      })
+    end,
+  },
 }
