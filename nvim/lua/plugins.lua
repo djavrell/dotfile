@@ -101,16 +101,6 @@ return {
     end,
   },
   {
-    'chrisbra/csv.vim',
-    ft = 'csv',
-    config = function()
-      vim.cmd([[
-        let g:csv_delim=';'
-        let g:csv_table_leftalign=1
-      ]])
-    end,
-  },
-  {
     'jamessan/vim-gnupg',
   },
 

@@ -31,4 +31,17 @@ return {
       'nvim-treesitter/nvim-treesitter',
     },
   },
+  {
+    'hat0uma/csvview.nvim',
+    config = function()
+      require('csvview').setup({
+        delimiter = {
+          default = ';',
+        },
+        view = {
+          display_mode = 'border',
+        },
+      })
+    end,
+  },
 }
