@@ -8,18 +8,13 @@ return {
     lazy = false,
     config = function()
       require('markview').setup({
-        filetypes = { 'markdown', 'Avante' },
-        injections = {
-          languages = {
-            markdown = {
-              overwrite = true,
-              query = [[
-                  (section
-                      (atx_headng) @injections.mkv.fold
-                      (#set! @fold))
-              ]],
-            },
-          },
+        preview = {
+          enable = true,
+          filetypes = { 'markdown', 'Avante' },
+          ignore_buftypes = { 'nofile' },
+        },
+        markdown = {
+          enable = true,
         },
       })
     end,
