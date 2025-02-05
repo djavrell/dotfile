@@ -33,13 +33,13 @@ return {
       require('avante_lib').load()
       require('avante').setup({
         provider = 'copilot',
-        auto_suggestions_provider = 'claude',
+        --[[ auto_suggestions_provider = 'claude',
         claude = {
           endpoint = 'https://api.anthropic.com',
           model = 'claude-3-5-sonnet-20241022',
           temperature = 0,
           max_tokens = 4096,
-        },
+        }, ]]
         behaviour = {
           auto_suggestions = false, -- Experimental stage
           auto_set_highlight_group = true,
@@ -133,6 +133,7 @@ return {
   },
   {
     'zbirenbaum/copilot-cmp',
+    after = { 'copilot.lua' },
     config = function()
       require('copilot_cmp').setup()
     end,
