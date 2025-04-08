@@ -107,7 +107,7 @@ ls.add_snippets('typescript', {
       [[
         import { z } from 'zod';
 
-        const [name] = z.object([content]);
+        const [name] = z.[content];
 
         export type [type] = z.infer<typeof [name]>;
 
