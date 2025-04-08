@@ -98,6 +98,14 @@ return {
   'hrsh7th/cmp-cmdline',
   'saadparwaiz1/cmp_luasnip',
   'rcarriga/cmp-dap',
+  {
+    'petertriho/cmp-git',
+    config = function()
+      require('cmp_git').setup({
+        filetypes = { 'octo' },
+      })
+    end,
+  },
 
   {
     'j-hui/fidget.nvim',

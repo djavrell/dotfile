@@ -26,6 +26,7 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'luasnip' },
     { name = 'path' },
+    { name = 'git' },
   }),
   formatting = {
     fields = { 'abbr', 'kind', 'menu' },
