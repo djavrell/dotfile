@@ -30,6 +30,7 @@ cmp.setup({
   }),
   formatting = {
     fields = { 'abbr', 'kind', 'menu' },
+    expandable_indicator = true,
     format = lspkind.cmp_format({
       maxwidth = 50,
       mode = 'symbol',
