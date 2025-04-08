@@ -74,11 +74,12 @@ local on_attach = function(client, bufnr)
   end, {})
 
   lsp_signature.on_attach({
-    max_height = 50,
+    max_height = 100,
     max_width = 200,
-    wrap = false,
+    wrap = true,
     timer_interval = 50,
     floating_window = false,
+    hint_enable = false,
     hint_prefix = '',
     handler_opt = {
       border = U.border_chars_outer_thin,
