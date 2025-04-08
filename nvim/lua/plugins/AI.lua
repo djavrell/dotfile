@@ -128,6 +128,7 @@ return {
       require('copilot').setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
+        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v20.19.0/installation/bin/node',
       })
     end,
   },
