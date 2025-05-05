@@ -49,34 +49,51 @@ return {
         },
       }))
 
+      --[[ vim.lsp.enable('eslint')
+      vim.lsp.config(
+        'eslint',
+        lsp_conf.setup({
+          settings = {
+            run = 'onSave',
+          },
+        })
+      ) ]]
       nvim_lsp.eslint.setup(lsp_conf.setup({
         settings = {
           run = 'onSave',
         },
       }))
 
-      nvim_lsp.bashls.setup(lsp_conf.setup())
-      nvim_lsp.lua_ls.setup(lsp_conf.setup({
-        settings = {
-          Lua = {
-            format = {
-              enable = false,
-            },
-          },
-        },
-        nvim_lsp.pylsp.setup({
+      vim.lsp.enable('bashls')
+      vim.lsp.config('bashls', lsp_conf.setup())
+
+      vim.lsp.enable('lua_ls')
+      vim.lsp.config(
+        'lua_ls',
+        lsp_conf.setup({
           settings = {
-            pylsp = {
-              plugins = {
-                pycodestyle = {
-                  ignore = { 'W391' },
-                  maxLineLength = 100,
-                },
+            Lua = {
+              format = {
+                enable = false,
               },
             },
           },
-        }),
-      }))
+        })
+      )
+
+      vim.lsp.enable('pylsp')
+      vim.lsp.config('pylsp', {
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = {
+                ignore = { 'W391' },
+                maxLineLength = 100,
+              },
+            },
+          },
+        },
+      })
     end,
   },
   'onsails/lspkind-nvim',
