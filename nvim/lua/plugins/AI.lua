@@ -33,19 +33,23 @@ return {
       require('avante_lib').load()
       require('avante').setup({
         provider = 'copilot',
-        --[[ auto_suggestions_provider = 'claude',
-        claude = {
-          endpoint = 'https://api.anthropic.com',
-          model = 'claude-3-5-sonnet-20241022',
+        mode = 'agentic',
+        copilot = {
+          model = 'claude-3.7-sonnet',
           temperature = 0,
-          max_tokens = 4096,
-        }, ]]
+          max_tokens = 8192,
+          reasoning_mode = 'medium',
+          disable_tools = { 'git_commit' },
+        },
         behaviour = {
           auto_suggestions = false, -- Experimental stage
           auto_set_highlight_group = true,
           auto_set_keymaps = true,
           auto_apply_diff_after_generation = false,
           support_paste_from_clipboard = false,
+          minimize_diff = true,
+          enable_cursor_planning_mode = true, -- Whether to enable Cursor Planning Mode. Default to false.
+          enable_claude_text_editor_tool_mode = true, -- Whether to enable Claude Text Editor Tool Mode.
         },
         mappings = {
           --- @class AvanteConflictMappings
