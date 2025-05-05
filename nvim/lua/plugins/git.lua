@@ -49,7 +49,6 @@ return {
       'nvim-lua/plenary.nvim',
       {
         'chrisgrieser/nvim-tinygit',
-        dependencies = { 'stevearc/dressing.nvim' },
       },
     },
     cmd = { 'Fugit2', 'Fugit2Graph' },
