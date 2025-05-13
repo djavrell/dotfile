@@ -7,7 +7,8 @@ return {
     config = function()
       require('mason').setup({})
       require('mason-lspconfig').setup({
-        ensure_installed = { 'lua_ls', 'ts_ls', 'vtsls', 'eslint', 'bashls' },
+        automatic_enable = false,
+        ensure_installed = { 'lua_ls', 'ts_ls', 'eslint', 'bashls' },
       })
     end,
   },
