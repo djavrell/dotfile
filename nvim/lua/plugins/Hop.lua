@@ -1,7 +1,7 @@
 local mapOpt = { silent = true, noremap = true }
 
 return {
-  'phaazon/hop.nvim',
+  'smoka7/hop.nvim',
   keys = {
     { 'f', '<cmd>HopWordAC<CR>', '', mapOpt },
     -- { 'f', '<cmd>HopChar1CurrentLineAC<CR>', 'o', mapOpt },
