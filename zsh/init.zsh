@@ -95,8 +95,6 @@ module "fzf"
 module "navi"
 module "nvim"
 module "rust"
-module "java"
-module "scala"
 
 export_alias
 export_binding
