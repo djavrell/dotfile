@@ -35,7 +35,7 @@ return {
         provider = 'copilot',
         mode = 'agentic',
         copilot = {
-          model = 'claude-3.7-sonnet',
+          model = 'claude-sonnet-4',
           temperature = 0,
           max_tokens = 8192,
           reasoning_mode = 'medium',
