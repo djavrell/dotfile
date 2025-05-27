@@ -9,6 +9,7 @@ return {
         options = {
           theme = 'nordic',
         },
+        extensions = { 'neo-tree', 'man', 'nvim-dap-ui' },
         sections = {
           lualine_b = { 'branch', 'diagnostics' },
           lualine_x = {
