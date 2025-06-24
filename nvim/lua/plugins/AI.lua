@@ -34,12 +34,15 @@ return {
       require('avante').setup({
         provider = 'copilot',
         mode = 'agentic',
-        copilot = {
-          model = 'claude-sonnet-4',
-          temperature = 0,
-          max_tokens = 8192,
-          reasoning_mode = 'medium',
-          -- disable_tools = { 'git_commit' },
+        providers = {
+          copilot = {
+            model = 'claude-sonnet-4',
+            extra_request_body = {
+              temperature = 0,
+              max_tokens = 8192,
+            },
+            reasoning_mode = 'medium',
+          },
         },
         behaviour = {
           auto_suggestions = false, -- Experimental stage
