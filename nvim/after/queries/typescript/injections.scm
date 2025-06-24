@@ -26,7 +26,7 @@
     (#set! injection.language "sql")
     (#set! injection.include-children)
   )
-  (#match? @id "sql")
+  (#any-of? @id "sql" "Sql")
   (#any-of? @props "fragment")
 )
 
