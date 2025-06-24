@@ -12,6 +12,12 @@ local function buf_set_keymap(...)
 end
 
 local additionalSetup = setmetatable({
+  ['typescipt-tools'] = function(client, bufnr)
+    ts_utils_lsp.setup({})
+    ts_utils_lsp.setup_client(client)
+
+    require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
+  end,
   ts_ls = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
