@@ -74,18 +74,21 @@ return {
       )
       vim.lsp.enable('lua_ls')
 
-      vim.lsp.config('pylsp', {
-        settings = {
-          pylsp = {
-            plugins = {
-              pycodestyle = {
-                ignore = { 'W391' },
-                maxLineLength = 100,
+      vim.lsp.config(
+        'pylsp',
+        lsp_conf.setup({
+          settings = {
+            pylsp = {
+              plugins = {
+                pycodestyle = {
+                  ignore = { 'W391' },
+                  maxLineLength = 100,
+                },
               },
             },
           },
-        },
-      })
+        })
+      )
       vim.lsp.enable('pylsp')
     end,
   },
