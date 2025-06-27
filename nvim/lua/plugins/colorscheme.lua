@@ -28,6 +28,14 @@ return {
           }
           highlights['@keyword.coroutine'] = { link = 'Keyword' }
           highlights['@lsp.type.interface'] = { link = 'Type' }
+
+          -- nvimdev/indentmini.nvim
+          highlights.IndentLine = {
+            fg = C.grey1,
+          }
+          highlights.IndentLineCurrent = {
+            fg = C.grey5,
+          }
         end,
       }
     end,
