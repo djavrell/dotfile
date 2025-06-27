@@ -16,6 +16,7 @@ return {
         markdown = {
           enable = true,
         },
+        experimental = { check_rtp_message = false },
       })
     end,
   },
