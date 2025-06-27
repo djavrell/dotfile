@@ -13,6 +13,7 @@ return {
           'sh',
           'lua',
           'json',
+          'sql',
         },
       })
     end,
