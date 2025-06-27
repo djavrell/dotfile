@@ -1,10 +1,32 @@
 return {
-  'rcarriga/nvim-dap-ui',
+  -- 'rcarriga/nvim-dap-ui',
   'theHamsta/nvim-dap-virtual-text',
   'mxsdev/nvim-dap-vscode-js',
   'nvim-neotest/nvim-nio',
   {
     'mfussenegger/nvim-dap',
+    dependencies = {
+      {
+        'igorlfs/nvim-dap-view',
+        opts = {
+          winbar = {
+            sections = { 'watches', 'scopes', 'exceptions', 'breakpoints', 'repl' },
+            controls = {
+              enabled = true,
+            },
+          },
+          windows = {
+            position = 'left',
+            height = 0.2,
+            terminal = {
+              start_hidden = true,
+              position = 'below',
+              width = 0.3,
+            },
+          },
+        },
+      },
+    },
     config = function()
       local dap = require('dap')
       local augroups = require('core.augroups.utils')
@@ -49,7 +71,7 @@ return {
       -- TODO:
       -- disconnect vs. terminate
 
-      map('<leader>dr', require('dap').repl.open)
+      -- map('<leader>dr', require('dap').repl.open)
 
       map('<leader>db', require('dap').toggle_breakpoint)
       map('<leader>dB', function()
@@ -59,9 +81,15 @@ return {
         require('dap').set_breakpoint(nil, nil, vim.fn.input('[DAP] Log > '))
       end)
 
-      map('<leader>de', require('dapui').eval)
-      map('<leader>dE', function()
-        require('dapui').eval(vim.fn.input('[DAP] Expression > '))
+      -- map('<leader>de', require('dapui').eval)
+      -- map('<leader>dE', function()
+      --   require('dapui').eval(vim.fn.input('[DAP] Expression > '))
+      -- end)
+      map('<leader>dh', function()
+        require('dap.ui.widgets').hover()
+      end)
+      map('<leader>dv', function()
+        require('dap.ui.widgets').preview()
       end)
 
       require('nvim-dap-virtual-text').setup({
@@ -94,37 +122,19 @@ return {
         end,
       })
 
-      local dap_ui = require('dapui')
+      local dv = require('dap-view')
 
-      dap_ui.setup({
-        layouts = {
-          {
-            elements = {
-              { id = 'watches', size = 0.5 },
-              'scopes',
-              { id = 'breakpoints', size = 0.10 },
-            },
-            size = 0.25,
-            position = 'left',
-          },
-          {
-            elements = { 'repl', 'console' },
-            size = 0.15,
-            position = 'bottom',
-          },
-        },
-      })
-
-      dap.listeners.after.event_initialized['dapui_config'] = function()
-        dap_ui.open()
+      dap.listeners.before.attach['dap-view-config'] = function()
+        dv.open()
       end
-
-      dap.listeners.before.event_terminated['dapui_config'] = function()
-        dap_ui.close()
+      dap.listeners.before.launch['dap-view-config'] = function()
+        dv.open()
       end
-
-      dap.listeners.before.event_exited['dapui_config'] = function()
-        dap_ui.close()
+      dap.listeners.before.event_terminated['dap-view-config'] = function()
+        dv.close()
+      end
+      dap.listeners.before.event_exited['dap-view-config'] = function()
+        dv.close()
       end
     end,
   },
