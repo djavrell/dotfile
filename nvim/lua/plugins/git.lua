@@ -16,6 +16,13 @@ return {
           merge_tool = {
             layout = 'diff4_mixed',
             disable_diagnostics = true,
+            winbar_info = true,
+          },
+          default = {
+            winbar_info = true,
+          },
+          file_history = {
+            winbar_info = true,
           },
         },
         hooks = {
