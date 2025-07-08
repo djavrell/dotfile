@@ -27,6 +27,7 @@ cmp.setup({
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'git' },
+    { name = 'emoji' },
   }),
   formatting = {
     fields = { 'abbr', 'kind', 'menu' },

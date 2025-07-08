@@ -119,6 +119,7 @@ return {
       })
     end,
   },
+  'hrsh7th/cmp-emoji',
 
   {
     'j-hui/fidget.nvim',
