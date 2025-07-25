@@ -10,6 +10,8 @@ return {
         'igorlfs/nvim-dap-view',
         opts = {
           winbar = {
+            show = true,
+            default_section = 'watches',
             sections = { 'watches', 'scopes', 'exceptions', 'breakpoints', 'repl' },
             controls = {
               enabled = true,
