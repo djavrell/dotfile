@@ -1,0 +1,6 @@
+#vim: ft=zsh
+function link_opencode() {
+  reply=(
+    "$DOTFILE/opencode" "$XDG_CONFIG_HOME/opencode"
+  )
+}
