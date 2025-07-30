@@ -32,6 +32,15 @@ return {
     config = function()
       require('avante_lib').load()
       require('avante').setup({
+        system_prompt = function()
+          local hub = require('mcphub').get_hub_instance()
+          return hub and hub:get_active_servers_prompt() or ''
+        end,
+        custom_tools = function()
+          return {
+            require('mcphub.extensions.avante').mcp_tool(),
+          }
+        end,
         provider = 'copilot',
         mode = 'agentic',
         providers = {
@@ -43,6 +52,18 @@ return {
             },
             reasoning_mode = 'medium',
           },
+        },
+        disabled_tools = {
+          'list_files', -- Built-in file operations
+          'search_files',
+          'read_file',
+          'create_file',
+          'rename_file',
+          'delete_file',
+          'create_dir',
+          'rename_dir',
+          'delete_dir',
+          'bash', -- Built-in terminal access
         },
         behaviour = {
           auto_suggestions = false, -- Experimental stage
@@ -91,7 +112,7 @@ return {
           ---@type "right" | "left" | "top" | "bottom"
           position = 'right',
           wrap = true,
-          width = 40,
+          width = 60,
           sidebar_header = {
             enabled = true,
             align = 'center',
@@ -125,6 +146,22 @@ return {
         },
         file_selector = {
           provider = 'telescope',
+        },
+      })
+    end,
+  },
+  {
+    'ravitemer/mcphub.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    build = 'npm install -g mcp-hub@latest', -- Installs `mcp-hub` node binary globally
+    config = function()
+      require('mcphub').setup({
+        extensions = {
+          avante = {
+            make_slash_commands = true, -- make /slash commands from MCP server prompts
+          },
         },
       })
     end,
