@@ -10,6 +10,11 @@ return {
   'ryanoasis/vim-devicons',
   'kyazdani42/nvim-web-devicons', -- for file icons
   'mortepau/codicons.nvim',
+  {
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    opts = {},
+  },
 
   'hsanson/vim-openapi',
 
