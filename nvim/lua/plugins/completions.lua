@@ -100,7 +100,6 @@ return {
   'artemave/workspace-diagnostics.nvim',
 
   -- Wrapper around some LSP for particular language
-  'scalameta/nvim-metals',
   'SidOfc/mkdx',
 
   'hrsh7th/nvim-cmp',
