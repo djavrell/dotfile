@@ -13,7 +13,12 @@ return {
   {
     'catgoose/nvim-colorizer.lua',
     event = 'BufReadPre',
-    opts = {},
+    opts = {
+      user_default_options = {
+        names = false, -- disable names for colors
+        mode = 'background', -- set mode to background
+      },
+    },
   },
 
   'hsanson/vim-openapi',
