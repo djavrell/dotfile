@@ -112,7 +112,7 @@ return {
           ---@type "right" | "left" | "top" | "bottom"
           position = 'right',
           wrap = true,
-          width = 60,
+          width = 45,
           sidebar_header = {
             enabled = true,
             align = 'center',
