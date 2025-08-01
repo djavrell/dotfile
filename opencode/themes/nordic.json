@@ -35,7 +35,10 @@
     "green_dim": "#97B67C",
     "magenta_base": "#B48EAD",
     "magenta_bright": "#BE9DB8",
-    "magenta_dim": "#A97EA1"
+    "magenta_dim": "#A97EA1",
+
+    "diffAdd": "#3d4745",
+    "diffDelete": "#43343e"
   },
   "theme": {
     "primary": {
@@ -115,20 +118,20 @@
       "light": "gray4"
     },
     "diffHighlightAdded": {
-      "dark": "green_bright",
-      "light": "green_bright"
+      "dark": "green_dim",
+      "light": "green_dim"
     },
     "diffHighlightRemoved": {
-      "dark": "red_bright",
-      "light": "red_bright"
+      "dark": "red_dim",
+      "light": "red_dim"
     },
     "diffAddedBg": {
-      "dark": "gray1",
-      "light": "white2"
+      "dark": "diffAdd",
+      "light": "diffAdd"
     },
     "diffRemovedBg": {
-      "dark": "gray1",
-      "light": "white2"
+      "dark": "diffDelete",
+      "light": "diffDelete"
     },
     "diffContextBg": {
       "dark": "gray2",
