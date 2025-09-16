@@ -96,6 +96,7 @@ module "navi"
 module "nvim"
 module "rust"
 module "python"
+module "fnm"
 
 export_alias
 export_binding
