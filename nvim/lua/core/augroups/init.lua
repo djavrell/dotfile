@@ -5,7 +5,7 @@ local augroups = require('core.augroups.utils')
 autocmd('TextYankPost', {
   group = augroups['yank'],
   callback = function()
-    vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 })
+    vim.hl.on_yank({ higroup = 'IncSearch', timeout = 200 })
   end,
 })
 
