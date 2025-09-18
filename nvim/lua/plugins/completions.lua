@@ -3,7 +3,6 @@ return {
   {
     'neovim/nvim-lspconfig',
     config = function()
-      local nvim_lsp = require('lspconfig')
       local lsp_conf = require('core.lsp')
 
       require('typescript-tools').setup(lsp_conf.setup({
@@ -36,26 +35,21 @@ return {
       -- vim.lsp.config('ts_ls', lsp_conf.setup())
       -- vim.lsp.enable('ts_ls')
 
-      --[[ vim.lsp.config(
-        'eslint',
-        lsp_conf.setup({
-          settings = {
-            run = 'onSave',
-          },
-          -- on_attach = function(client, bufnr)
-          --   vim.api.nvim_create_autocmd('BufWritePre', {
-          --     buffer = bufnr,
-          --     command = 'EslintFixAll',
-          --   })
-          -- end,
-        })
-      ) ]]
-      -- vim.lsp.enable('eslint')
-      nvim_lsp.eslint.setup(lsp_conf.setup({
-        settings = {
-          run = 'onSave',
-        },
-      }))
+      local base_on_attach = vim.lsp.config.eslint.on_attach
+      vim.lsp.config('eslint', {
+        on_attach = function(client, bufnr)
+          if not base_on_attach then
+            return
+          end
+
+          base_on_attach(client, bufnr)
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = bufnr,
+            command = 'LspEslintFixAll',
+          })
+        end,
+      })
+      vim.lsp.enable('eslint')
 
       vim.lsp.config('bashls', lsp_conf.setup())
       vim.lsp.enable('bashls')
