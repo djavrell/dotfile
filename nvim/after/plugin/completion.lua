@@ -3,8 +3,6 @@ local lspkind = require('lspkind')
 
 local U = require('core.utils.ui')
 
-local compare = cmp.config.compare
-
 cmp.setup({
   snippet = {
     expand = function(args)
