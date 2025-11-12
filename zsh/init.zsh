@@ -97,6 +97,7 @@ module "nvim"
 module "rust"
 module "python"
 module "fnm"
+module "goose"
 
 export_alias
 export_binding
