@@ -1,5 +1,4 @@
 return {
-  'pmizio/typescript-tools.nvim',
   'ianks/vim-tsx',
   {
     'maxmellon/vim-jsx-pretty',

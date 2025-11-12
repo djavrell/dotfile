@@ -1,22 +1,17 @@
 return {
   -- LSP
   {
-    'neovim/nvim-lspconfig',
+    'pmizio/typescript-tools.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     config = function()
       local lsp_conf = require('core.lsp')
 
-      require('typescript-tools').setup(lsp_conf.setup({
+      require('typescript-tools').setup({
+        capabilities = lsp_conf.capabilities,
         settings = {
-          -- spawn additional tsserver instance to calculate diagnostics on it
           separate_diagnostic_server = true,
-          -- "change"|"insert_leave" determine when the client asks the server about diagnostic
           publish_diagnostic_on = 'insert_leave',
-          -- CodeLens
-          -- WARNING: Experimental feature also in VSCode, because it might hit performance of server.
-          -- possible values: ("off"|"all"|"implementations_only"|"references_only")
           code_lens = 'all',
-          -- by default code lenses are displayed on all referencable values and for some of you it can
-          -- be too much this option reduce count of them by removing member references from lenses
           disable_member_code_lens = false,
           tsserver_file_preferences = {
             includeInlayParameterNameHints = 'all',
@@ -31,7 +26,17 @@ return {
             quotePreference = 'auto',
           },
         },
-      }))
+        flags = {
+          debounce_text_changes = 150,
+        },
+      })
+    end,
+  },
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      local lsp_conf = require('core.lsp')
+
       -- vim.lsp.config('ts_ls', lsp_conf.setup())
       -- vim.lsp.enable('ts_ls')
 

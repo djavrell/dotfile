@@ -30,13 +30,6 @@ local additionalSetup = setmetatable({
 
     require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
   end,
-  ---@diagnostic disable-next-line: unused-local
-  eslint = function(client, bufnr)
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      buffer = bufnr,
-      command = 'EslintFixAll',
-    })
-  end,
 }, {
   __index = function()
     return function() end
@@ -96,6 +89,9 @@ local on_attach = function(client, bufnr)
 
   additionalSetup[client.name](client, bufnr)
 end
+
+M.on_attach = on_attach
+M.capabilities = capabilities
 
 local config = {
   on_attach = on_attach,

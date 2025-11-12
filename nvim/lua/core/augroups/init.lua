@@ -1,6 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 
 local augroups = require('core.augroups.utils')
+local lsp = require('core.lsp')
 
 autocmd('TextYankPost', {
   group = augroups['yank'],
@@ -49,4 +50,14 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   group = augroups['git'],
   pattern = { '*gitconfig*' },
   command = 'set ft=gitconfig',
+})
+
+autocmd('LspAttach', {
+  group = augroups['lsp_attach'],
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    local bufnr = args.buf
+
+    lsp.on_attach(client, bufnr)
+  end,
 })
