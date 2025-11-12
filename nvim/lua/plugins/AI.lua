@@ -45,7 +45,8 @@ return {
         mode = 'agentic',
         providers = {
           copilot = {
-            model = 'claude-sonnet-4',
+            model = 'gpt-5',
+            -- model = 'claude-sonnet-4.5',
             extra_request_body = {
               temperature = 0,
               max_tokens = 8192,
@@ -172,12 +173,14 @@ return {
       require('copilot').setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
-        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v20.19.0/installation/bin/node',
+        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v22.19.0/installation/bin/node',
       })
     end,
   },
   {
-    'zbirenbaum/copilot-cmp',
+    -- 'zbirenbaum/copilot-cmp',
+    'jvune0/copilot-cmp',
+    branch = 'deprication_fix',
     after = { 'copilot.lua' },
     config = function()
       require('copilot_cmp').setup()
