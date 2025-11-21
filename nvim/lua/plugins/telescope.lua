@@ -112,14 +112,13 @@ return {
       -- extension
       Telescope.load_extension('fzf')
       Telescope.load_extension('menufacture')
+      Telescope.load_extension('ui-select')
 
       vim.keymap.set('n', '<leader>f', builtin.find_files)
       vim.keymap.set('n', '<leader>b', builtin.buffers)
       vim.keymap.set('n', '<leader>g', menufacture.live_grep)
       vim.keymap.set('n', '<leader>G', menufacture.grep_string)
       vim.keymap.set('n', '<space>r', builtin.resume)
-
-      -- require('core.telescope.mapping')
     end,
   },
 }
