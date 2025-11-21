@@ -8,11 +8,6 @@ local c = ls.choice_node
 local sn = ls.snippet_node
 local fmt = require('luasnip.extras.fmt').fmt
 
-local choice_result_kind = c(1, {
-  t('success'),
-  t('failure'),
-})
-
 ls.add_snippets('typescript', {
   s(
     'dol-error',
@@ -63,41 +58,6 @@ ls.add_snippets('typescript', {
       {
         delimiters = '[]',
         repeat_duplicates = true,
-      }
-    )
-  ),
-  s(
-    'ret',
-    fmt(
-      [[
-    return {
-      [kind]: [err],
-    }
-  ]],
-      {
-        kind = choice_result_kind,
-        err = i(2, 'undefined'),
-      },
-      {
-        delimiters = '[]',
-      }
-    )
-  ),
-  s(
-    'ifr',
-    fmt(
-      [[
-    if ('[kind]' in [var]) {
-      [core]
-    }
-  ]],
-      {
-        kind = choice_result_kind,
-        var = i(2),
-        core = i(3),
-      },
-      {
-        delimiters = '[]',
       }
     )
   ),
