@@ -108,6 +108,7 @@ return {
     ft = 'json',
     config = function()
       vim.g.fixjson_fix_on_save = 0
+      vim.g.fixjson_indent_size = 2
     end,
   },
   {
