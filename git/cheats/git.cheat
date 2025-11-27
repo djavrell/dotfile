@@ -7,10 +7,27 @@ $ old_base: git branch | awk '{print $NF}'
 $ new_base: git branch | awk '{print $NF}'
 
 git rebase --onto <new_base> <old_base> $(git_current_branch)
-# TODO: add one to rebase current branche onto a specific commit
 
 % git, rename, branch
 # rename the current branch
 
 git branch -m $(git_current_branch) <new_branch>
 
+% git, branch, log, current
+# log commits between current branches and select
+
+# select the branch you want as the comparison point
+$ branch: git branch | awk '{print $NF}'
+
+git lol <branch>..$(git_current_branch)
+
+% git, branch, log
+# log commits between two branches
+
+# select the branch you want as the base
+$ base: git branch | awk '{print $NF}'
+
+# select the branch you want as the top
+$ top: git branch | awk '{print $NF}'
+
+git lol <branch>..<top>
