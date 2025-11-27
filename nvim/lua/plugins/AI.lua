@@ -45,7 +45,8 @@ return {
         mode = 'agentic',
         providers = {
           copilot = {
-            model = 'gpt-5',
+            model = 'gpt-5.1',
+            -- model = 'gpt-5',
             -- model = 'claude-sonnet-4.5',
             extra_request_body = {
               temperature = 0,
