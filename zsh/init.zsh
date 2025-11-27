@@ -35,9 +35,6 @@ function export_zsh_conf() {
 }
 
 function export_env() {
-  # GPG (need for nvim plugin)
-  export GPG_TTY=$(tty)
-
 }
 
 function export_alias() {
@@ -83,6 +80,7 @@ load "$DOTFILE/local.zsh"
 load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/osc-integration.sh"
 
+module "gpg"
 module "ssh"
 module "git"
 module "starship"
