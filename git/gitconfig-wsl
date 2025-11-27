@@ -1,0 +1,5 @@
+[include]
+  path = ~/.bashrc.d/git/gitconfig
+
+[core]
+  sshCommand    = ssh.exe
