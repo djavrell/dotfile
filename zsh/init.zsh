@@ -41,9 +41,6 @@ function export_env() {
   ## SSH
   export SSH_KEY_PATH="$W_HOME/.ssh/id_rsa"
 
-  ## FNM Node version manager
-  export FNM_DIR="$XDG_DATA_HOME/fnm"
-  export FNM_LOGLEVEL=quiet
 }
 
 function export_alias() {
