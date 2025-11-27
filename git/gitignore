@@ -9,36 +9,12 @@ work.sh
 .metals/
 .bloop/
 
-## metals
-project/metals.sbt
-project/project/metals.sbt
-project/project/project/metals.sbt
-*.worksheet.sc
-
-## Haskell
-.stack-*
-
-## direnv
-.envrc
-
-## node
-.nvmrc
-
 ## global
 *.tmp
 *.log
 *~
 log/
 tmp/
-
-## os X
-.DS_Store
-
-## vim
-.tern-project
-
-## slack
-slack-term.json
 
 ## Tags
 .tags
