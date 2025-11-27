@@ -1,17 +1,12 @@
-tmux/resurrect
-tmux/plugins
-
+# nvim
 nvim/lazy-lock.json
 nvim/lua/.luarc.json
+wip_*.lua
 
-pgcli/.config/pgcli/log
-pgcli/.config/pgcli/history
-
+# config
 **/*private*
 **/*work*
 local.zsh
 local.d/
 
 **/*.zwc
-
-Brewfile.lock.json
