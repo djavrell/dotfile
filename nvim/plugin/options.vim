@@ -57,8 +57,8 @@ set lazyredraw " Do not redraw screen in the middle of a macro. Makes them compl
 
 " Folding {{{
 syntax enable
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 " set foldmethod=syntax
 set foldlevel=1
 " }}}

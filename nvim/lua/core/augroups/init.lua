@@ -41,12 +41,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 autocmd({ 'BufRead', 'BufNewFile' }, {
-  group = augroups['zsh'],
-  pattern = { '*.zsh' },
-  command = 'set ft=sh',
-})
-
-autocmd({ 'BufRead', 'BufNewFile' }, {
   group = augroups['git'],
   pattern = { '*gitconfig*' },
   command = 'set ft=gitconfig',
@@ -59,5 +53,35 @@ autocmd('LspAttach', {
     local bufnr = args.buf
 
     lsp.on_attach(client, bufnr)
+  end,
+})
+
+autocmd('FileType', {
+  group = augroups['treesitter'],
+  pattern = {
+    'help',
+    'javascript',
+    'typescript',
+    'typescript.tsx',
+    'tsx',
+    'sh',
+    'zsh',
+    'lua',
+    'json',
+    'sql',
+    'python',
+    'scheme',
+    'markdown',
+    'markdown_inline',
+    'scss',
+    'css',
+  },
+  callback = function()
+    vim.treesitter.start()
+
+    vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    -- experimental
+    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
   end,
 })
