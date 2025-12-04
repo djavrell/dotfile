@@ -53,13 +53,13 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '<leader>E', function()
+  buf_set_keymap('n', '<space>i', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '<space>E', function()
     vim.diagnostic.jump({
       count = -1,
     })
   end, opts)
-  buf_set_keymap('n', '<leader>e', function()
+  buf_set_keymap('n', '<space>e', function()
     vim.diagnostic.jump({
       count = 1,
     })
