@@ -90,7 +90,7 @@ return {
       map('<leader>dh', function()
         require('dap.ui.widgets').hover()
       end)
-      map('<leader>dv', function()
+      map('<leader>dp', function()
         require('dap.ui.widgets').preview()
       end)
 
