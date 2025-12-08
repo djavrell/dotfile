@@ -45,9 +45,11 @@ return {
         mode = 'agentic',
         providers = {
           copilot = {
+            -- model = 'gemini-3-pro-preview',
             model = 'gpt-5.1',
             -- model = 'gpt-5',
             -- model = 'claude-sonnet-4.5',
+            -- model = 'claude-opus-4.5',
             extra_request_body = {
               temperature = 0,
               max_tokens = 8192,
