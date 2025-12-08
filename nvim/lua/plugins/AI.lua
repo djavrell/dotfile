@@ -1,5 +1,15 @@
 return {
   {
+    'zbirenbaum/copilot.lua',
+    config = function()
+      require('copilot').setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v22.19.0/installation/bin/node',
+      })
+    end,
+  },
+  {
     'yetone/avante.nvim',
     event = 'VeryLazy',
     lazy = false,
@@ -167,16 +177,6 @@ return {
             make_slash_commands = true, -- make /slash commands from MCP server prompts
           },
         },
-      })
-    end,
-  },
-  {
-    'zbirenbaum/copilot.lua',
-    config = function()
-      require('copilot').setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v22.19.0/installation/bin/node',
       })
     end,
   },
