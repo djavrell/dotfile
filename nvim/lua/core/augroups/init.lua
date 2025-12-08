@@ -75,6 +75,8 @@ autocmd('FileType', {
     'markdown_inline',
     'scss',
     'css',
+    'Avante',
+    'diff',
   },
   callback = function()
     vim.treesitter.start()
