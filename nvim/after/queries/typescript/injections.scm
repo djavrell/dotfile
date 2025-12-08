@@ -8,7 +8,8 @@
         ( identifier ) @id
         ( property_identifier) @props
         ))
-    (template_string) @injection.content
+    (template_string
+      (string_fragment) @injection.content)
     (#set! injection.language "sql")
     (#set! injection.include-children)
   )
@@ -22,7 +23,8 @@
       (identifier) @id
       (property_identifier) @props
     ))
-    (template_string) @injection.content
+    (template_string
+      (string_fragment) @injection.content)
     (#set! injection.language "sql")
     (#set! injection.include-children)
   )
@@ -34,7 +36,8 @@
 (
   (pair
     (property_identifier) @id
-    (template_string) @injection.content
+    (template_string
+      (string_fragment) @injection.content)
     (#set! injection.language "sql")
     (#set! injection.include-children)
   )
@@ -44,7 +47,8 @@
 (
   (variable_declarator
     (identifier) @id
-    (template_string) @injection.content
+    (template_string
+      (string_fragment) @injection.content)
     (#set! injection.language "sql")
     (#set! injection.include-children)
   )
@@ -54,7 +58,8 @@
 (
   (assignment_expression
     (identifier) @id
-    (template_string) @injection.content
+    (template_string
+      (string_fragment) @injection.content)
     (#set! injection.language "sql")
   )
   (#any-contains? @id "join" "sql")
