@@ -7,24 +7,8 @@ local U = require('core.utils.ui')
 
 local M = {}
 
-local function buf_set_keymap(...)
-  vim.keymap.set(...)
-end
-
 local additionalSetup = setmetatable({
   ['typescipt-tools'] = function(client, bufnr)
-    ts_utils_lsp.setup({})
-    ts_utils_lsp.setup_client(client)
-
-    require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-  end,
-  ts_ls = function(client, bufnr)
-    ts_utils_lsp.setup({})
-    ts_utils_lsp.setup_client(client)
-
-    require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
-  end,
-  vtsls = function(client, bufnr)
     ts_utils_lsp.setup({})
     ts_utils_lsp.setup_client(client)
 
@@ -43,28 +27,28 @@ local on_attach = function(client, bufnr)
 
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  buf_set_keymap('n', 'gd', '<cmd>Glance definitions<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>Glance implementations<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>Glance references<CR>', opts)
-  buf_set_keymap('n', 'gt', '<cmd>Glance type_definitions<CR>', opts)
+  vim.keymap.set('n', 'gd', '<cmd>Glance definitions<CR>', opts)
+  vim.keymap.set('n', 'gi', '<cmd>Glance implementations<CR>', opts)
+  vim.keymap.set('n', 'gr', '<cmd>Glance references<CR>', opts)
+  vim.keymap.set('n', 'gt', '<cmd>Glance type_definitions<CR>', opts)
 
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  vim.keymap.set('n', '<space>a', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 
-  buf_set_keymap('n', '<space>i', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '<space>E', function()
+  vim.keymap.set('n', '<space>i', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  vim.keymap.set('n', '<space>E', function()
     vim.diagnostic.jump({
       count = -1,
     })
   end, opts)
-  buf_set_keymap('n', '<space>e', function()
+  vim.keymap.set('n', '<space>e', function()
     vim.diagnostic.jump({
       count = 1,
     })
   end, opts)
-  buf_set_keymap('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
+  vim.keymap.set('n', '<space>Q', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
 
   vim.api.nvim_create_user_command('Format', vim.lsp.buf.format, {})
   vim.api.nvim_create_user_command('ResetDiagnostic', function()
