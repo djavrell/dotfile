@@ -55,35 +55,3 @@ autocmd('LspAttach', {
     lsp.on_attach(client, bufnr)
   end,
 })
-
-autocmd('FileType', {
-  group = augroups['treesitter'],
-  pattern = {
-    'help',
-    'javascript',
-    'typescript',
-    'typescript.tsx',
-    'tsx',
-    'sh',
-    'zsh',
-    'lua',
-    'json',
-    'sql',
-    'python',
-    'scheme',
-    'markdown',
-    'markdown_inline',
-    'scss',
-    'css',
-    'Avante',
-    'diff',
-  },
-  callback = function()
-    vim.treesitter.start()
-
-    vim.wo.foldmethod = 'expr'
-    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    -- experimental
-    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-  end,
-})
