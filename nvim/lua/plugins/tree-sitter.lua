@@ -3,7 +3,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroups = require('core.augroups.utils')
 
 local parser = {
-  'Avante',
   'bash',
   'comment',
   'css',
@@ -11,10 +10,7 @@ local parser = {
   'dockerfile',
   'gitattributes',
   'gitcommit',
-  'gitconfig',
-  'gitrebase',
   'hcl', -- terraform
-  'help',
   'javascript',
   'jq',
   'json',
@@ -26,15 +22,22 @@ local parser = {
   'regex',
   'scheme',
   'scss',
-  'sh',
   'sql',
   'tsx',
   'typescript',
-  'typescript.tsx',
   'vimdoc',
   'yaml',
   'zsh',
 }
+
+local ft = vim.tbl_extend('keep', parser, {
+  'Avante',
+  'gitconfig',
+  'gitrebase',
+  'help',
+  'sh',
+  'typescript.tsx',
+})
 
 ---@module "lazy"
 ---@type LazySpec
@@ -55,7 +58,7 @@ return {
       autocmd('FileType', {
         group = augroups['tree-sitter'],
         callback = function(event)
-          if not vim.tbl_contains(parser, event.match) then
+          if not vim.tbl_contains(ft, event.match) then
             return
           end
 
