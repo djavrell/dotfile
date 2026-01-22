@@ -28,11 +28,10 @@ cmp.setup({
     { name = 'emoji' },
   }),
   formatting = {
-    fields = { 'abbr', 'kind', 'menu' },
     expandable_indicator = true,
+    fields = { 'abbr', 'icon', 'kind', 'menu' },
     format = lspkind.cmp_format({
       maxwidth = 50,
-      mode = 'symbol',
       symbol_map = U.kind_icons,
     }),
   },
