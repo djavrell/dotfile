@@ -9,6 +9,7 @@ return {
       {
         'igorlfs/nvim-dap-view',
         opts = {
+          auto_toggle = false,
           winbar = {
             show = true,
             default_section = 'watches',
@@ -19,11 +20,10 @@ return {
           },
           windows = {
             position = 'left',
-            height = 0.2,
+            size = 0.2,
             terminal = {
-              start_hidden = true,
               position = 'below',
-              width = 0.3,
+              size = 0.3,
             },
           },
         },
