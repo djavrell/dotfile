@@ -30,7 +30,7 @@ local parser = {
   'zsh',
 }
 
-local ft = vim.tbl_extend('keep', parser, {
+local ft = vim.tbl_extend('force', parser, {
   'Avante',
   'gitconfig',
   'gitrebase',
@@ -62,15 +62,16 @@ return {
             return
           end
 
+          local winid = vim.api.nvim_get_current_win()
           local lang = vim.treesitter.language.get_lang(event.match) or event.match
           local buf = event.buf
 
           -- Start highlighting immediately (works if parser exists)
           pcall(vim.treesitter.start, buf, lang)
 
-          vim.b[buf].foldmethod = 'expr'
-          vim.b[buf].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-          vim.b[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+          vim.wo[winid][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.wo[winid][0].foldmethod = 'expr'
+          vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 
           -- Install missing parsers (async, no-op if already installed)
           ts.install({ lang })
