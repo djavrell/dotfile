@@ -17,7 +17,7 @@ set shortmess+=c
 set formatoptions-=c, formatoptions-=r, formatoptions-=o
 set signcolumn=yes
 set cmdheight=1
-set spelllang=en_us,fr_fr
+set spelllang=en_us,fr
 
 set nocompatible
 set hidden
