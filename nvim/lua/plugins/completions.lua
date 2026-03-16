@@ -5,13 +5,15 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
     config = function()
       local lsp_conf = require('core.lsp')
+      local capabilities = lsp_conf.capabilities
 
       require('typescript-tools').setup({
-        capabilities = lsp_conf.capabilities,
+        capabilities = capabilities,
         settings = {
           separate_diagnostic_server = true,
           publish_diagnostic_on = 'insert_leave',
-          code_lens = 'all',
+          expose_as_code_action = 'all',
+          code_lens = 'off',
           disable_member_code_lens = false,
           tsserver_file_preferences = {
             includeInlayParameterNameHints = 'all',
@@ -94,7 +96,6 @@ return {
   'onsails/lspkind-nvim',
   'wbthomason/lsp-status.nvim',
   'lukas-reineke/lsp-format.nvim',
-  'jose-elias-alvarez/nvim-lsp-ts-utils',
   'ray-x/lsp_signature.nvim',
   'artemave/workspace-diagnostics.nvim',
 

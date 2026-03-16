@@ -1,7 +1,8 @@
 local lsp_signature = require('lsp_signature')
-local ts_utils_lsp = require('nvim-lsp-ts-utils')
+-- local ts_utils_lsp = require('nvim-lsp-ts-utils')
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 local U = require('core.utils.ui')
 
@@ -9,8 +10,8 @@ local M = {}
 
 local additionalSetup = setmetatable({
   ['typescipt-tools'] = function(client, bufnr)
-    ts_utils_lsp.setup({})
-    ts_utils_lsp.setup_client(client)
+    -- ts_utils_lsp.setup({})
+    -- ts_utils_lsp.setup_client(client)
 
     require('workspace-diagnostics').populate_workspace_diagnostics(client, bufnr)
   end,
