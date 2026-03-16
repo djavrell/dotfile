@@ -10,16 +10,6 @@ return {
   'ryanoasis/vim-devicons',
   'kyazdani42/nvim-web-devicons', -- for file icons
   'mortepau/codicons.nvim',
-  {
-    'catgoose/nvim-colorizer.lua',
-    event = 'BufReadPre',
-    opts = {
-      user_default_options = {
-        names = false, -- disable names for colors
-        mode = 'background', -- set mode to background
-      },
-    },
-  },
 
   'hsanson/vim-openapi',
 

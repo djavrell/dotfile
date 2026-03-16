@@ -40,4 +40,21 @@ return {
       }
     end,
   },
+  {
+    'catgoose/nvim-colorizer.lua',
+    event = 'BufReadPre',
+    opts = {
+      options = {
+        parsers = {
+          css = true,
+          names = {
+            enable = false,
+          },
+        },
+        display = {
+          mode = 'background',
+        },
+      },
+    },
+  },
 }
