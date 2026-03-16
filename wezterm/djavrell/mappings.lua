@@ -31,6 +31,19 @@ return function(config)
     map.ctrl('+', actions.IncreaseFontSize),
     map.ctrl('-', actions.DecreaseFontSize),
     map.ctrl('0', actions.ResetFontSize),
+
+    map.Ctrl('j', actions.ScrollByPage(1)),
+    map.Ctrl('k', actions.ScrollByPage(-1)),
+    map.alt('g', actions.ScrollToTop),
+    map.Alt('g', actions.ScrollToBottom),
+    map.alt('UpArrow', actions.ScrollToPrompt(-1)),
+    map.alt('DownArrow', actions.ScrollToPrompt(1)),
+
+    {
+      key = 'Enter',
+      mods = 'SHIFT',
+      action = wezterm.action.SendString('\n'),
+    },
   }
 
   config.key_tables = {
@@ -50,6 +63,8 @@ return function(config)
     },
     pane = {
       { key = 'l', action = actions.ActivatePaneDirection('Next') },
+      { key = 'j', action = actions.ActivatePaneDirection('Down') },
+      { key = 'k', action = actions.ActivatePaneDirection('Up') },
       { key = 'h', action = actions.ActivatePaneDirection('Prev') },
     },
     resize_pane = {

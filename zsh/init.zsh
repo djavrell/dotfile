@@ -91,6 +91,7 @@ module "rust"
 module "python"
 module "fnm"
 module "goose"
+module "wezterm"
 
 export_alias
 export_binding

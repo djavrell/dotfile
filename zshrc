@@ -18,6 +18,7 @@ mkdir -p $XDG_RUNTIME_DIR
 export DOTFILE="$HOME/.bashrc.d"
 export SUB_MODULES="$DOTFILE/submodules"
 
+export SYSTEM="${LOCAL_SYSTEM:-WSL}" # WSL | linux set in local.zsh
 export SYSTEM_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
 export SYSTEM_HARDWARE=$(uname -m | tr '[:upper:]' '[:lower:]')
 export SYSFILE="$DOTFILE/$SYSTEM_NAME"
