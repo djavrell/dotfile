@@ -92,6 +92,8 @@ module "python"
 module "fnm"
 module "goose"
 module "wezterm"
+module "opencode"
+module "claude"
 
 export_alias
 export_binding

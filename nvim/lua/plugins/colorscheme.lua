@@ -44,6 +44,9 @@ return {
     'catgoose/nvim-colorizer.lua',
     event = 'BufReadPre',
     opts = {
+      filetype = {
+        '!snacks_terminal',
+      },
       options = {
         parsers = {
           css = true,
