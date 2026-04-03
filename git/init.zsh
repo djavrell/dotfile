@@ -32,13 +32,15 @@ alias 'gcn!'='git commit -v --no-edit --amend'
 
 alias gcl='git clone --recursive'
 
-alias gcb='git checkout -b'
-alias move='git checkout $(git branch | sd "[\+* ]" "" | fzf --reverse)'
-alias movea='git checkout $(gba | sd "remotes/origin/" "" | sd "[\+* ]" "" | sort | uniq | fzf --reverse)'
-alias movet='git checkout $(git tag | fzf --reverse)'
-alias 'g-'='git checkout -'
-alias master='git checkout $(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d"/" -f2)'
-alias develop='git checkout develop'
+alias 'g-'='git switch -'
+
+alias gs='git switch'
+alias gsc='git switch -c'
+
+alias move='git switch $(git branch | sd "[\+* ]" "" | fzf --reverse)'
+alias movea='git switch $(gba | sd "remotes/origin/" "" | sd "[\+* ]" "" | sort | uniq | fzf --reverse)'
+alias movet='git switch --detach $(git tag | fzf --reverse)'
+alias master='git switch $(git symbolic-ref --short refs/remotes/origin/HEAD | cut -d"/" -f2)'
 
 alias gcp='git cherry-pick'
 alias gcpa='git cherry-pick --abort'
@@ -66,10 +68,10 @@ alias gitAbort="git reset --hard HEAD"
 alias gitSRestore='git restore --staged $(git status --porcelain | cut -d" " -f3 | fzf --reverse --multi)'
 alias gitRestore='git restore $(git status --porcelain | cut -d" " -f3 | fzf --reverse --multi)'
 
-alias gsps='git show --pretty=short --show-signature'
-alias gs='git show'
-alias gssu='git show --summary'
-alias gsst='git show --stat'
+# alias gsps='git show --pretty=short --show-signature'
+# alias gs='git show'
+# alias gssu='git show --summary'
+# alias gsst='git show --stat'
 
 alias gst='git status --untracked-files'
 
