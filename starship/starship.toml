@@ -36,4 +36,4 @@ format = "[$branch ]($style)"
 style = "bold purple"
 
 [git_commit]
-# tag_disabled = false
+tag_disabled = false
