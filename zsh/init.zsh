@@ -67,6 +67,9 @@ function export_binding() {
   # Binding
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
+
+  bindkey '^[[1;5D' backward-word
+  bindkey '^[[1;5C' forward-word
 }
 
 export_zsh_conf
