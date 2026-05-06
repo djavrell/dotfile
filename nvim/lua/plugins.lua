@@ -154,4 +154,10 @@ return {
       vim.fn['fzf#install']()
     end,
   },
+  {
+    'aikhe/wrapped.nvim',
+    dependencies = { 'nvzone/volt' },
+    cmd = { 'NvimWrapped' },
+    opts = {},
+  },
 }
