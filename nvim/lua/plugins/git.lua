@@ -1,6 +1,6 @@
 return {
   {
-    'dlyongemallo/diffview.nvim',
+    'dlyongemallo/diffview-plus.nvim',
     config = function()
       local actions = require('diffview.config').actions
 
@@ -102,6 +102,8 @@ return {
       gitsigns.setup()
 
       vim.api.nvim_create_user_command('Blame', 'Gitsigns blame_line', {})
+      vim.api.nvim_create_user_command('NHunk', 'Gitsigns next_hunk', {})
+      vim.api.nvim_create_user_command('PHunk', 'Gitsigns prev_hunk', {})
     end,
   },
   {
