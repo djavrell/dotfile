@@ -86,3 +86,9 @@ alias gsts='git stash show --text'
 
 alias gts='git tag -s'
 alias gtv='git tag | sort -V'
+
+alias gw='git worktree'
+alias gwl='git worktree list'
+alias gwp='git worktree prune'
+alias gwr='git worktree remove'
+alias gwa='git worktree add'

@@ -31,3 +31,26 @@ $ base: git branch | awk '{print $NF}'
 $ top: git branch | awk '{print $NF}'
 
 git lol <branch>..<top>
+
+% git worktree add -b
+# create a new branch in a worktree
+
+# branch to add to worktree
+$ branch: git branch -a | sd "remotes/origin/" "" | sd "[\+* ]" "" | sort | uniq
+
+$ name: echo "$branch" | cut -d'/' -f 2 | tr '[:upper:]' '[:lower:]'
+
+# select the branch to base the new one on
+$ base: git branch | awk '{print $NF}'
+
+git worktree add -b <branch> $DOLMEN_WORKTREE/<name> <base>
+
+% git worktree add
+# create a new branch in a worktree
+
+# branch to add to worktree
+$ branch: git branch -a | sd "remotes/origin/" "" | sd "[\+* ]" "" | sort | uniq
+
+$ name: echo "$branch" | cut -d'/' -f 2 | tr '[:upper:]' '[:lower:]'
+
+git worktree add $DOLMEN_WORKTREE/<name> <branch>
