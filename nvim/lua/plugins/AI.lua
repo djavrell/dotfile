@@ -1,15 +1,5 @@
 return {
   {
-    'zbirenbaum/copilot.lua',
-    config = function()
-      require('copilot').setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-        copilot_node_command = vim.fn.expand('$FNM_DIR') .. '/node-versions/v22.19.0/installation/bin/node',
-      })
-    end,
-  },
-  {
     'ravitemer/mcphub.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
@@ -23,15 +13,6 @@ return {
           },
         },
       })
-    end,
-  },
-  {
-    -- 'zbirenbaum/copilot-cmp',
-    'jvune0/copilot-cmp',
-    branch = 'deprication_fix',
-    after = { 'copilot.lua' },
-    config = function()
-      require('copilot_cmp').setup()
     end,
   },
   {

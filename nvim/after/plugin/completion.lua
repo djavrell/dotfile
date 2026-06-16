@@ -18,7 +18,6 @@ cmp.setup({
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
   },
   sources = cmp.config.sources({
-    { name = 'copilot', group_index = 2 },
     { name = 'lazydev', group_index = 0 },
     { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
