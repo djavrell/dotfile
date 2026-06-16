@@ -61,6 +61,8 @@ function export_alias() {
   alias ping='prettyping'
 
   alias dstop='docker stop $(docker ps | rev | cut -d" " -f1 | rev | tail -n +2 | fzf-tmux -r 30% --reverse --multi)'
+
+  alias clipboard='xclip -sel c <'
 }
 
 function export_binding() {
