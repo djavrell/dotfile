@@ -181,6 +181,11 @@ return {
             select_last_entry = { lhs = '<space>P', desc = 'move to last changed file' },
           },
         },
+        ui = {
+          use_signcolumn = true, -- show "modified" marks on the sign column
+          use_statuscolumn = false, -- show "modified" marks on the status column
+          use_foldtext = false,
+        },
       })
       vim.treesitter.language.register('markdown', 'octo')
     end,
