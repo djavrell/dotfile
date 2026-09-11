@@ -21,13 +21,13 @@ return {
     config = true,
     opts = {
       terminal = {
-        split_width_percentage = 0.40,
+        split_width_percentage = 0.50,
         snacks_win_opts = {
-          width = 0.40,
+          width = 0.50,
         },
       },
       diff_opts = {
-        layout = 'horizontal',
+        layout = 'inline',
       },
     },
     keys = {
