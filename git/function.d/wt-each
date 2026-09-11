@@ -1,0 +1,9 @@
+# vim:ft=zsh
+
+wt-each() {
+  git worktree list --porcelain | awk '/^worktree /{print $2}' |
+    while read -r wt; do
+      printf '\n\033[1;34m%s\033[0m\n' "${wt##*/}"
+      git -C "$wt" "$@"
+    done
+}
