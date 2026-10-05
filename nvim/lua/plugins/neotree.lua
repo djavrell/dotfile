@@ -27,6 +27,7 @@ return {
             always_show_by_pattern = {
               'notes',
               'notes/**',
+              'notes/specs/**',
               '.env.*',
               '*.md',
               '*.mmd',
