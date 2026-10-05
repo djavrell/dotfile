@@ -83,7 +83,7 @@ load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 load "$DOTFILE/modules.zsh"
 load "$DOTFILE/local.zsh"
-load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
+load "$SYSFILE/init.zsh" # load conf for the current system (system/wsl, system/linux, ...)
 load "$DOTFILE/osc-integration.sh"
 
 # zsh is this very module, already loaded by zshrc

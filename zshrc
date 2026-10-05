@@ -24,7 +24,6 @@ if [[ -n "$WSL_DISTRO_NAME" ]]; then
 else
   export SYSTEM="${OSTYPE%%[0-9.-]*}"
 fi
-export SYSTEM_HARDWARE=$(uname -m | tr '[:upper:]' '[:lower:]')
 export SYSFILE="$DOTFILE/system/$SYSTEM"
 
 export LC_ALL=fr_FR.UTF-8

@@ -1,6 +1,0 @@
-# vim: ft=zsh
-function link_kitty() {
-  reply=(
-    "$DOTFILE/kitty" "$XDG_CONFIG_HOME/kitty"
-  )
-}

@@ -10,3 +10,6 @@ local.zsh
 local.d/
 
 **/*.zwc
+
+# zsh completion cache
+.zcompdump*

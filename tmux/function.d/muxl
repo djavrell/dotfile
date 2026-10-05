@@ -1,3 +1,0 @@
-#! /bin/sh
-
-tmuxinator start -p $(ls *.yml | fzf --reverse)
