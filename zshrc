@@ -1,7 +1,6 @@
 #! /usr/bin/env zsh
 # zmodload zsh/zprof
 
-autoload -Uz colors && colors
 autoload -Uz compinit
 
 zmodload -i zsh/complist
@@ -23,7 +22,7 @@ else
 fi
 export SYSFILE="$DOTFILE/system/$SYSTEM"
 
-export LC_ALL=fr_FR.UTF-8
+export LANG=fr_FR.UTF-8
 export EDITOR="nvim"
 export VISUAL="nvim"
 export MANPAGER="nvim +Man!"
@@ -31,8 +30,8 @@ export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
 # export TERM='tmux-256color-italic'
 
 export HISTFILE=~/.zsh_history
-export HISTSIZE=1024
-export SAVEHIST=1024
+export HISTSIZE=50000
+export SAVEHIST=50000
 
 # prevent the global variable PATH to have duplicate
 typeset -U path
@@ -47,7 +46,6 @@ autoload -Uz "$DOTFILE/function.d/load_func"
 
 # load all core function
 load_func "core"
-module "core"
 
 module "zsh"
 
@@ -65,8 +63,12 @@ module "zsh"
 # - 'N' makes the glob pattern evaluate to nothing when it doesn't match (rather than throw a globbing error)
 # - '.' matches "regular files"
 # - 'mh+24' matches files (or directories or whatever) that are older than 24 hours.
+#
+# The dump is removed first: `compinit` leaves an unchanged dump untouched, so its
+# mtime would stay old and every shell would pay the full rebuild.
 if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]] \
   || ! grep -q "version: ${ZSH_VERSION}\$" "${HOME}/.zcompdump" 2>/dev/null; then
+  rm -f "${HOME}/.zcompdump"
   compinit
 else
   compinit -C

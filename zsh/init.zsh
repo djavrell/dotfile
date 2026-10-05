@@ -3,17 +3,16 @@ load_func "zsh"
 function export_zsh_conf() {
   # ZSH Conf
   ## History
-  unsetopt hist_ignore_space      # ignore space prefixed commands
-  setopt append_history           # append
+  setopt hist_ignore_space        # don't save space prefixed commands
   setopt hist_ignore_all_dups     # no duplicate
   setopt hist_reduce_blanks       # trim blanks
   setopt hist_verify              # show before executing history commands
-  setopt inc_append_history       # add commands as they are typed, don't wait until shell exit
-  setopt share_history            # share hist between sessions
+  setopt share_history            # write as typed and share between sessions (implies the append options)
   setopt bang_hist                # !keyword
 
   ## Options setup
   setopt extended_glob            # activate complex pattern globbing
+  setopt interactive_comments     # allow `# comment` on the command line
   unsetopt rm_star_silent         # ask for confirmation for `rm *' or `rm path/*'
 
   ## Completion
@@ -25,20 +24,15 @@ function export_zsh_conf() {
   zstyle ':completion:*:*:*:*:*' menu select
   zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|=*' 'l:|=* r:|=*'
   zstyle ':completion::complete:*' use-cache 1
-  zstyle ':completion::complete:*' cache-path $ZSH_CACHE_DIR
+  zstyle ':completion::complete:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
   zstyle ':completion:*' list-colors ''
   zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
-
-  ## ZSH config
-  export COMPLETION_WAITING_DOTS="true"
-  export DISABLE_UNTRACKED_FILES_DIRTY="true"
 }
 
 function export_alias() {
   # Alias
   alias -- -='cd -'
   alias ..='cd ..'
-  alias eza='eza'
   alias ls='eza'
   alias ll='eza -lh'
   alias la='eza -la'
@@ -46,12 +40,12 @@ function export_alias() {
   alias lr='eza -lhR'
   alias lt='eza -lhT'
 
-  alias s='source ~/.zshrc'
-  alias as='alias | grep $*'
+  # exec: replace this shell with a fresh one, re-sourcing would duplicate hooks
+  alias s='exec zsh'
+  alias as='alias | grep'
 
-  alias ah='history | grep $*'
-
-  alias rml='rm -vrf $(ls | fzf-tmux -r 30% --multi --reverse)'
+  # `history` alone only lists the last 16 events
+  alias ah='history 1 | grep'
 
   alias pk="ps aux | fzf --reverse --header-lines=1 --bind 'enter:execute(kill -9 {2})'"
 
@@ -66,9 +60,16 @@ function export_binding() {
   # Binding
   bindkey '^[[A' history-substring-search-up
   bindkey '^[[B' history-substring-search-down
+  # same arrows in application mode (^[OA / ^[OB)
+  bindkey "$terminfo[kcuu1]" history-substring-search-up
+  bindkey "$terminfo[kcud1]" history-substring-search-down
 
   bindkey '^[[1;5D' backward-word
   bindkey '^[[1;5C' forward-word
+
+  # Shift-Tab: walk the completion list backwards
+  bindkey '^[[Z' reverse-menu-complete
+  bindkey -M menuselect '^[[Z' reverse-menu-complete
 }
 
 export_zsh_conf
