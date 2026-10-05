@@ -1,0 +1,154 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(code-review:code-review)",
+      "Bash(gh repo:*)",
+      "Read(//tmp/**)",
+      "Bash(gh pr:*)",
+      "Bash(git log *)",
+      "Bash(git:*)",
+      "Bash(gh search:*)",
+      "Bash(gh api *)",
+      "Bash(gh release *)",
+      "Bash(python3 -c:*)",
+      "Bash(grep *)",
+      "Bash(npx eslint *)",
+      "Bash(npx tsc *)",
+      "Bash(npx prettier *)",
+      "Bash(npm audit *)",
+      "Bash(npm outdated *)",
+      "mcp__ide__getDiagnostics",
+      "mcp__cclsp"
+    ],
+    "defaultMode": "default"
+  },
+  "model": "opus[1m]",
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "matcher": "mcp__cclsp__(find_definition|find_references|find_implementation|find_workspace_symbols|get_hover|get_diagnostics|get_incoming_calls|get_outgoing_calls|prepare_call_hierarchy)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PermissionRequest\",\"decision\":{\"behavior\":\"allow\"}}}'"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-first-guard.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-first-glob-guard.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/bash-grep-block.js"
+          },
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/bash-file-read-block.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-first-read-guard.js"
+          }
+        ]
+      },
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-pre-delegation.js"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "mcp__cclsp__find_definition|mcp__cclsp__find_references|mcp__cclsp__find_workspace_symbols|mcp__cclsp__find_implementation|mcp__cclsp__get_hover|mcp__cclsp__get_diagnostics|mcp__cclsp__get_incoming_calls|mcp__cclsp__get_outgoing_calls",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-usage-tracker.js"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "true",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ~/.claude/hooks/lsp-session-reset.js"
+          }
+        ]
+      }
+    ]
+  },
+  "enableWorkflows": false,
+  "workflowKeywordTriggerEnabled": false,
+  "statusLine": {
+    "type": "command",
+    "command": "bash /home/kpr/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "ponytail@ponytail": true
+  },
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    }
+  },
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "editorMode": "vim",
+  "verbose": true,
+  "preferredNotifChannel": "kitty",
+  "autoCompactEnabled": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "mcpServers": {
+    "cclsp": {
+      "command": "cclsp",
+      "env": {
+        "CCLSP_CONFIG_PATH": "/home/kpr/.claude/cclsp.json"
+      }
+    }
+  }
+}

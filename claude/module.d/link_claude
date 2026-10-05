@@ -1,0 +1,14 @@
+# vim: ft=zsh
+# Generic config only: credentials, history, projects/ (memory), plugins and work rules/agents stay out of the repo.
+function link_claude() {
+  local d="$HOME/.claude"
+  reply=(
+    "$DOTFILE/claude/settings.json" "$d/settings.json"
+    "$DOTFILE/claude/keybindings.json" "$d/keybindings.json"
+    "$DOTFILE/claude/statusline-command.sh" "$d/statusline-command.sh"
+    "$DOTFILE/claude/cclsp.json" "$d/cclsp.json"
+    "$DOTFILE/claude/hooks" "$d/hooks"
+    "$DOTFILE/claude/rules/lsp-first.md" "$d/rules/lsp-first.md"
+    "$DOTFILE/claude/rules/markdown-style.md" "$d/rules/markdown-style.md"
+  )
+}
