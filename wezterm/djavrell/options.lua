@@ -9,7 +9,7 @@ return function(config)
 
   config.color_scheme = 'nordic'
   config.font = wezterm.font('Hasklug Nerd Font')
-  config.font_size = 10.5
+  config.font_size = 8
 
   config.window_padding = {
     left = 0,
@@ -22,10 +22,11 @@ return function(config)
   config.use_fancy_tab_bar = false
   config.tab_bar_at_bottom = true
 
-  config.enable_kitty_keyboard = true
+  config.enable_kitty_keyboard = false
   config.disable_default_key_bindings = true
 
   config.status_update_interval = 500
+  config.scrollback_lines = 10000
 
   config.audible_bell = 'Disabled'
 

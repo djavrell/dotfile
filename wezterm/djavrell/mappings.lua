@@ -34,8 +34,13 @@ return function(config)
 
     map.Ctrl('j', actions.ScrollByPage(1)),
     map.Ctrl('k', actions.ScrollByPage(-1)),
+
+    -- map.ctrl('j', actions.ScrollByLine(1)),
+    -- map.ctrl('k', actions.ScrollByLine(-1)),
+
     map.alt('g', actions.ScrollToTop),
     map.Alt('g', actions.ScrollToBottom),
+
     map.alt('UpArrow', actions.ScrollToPrompt(-1)),
     map.alt('DownArrow', actions.ScrollToPrompt(1)),
 
@@ -54,11 +59,19 @@ return function(config)
       { key = '-', action = actions.SplitVertical({ domain = 'CurrentPaneDomain' }) },
       { key = '=', action = actions.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
       { key = 'o', action = actions.ActivateLastTab },
-      { key = '0', action = actions.ActivatePaneByIndex(0) },
+      { key = 'a', action = actions.ActivateTab(0) },
+      { key = 'z', action = actions.ActivateTab(1) },
+      { key = 'e', action = actions.ActivateTab(2) },
+      { key = 'r', action = actions.ActivateTab(3) },
+      { key = 't', action = actions.ActivateTab(4) },
+      { key = 'y', action = actions.ActivateTab(5) },
+
+      { key = 'LeftArrow', action = actions.SwitchWorkspaceRelative(-1) },
+      { key = 'RightArrow', action = actions.SwitchWorkspaceRelative(1) },
     },
     win2 = {
-      { key = 'H', action = actions.MoveTabRelative(-1) },
-      { key = 'L', action = actions.MoveTabRelative(1) },
+      { key = 'h', action = actions.MoveTabRelative(-1) },
+      { key = 'l', action = actions.MoveTabRelative(1) },
       { key = 'Escape', action = 'PopKeyTable' },
     },
     pane = {
@@ -76,6 +89,7 @@ return function(config)
     },
     debug = {
       { key = 'p', action = actions.ShowDebugOverlay },
+      { key = 'r', action = actions.ReloadConfiguration },
     },
   }
 

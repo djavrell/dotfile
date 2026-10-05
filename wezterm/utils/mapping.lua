@@ -17,6 +17,7 @@ end
 M.alt = M.mod('ALT')
 M.Alt = M.mod('ALT|SHIFT')
 M.ctrl = M.mod('CTRL')
+M.Ctrl = M.mod('CTRL|SHIFT')
 M.cm = M.mod('CTRL|SHIFT')
 M.leader = M.mod('LEADER')
 

@@ -16,7 +16,7 @@ local A = require('wezline.attrs')
 local S = require('wezline.nodes')
 -- local B = require("wezline.battery")
 
-local ob = P.pipeC(
+local orange_background = P.pipeC(
   A.Bold,
   S.wrapSpace,
   S.section({
@@ -25,7 +25,7 @@ local ob = P.pipeC(
   })
 )
 
-local gb = P.pipeC(
+local green_background = P.pipeC(
   A.Bold,
   S.wrapSpace,
   S.section({
@@ -45,15 +45,15 @@ local time = P.pipeC(
 ---@param kt? string
 ---@return wezline.Attr[]
 local function KeyTableSection(kt)
-  return ob(kt_icone[kt] .. ' ' .. kt)
+  return orange_background(kt_icone[kt] .. ' ' .. kt)
 end
 
 ---@param kt string|nil key table in use
 local function selectSection(kt)
   if kt ~= nil and kt == 'copy_mode' then
-    return gb
+    return green_background
   end
-  return ob
+  return orange_background
 end
 
 ---@param kt string|nil key table in use
