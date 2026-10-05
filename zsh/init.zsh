@@ -34,9 +34,6 @@ function export_zsh_conf() {
   export DISABLE_UNTRACKED_FILES_DIRTY="true"
 }
 
-function export_env() {
-}
-
 function export_alias() {
   # Alias
   alias -- -='cd -'
@@ -75,7 +72,6 @@ function export_binding() {
 }
 
 export_zsh_conf
-export_env
 
 load "$SUB_MODULES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"

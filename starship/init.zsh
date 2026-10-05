@@ -1,3 +1,1 @@
-load "$DOTFILE/starship/starship.zsh"
-
-# eval $(starship init zsh)
+check_eval starship init zsh

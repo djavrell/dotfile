@@ -10,11 +10,6 @@ alias gd='git diff'
 alias sync='ggpull && gfo --prune && git fetch --tags --force'
 alias brute='ggpush --force-with-lease'
 
-alias gw='git worktree'
-alias gwa='gw add'
-alias gwl='gw list'
-alias gwr='gw remove'
-
 alias gb='git branch'
 alias gba='git branch -a'
 alias gbd='git branch -d'
