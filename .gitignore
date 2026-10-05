@@ -7,7 +7,6 @@ wip_*.lua
 **/*private*
 **/*work*
 local.zsh
-local.d/
 
 **/*.zwc
 
