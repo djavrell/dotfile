@@ -2,6 +2,5 @@
 function link_zsh() {
   reply=(
     "$DOTFILE/zshrc" "$HOME/.zshrc"
-    "$DOTFILE/zprofile" "$HOME/.zprofile"
   )
 }

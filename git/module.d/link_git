@@ -1,10 +1,10 @@
 # vim: ft=zsh
 function link_git() {
   reply=()
-  if [ -d "$WSL_DISTRO_NAMe" ]; then
+  if [[ -n "$WSL_DISTRO_NAME" ]]; then
     reply+=("$DOTFILE/git/gitconfig-wsl" "$HOME/.gitconfig")
   else
-    reply+=("$DOTFILE/git/gitconfig-wsl" "$HOME/.gitconfig")
+    reply+=("$DOTFILE/git/gitconfig" "$HOME/.gitconfig")
   fi
 
   reply+=("$DOTFILE/git/gitignore" "$HOME/.gitignore")

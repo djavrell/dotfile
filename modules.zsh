@@ -15,7 +15,7 @@ typeset -U mods=(
   "wezterm"
 )
 
-autoload -Uz "$DOTFILE/function.d/load_actions"
+autoload -Uz "$DOTFILE/function.d/load_actions" "$DOTFILE/function.d/link"
 
 function modules_exec() {
   # Use a unique associative array to collect link source/destination pairs

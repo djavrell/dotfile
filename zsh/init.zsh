@@ -77,7 +77,7 @@ function export_binding() {
 export_zsh_conf
 export_env
 
-load "$SUB_MODULES/zsh-hightlighting/zsh-syntax-hightlighting.zsh"
+load "$SUB_MODULES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
@@ -86,7 +86,6 @@ load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/osc-integration.sh"
 
 module "gpg"
-module "ssh"
 module "git"
 module "starship"
 module "fzf"
