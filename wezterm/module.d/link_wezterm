@@ -1,6 +1,7 @@
 # vim: ft=zsh
 function link_wezterm() {
-  reply=(
-    "$DOTFILE/wezterm" "$XDG_CONFIG_HOME/wezterm"
-  )
+  reply=()
+  # on WSL, Windows can't follow a WSL symlink: install_wezterm writes a stub instead
+  [[ $SYSTEM == wsl ]] && return
+  reply=("$DOTFILE/wezterm" "$XDG_CONFIG_HOME/wezterm")
 }

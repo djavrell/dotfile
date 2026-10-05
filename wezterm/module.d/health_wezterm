@@ -1,0 +1,19 @@
+# vim: ft=zsh
+function health_wezterm() {
+  if [[ $SYSTEM != wsl ]]; then
+    (( $+commands[wezterm] )) || { log_error "deps manquantes: wezterm"; return 1 }
+    log_success "deps: wezterm"
+    return
+  fi
+
+  (( $+commands[wezterm.exe] )) || { log_error "deps manquantes: wezterm.exe"; return 1 }
+  log_success "deps: wezterm.exe"
+
+  source "$DOTFILE/wezterm/module.d/install_wezterm"
+  local stub=$(wezterm_stub_path)
+  if [[ "$(<$stub)" != "$(wezterm_stub)" ]] 2>/dev/null; then
+    log_error "$stub absent ou différent (dots link)"
+    return 1
+  fi
+  log_success "$stub (stub Windows)"
+}

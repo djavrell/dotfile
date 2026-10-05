@@ -15,7 +15,7 @@ local M = {}
 ---@type WorkspaceSwitcherConfig
 local defaultConfig = {
   title = 'Switch to workspace',
-  filePath = os.getenv('HOMEPATH') .. '\\.local\\share\\.fzf-marks',
+  filePath = os.getenv('USERPROFILE') .. '\\.local\\share\\.fzf-marks',
 }
 
 ---@param opt WorkspaceSwitcherOpt|nil

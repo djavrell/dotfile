@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # Module lifecycle, driven by modules.zsh (+ local.zsh):
-#   dots link              symlink every module's link_<mod> pairs (idempotent, backs up real files)
+#   dots link              symlink every module's link_<mod> pairs (idempotent, backs up real files), then run install_<mod>
 #   dots unlink            remove those symlinks, only when they point into the repo
 #   dots health [mod...]   report deps, links and the module's own health_<mod>, change nothing
 
@@ -11,6 +11,7 @@ export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
 # ponytail: module knowledge leaking here, needed by link_navi/link_git until modules can export their own vars
 export NAVI_PATH=${NAVI_PATH:-$XDG_DATA_HOME/navi}
 [[ -n "$WSL_DISTRO_NAME" ]] && SYSTEM=wsl || SYSTEM=${OSTYPE%%[0-9.-]*}
+[[ -f "$DOTFILE/system/$SYSTEM/init.zsh" ]] && source "$DOTFILE/system/$SYSTEM/init.zsh"
 
 source "$DOTFILE/utils/log.zsh"
 source "$DOTFILE/modules.zsh"
@@ -28,7 +29,7 @@ function pairs() {
 function linked() { [[ -L $1 && ${1:A} == ${2:A} ]] }
 
 function do_link() {
-  local m src dst bak
+  local m src dst bak f
   for m in $mods; do
     pairs $m
     for src dst in $reply; do
@@ -40,6 +41,10 @@ function do_link() {
       fi
       mkdir -p "${dst:h}" && ln -sn "$src" "$dst" && log_success "$dst -> $src"
     done
+
+    # side effects that aren't a symlink (e.g. a file written on the Windows side)
+    f="$DOTFILE/$m/module.d/install_$m"
+    [[ -f $f ]] && source "$f" && "install_$m"
   done
 }
 
