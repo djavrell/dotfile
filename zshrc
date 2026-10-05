@@ -18,10 +18,14 @@ mkdir -p $XDG_RUNTIME_DIR
 export DOTFILE="$HOME/.bashrc.d"
 export SUB_MODULES="$DOTFILE/submodules"
 
-export SYSTEM="${LOCAL_SYSTEM:-WSL}" # WSL | linux set in local.zsh
-export SYSTEM_NAME=$(uname -s | tr '[:upper:]' '[:lower:]')
+# wsl | linux | darwin -- a module can add a <module>/$SYSTEM.zsh next to its init.zsh
+if [[ -n "$WSL_DISTRO_NAME" ]]; then
+  export SYSTEM="wsl"
+else
+  export SYSTEM="${OSTYPE%%[0-9.-]*}"
+fi
 export SYSTEM_HARDWARE=$(uname -m | tr '[:upper:]' '[:lower:]')
-export SYSFILE="$DOTFILE/$SYSTEM_NAME"
+export SYSFILE="$DOTFILE/system/$SYSTEM"
 
 export LC_ALL=fr_FR.UTF-8
 export EDITOR="nvim"

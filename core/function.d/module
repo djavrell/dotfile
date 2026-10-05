@@ -1,4 +1,6 @@
 # vim: ft=zsh
 function module {
+  # system file first: it can export vars that init.zsh reads at load time
+  load "$DOTFILE/$1/$SYSTEM.zsh"
   load "$DOTFILE/$1/init.zsh"
 }
