@@ -8,8 +8,5 @@ function link_git() {
   fi
 
   reply+=("$DOTFILE/git/gitignore" "$HOME/.gitignore")
-
-  if [ -d "$NAVI_PATH" ]; then
-    reply+=("$DOTFILE/git/cheats/git.cheat" "$NAVI_PATH/git.cheat")
-  fi
+  reply+=("$DOTFILE/git/cheats/git.cheat" "$NAVI_PATH/git.cheat")
 }

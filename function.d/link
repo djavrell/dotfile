@@ -1,6 +1,0 @@
-# vim: ft=zsh
-function link() {
-  if [[ -f "$1" || -d "$1" ]]; then
-    ln -sn "$1" "$2"
-  fi
-}

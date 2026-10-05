@@ -81,23 +81,15 @@ load "$SUB_MODULES/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 load "$SUB_MODULES/zsh-autosuggestions/zsh-autosuggestions.zsh"
 load "$SUB_MODULES/zsh-history-substring-search/zsh-history-substring-search.zsh"
 
+load "$DOTFILE/modules.zsh"
 load "$DOTFILE/local.zsh"
 load "$SYSFILE/init.zsh" # load conf for the current system (linux/darwin/...)
 load "$DOTFILE/osc-integration.sh"
 
-module "gpg"
-module "git"
-module "starship"
-module "fzf"
-module "navi"
-module "nvim"
-module "rust"
-module "python"
-module "fnm"
-module "goose"
-module "wezterm"
-module "opencode"
-module "claude"
+# zsh is this very module, already loaded by zshrc
+for m in ${${mods:|mods_off}:#zsh}; do
+  module "$m"
+done
 
 export_alias
 export_binding

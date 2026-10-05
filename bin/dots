@@ -1,0 +1,94 @@
+#!/usr/bin/env zsh
+# Module lifecycle, driven by modules.zsh (+ local.zsh):
+#   dots link              symlink every module's link_<mod> pairs (idempotent, backs up real files)
+#   dots unlink            remove those symlinks, only when they point into the repo
+#   dots health [mod...]   report deps, links and the module's own health_<mod>, change nothing
+
+export DOTFILE=${0:A:h:h}
+# defaults from zshrc, for a bootstrap run before the shell is set up
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+export XDG_DATA_HOME=${XDG_DATA_HOME:-$HOME/.local/share}
+# ponytail: module knowledge leaking here, needed by link_navi/link_git until modules can export their own vars
+export NAVI_PATH=${NAVI_PATH:-$XDG_DATA_HOME/navi}
+[[ -n "$WSL_DISTRO_NAME" ]] && SYSTEM=wsl || SYSTEM=${OSTYPE%%[0-9.-]*}
+
+source "$DOTFILE/utils/log.zsh"
+source "$DOTFILE/modules.zsh"
+[[ -f "$DOTFILE/local.zsh" ]] && source "$DOTFILE/local.zsh"
+
+# fills $reply with the module's src/dst pairs, empty when it has no link_<mod>
+function pairs() {
+  reply=()
+  local f="$DOTFILE/$1/module.d/link_$1"
+  [[ -f $f ]] || return
+  source "$f" && "link_$1"
+}
+
+# true when $1 is a symlink resolving to $2
+function linked() { [[ -L $1 && ${1:A} == ${2:A} ]] }
+
+function do_link() {
+  local m src dst bak
+  for m in $mods; do
+    pairs $m
+    for src dst in $reply; do
+      if [[ ! -e $src ]]; then log_warn "$m: source absente $src"; continue; fi
+      if linked $dst $src; then log_skip "$dst"; continue; fi
+      if [[ -e $dst || -L $dst ]]; then
+        bak="$dst.bak-$(date +%Y%m%d%H%M%S)"
+        mv "$dst" "$bak" && log_warn "$dst sauvegardé en $bak"
+      fi
+      mkdir -p "${dst:h}" && ln -sn "$src" "$dst" && log_success "$dst -> $src"
+    done
+  done
+}
+
+function do_unlink() {
+  local m src dst
+  for m in $mods; do
+    pairs $m
+    for src dst in $reply; do
+      linked $dst $src && rm "$dst" && log_success "supprimé $dst"
+    done
+  done
+}
+
+function do_health() {
+  local m d src dst f deps missing fail=0
+  for m in ${@:-$mods}; do
+    if [[ ! -d "$DOTFILE/$m" ]]; then log_error "$m: module inconnu"; fail=1; continue; fi
+    if (( ! ${mods[(Ie)$m]} )); then log_header "$m (hors mods)"
+    elif (( ${mods_off[(Ie)$m]} )); then log_header "$m (off)"
+    else log_header "$m"; fi
+
+    f="$DOTFILE/$m/module.d/deps"
+    if [[ -f $f ]]; then
+      deps=(${${${(f)"$(<$f)"}%%\#*}// /})
+      missing=(); for d in $deps; do (( $+commands[$d] )) || missing+=($d); done
+      if (( $#missing )); then log_error "deps manquantes: $missing"; fail=1
+      else log_success "deps: $deps"; fi
+    fi
+
+    pairs $m
+    for src dst in $reply; do
+      if linked $dst $src; then log_success "$dst"
+      elif [[ ! -e $src ]]; then log_error "source absente: $src"; fail=1
+      elif [[ -L $dst ]]; then log_error "$dst pointe vers ${dst:A}"; fail=1
+      elif [[ -e $dst ]]; then log_error "$dst est un vrai fichier, pas un lien"; fail=1
+      else log_error "$dst absent (dots link)"; fail=1; fi
+    done
+
+    f="$DOTFILE/$m/module.d/health_$m"
+    if [[ -f $f ]]; then
+      source "$f" && "health_$m" || fail=1
+    fi
+  done
+  return $fail
+}
+
+case ${1:-} in
+  link)   do_link ;;
+  unlink) do_unlink ;;
+  health) shift; do_health "$@" ;;
+  *)      echo "usage: dots link | unlink | health [module...]"; exit 1 ;;
+esac

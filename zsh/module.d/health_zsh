@@ -1,0 +1,9 @@
+# vim: ft=zsh
+function health_zsh() {
+  local missing=(${(f)"$(git -C "$DOTFILE" submodule status | sed -n 's/^-[0-9a-f]* \([^ ]*\).*/\1/p')"})
+  if (( $#missing )); then
+    log_error "submodules non initialisés: $missing (git submodule update --init)"
+    return 1
+  fi
+  log_success "submodules initialisés"
+}
