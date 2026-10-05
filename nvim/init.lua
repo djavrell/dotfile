@@ -36,5 +36,5 @@ require('vim._core.ui2').enable({
 })
 
 vim.cmd([[
-    set messagesopt+=maxheight:50,timeout:4000
+    set messagesopt+=maxheight:100,timeout:4000
 ]])
