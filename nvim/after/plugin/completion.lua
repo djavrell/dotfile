@@ -69,9 +69,10 @@ cmp.setup.filetype('prompt', {
 
 cmp.setup.filetype({ 'sql', 'mysql', 'plsql' }, {
   sources = {
-    { name = 'vim-dadbod-completion' },
+    { name = 'sqmeow' },
   },
 })
+cmp.register_source('sqmeow', require('sqmeow.completion.cmp').new())
 
 cmp.setup.filetype({ 'zsh' }, {
   sources = {

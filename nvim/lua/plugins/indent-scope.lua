@@ -14,7 +14,6 @@ return {
           'lua',
           'json',
           'sql',
-          'dbout',
         },
       })
     end,

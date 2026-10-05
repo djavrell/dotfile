@@ -48,7 +48,6 @@ return {
           'help',
           'text',
           'markdown',
-          'dbout',
           'man',
           'lazy',
         },

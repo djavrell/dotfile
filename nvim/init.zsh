@@ -1,5 +1,5 @@
 alias vim='nvim'
-alias vimdb='vim +DBUIToggle'
+alias vimdb='vim +Sqmeow'
 
 alias vadd='vim +Fugit2'
 alias vdiff='vim +DiffviewOpen'
