@@ -47,8 +47,10 @@ export const parseScheme = (text: string): PaletteTheme => {
   const scalar = (key: string) => text.match(new RegExp(`^\\s*${key}\\s*=\\s*"(#[0-9A-Fa-f]{6})"`, 'm'))?.[1]
   const array = (key: 'ansi' | 'brights'): PaletteColors => {
     const body = text.match(new RegExp(`^\\s*${key}\\s*=\\s*\\[([^\\]]*)\\]`, 'm'))?.[1] ?? ''
-    const hex = [...body.matchAll(HEX)].map(m => m[1])
-    return Object.fromEntries(SLOTS.map((slot, i) => [slot, hex[i] ?? FALLBACK[key][slot]])) as PaletteColors
+    const hex = [...body.matchAll(HEX)].map(match => match[1])
+    return Object.fromEntries(
+      SLOTS.map((slot, slotIndex) => [slot, hex[slotIndex] ?? FALLBACK[key][slot]]),
+    ) as PaletteColors
   }
   const theme = { ...FALLBACK, ansi: array('ansi'), brights: array('brights') }
   for (const key of SCALARS) theme[key] = scalar(key) ?? FALLBACK[key]
@@ -68,10 +70,10 @@ export const register: Register = on => {
   let cached: Promise<PaletteTheme> | undefined
 
   // the noun's own body is the bottom of its chain: the built-in copy
-  on('engine.create', async (_, e, next) => {
+  on('engine.create', async (_, event, next) => {
     const palette: Palette = { get: async () => FALLBACK }
 
-    return { ...(await next(e)), palette }
+    return { ...(await next(event)), palette }
   })
 
   // a call on $.palette.get runs this first, with a full $ to read the scheme file
