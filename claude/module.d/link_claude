@@ -1,15 +1,15 @@
 # vim: ft=zsh
 # Generic config only: credentials, history, projects/ (memory), plugins and work rules/agents stay out of the repo.
 function link_claude() {
-  local d="$HOME/.claude"
+  local claude_dir="$HOME/.claude"
   reply=(
-    "$DOTFILE/claude/settings.json" "$d/settings.json"
-    "$DOTFILE/claude/keybindings.json" "$d/keybindings.json"
-    "$DOTFILE/claude/statusline-command.sh" "$d/statusline-command.sh"
-    "$DOTFILE/claude/cclsp.json" "$d/cclsp.json"
-    "$DOTFILE/claude/hooks" "$d/hooks"
-    "$DOTFILE/claude/rules/lsp-first.md" "$d/rules/lsp-first.md"
-    "$DOTFILE/claude/rules/markdown-style.md" "$d/rules/markdown-style.md"
-    "$DOTFILE/claude/skills/changelog" "$d/skills/changelog"
+    "$DOTFILE/claude/settings.json" "$claude_dir/settings.json"
+    "$DOTFILE/claude/keybindings.json" "$claude_dir/keybindings.json"
+    "$DOTFILE/claude/statusline-command.sh" "$claude_dir/statusline-command.sh"
+    "$DOTFILE/claude/cclsp.json" "$claude_dir/cclsp.json"
+    "$DOTFILE/claude/hooks" "$claude_dir/hooks"
+    "$DOTFILE/claude/rules/lsp-first.md" "$claude_dir/rules/lsp-first.md"
+    "$DOTFILE/claude/rules/markdown-style.md" "$claude_dir/rules/markdown-style.md"
+    "$DOTFILE/claude/skills/changelog" "$claude_dir/skills/changelog"
   )
 }

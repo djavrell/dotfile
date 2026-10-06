@@ -84,9 +84,10 @@ load "$SYSFILE/init.zsh" # load conf for the current system (system/wsl, system/
 load "$DOTFILE/osc-integration.sh"
 
 # zsh is this very module, already loaded by zshrc
-for m in ${${mods:|mods_off}:#zsh}; do
-  module "$m"
+for module_name in ${${mods:|mods_off}:#zsh}; do
+  module "$module_name"
 done
+unset module_name
 
 export_alias
 export_binding
