@@ -1,0 +1,6 @@
+{
+  "name": "palette",
+  "version": "0.1.0",
+  "description": "Shares the wezterm color scheme with other mods as $.palette",
+  "types": "./types/index.d.ts"
+}
