@@ -111,10 +111,6 @@
   },
   "enableWorkflows": false,
   "workflowKeywordTriggerEnabled": false,
-  "statusLine": {
-    "type": "command",
-    "command": "bash /home/kpr/.claude/statusline-command.sh"
-  },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": true,
