@@ -10,5 +10,6 @@ function link_claude() {
     "$DOTFILE/claude/hooks" "$d/hooks"
     "$DOTFILE/claude/rules/lsp-first.md" "$d/rules/lsp-first.md"
     "$DOTFILE/claude/rules/markdown-style.md" "$d/rules/markdown-style.md"
+    "$DOTFILE/claude/skills/changelog" "$d/skills/changelog"
   )
 }

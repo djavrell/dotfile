@@ -1,0 +1,6 @@
+{
+  "name": "session",
+  "version": "0.1.0",
+  "description": "Side pane with the session's subagents, loaded skills and changed files (+/- lines)",
+  "types": "./types/index.d.ts"
+}

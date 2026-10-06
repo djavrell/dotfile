@@ -12,3 +12,6 @@ local.zsh
 
 # zsh completion cache
 .zcompdump*
+
+# mods
+claude/mods/*/.claude-plugin/types/
