@@ -16,7 +16,7 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 | Mod       | Role                                                                                                         |
 |-----------|--------------------------------------------------------------------------------------------------------------|
 | `palette` | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
-| `agents`  | Single source of the session's agents: collects them, publishes the `agents.list` state. Draws nothing.      |
+| `agents`  | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
 | `session` | The side pane (`/session` toggles it, opens on start): Agents, Skills, Files tree, Status. Consumer only.    |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
