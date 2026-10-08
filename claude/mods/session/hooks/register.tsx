@@ -31,6 +31,7 @@ const roots = atom({ plugin: "session", key: "roots" } as const, null);
 const PANE = "session";
 const PANE_COLUMNS = 50;
 const TICK_MS = 30_000;
+const GIT_POLL_MS = 10_000;
 const DEBOUNCE_MS = 300;
 // ponytail: keeps the last 100 reads; older ones drop off the list
 const MAX_READ_FILES = 100;
@@ -136,6 +137,18 @@ async function ticker($: EngineInterface) {
   }
 }
 
+// git changes made outside Claude (a commit, a checkout in another terminal) raise no event:
+// re-read them on a timer while the pane is open
+// ponytail: polling; a file watcher if git ever gets slow on a big repo
+async function gitPoller($: EngineInterface) {
+  for (;;) {
+    await $.clock.sleep(GIT_POLL_MS);
+    if (!(await isPaneOpen($))) continue;
+    await refresh($).catch(() => {});
+    await refreshBranch($).catch(() => {});
+  }
+}
+
 // $.palette is absent for a moment when this mod draws before palette has loaded: default colors then
 async function getTheme($: EngineInterface) {
   try {
@@ -158,6 +171,7 @@ export const register: Register = (on) => {
     void refreshRoots($).catch(() => {});
     void refreshCompactAt($).catch(() => {});
     void ticker($).catch(() => {});
+    void gitPoller($).catch(() => {});
     void openPane($).catch(() => {});
 
     return next(event);
@@ -282,7 +296,12 @@ export const register: Register = (on) => {
         backgroundColor={theme?.background}
       >
         <Box flexDirection="column" flexGrow={1}>
-          {AgentsSection({ ui, color, agentList })}
+          {AgentsSection({
+            ui,
+            color,
+            agentList,
+            bodyColumns: event.props.bodyColumns,
+          })}
           <Text> </Text>
           {SkillsSection({ ui, skillList })}
           <Text> </Text>

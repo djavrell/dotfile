@@ -35,6 +35,20 @@ export const fileIcon = (fileName: string) => {
   return FILE_ICONS[extension] ?? DEFAULT_FILE_ICON;
 };
 
+// a model family by a Nerd Font glyph: the magnum opus, a sonnet's note, a haiku's leaf, a fable's book
+const MODEL_ICONS: { family: string; glyph: string; color: Role }[] = [
+  { family: "opus", glyph: "", color: "magenta" }, // nf-fa-star
+  { family: "sonnet", glyph: "", color: "blue" }, // nf-fa-music
+  { family: "haiku", glyph: "", color: "green" }, // nf-fa-leaf
+  { family: "fable", glyph: "", color: "yellow" }, // nf-fa-book
+];
+const UNKNOWN_MODEL_ICON = { glyph: "", color: "gray" } as const; // nf-fa-question
+
+// from an id (claude-haiku-4-5-...) or an alias (haiku)
+export const modelIcon = (model: string | undefined) =>
+  MODEL_ICONS.find((icon) => model?.toLowerCase().includes(icon.family)) ??
+  UNKNOWN_MODEL_ICON;
+
 // end-of-line marks telling an edited file from one only read
 export const EDITED_MARK = "●";
 export const READ_MARK = "○";
