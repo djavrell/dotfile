@@ -1,0 +1,6 @@
+{
+  "name": "agents",
+  "version": "0.1.0",
+  "description": "Single source of the session's agents: collects them and publishes them as state other mods read",
+  "types": "./types/index.d.ts"
+}
