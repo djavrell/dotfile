@@ -1,6 +1,7 @@
 import type { AgentEntry } from "agents";
 
-import { buildAgentTree, stepStrip } from "../lib/agentTree";
+import { Meter } from "../components/meter";
+import { buildAgentTree } from "../lib/agentTree";
 import { modelIcon } from "../lib/icons";
 import type { Colors, Role, Ui } from "../lib/theme";
 
@@ -30,17 +31,10 @@ export function AgentsSection({
 }) {
   return (
     <Box flexDirection="column">
-      <Text bold>Agents</Text>
-      {agentList.length === 0 && <Text dimColor>None.</Text>}
       {buildAgentTree(agentList).map(({ guide, underGuide, agent }) => {
         const agentStatus = AGENT_STATUS[agent.status] ?? UNKNOWN_STATUS;
         const model = modelIcon(agent.model);
         const counter = ` ${agent.stepsDone}/${agent.stepsStarted}`;
-        const strip = stepStrip(
-          agent.stepsDone,
-          agent.stepsStarted,
-          bodyColumns - underGuide.length - counter.length,
-        );
         return (
           <Box key={agent.id} flexDirection="column">
             <Text wrap="truncate-end">
@@ -53,10 +47,17 @@ export function AgentsSection({
             {agent.stepsStarted > 0 && (
               <Text wrap="truncate-end">
                 <Text dimColor>{underGuide}</Text>
-                <Text color={FINISHED.has(agent.status) ? color.green : color.blue}>
-                  {strip.done}
-                </Text>
-                <Text color={color.yellow}>{strip.running}</Text>
+                {/* one cell per step; the empty one left is the step running */}
+                {Meter({
+                  ui: { Box, Text },
+                  filled: agent.stepsDone,
+                  total: agent.stepsStarted,
+                  maxWidth: bodyColumns - underGuide.length - counter.length,
+                  filledColor: FINISHED.has(agent.status)
+                    ? color.green
+                    : color.blue,
+                  emptyColor: color.yellow,
+                })}
                 <Text dimColor>{counter}</Text>
               </Text>
             )}

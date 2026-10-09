@@ -1,18 +1,12 @@
 import { expect, test } from 'claude-code/testing'
 
-import { buildAgentTree, stepStrip } from '../hooks/lib/agentTree'
+import { buildAgentTree } from '../hooks/lib/agentTree'
 import { modelIcon } from '../hooks/lib/icons'
 
 test('lines under an agent carry the tree down to siblings and children', () => {
   const rows = buildAgentTree([agent('root', 1), agent('child', 2, 'root'), agent('other', 3)])
   // two columns past the agent's own guide: "│ " down to its children, or "  " for a leaf
   expect(rows.map(row => row.underGuide)).toEqual(['│  │ ', '│       ', '     '])
-})
-
-test('step strip: one cell per step, the running one last, latest kept when too long', () => {
-  expect(stepStrip(3, 4, 20)).toEqual({ done: '━━━', running: '╸' })
-  expect(stepStrip(3, 3, 20)).toEqual({ done: '━━━', running: '' })
-  expect(stepStrip(30, 31, 6)).toEqual({ done: '…━━━━', running: '╸' })
 })
 
 const agent = (id: string, startedAt: number, parentId?: string) => ({

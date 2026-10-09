@@ -49,6 +49,5 @@ export const modelIcon = (model: string | undefined) =>
   MODEL_ICONS.find((icon) => model?.toLowerCase().includes(icon.family)) ??
   UNKNOWN_MODEL_ICON;
 
-// end-of-line marks telling an edited file from one only read
+// end-of-line mark of an edited file: yellow, green when new
 export const EDITED_MARK = "●";
-export const READ_MARK = "○";

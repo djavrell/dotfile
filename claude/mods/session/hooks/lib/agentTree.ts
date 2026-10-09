@@ -36,13 +36,3 @@ export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {
   walk(undefined, "");
   return rows;
 }
-
-// an agent's steps as a thin strip, one cell per step: "━━━━" done, "╸" the one running;
-// past `width` cells only the latest show, after a "…"
-export function stepStrip(stepsDone: number, stepsStarted: number, width: number) {
-  const running = stepsStarted > stepsDone ? "╸" : "";
-  const room = Math.max(1, width - running.length);
-  const done =
-    stepsDone > room ? `…${"━".repeat(room - 1)}` : "━".repeat(stepsDone);
-  return { done, running };
-}

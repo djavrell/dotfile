@@ -1,5 +1,3 @@
-import type { Roots } from "../../types";
-
 // one drawn line of a file tree: `branch` is the "│  ├─ " guide in front of `label`,
 // `item` the file on that line, absent on a folder line
 export type TreeRow<Item> = { branch: string; label: string; item?: Item };
@@ -55,12 +53,3 @@ export function buildTree<Item extends { path: string }>(
   walk(root, "");
   return rows;
 }
-
-// an absolute path as the pane shows it: from the repo root, else ~/..., else as is
-export const displayPath = (absolutePath: string, pathRoots: Roots | null) => {
-  if (pathRoots?.repo && absolutePath.startsWith(`${pathRoots.repo}/`))
-    return absolutePath.slice(pathRoots.repo.length + 1);
-  if (pathRoots?.home && absolutePath.startsWith(`${pathRoots.home}/`))
-    return `~/${absolutePath.slice(pathRoots.home.length + 1)}`;
-  return absolutePath;
-};

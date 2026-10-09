@@ -13,17 +13,24 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 
 ## Mods and how they fit
 
-| Mod       | Role                                                                                                         |
-|-----------|--------------------------------------------------------------------------------------------------------------|
-| `palette` | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
-| `agents`  | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
-| `session` | The side pane (`/session` toggles it, opens on start): Agents, Skills, Files tree, Status. Consumer only.    |
+| Mod         | Role                                                                                                         |
+|-------------|--------------------------------------------------------------------------------------------------------------|
+| `palette`   | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
+| `agents`    | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
+| `session`   | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Context. |
+|             | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
+| `pr-viewer` | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
+|             | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with
 `read($, atom({ plugin: "<source>", key: "<key>" } as const, <initial>))`. The consumer redraws when the source writes (verified).
 This keeps one source of truth that a pane, a band or a toast can all read. Split a domain out of `session` only once a second consumer
 exists, not for its own sake.
+
+Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/` holds pure helpers (git, tree, format, icons, theme);
+`components/` holds reusable drawing bricks (`Meter`, the `▰▱` gauge used by the steps and effort bars: glyphs live there only);
+`sections/` assembles them into the pane's sections. A component takes `Box`/`Text` and data, never `$`, and is called as a function.
 
 ## API constraints learned the hard way
 

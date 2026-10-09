@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { buildTree, displayPath } from '../hooks/lib/tree'
+import { buildTree } from '../hooks/lib/tree'
 
 test('builds a tree, folders first, single-folder chains merged', () => {
   const rows = buildTree([{ path: 'c.md' }, { path: 'a/b/x.ts' }, { path: 'a/b/y.ts' }, { path: 'a/z.ts' }])
@@ -25,12 +25,4 @@ test('merges a folder that only holds one folder', () => {
     '   └─ types/',
     '      └─ index.d.ts',
   ])
-})
-
-test('shows paths from the repo root, else from ~', () => {
-  const pathRoots = { repo: '/home/me/repo', home: '/home/me' }
-  expect(displayPath('/home/me/repo/src/a.ts', pathRoots)).toBe('src/a.ts')
-  expect(displayPath('/home/me/notes/b.md', pathRoots)).toBe('~/notes/b.md')
-  expect(displayPath('/etc/hosts', pathRoots)).toBe('/etc/hosts')
-  expect(displayPath('/etc/hosts', null)).toBe('/etc/hosts')
 })
