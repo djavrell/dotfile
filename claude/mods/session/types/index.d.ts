@@ -4,8 +4,14 @@ export type Change = { path: string; added: number | null; deleted: number | nul
 export type ModelInfo = { model: string; effort?: string }
 // one /context row, slimmed to what the pane draws; kind as ContextCategoryKind (the contract may not import it)
 export type ContextSlice = { name: string; tokens: number; kind: 'used' | 'free' | 'buffer' | 'deferred' }
-// the /context breakdown: its rows, the window they share, and the token count auto-compaction runs at (null when off)
-export type ContextInfo = { slices: ContextSlice[]; maxTokens: number; compactAt: number | null }
+// the /context breakdown: its rows, the window they share, and the token count auto-compaction runs at (null when off);
+// cacheReadPercent: the last response's input the prompt cache served, null before the first response
+export type ContextInfo = {
+  slices: ContextSlice[]
+  maxTokens: number
+  compactAt: number | null
+  cacheReadPercent: number | null
+}
 
 declare module 'claude-code' {
   interface PluginState {

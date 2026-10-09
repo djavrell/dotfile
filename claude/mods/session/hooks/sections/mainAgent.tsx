@@ -1,6 +1,6 @@
 import type { SessionUsage } from "claude-code";
 
-import type { ModelInfo } from "../../types";
+import type { ContextInfo, ModelInfo } from "../../types";
 import { Meter } from "../components/meter";
 import { fmtElapsed, fmtLeft } from "../lib/format";
 import { modelIcon } from "../lib/icons";
@@ -16,17 +16,22 @@ const EFFORT_COLOR: Record<string, Role> = {
   high: "cyan",
 };
 
-// the main conversation's card, the root the subagents' tree hangs from: model, effort, cost, limits, time
+// nf-md-cached, as an escape: Nerd Font glyphs vanish from Claude's own output
+const CACHE_GLYPH = "\u{F00E8}";
+
+// the main conversation's card, the root the subagents' tree hangs from: model, effort, cost, limits, cache, time
 export function MainAgentCard({
   ui: { Box, Text },
   color,
   modelInfo,
+  contextInfo,
   usage,
   nowMs,
 }: {
   ui: Ui;
   color: Colors;
   modelInfo: ModelInfo | null;
+  contextInfo: ContextInfo | null;
   usage: SessionUsage;
   nowMs: number;
 }) {
@@ -55,6 +60,7 @@ export function MainAgentCard({
   const effortLevel = effort ? EFFORT_LEVELS.indexOf(effort) + 1 : 0;
   const effortColor = color[(effort && EFFORT_COLOR[effort]) || "gray"];
   const model = modelIcon(modelInfo?.model);
+  const cacheRead = contextInfo?.cacheReadPercent ?? null;
 
   return (
     <Box
@@ -102,6 +108,12 @@ export function MainAgentCard({
             {secondsUntilReset > 0 && (
               <Text color={color.blue}> ↺ {fmtLeft(secondsUntilReset)}</Text>
             )}
+          </Text>
+        )}
+        {cacheRead !== null && (
+          // high is good: a drop means the cache lapsed and the prefix was billed again
+          <Text color={color[band(100 - cacheRead)]}>
+            {CACHE_GLYPH} {Math.round(cacheRead)}%
           </Text>
         )}
         {spendLimit && (

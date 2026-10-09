@@ -8,7 +8,7 @@ the files changed in the repo, and the context window usage. It opens on session
 ```
 ╭────────────────────────────────────────────────╮
 │ * opus-4-5   🧠 ▰▰▰▱▱ high   💰 $1.2345        │
-│ ⚡ 23%/41% ↺ 2h15m   ⏱ 42m07s                  │
+│ ⚡ 23%/41% ↺ 2h15m   󰃨 97%   ⏱ 42m07s          │
 ╰────────────────────────────────────────────────╯
 ├─ ✓ * Explore find the pane hooks
 │  ▰▰▰▰▰▰ 6/6

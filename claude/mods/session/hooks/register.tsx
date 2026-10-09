@@ -6,6 +6,7 @@ import type { EngineInterface, Register } from "claude-code";
 
 import type { ContextInfo, ModelInfo } from "../types";
 import { visibleAgents } from "./lib/agentTree";
+import { cacheReadPercent } from "./lib/format";
 import { DIFF_ARGS, UNTRACKED_ARGS, parseNumstat, parseUntracked } from "./lib/git";
 import { colors } from "./lib/theme";
 import type { Colors } from "./lib/theme";
@@ -82,6 +83,9 @@ async function refreshContext($: EngineInterface) {
     })),
     maxTokens: breakdown.maxTokens,
     compactAt: breakdown.autoCompactThreshold ?? null,
+    cacheReadPercent: breakdown.apiUsage
+      ? cacheReadPercent(breakdown.apiUsage)
+      : null,
   };
   await update($, context, () => contextInfo);
 }
@@ -250,7 +254,7 @@ export const register: Register = (on) => {
         backgroundColor={theme?.background}
       >
         <Box flexDirection="column" flexGrow={1}>
-          {MainAgentCard({ ui, color, modelInfo, usage, nowMs })}
+          {MainAgentCard({ ui, color, modelInfo, contextInfo, usage, nowMs })}
           {AgentsSection({
             ui,
             color,

@@ -19,3 +19,18 @@ export const fmtTokens = (tokenCount: number) =>
     : tokenCount < 1e6
       ? `${Math.round(tokenCount / 1000)}k`
       : `${(tokenCount / 1e6).toFixed(1).replace(/\.0$/, "")}M`;
+
+// share of a response's input the prompt cache served; null when the input was empty
+export const cacheReadPercent = (usage: {
+  input_tokens: number;
+  cache_read_input_tokens: number;
+  cache_creation_input_tokens: number;
+}) => {
+  const inputTokens =
+    usage.input_tokens +
+    usage.cache_read_input_tokens +
+    usage.cache_creation_input_tokens;
+  return inputTokens > 0
+    ? (usage.cache_read_input_tokens / inputTokens) * 100
+    : null;
+};
