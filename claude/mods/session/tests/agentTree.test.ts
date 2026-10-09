@@ -37,7 +37,7 @@ test('finished agents leave after the keep delay, unless a descendant is still s
 })
 
 test('model icon by family, from an id or an alias', () => {
-  expect(modelIcon('claude-haiku-4-5-20251001').glyph).toBe('')
-  expect(modelIcon('opus').glyph).toBe('')
-  expect(modelIcon(undefined).glyph).toBe('')
+  expect(modelIcon('claude-haiku-4-5-20251001').glyph).toBe('\u{f032a}') // nf-md-leaf
+  expect(modelIcon('opus').glyph).toBe('\u{f01a5}') // nf-md-crown
+  expect(modelIcon(undefined).glyph).toBe('\u{ee0d}') // nf-fa-robot
 })

@@ -35,14 +35,14 @@ export const fileIcon = (fileName: string) => {
   return FILE_ICONS[extension] ?? DEFAULT_FILE_ICON;
 };
 
-// a model family by a Nerd Font glyph: the magnum opus, a sonnet's note, a haiku's leaf, a fable's book
+// a model family by a Nerd Font glyph: the magnum opus' crown, a sonnet's quill, a haiku's leaf, a fable's open book
 const MODEL_ICONS: { family: string; glyph: string; color: Role }[] = [
-  { family: "opus", glyph: "", color: "magenta" }, // nf-fa-star
-  { family: "sonnet", glyph: "", color: "blue" }, // nf-fa-music
-  { family: "haiku", glyph: "", color: "green" }, // nf-fa-leaf
-  { family: "fable", glyph: "", color: "yellow" }, // nf-fa-book
+  { family: "opus", glyph: "󰆥", color: "magenta" }, // nf-md-crown
+  { family: "sonnet", glyph: "󰛓", color: "blue" }, // nf-md-feather
+  { family: "haiku", glyph: "󰌪", color: "green" }, // nf-md-leaf
+  { family: "fable", glyph: "󱓷", color: "yellow" }, // nf-md-book_open_variant
 ];
-const UNKNOWN_MODEL_ICON = { glyph: "", color: "gray" } as const; // nf-fa-question
+const UNKNOWN_MODEL_ICON = { glyph: "", color: "gray" } as const; // nf-fa-robot
 
 // from an id (claude-haiku-4-5-...) or an alias (haiku)
 export const modelIcon = (model: string | undefined) =>

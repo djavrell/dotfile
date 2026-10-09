@@ -1,0 +1,14 @@
+# vim: ft=zsh
+# Prints glyphs from a code point on, to check what the installed Nerd Font covers: nf_range 0xf000 64
+function nf_range {
+  if [[ $# -eq 0 ]]; then
+    echo "nf_range start_code [count=32]"
+    return 1
+  fi
+
+  local code
+  for (( code = $1; code < $1 + ${2:-32}; code++ )); do
+    print -n -- "${(#)code} "
+  done
+  print
+}
