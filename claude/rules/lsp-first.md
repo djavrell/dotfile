@@ -14,6 +14,9 @@ When cclsp MCP connected, ALL agents MUST use LSP over Grep for semantic navigat
 
 Grep/Glob = fallback ONLY when LSP returns empty or searching non-symbol text.
 
+The first call after the TypeScript server starts can return only the declaration while the project still loads, with no error.
+A lone declaration from `find_references` right after a start: call it once more before concluding the symbol is unused.
+
 ## After locating: read the window, not the file
 
 An LSP call returns `file:line`. That is a coordinate — use it.
