@@ -1,0 +1,7 @@
+{
+  "name": "pr-viewer",
+  "version": "0.1.0",
+  "description": "The current branch's GitHub pull request (CI, review) in the band above the prompt, published as state",
+  "types": "./types/index.d.ts",
+  "dependencies": ["palette"]
+}
