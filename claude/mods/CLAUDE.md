@@ -53,6 +53,21 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
 - **Panes**: opened from `session.start` (unasked) a pane needs ≥ 144 columns, ≥ 110 if the person opened it before. Docked,
   `scroll.bodyRows` excludes the frame's last row, which Claude Code paints itself: a background color cannot reach it.
 - `claude plugin test` cannot call another mod's served noun: tests cover the pure helpers in `lib/` only.
+- **The `types` contract must be self-contained**: no `import` in `types/index.d.ts`, not even a type from `claude-code`; copy the
+  union inline (as `ContextSlice.kind` does).
+- **Tool calls** (`tool.call`): plugin hooks run above the classic `PreToolUse` hooks, and fire for subagents' calls too (`agentId`).
+  A hook answers `{ deny }`, `{ result }` (in place of the tool) or `next(e)`; `context` on the answer is a reminder the model
+  reads. A classic hook's `systemMessage` reaches the user only, never the model. `next(e)` twice replays the first run, it never
+  runs the tool again: retry through `$.mcp.call` instead (`lsp-first`). A guard with no `.catch` fails open; `validate` warns.
+- This build offers the model no `Grep`/`Glob` tool: searches go through `Bash`, so a guard has to read the shell command.
+- **Context**: `$.session.usage({ breakdown: "summary" })` is free, `"full"` calls the token-count API. Its `gridRows` is a fixed
+  10x10 (or 20x10) grid: draw your own from `categories`. Branch on a row's `kind`; its `name` (`MCP server instructions`, ...) only
+  for cosmetics, with a fallback for an unknown one.
+- `ui.render` on `ToolResult` redraws a call's result (the refusal text is `output` when `isErrored`); `AbovePrompt` must pass
+  (`next(e)`) while `hasSurvey`. `Box` takes `borderStyle="round"` and `overflow="hidden"`.
+- A command's text output is shown prefixed with `<plugin>:`.
+- Nerd Font glyphs vanish from Claude's own messages and from the copy of a command output Claude reads, yet render for the user:
+  do not conclude a glyph is broken from that. A glyph missing from the user's font draws as a box; an unknown category drew one.
 
 ## Working on a mod
 
