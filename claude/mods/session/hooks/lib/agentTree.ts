@@ -4,6 +4,25 @@ import type { AgentEntry } from "agents";
 // a line drawn under it (its steps), carrying the tree's lines down to its siblings and children
 export type AgentRow = { guide: string; underGuide: string; agent: AgentEntry };
 
+export const FINISHED = new Set(["completed", "failed", "killed"]);
+
+// drops agents finished more than `keepMs` ago (no endedAt counts as long ago), but keeps a finished
+// agent while one of its descendants is still shown, so a running child stays nested under it
+export function visibleAgents(
+  agents: readonly AgentEntry[],
+  nowMs: number,
+  keepMs: number,
+): AgentEntry[] {
+  const isRecent = (agent: AgentEntry) =>
+    !FINISHED.has(agent.status) ||
+    (agent.endedAt !== undefined && nowMs - agent.endedAt < keepMs);
+  // ponytail: rescans the list per agent, fine for a session's few dozen agents
+  const isVisible = (agent: AgentEntry): boolean =>
+    isRecent(agent) ||
+    agents.some((child) => child.parentId === agent.id && isVisible(child));
+  return agents.filter(isVisible);
+}
+
 // agents nested under the agent that spawned them, each level in start order;
 // an agent whose parent is unknown (the main conversation, or a parent dropped from the list) is a root
 export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {

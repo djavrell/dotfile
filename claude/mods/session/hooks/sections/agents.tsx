@@ -1,7 +1,7 @@
 import type { AgentEntry } from "agents";
 
 import { Meter } from "../components/meter";
-import { buildAgentTree } from "../lib/agentTree";
+import { FINISHED, buildAgentTree } from "../lib/agentTree";
 import { modelIcon } from "../lib/icons";
 import type { Colors, Role, Ui } from "../lib/theme";
 
@@ -15,7 +15,6 @@ const AGENT_STATUS: Record<string, { icon: string; color: Role }> = {
   killed: { icon: "✗", color: "red" },
 };
 const UNKNOWN_STATUS = { icon: "?", color: "gray" } as const;
-const FINISHED = new Set(["completed", "failed", "killed"]);
 
 export function AgentsSection({
   ui: { Box, Text },

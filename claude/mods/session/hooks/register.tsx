@@ -5,6 +5,7 @@ import { atom, read, update } from "claude-code";
 import type { EngineInterface, Register } from "claude-code";
 
 import type { ContextInfo, ModelInfo } from "../types";
+import { visibleAgents } from "./lib/agentTree";
 import { DIFF_ARGS, UNTRACKED_ARGS, parseNumstat, parseUntracked } from "./lib/git";
 import { colors } from "./lib/theme";
 import type { Colors } from "./lib/theme";
@@ -27,7 +28,9 @@ const context = atom({ plugin: "session", key: "context" } as const, null);
 
 const PANE = "session";
 const PANE_COLUMNS = 50;
-const TICK_MS = 30_000;
+const TICK_MS = 10_000;
+// a finished agent stays in the pane this long after it ended, then leaves on the next tick
+const FINISHED_AGENT_KEEP_MS = 30_000;
 const GIT_POLL_MS = 10_000;
 const DEBOUNCE_MS = 300;
 const WRITERS = new Set(["Edit", "MultiEdit", "Write", "NotebookEdit", "Bash"]);
@@ -251,7 +254,7 @@ export const register: Register = (on) => {
           {AgentsSection({
             ui,
             color,
-            agentList,
+            agentList: visibleAgents(agentList, nowMs, FINISHED_AGENT_KEEP_MS),
             bodyColumns: event.props.bodyColumns,
           })}
           <Text> </Text>

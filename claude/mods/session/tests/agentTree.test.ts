@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { buildAgentTree } from '../hooks/lib/agentTree'
+import { buildAgentTree, visibleAgents } from '../hooks/lib/agentTree'
 import { modelIcon } from '../hooks/lib/icons'
 
 test('lines under an agent carry the tree down to siblings and children', () => {
@@ -25,6 +25,15 @@ test('nests agents under their parent, in start order', () => {
 
 test('an agent whose parent is unknown is a root', () => {
   expect(buildAgentTree([agent('orphan', 1, 'gone')]).map(row => row.guide + row.agent.id)).toEqual(['└─ orphan'])
+})
+
+test('finished agents leave after the keep delay, unless a descendant is still shown', () => {
+  const ended = (id: string, endedAt?: number, parentId?: string) => ({ ...agent(id, 1, parentId), status: 'completed', endedAt })
+  const shown = visibleAgents([
+    ended('recent', 90), ended('old', 10), ended('noEnd'),
+    ended('parent', 10), ended('middle', 10, 'parent'), agent('runningChild', 2, 'middle'),
+  ], 100, 30)
+  expect(shown.map(row => row.id)).toEqual(['recent', 'parent', 'middle', 'runningChild'])
 })
 
 test('model icon by family, from an id or an alias', () => {
