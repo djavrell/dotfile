@@ -1,0 +1,6 @@
+# vim:ft=zsh
+# Local branches whose GitHub PR is merged (works with squash merges)
+
+comm -12 \
+  <(git branch --format='%(refname:short)' | sort) \
+  <(gh pr list --state merged --limit 500 --json headRefName --jq '.[].headRefName' | sort)
