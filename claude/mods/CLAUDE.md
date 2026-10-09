@@ -21,6 +21,8 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |             | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
 | `pr-viewer` | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
 |             | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
+| `lsp-first` | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
+|             | start, folds LSP-first refusals (its own and the classic hooks') to one line. Runs above the classic hooks.  |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with
@@ -54,6 +56,9 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
 
 ## Working on a mod
 
+- Entry points from any directory: the `mods` skill (`/mods`, `claude/skills/mods/`) loads this file and the workflow into a
+  session; the `mod-dev` agent (`claude/agents/mod-dev.md`) takes a delegated task, or a whole session with `claude --agent mod-dev`.
+  Both are linked into `~/.claude/`. Knowledge goes here, the procedure in the skill, nothing in the agent.
 - Checks: `claude plugin validate <mod>`, `claude plugin test <mod>`, `npx -p typescript tsc -p <mod>`.
 - In **auto mode**, the classifier gives no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule): edit a copy outside (scratchpad, or `~/.claude/dev-mods/<session>/`), check it, then

@@ -1,0 +1,5 @@
+{
+  "name": "lsp-first",
+  "version": "0.1.0",
+  "description": "LSP-first guards: refuses shell greps on code symbols and shell writes to source files, retries cclsp's cold start, folds the refusals to one line"
+}
