@@ -11,5 +11,7 @@ function link_claude() {
     "$DOTFILE/claude/rules/lsp-first.md" "$claude_dir/rules/lsp-first.md"
     "$DOTFILE/claude/rules/markdown-style.md" "$claude_dir/rules/markdown-style.md"
     "$DOTFILE/claude/skills/changelog" "$claude_dir/skills/changelog"
+    "$DOTFILE/claude/skills/mods" "$claude_dir/skills/mods"
+    "$DOTFILE/claude/agents/mod-dev.md" "$claude_dir/agents/mod-dev.md"
   )
 }
