@@ -20,7 +20,7 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 | `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Context. |
 |                   | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
 | `pr-viewer`       | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
-|                   | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
+|                   | drawn as one line in the band above the prompt (state, CI, review). No pull request: the branch.             |
 | `lsp-first`       | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
 |                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
@@ -92,7 +92,10 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
   hot-reloads in the session after one "Enable hot reloading" question. Copy it to `claude/mods/` once it works.
 - In **auto mode**, the classifier gives no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule): edit a copy outside (scratchpad, or `~/.claude/dev-mods/<session>/`), check it, then
-  `cp` it back. In manual mode, edits there go through directly.
+  `cp` it back. In manual mode, edits there go through directly. Go straight to the copy: a `sed` on a mod's source file first
+  gets refused by `lsp-first`, and the classifier then reads the copy-back as a way around that refusal and denies it too.
+- Edit cannot match a passage holding a Nerd Font glyph (the glyph vanishes from what Claude reads): anchor on glyph-free lines,
+  and write a new icon as an escape (`""`) with its name in a comment.
 - Style: descriptive names (no one-letter variables), the formatting already in the file (double quotes and semicolons in `session`),
   colors through `palette` roles rather than raw names, Nerd Font glyphs for icons.
 

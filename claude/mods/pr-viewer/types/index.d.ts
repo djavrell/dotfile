@@ -19,6 +19,8 @@ declare module 'claude-code' {
     'pr-viewer': {
       // null when the branch has no pull request, or gh cannot tell (not installed, logged out, not GitHub)
       current: PullRequest | null
+      // the checked-out branch's name; null when HEAD is detached or outside git
+      branch: string | null
     }
   }
 }

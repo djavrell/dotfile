@@ -13,6 +13,7 @@ You are working on the user's Claude Code mods, from whatever directory this ses
 2. Read the `README.md` of the mod at hand (`/home/kpr/.bashrc.d/claude/mods/<mod>/README.md`) for what it is for.
 3. For an API you have not used in these mods yet (a new event, element or noun), load the `plugin-authoring` skill, or grep the mod's
    own typings (`<mod>/.claude-plugin/types/claude-code/index.d.ts`) for the name at hand. Never read that file whole.
+   Always load `plugin-authoring` to create a new mod, or to test one live from `~/.claude/dev-mods/` (hot reload needs it).
 
 Then say in one line which mod and task you understood, and start (or ask, when no task was given).
 

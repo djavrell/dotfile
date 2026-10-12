@@ -8,9 +8,13 @@ import type { PullRequest } from "../types";
 import { PR_FIELDS, parsePullRequest } from "./lib/pr";
 
 const current = atom({ plugin: "pr-viewer", key: "current" } as const, null);
+const branch = atom({ plugin: "pr-viewer", key: "branch" } as const, null);
 
 // ponytail: polls GitHub once a minute; a webhook-fed source if the delay ever matters
 const PR_POLL_MS = 60_000;
+// `refs/heads/feature/x` -> `feature/x`
+const LOCAL_BRANCH_PREFIX = /^refs\/heads\//;
+const BRANCH_ICON = ""; // nf-dev-git_branch
 const PR_ICON = ""; // nf-oct-git_pull_request
 const MERGED_ICON = ""; // nf-oct-git_merge
 
@@ -26,15 +30,28 @@ async function fetchPullRequest($: EngineInterface) {
   const thisGeneration = ++fetchGeneration;
   const view = await $.process.run(["gh", "pr", "view", "--json", PR_FIELDS]);
   if (thisGeneration !== fetchGeneration) return;
-  const pullRequest = view.exitCode === 0 ? parsePullRequest(view.stdout) : null;
+  const pullRequest =
+    view.exitCode === 0 ? parsePullRequest(view.stdout) : null;
   await update($, current, () => pullRequest);
 }
 
 async function refetchOnSwitch($: EngineInterface) {
-  const head = await $.process.run(["git", "--no-optional-locks", "symbolic-ref", "-q", "HEAD"]);
+  const head = await $.process.run([
+    "git",
+    "--no-optional-locks",
+    "symbolic-ref",
+    "-q",
+    "HEAD",
+  ]);
   const headName = head.stdout.trim();
   if (headName === lastHead) return;
   lastHead = headName;
+  // detached HEAD or outside git: empty, hence null
+  await update(
+    $,
+    branch,
+    () => headName.replace(LOCAL_BRANCH_PREFIX, "") || null,
+  );
   await fetchPullRequest($);
 }
 
@@ -51,7 +68,10 @@ export const register: Register = (on) => {
   on("session.start", async ($, event, next) => {
     void refetchOnSwitch($).catch(() => {});
     pollTimer?.cancel();
-    pollTimer = $.clock.every(PR_POLL_MS, () => void fetchPullRequest($).catch(() => {}));
+    pollTimer = $.clock.every(
+      PR_POLL_MS,
+      () => void fetchPullRequest($).catch(() => {}),
+    );
 
     return next(event);
   });
@@ -76,22 +96,38 @@ export const register: Register = (on) => {
   on("ui.render", { component: "AbovePrompt" }, async ($, event, next) => {
     // a survey holds the band first
     if (event.props.hasSurvey) return next(event);
-    const [pullRequest, theme] = await Promise.all([read($, current), getTheme($)]);
-    if (!pullRequest) return next(event);
+    const [pullRequest, branchName, theme] = await Promise.all([
+      read($, current),
+      read($, branch),
+      getTheme($),
+    ]);
+    if (!pullRequest && !branchName) return next(event);
     const { Box, Text, Link } = $.ui.resolve(event);
     const ansi = theme?.ansi;
+    // no pull request: the branch alone, in a muted blue so a pull request line still stands out
+    if (!pullRequest) {
+      return (
+        <Box width={event.props.bodyColumns}>
+          <Text wrap="truncate-end" color={ansi?.blue}>
+            {BRANCH_ICON} {branchName}
+          </Text>
+        </Box>
+      );
+    }
     const stateColor: Record<PullRequest["state"], string | undefined> = {
       open: ansi?.green,
       draft: theme?.comment,
       merged: ansi?.magenta,
       closed: ansi?.red,
     };
+
     const checks = {
       pass: { mark: "✓ CI", color: ansi?.green },
       fail: { mark: "✗ CI", color: ansi?.red },
       pending: { mark: "● CI", color: ansi?.yellow },
       none: null,
     }[pullRequest.checks];
+
     const review = {
       approved: { mark: "✓ approved", color: ansi?.green },
       changes_requested: { mark: "✗ changes requested", color: ansi?.red },
