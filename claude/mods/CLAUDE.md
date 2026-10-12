@@ -13,16 +13,18 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 
 ## Mods and how they fit
 
-| Mod         | Role                                                                                                         |
-|-------------|--------------------------------------------------------------------------------------------------------------|
-| `palette`   | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
-| `agents`    | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
-| `session`   | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Context. |
-|             | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
-| `pr-viewer` | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
-|             | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
-| `lsp-first` | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
-|             | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
+| Mod               | Role                                                                                                         |
+|-------------------|--------------------------------------------------------------------------------------------------------------|
+| `palette`         | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
+| `agents`          | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
+| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Context. |
+|                   | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
+| `pr-viewer`       | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
+|                   | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
+| `lsp-first`       | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
+|                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
+| `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
+|                   | click, fullscreen). Drawing only: the model reads them whole.                                                |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with
@@ -70,6 +72,12 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
   for cosmetics, with a fallback for an unknown one.
 - `ui.render` on `ToolResult` redraws a call's result (the refusal text is `output` when `isErrored`); `AbovePrompt` must pass
   (`next(e)`) while `hasSurvey`. `Box` takes `borderStyle="round"` and `overflow="hidden"`.
+- **Tool rows** (seen live, not in the typings): Bash raises no `ToolResult`, its output is drawn inside its `ToolUse` row;
+  Agent and Edit do raise one (`fold-transcript`).
+- **`UserMessage.isExpanded`** is true in ctrl+o but also for any body short enough to fit under the sender's label. An agent's
+  report comes as `origin.kind: "peer"` with `from.name` (the agent type), then a `task-notification` row.
+- **Clicks in the transcript**: a `Button` in a transcript row works in fullscreen; its `onPress` updates an atom and the row
+  redraws (`fold-transcript`).
 - A command's text output is shown prefixed with `<plugin>:`.
 - Nerd Font glyphs vanish from Claude's own messages and from the copy of a command output Claude reads, yet render for the user:
   do not conclude a glyph is broken from that. A glyph missing from the user's font draws as a box; an unknown category drew one.
@@ -80,6 +88,8 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
   session; the `mod-dev` agent (`claude/agents/mod-dev.md`) takes a delegated task, or a whole session with `claude --agent mod-dev`.
   Both are linked into `~/.claude/`. Knowledge goes here, the procedure in the skill, nothing in the agent.
 - Checks: `claude plugin validate <mod>`, `claude plugin test <mod>`, `npx -p typescript tsc -p <mod>`.
+- **Live test without a new shell**: once the `plugin-authoring` skill is loaded, a mod written under `~/.claude/dev-mods/<session>/`
+  hot-reloads in the session after one "Enable hot reloading" question. Copy it to `claude/mods/` once it works.
 - In **auto mode**, the classifier gives no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule): edit a copy outside (scratchpad, or `~/.claude/dev-mods/<session>/`), check it, then
   `cp` it back. In manual mode, edits there go through directly.
