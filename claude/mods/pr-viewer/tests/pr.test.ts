@@ -14,11 +14,11 @@ test('one failing check fails all, one running keeps it pending', () => {
 
 test('reads gh pr view output', () => {
   const json = JSON.stringify({
-    number: 42, title: 'Add the band', state: 'OPEN', isDraft: true, reviewDecision: 'CHANGES_REQUESTED',
+    number: 42, title: 'Add the band', url: 'https://github.com/o/r/pull/42', state: 'OPEN', isDraft: true, reviewDecision: 'CHANGES_REQUESTED',
     statusCheckRollup: [run('COMPLETED', 'SUCCESS')],
   })
   expect(parsePullRequest(json)).toEqual({
-    number: 42, title: 'Add the band', state: 'draft', checks: 'pass', review: 'changes_requested',
+    number: 42, title: 'Add the band', url: 'https://github.com/o/r/pull/42', state: 'draft', checks: 'pass', review: 'changes_requested',
   })
   expect(parsePullRequest('{"number":1,"state":"MERGED","reviewDecision":""}')?.state).toBe('merged')
   expect(parsePullRequest('no pull requests found')).toBe(null)

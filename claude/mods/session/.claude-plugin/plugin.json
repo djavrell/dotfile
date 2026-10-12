@@ -1,7 +1,7 @@
 {
   "name": "session",
   "version": "0.1.0",
-  "description": "Side pane with the session's subagents, loaded skills and changed files (+/- lines)",
+  "description": "Side pane with the session's model, cost and limits, subagents, loaded skills, changed files (+/- lines) and context usage",
   "types": "./types/index.d.ts",
   "dependencies": ["palette", "agents"]
 }

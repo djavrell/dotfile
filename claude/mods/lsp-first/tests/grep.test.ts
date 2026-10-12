@@ -59,3 +59,8 @@ test('exemption: -c and context flags', () => {
 test('exemption: only non-code files named', () => {
   expect(grepSymbols('grep -n "UserService" notes.md todo.md')).toEqual([])
 })
+
+test('a grep quoted in a heredoc body is payload, not a search', () => {
+  const prBody = `gh pr create --body "$(cat <<'EOF'\nRan grep -rn "UserService" src/ to check.\nEOF\n)"`
+  expect(grepSymbols(prBody)).toEqual([])
+})

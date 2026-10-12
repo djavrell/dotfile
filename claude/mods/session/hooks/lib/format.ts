@@ -7,10 +7,9 @@ export const fmtLeft = (seconds: number) => {
   return `${Math.floor(seconds / 60)}m`;
 };
 
+// the pane redraws every 10s: seconds only in the first minute, then the countdown's units
 export const fmtElapsed = (seconds: number) =>
-  seconds >= 3600
-    ? `${Math.floor(seconds / 3600)}h${String(Math.floor((seconds % 3600) / 60)).padStart(2, "0")}m`
-    : `${Math.floor(seconds / 60)}m${String(seconds % 60).padStart(2, "0")}s`;
+  seconds < 60 ? `${seconds}s` : fmtLeft(seconds);
 
 // 950, 123k, 1M, 1.5M
 export const fmtTokens = (tokenCount: number) =>

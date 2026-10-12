@@ -4,6 +4,8 @@
 export type PullRequest = {
   number: number
   title: string
+  // the pull request's page on GitHub
+  url: string
   // open, draft, merged, closed
   state: 'open' | 'draft' | 'merged' | 'closed'
   // the checks rolled up: one failing fails all, one running keeps it pending; none when it has no checks

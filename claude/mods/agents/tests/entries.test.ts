@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { MAX_ENTRIES, mergeListed, newEntry, patchEntry, statusOfEnd, upsertEntry } from '../hooks/lib/entries'
+import { MAX_ENTRIES, mergeListed, newEntry, patchEntry, statusOfEnd, stepStarted, upsertEntry } from '../hooks/lib/entries'
 
 const explore = newEntry({ id: 'a1', type: 'Explore', description: 'find things', status: 'running' })
 
@@ -39,4 +39,10 @@ test('end reason to status', () => {
   expect(statusOfEnd('answer')).toBe('completed')
   expect(statusOfEnd('aborted')).toBe('killed')
   expect(statusOfEnd('error')).toBe('failed')
+})
+
+test('a step on a finished agent marks it running again', () => {
+  const finished = { ...explore, status: 'completed', endedAt: 5, endReason: 'answer' }
+  expect(stepStarted(finished, 'haiku')).toEqual({ stepsStarted: 1, model: 'haiku', status: 'running', endedAt: undefined, endReason: undefined })
+  expect(stepStarted(explore, 'haiku')).toEqual({ stepsStarted: 1, model: 'haiku' })
 })

@@ -23,7 +23,7 @@ const files = atom({ plugin: "session", key: "files" } as const, []);
 const agents = atom({ plugin: "agents", key: "list" } as const, []);
 const skills = atom({ plugin: "session", key: "skills" } as const, []);
 const info = atom({ plugin: "session", key: "info" } as const, null);
-// bumped on a timer and after each turn so usage, countdown and elapsed time redraw
+// bumped on a timer and on each measure (turn, rate-limit move) so usage, countdown and elapsed time redraw
 const tick = atom({ plugin: "session", key: "tick" } as const, 0);
 const context = atom({ plugin: "session", key: "context" } as const, null);
 
@@ -162,7 +162,7 @@ export const register: Register = (on) => {
 
   on("tool.call", async ($, event, next) => {
     const result = await next(event);
-    if (event.tool === "Skill" && typeof event.skill === "string")
+    if (event.tool === "Skill")
       void addSkill($, event.skill).catch(() => {});
     if (WRITERS.has(event.tool)) void scheduleRefresh($).catch(() => {});
 
@@ -181,13 +181,19 @@ export const register: Register = (on) => {
     return yield* next(event);
   });
 
-  on("turn.complete", async ($, event, next) => {
+  // after each main-thread turn and when a rate-limit window moves: usage, countdown and elapsed time redraw
+  on("session.measure", async ($, event, next) => {
+    void update($, tick, (tickCount) => tickCount + 1).catch(() => {});
+    // the messages grow each turn; the threshold moves with the model (/model) and the settings
+    if (event.changed.includes("context")) void refreshContext($).catch(() => {});
+
+    return next(event);
+  });
+
+  // a compaction is no turn: re-read the shrunk context once it is done
+  on("session.compact", async ($, event, next) => {
     const result = await next(event);
-    if (!event.agentId) {
-      void update($, tick, (tickCount) => tickCount + 1).catch(() => {});
-      // the messages grow each turn; the threshold moves with the model (/model) and the settings
-      void refreshContext($).catch(() => {});
-    }
+    if (!event.agentId) void refreshContext($).catch(() => {});
 
     return result;
   });
@@ -200,19 +206,18 @@ export const register: Register = (on) => {
     return next(event);
   });
 
-  // ponytail: any user/plugin command counts as a skill, the engine does not tell them apart
+  // ponytail: any user/plugin command outside this mod counts as a skill, the engine does not tell them apart
   on("command.run", async ($, event, next) => {
     const result = await next(event);
-    if (event.command !== "session" && event.command !== "context-icons") {
-      const commandInfo = (await $.command.list()).find(
-        (command) => command.name === event.command,
-      );
-      if (
-        commandInfo &&
-        (commandInfo.source === "user" || commandInfo.source === "plugin")
-      )
-        await addSkill($, event.command).catch(() => {});
-    }
+    const commandInfo = (await $.command.list()).find(
+      (command) => command.name === event.command,
+    );
+    if (
+      commandInfo &&
+      commandInfo.plugin !== "session" &&
+      (commandInfo.source === "user" || commandInfo.source === "plugin")
+    )
+      void addSkill($, event.command).catch(() => {});
 
     return result;
   });

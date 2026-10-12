@@ -22,7 +22,7 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 | `pr-viewer` | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
 |             | drawn as one line in the band above the prompt (state, CI, review). No pull request, no band.                |
 | `lsp-first` | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
-|             | start, folds LSP-first refusals (its own and the classic hooks') to one line. Runs above the classic hooks.  |
+|             | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with
@@ -52,7 +52,12 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
 - The classic `Stop` hook's `background_tasks` did not show up in practice; the footer shows background tasks anyway.
 - **Panes**: opened from `session.start` (unasked) a pane needs ≥ 144 columns, ≥ 110 if the person opened it before. Docked,
   `scroll.bodyRows` excludes the frame's last row, which Claude Code paints itself: a background color cannot reach it.
-- `claude plugin test` cannot call another mod's served noun: tests cover the pure helpers in `lib/` only.
+- `claude plugin test` cannot call another mod's served noun. It can drive a mod's own hooks: the test's `on` hooks sit beneath the
+  plugin, so a fake `tool.call` answer plus `on("mcp.call", () => ({ value }))` let `$.tool.call(...)` run a hook end to end (`lsp-first`).
+- **Refresh events**: `session.measure` fires after each main-thread turn and when a rate-limit window moves, with
+  `changed: ('context'|'rateLimits'|'cost')[]`; a compaction is no turn, hence a `session.compact` hook (`session`).
+- **Timers and cwd**: `$.clock.every(ms, fn)` returns a cancelable `Timer`, use it over a `sleep` loop that outlives its hook.
+  `$.process.run` runs in the session's cwd, which `/cd` (a `command.run` with `command: "cd"`) and worktrees move (`pr-viewer`).
 - **The `types` contract must be self-contained**: no `import` in `types/index.d.ts`, not even a type from `claude-code`; copy the
   union inline (as `ContextSlice.kind` does).
 - **Tool calls** (`tool.call`): plugin hooks run above the classic `PreToolUse` hooks, and fire for subagents' calls too (`agentId`).

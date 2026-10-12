@@ -10,18 +10,15 @@ export const grepDenial = (symbols: readonly string[]) =>
 
 export const writeDenial = (target: string) =>
   `${DENY_MARKER} writing the source file ${target} from the shell: use Edit (Read it first) or Write, ` +
-  "which show a diff and fail loudly on a missing anchor. Scratch paths (scratchpad/, /tmp) are exempt.";
+  "which show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). " +
+  "Scratch paths (scratchpad/, /tmp) are exempt.";
 
-// The classic hooks prefixed their refusals: `PreToolUse:Bash hook error: [node ~/.claude/hooks/x.js]: ⛔ ...`.
-const CLASSIC_HOOK_PREFIX = /^[^]*?(?=⛔|LSP-FIRST|TOOL-CHOICE)/;
+// This mod's refusal: the error text starts with the marker (a ⛔ before it allowed); its first line is captured.
+// An error that merely quotes the marker further in (a grep's output, a log) is no refusal.
+const OWN_DENIAL = new RegExp(`^\\s*(?:⛔\\s*)?(${DENY_MARKER}.*)`);
 
-// An LSP-first refusal (this mod's, or a classic hook's: LSP-FIRST or TOOL-CHOICE) as its first line, for the
-// transcript; null for any other error, which keeps its own display.
+// This mod's refusal as one line, for the transcript; null for any other error, which keeps its own display.
 export function compactDenial(errorText: string): string | null {
-  if (!/LSP-FIRST|TOOL-CHOICE/.test(errorText)) return null;
-  const lines = errorText
-    .replace(CLASSIC_HOOK_PREFIX, "")
-    .split("\n")
-    .map((line) => line.replace(/^⛔\s*/, "").trim());
-  return `⛔ ${lines.find(Boolean) ?? ""}`;
+  const refusalLine = errorText.match(OWN_DENIAL)?.[1];
+  return refusalLine ? `⛔ ${refusalLine.trim()}` : null;
 }

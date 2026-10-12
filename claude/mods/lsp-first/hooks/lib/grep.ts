@@ -1,7 +1,7 @@
 // Shell greps that look up a code symbol. An LSP lookup answers those better (the exact definition, the real
 // references), so the guard refuses them and names the LSP call to make instead.
 // Ported from the classic hook bash-grep-block.js.
-import { cleanCommand } from "./command";
+import { cleanCommand, withoutHeredocBodies } from "./command";
 
 const SEARCH_PROGRAM = /\b(grep|rg|ag|ack)\b/i;
 
@@ -157,7 +157,7 @@ function symbolsOf(pattern: string, searchesPython: boolean) {
 
 // The code symbols a shell grep looks up, which the guard refuses; none when the command is no such lookup.
 export function grepSymbols(rawCommand: string): string[] {
-  const command = cleanCommand(rawCommand);
+  const command = withoutHeredocBodies(cleanCommand(rawCommand));
   if (!SEARCH_PROGRAM.test(command)) return [];
   if (GREP_EXEMPTIONS.some((exemption) => exemption.applies(command))) return [];
 

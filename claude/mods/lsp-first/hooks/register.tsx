@@ -2,7 +2,7 @@
 //   1. a Bash command that greps for a code symbol, or writes a source file, is refused (lib/grep.ts, lib/write.ts);
 //   2. Read calls are noted, so cclsp can be primed on a file the session already opened;
 //   3. a cclsp call that hit the server's cold start ("No Project") is primed and run again, transparently;
-//   4. every LSP-first refusal, this mod's and the classic hooks', is drawn as one dim line in the transcript.
+//   4. this mod's own refusals are drawn as one dim line in the transcript.
 // Plugin hooks run above the classic PreToolUse hooks, so this mod judges a call first.
 // $ stays in this file (the validator does not follow it across an import); the judging is pure, in lib/.
 import type { EngineInterface, McpToolResult, Register } from "claude-code";
@@ -15,6 +15,7 @@ const CCLSP_SERVER = "cclsp";
 const CCLSP_TOOL_PREFIX = `mcp__${CCLSP_SERVER}__`;
 // what cclsp answers until a file-scoped call has primed its project (ktnyt/cclsp#43)
 const COLD_START_ERROR = /No Project\.|ThrowNoProject|Server not initialized|Project not loaded|LSP server.*not ready/i;
+// narrower than lib/command.ts's SOURCE_EXTENSION on purpose: only what claude/cclsp.json serves can prime cclsp
 const SOURCE_FILE = /\.(?:ts|tsx|js|jsx|mjs|cjs|py)$/i;
 // the fields of a tool.call event that are no argument of the MCP tool itself
 const EVENT_ENVELOPE_FIELDS = new Set(["tool", "tool_use_id", "agentId", "requestMeta"]);
@@ -56,10 +57,9 @@ export const register: Register = (on) => {
   });
 
   // 3.
-  on("tool.call", async ($, event, next) => {
+  on("tool.call", { tool: /^mcp__cclsp__/ }, async ($, event, next) => {
     const ran = await next(event);
-    const isCclspCall = event.tool.startsWith(CCLSP_TOOL_PREFIX);
-    if (!isCclspCall || ran.deny !== undefined || !COLD_START_ERROR.test(ran.text ?? "")) return ran;
+    if (ran.deny !== undefined || !COLD_START_ERROR.test(ran.text ?? "")) return ran;
 
     const toolArguments = Object.fromEntries(
       Object.entries(event).filter(([field]) => !EVENT_ENVELOPE_FIELDS.has(field)),

@@ -57,13 +57,11 @@ export const parseScheme = (text: string): PaletteTheme => {
   return theme
 }
 
+// rejects when HOME is unset or the file cannot be read (missing, or the calling turn was stopped)
 async function load($: EngineInterface): Promise<PaletteTheme> {
-  try {
-    const home = (await $.process.run(['printenv', 'HOME'])).stdout.trim()
-    return parseScheme(await $.fs.read(`${home}/${SCHEME}`))
-  } catch {
-    return FALLBACK
-  }
+  const home = await $.env.get('HOME')
+  if (!home) throw new Error('HOME is unset')
+  return parseScheme(await $.fs.read(`${home}/${SCHEME}`))
 }
 
 export const register: Register = on => {
@@ -77,5 +75,15 @@ export const register: Register = on => {
   })
 
   // a call on $.palette.get runs this first, with a full $ to read the scheme file
-  on('palette.get', async $ => ({ value: await (cached ??= load($)) }))
+  // only a successful read is kept: a failed one (a stopped turn rejects it) is retried by the next call
+  // ponytail: a missing scheme file is re-read on every call, cache the miss if that ever shows in a profile
+  on('palette.get', async $ => {
+    cached ??= load($)
+    try {
+      return { value: await cached }
+    } catch {
+      cached = undefined
+      return { value: FALLBACK }
+    }
+  })
 }

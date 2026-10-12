@@ -2,7 +2,7 @@
 // the band above the prompt. No pull request (or no gh), no band.
 // $ and the atom stay in this file (the validator does not follow them across an import); parsing lives in lib/pr.ts.
 import { atom, read, update } from "claude-code";
-import type { EngineInterface, Register } from "claude-code";
+import type { EngineInterface, Register, Timer } from "claude-code";
 
 import type { PullRequest } from "../types";
 import { PR_FIELDS, parsePullRequest } from "./lib/pr";
@@ -14,8 +14,11 @@ const PR_POLL_MS = 60_000;
 const PR_ICON = ""; // nf-oct-git_pull_request
 const MERGED_ICON = ""; // nf-oct-git_merge
 
-// the commit checked out, to refetch as soon as a Bash call switched branches
-let lastHead = "";
+// the branch checked out (its ref name, empty when detached), to refetch as soon as it changes;
+// undefined until the first look, so a detached HEAD at start still fetches
+let lastHead: string | undefined;
+// the minute poll, cancelled when a new session.start starts another
+let pollTimer: Timer | undefined;
 // bumped by every fetch: a run that is no longer the latest drops its result
 let fetchGeneration = 0;
 
@@ -35,13 +38,6 @@ async function refetchOnSwitch($: EngineInterface) {
   await fetchPullRequest($);
 }
 
-async function poller($: EngineInterface) {
-  for (;;) {
-    await $.clock.sleep(PR_POLL_MS);
-    await fetchPullRequest($).catch(() => {});
-  }
-}
-
 // $.palette is absent for a moment when this mod draws before palette has loaded: default colors then
 async function getTheme($: EngineInterface) {
   try {
@@ -54,15 +50,25 @@ async function getTheme($: EngineInterface) {
 export const register: Register = (on) => {
   on("session.start", async ($, event, next) => {
     void refetchOnSwitch($).catch(() => {});
-    void poller($).catch(() => {});
+    pollTimer?.cancel();
+    pollTimer = $.clock.every(PR_POLL_MS, () => void fetchPullRequest($).catch(() => {}));
 
     return next(event);
   });
 
-  // a checkout or a switch goes through Bash
+  // a checkout goes through Bash, a worktree move through EnterWorktree/ExitWorktree: any tool may switch
+  // branches, and refetchOnSwitch only fetches when the ref name changed
   on("tool.call", async ($, event, next) => {
     const result = await next(event);
-    if (event.tool === "Bash") void refetchOnSwitch($).catch(() => {});
+    void refetchOnSwitch($).catch(() => {});
+
+    return result;
+  });
+
+  // /cd moves the session's directory, where git and gh run
+  on("command.run", { command: "cd" }, async ($, event, next) => {
+    const result = await next(event);
+    void refetchOnSwitch($).catch(() => {});
 
     return result;
   });
@@ -72,7 +78,7 @@ export const register: Register = (on) => {
     if (event.props.hasSurvey) return next(event);
     const [pullRequest, theme] = await Promise.all([read($, current), getTheme($)]);
     if (!pullRequest) return next(event);
-    const { Box, Text } = $.ui.resolve(event);
+    const { Box, Text, Link } = $.ui.resolve(event);
     const ansi = theme?.ansi;
     const stateColor: Record<PullRequest["state"], string | undefined> = {
       open: ansi?.green,
@@ -98,7 +104,8 @@ export const register: Register = (on) => {
         <Box flexShrink={1}>
           <Text wrap="truncate-end">
             <Text color={stateColor[pullRequest.state]}>
-              {pullRequest.state === "merged" ? MERGED_ICON : PR_ICON} #{pullRequest.number}
+              {pullRequest.state === "merged" ? MERGED_ICON : PR_ICON}{" "}
+              <Link href={pullRequest.url}>#{pullRequest.number}</Link>
               {pullRequest.state === "open" ? "" : ` ${pullRequest.state}`}
             </Text>{" "}
             {pullRequest.title}

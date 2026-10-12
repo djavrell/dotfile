@@ -5,7 +5,7 @@
 import { atom, update } from "claude-code";
 import type { EngineInterface, Register } from "claude-code";
 
-import { mergeListed, newEntry, patchEntry, statusOfEnd, upsertEntry } from "./lib/entries";
+import { mergeListed, newEntry, patchEntry, statusOfEnd, stepStarted, upsertEntry } from "./lib/entries";
 
 const list = atom({ plugin: "agents", key: "list" } as const, []);
 
@@ -35,7 +35,7 @@ export const register: Register = (on) => {
 
   on("agent.spawn", async ($, event, next) => {
     const result = await next(event);
-    const agentId = "agentId" in result ? result.agentId : undefined;
+    const agentId = result.agentId;
     if (agentId) {
       const startedAt = await $.clock.now();
       const entry = newEntry({
@@ -44,7 +44,7 @@ export const register: Register = (on) => {
         type: event.subagentType,
         description: event.description,
         status: "running",
-        model: "model" in result ? result.model : event.model,
+        model: result.model,
         background: event.background,
         startedAt,
       });
@@ -60,10 +60,7 @@ export const register: Register = (on) => {
     const agentId = event.agentId;
     if (agentId)
       void update($, list, (entries) =>
-        patchEntry(entries, agentId, (entry) => ({
-          stepsStarted: entry.stepsStarted + 1,
-          model: event.model,
-        })),
+        patchEntry(entries, agentId, (entry) => stepStarted(entry, event.model)),
       ).catch(() => {});
 
     const result = yield* next(event);

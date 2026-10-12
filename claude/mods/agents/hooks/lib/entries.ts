@@ -58,3 +58,12 @@ export const mergeListed = (
 // a finished turn's reason, as a status, until the engine's list says otherwise
 export const statusOfEnd = (reason: string) =>
   reason === "answer" ? "completed" : reason === "aborted" ? "killed" : "failed";
+
+const FINISHED_STATUSES = new Set(["completed", "failed", "killed"]);
+
+// a step about to go out; a finished agent stepping again was resumed (SendMessage): running again
+export const stepStarted = (entry: AgentEntry, model: string): Partial<AgentEntry> => ({
+  stepsStarted: entry.stepsStarted + 1,
+  model,
+  ...(FINISHED_STATUSES.has(entry.status) ? { status: "running", endedAt: undefined, endReason: undefined } : {}),
+});

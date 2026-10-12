@@ -1,6 +1,6 @@
 import type { PullRequest } from "../../types";
 
-export const PR_FIELDS = "number,title,state,isDraft,reviewDecision,statusCheckRollup";
+export const PR_FIELDS = "number,title,url,state,isDraft,reviewDecision,statusCheckRollup";
 
 // one entry of gh's statusCheckRollup: a GitHub Actions run, or a commit status from another CI
 type RollupItem = {
@@ -53,6 +53,7 @@ export function parsePullRequest(json: string): PullRequest | null {
     return {
       number: raw.number,
       title: String(raw.title ?? ""),
+      url: String(raw.url ?? ""),
       state:
         raw.state === "MERGED"
           ? "merged"
