@@ -2,8 +2,7 @@
 
 Keeps Claude on the LSP for code navigation. It refuses a shell grep on a code symbol (pointing to the LSP call instead) and a shell
 write to a source file (pointing to Edit or Write), quietly retries the LSP server when it is not warmed up yet, and shows each
-refusal as a single dim line. It replaces the old classic hooks in `~/.claude/hooks/` (unwired; saved in
-`claude/hooks-lsp-first.disabled.json`).
+refusal as a single dim line.
 
 ## Example
 
