@@ -38,9 +38,19 @@ export const FALLBACK: PaletteTheme = {
     white: '#E5E9F0',
   },
   comment: '#60728A',
+  dimmed: '#7e848e',
 }
 
 const HEX = /"(#[0-9A-Fa-f]{6})"/g
+
+// the color halfway between two "#rrggbb"
+export const mixColors = (firstHex: string, secondHex: string) => {
+  const channels = (hex: string) => [1, 3, 5].map(start => parseInt(hex.slice(start, start + 2), 16))
+  const secondChannels = channels(secondHex)
+  return `#${channels(firstHex)
+    .map((value, index) => Math.round((value + secondChannels[index]!) / 2).toString(16).padStart(2, '0'))
+    .join('')}`
+}
 
 // ponytail: reads only the shapes a wezterm scheme uses (key = "#hex", key = [ "#hex", ... ]), not general TOML
 export const parseScheme = (text: string): PaletteTheme => {
@@ -54,6 +64,7 @@ export const parseScheme = (text: string): PaletteTheme => {
   }
   const theme = { ...FALLBACK, ansi: array('ansi'), brights: array('brights') }
   for (const key of SCALARS) theme[key] = scalar(key) ?? FALLBACK[key]
+  theme.dimmed = mixColors(theme.foreground, theme.background)
   return theme
 }
 

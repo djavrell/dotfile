@@ -32,6 +32,12 @@ state and its types; a consumer lists it under `dependencies` in `plugin.json` a
 This keeps one source of truth that a pane, a band or a toast can all read. Split a domain out of `session` only once a second consumer
 exists, not for its own sake.
 
+**Colors belong to `palette`.** Every color definition and every computed color (a mix, a dim look as a plain color, a theme
+fallback) lives in `palette` and is published on `PaletteTheme`. A consumer only picks which published color paints what (a status's
+role, a threshold band); it never hardcodes a hex nor computes a color. A color is named by its palette path (`PaletteColorPath`:
+`ansi.blue`, `brights.yellow`, `comment`), never through an alias or a flat copy of the theme. The one exception is `paint(theme, path)`
+in `session/hooks/lib/theme.ts`, a lookup only: a mod cannot import another's code, and a `$.palette` call is async, unusable mid-draw.
+
 Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/` holds pure helpers (git, tree, format, icons, theme);
 `components/` holds reusable drawing bricks (`Meter`, the `▰▱` gauge used by the steps and effort bars: glyphs live there only);
 `sections/` assembles them into the pane's sections. A component takes `Box`/`Text` and data, never `$`, and is called as a function.

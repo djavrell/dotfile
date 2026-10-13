@@ -34,6 +34,10 @@ test('falls back field by field for what the file lacks', () => {
   expect(t.comment).toBe(FALLBACK.comment)
 })
 
+test('dimmed sits halfway between the foreground and the background', () => {
+  expect(parseScheme(SCHEME).dimmed).toBe('#1a1a1a')
+})
+
 test('an empty file is the fallback', () => {
   expect(parseScheme('')).toEqual(FALLBACK)
 })
