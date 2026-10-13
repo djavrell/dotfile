@@ -22,6 +22,8 @@ declare module 'claude-code' {
       tick: number
       // the /context breakdown, estimated after each turn; null until the first one
       context: ContextInfo | null
+      // folder paths the person folded in the Files tree (a click on the folder's line)
+      collapsedFolders: string[]
     }
   }
 }

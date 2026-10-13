@@ -1,29 +1,31 @@
 import type { AgentEntry } from "agents";
+import type { PaletteColorPath, PaletteTheme } from "palette";
 
 import { Meter } from "../components/meter";
 import { FINISHED, buildAgentTree } from "../lib/agentTree";
 import { modelIcon } from "../lib/icons";
-import type { Colors, Role, Ui } from "../lib/theme";
+import { paint } from "../lib/theme";
+import type { Ui } from "../lib/theme";
 
-const AGENT_STATUS: Record<string, { icon: string; color: Role }> = {
-  pending: { icon: "●", color: "yellow" },
-  running: { icon: "●", color: "yellow" },
-  waiting: { icon: "●", color: "yellow" },
-  idle: { icon: "○", color: "gray" },
-  completed: { icon: "✓", color: "green" },
-  failed: { icon: "✗", color: "red" },
-  killed: { icon: "✗", color: "red" },
+const AGENT_STATUS: Record<string, { icon: string; color: PaletteColorPath }> = {
+  pending: { icon: "●", color: "ansi.yellow" },
+  running: { icon: "●", color: "ansi.yellow" },
+  waiting: { icon: "●", color: "ansi.yellow" },
+  idle: { icon: "○", color: "comment" },
+  completed: { icon: "✓", color: "ansi.green" },
+  failed: { icon: "✗", color: "ansi.red" },
+  killed: { icon: "✗", color: "ansi.red" },
 };
-const UNKNOWN_STATUS = { icon: "?", color: "gray" } as const;
+const UNKNOWN_STATUS = { icon: "?", color: "comment" } as const;
 
 export function AgentsSection({
   ui: { Box, Text },
-  color,
+  theme,
   agentList,
   bodyColumns,
 }: {
   ui: Ui;
-  color: Colors;
+  theme?: PaletteTheme;
   agentList: readonly AgentEntry[];
   // the pane's inner width, which the step strips fill
   bodyColumns: number;
@@ -38,9 +40,9 @@ export function AgentsSection({
           <Box key={agent.id} flexDirection="column">
             <Text wrap="truncate-end">
               <Text dimColor>{guide}</Text>
-              <Text color={color[agentStatus.color]}>{agentStatus.icon} </Text>
-              <Text color={color[model.color]}>{model.glyph} </Text>
-              <Text color={color.cyan}>{agent.type} </Text>
+              <Text color={paint(theme, agentStatus.color)}>{agentStatus.icon} </Text>
+              <Text color={paint(theme, model.color)}>{model.glyph} </Text>
+              <Text color={theme?.ansi.cyan}>{agent.type} </Text>
               <Text dimColor>{agent.description}</Text>
             </Text>
             {agent.stepsStarted > 0 && (
@@ -53,9 +55,9 @@ export function AgentsSection({
                   total: agent.stepsStarted,
                   maxWidth: bodyColumns - underGuide.length - counter.length,
                   filledColor: FINISHED.has(agent.status)
-                    ? color.green
-                    : color.blue,
-                  emptyColor: color.yellow,
+                    ? theme?.ansi.green
+                    : theme?.ansi.blue,
+                  emptyColor: theme?.ansi.yellow,
                 })}
                 <Text dimColor>{counter}</Text>
               </Text>

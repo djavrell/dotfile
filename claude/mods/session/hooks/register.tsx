@@ -7,9 +7,12 @@ import type { EngineInterface, Register } from "claude-code";
 import type { ContextInfo, ModelInfo } from "../types";
 import { visibleAgents } from "./lib/agentTree";
 import { cacheReadPercent } from "./lib/format";
-import { DIFF_ARGS, UNTRACKED_ARGS, parseNumstat, parseUntracked } from "./lib/git";
-import { colors } from "./lib/theme";
-import type { Colors } from "./lib/theme";
+import {
+  DIFF_ARGS,
+  UNTRACKED_ARGS,
+  parseNumstat,
+  parseUntracked,
+} from "./lib/git";
 import { AgentsSection } from "./sections/agents";
 import { CONTEXT_LEGEND, ContextSection } from "./sections/context";
 import { FilesSection } from "./sections/files";
@@ -26,9 +29,13 @@ const info = atom({ plugin: "session", key: "info" } as const, null);
 // bumped on a timer and on each measure (turn, rate-limit move) so usage, countdown and elapsed time redraw
 const tick = atom({ plugin: "session", key: "tick" } as const, 0);
 const context = atom({ plugin: "session", key: "context" } as const, null);
+const collapsedFolders = atom(
+  { plugin: "session", key: "collapsedFolders" } as const,
+  [],
+);
 
 const PANE = "session";
-const PANE_COLUMNS = 50;
+const PANE_COLUMNS = 70;
 const TICK_MS = 10_000;
 // a finished agent stays in the pane this long after it ended, then leaves on the next tick
 const FINISHED_AGENT_KEEP_MS = 30_000;
@@ -58,7 +65,8 @@ async function refresh($: EngineInterface) {
   ]);
   if (thisGeneration !== refreshGeneration) return;
   const changes = diff.exitCode === 0 ? parseNumstat(diff.stdout) : [];
-  if (untracked.exitCode === 0) changes.push(...parseUntracked(untracked.stdout));
+  if (untracked.exitCode === 0)
+    changes.push(...parseUntracked(untracked.stdout));
   await update($, files, () => changes);
 }
 
@@ -93,6 +101,15 @@ async function refreshContext($: EngineInterface) {
 async function addSkill($: EngineInterface, name: string) {
   await update($, skills, (skillNames) =>
     skillNames.includes(name) ? skillNames : [...skillNames, name],
+  );
+}
+
+// ponytail: a folded folder stays listed once its files are committed; harmless, the list stays tiny
+async function toggleFolder($: EngineInterface, folderPath: string) {
+  await update($, collapsedFolders, (folderPaths) =>
+    folderPaths.includes(folderPath)
+      ? folderPaths.filter((path) => path !== folderPath)
+      : [...folderPaths, folderPath],
   );
 }
 
@@ -133,7 +150,8 @@ export const register: Register = (on) => {
     });
     await $.command.register({
       name: "context-icons",
-      description: "What the icons of the session pane's Context legend stand for",
+      description:
+        "What the icons of the session pane's Context legend stand for",
     });
     void refresh($).catch(() => {});
     void refreshContext($).catch(() => {});
@@ -162,8 +180,7 @@ export const register: Register = (on) => {
 
   on("tool.call", async ($, event, next) => {
     const result = await next(event);
-    if (event.tool === "Skill")
-      void addSkill($, event.skill).catch(() => {});
+    if (event.tool === "Skill") void addSkill($, event.skill).catch(() => {});
     if (WRITERS.has(event.tool)) void scheduleRefresh($).catch(() => {});
 
     return result;
@@ -185,7 +202,8 @@ export const register: Register = (on) => {
   on("session.measure", async ($, event, next) => {
     void update($, tick, (tickCount) => tickCount + 1).catch(() => {});
     // the messages grow each turn; the threshold moves with the model (/model) and the settings
-    if (event.changed.includes("context")) void refreshContext($).catch(() => {});
+    if (event.changed.includes("context"))
+      void refreshContext($).catch(() => {});
 
     return next(event);
   });
@@ -234,6 +252,7 @@ export const register: Register = (on) => {
       skillList,
       modelInfo,
       contextInfo,
+      foldedFolders,
       usage,
       nowMs,
       theme,
@@ -243,14 +262,16 @@ export const register: Register = (on) => {
       read($, skills),
       read($, info),
       read($, context),
+      read($, collapsedFolders),
       $.session.usage(),
       $.clock.now(),
       getTheme($),
     ]);
-    const color: Colors = theme ? colors(theme) : {};
     // docked, fill the pane's height so the grown top block pushes Context to the bottom
     const minHeight =
-      event.props.placement === "dock" ? event.props.scroll.bodyRows : undefined;
+      event.props.placement === "dock"
+        ? event.props.scroll.bodyRows
+        : undefined;
 
     return (
       <Box
@@ -259,22 +280,29 @@ export const register: Register = (on) => {
         backgroundColor={theme?.background}
       >
         <Box flexDirection="column" flexGrow={1}>
-          {MainAgentCard({ ui, color, modelInfo, contextInfo, usage, nowMs })}
+          {MainAgentCard({ ui, theme, modelInfo, contextInfo, usage, nowMs })}
           {AgentsSection({
             ui,
-            color,
+            theme,
             agentList: visibleAgents(agentList, nowMs, FINISHED_AGENT_KEEP_MS),
             bodyColumns: event.props.bodyColumns,
           })}
           <Text> </Text>
           {SkillsSection({ ui, skillList })}
           <Text> </Text>
-          {FilesSection({ ui, color, changedFiles })}
+          {FilesSection({
+            ui,
+            theme,
+            changedFiles,
+            collapsedFolders: new Set(foldedFolders),
+            onToggleFolder: (folderPath) =>
+              void toggleFolder($, folderPath).catch(() => {}),
+          })}
           <Text> </Text>
         </Box>
         {ContextSection({
           ui,
-          color,
+          theme,
           contextInfo,
           usage,
           bodyColumns: event.props.bodyColumns,

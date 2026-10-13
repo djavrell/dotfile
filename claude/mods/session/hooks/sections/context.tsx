@@ -1,9 +1,11 @@
 import type { SessionUsage } from "claude-code";
+import type { PaletteColorPath, PaletteTheme } from "palette";
 
 import type { ContextInfo, ContextSlice } from "../../types";
 import { contextCells, sliceRuns } from "../lib/contextGrid";
 import { fmtTokens } from "../lib/format";
-import type { Colors, Role, Ui } from "../lib/theme";
+import { paint } from "../lib/theme";
+import type { Ui } from "../lib/theme";
 
 // share of the auto-compaction threshold past which the context line warns
 const COMPACT_WARN = 0.9;
@@ -14,17 +16,17 @@ const FREE_CELL = "▱";
 const UNKNOWN_ICON = "■";
 // by /context's row names: the rows have no stable id, only a kind; a row not listed takes the next spare color
 // and the plain cell as its legend icon
-const SLICE_STYLE: Record<string, { role: Role; icon: string }> = {
-  "System prompt": { role: "blue", icon: "" }, // nf-fa-cog
-  "System tools": { role: "cyan", icon: "" }, // nf-fa-wrench
-  "MCP tools": { role: "magenta", icon: "" }, // nf-fa-plug
-  "MCP server instructions": { role: "magenta", icon: "" }, // nf-fa-info_circle
-  "Custom agents": { role: "white", icon: "" }, // nf-fa-users
-  "Memory files": { role: "yellow", icon: "" }, // nf-fa-database
-  Skills: { role: "yellowBright", icon: "" }, // nf-fa-bolt
-  Messages: { role: "green", icon: "" }, // nf-fa-comments
+const SLICE_STYLE: Record<string, { role: PaletteColorPath; icon: string }> = {
+  "System prompt": { role: "ansi.blue", icon: "" }, // nf-fa-cog
+  "System tools": { role: "ansi.cyan", icon: "" }, // nf-fa-wrench
+  "MCP tools": { role: "ansi.magenta", icon: "" }, // nf-fa-plug
+  "MCP server instructions": { role: "ansi.magenta", icon: "" }, // nf-fa-info_circle
+  "Custom agents": { role: "ansi.white", icon: "" }, // nf-fa-users
+  "Memory files": { role: "ansi.yellow", icon: "" }, // nf-fa-database
+  Skills: { role: "brights.yellow", icon: "" }, // nf-fa-bolt
+  Messages: { role: "ansi.green", icon: "" }, // nf-fa-comments
 };
-const SPARE_COLORS: Role[] = ["cyan", "magenta", "yellow", "blue"];
+const SPARE_COLORS: PaletteColorPath[] = ["ansi.cyan", "ansi.magenta", "ansi.yellow", "ansi.blue"];
 
 // what /context-icons prints: each icon of the legend and the grid's other cells, by name
 export const CONTEXT_LEGEND = [
@@ -36,13 +38,13 @@ export const CONTEXT_LEGEND = [
 
 export function ContextSection({
   ui: { Box, Text },
-  color,
+  theme,
   contextInfo,
   usage,
   bodyColumns,
 }: {
   ui: Ui;
-  color: Colors;
+  theme?: PaletteTheme;
   contextInfo: ContextInfo | null;
   usage: SessionUsage;
   // the pane's inner width, which the grid fills
@@ -61,12 +63,13 @@ export function ContextSection({
       (slice) => slice.kind === "used" && slice.tokens > 0,
     ) ?? [];
   const sliceColor = (slice: ContextSlice) => {
-    if (slice.kind === "buffer") return color.red;
-    if (slice.kind !== "used") return color.gray;
+    if (slice.kind === "buffer") return theme?.ansi.red;
+    if (slice.kind !== "used") return theme?.comment;
     const spareIndex = usedSlices.indexOf(slice) % SPARE_COLORS.length;
-    return color[
-      SLICE_STYLE[slice.name]?.role ?? SPARE_COLORS[spareIndex] ?? "gray"
-    ];
+    return paint(
+      theme,
+      SLICE_STYLE[slice.name]?.role ?? SPARE_COLORS[spareIndex] ?? "comment",
+    );
   };
   const cells = contextInfo
     ? contextCells(contextInfo.slices, contextInfo.maxTokens, GRID_ROWS * bodyColumns)
@@ -99,7 +102,7 @@ export function ContextSection({
           </Text>
         ))}
       </Box>
-      <Text color={nearCompact ? color.red : color.yellow} wrap="truncate-end">
+      <Text color={nearCompact ? theme?.ansi.red : theme?.ansi.yellow} wrap="truncate-end">
         {Math.round(contextPercent)}%  📊{" "}
         {contextTokens
           ? `${fmtTokens(contextTokens)}/${fmtTokens(usage.context.window)}`

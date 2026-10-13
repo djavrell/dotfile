@@ -26,3 +26,16 @@ test('merges a folder that only holds one folder', () => {
     '      └─ index.d.ts',
   ])
 })
+
+test('a collapsed folder hides its children and counts its files', () => {
+  const items = [{ path: 'a/b/x.ts' }, { path: 'a/b/y.ts' }, { path: 'a/z.ts' }, { path: 'c.md' }]
+  const rows = buildTree(items, new Set(['a/b']))
+  expect(rows.map(row => row.branch + row.label)).toEqual(['├─ a/', '│  ├─ b/', '│  └─ z.ts', '└─ c.md'])
+  expect(rows[1]).toMatchObject({ folderPath: 'a/b', hiddenCount: 2 })
+  expect(rows[0]?.hiddenCount).toBeUndefined()
+})
+
+test('a merged folder chain folds under its full path', () => {
+  const rows = buildTree([{ path: 'claude/mods/session/a.ts' }, { path: 'claude/mods/session/b.ts' }], new Set(['claude/mods/session']))
+  expect(rows).toEqual([{ branch: '└─ ', label: 'claude/mods/session/', folderPath: 'claude/mods/session', hiddenCount: 2 }])
+})

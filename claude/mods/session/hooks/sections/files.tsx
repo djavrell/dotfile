@@ -1,16 +1,25 @@
+import type { Elements } from "claude-code";
+import type { PaletteTheme } from "palette";
+
 import type { Change } from "../../types";
-import { EDITED_MARK, FOLDER_ICON, fileIcon } from "../lib/icons";
-import type { Colors, Ui } from "../lib/theme";
+import { EDITED_MARK, FOLDER_CLOSED_ICON, FOLDER_ICON, fileIcon } from "../lib/icons";
+import { paint } from "../lib/theme";
+import type { Ui } from "../lib/theme";
 import { buildTree } from "../lib/tree";
 
 export function FilesSection({
-  ui: { Box, Text },
-  color,
+  ui: { Box, Button, Text },
+  theme,
   changedFiles,
+  collapsedFolders,
+  onToggleFolder,
 }: {
-  ui: Ui;
-  color: Colors;
+  // the folder lines are buttons: this section needs Button on top of Box and Text
+  ui: Ui & Pick<Elements[keyof Elements], "Button">;
+  theme?: PaletteTheme;
   changedFiles: readonly Change[];
+  collapsedFolders: ReadonlySet<string>;
+  onToggleFolder: (folderPath: string) => void;
 }) {
   const addedTotal = changedFiles.reduce(
     (total, file) => total + (file.added ?? 0),
@@ -25,38 +34,65 @@ export function FilesSection({
     <Box flexDirection="column">
       <Text bold>Files</Text>
       {changedFiles.length === 0 && <Text dimColor>None.</Text>}
-      {buildTree(changedFiles).map((row, rowIndex) => {
-        const change = row.item;
-        const icon = change ? fileIcon(row.label) : undefined;
+      {buildTree(changedFiles, collapsedFolders).map((row, rowIndex) => {
+        const { folderPath } = row;
+        // a click on a folder's line folds and unfolds its children. A Button always inverts under
+        // the pointer and no prop turns that off: `hover` swaps each part's colors beforehand so the
+        // inversion swaps them back, and the line looks unchanged
+        // (gray rather than dimColor: dim would also dim the swapped colors and the swap would show)
+        if (folderPath !== undefined) {
+          const isCollapsed = row.hiddenCount !== undefined;
+          const unInverted = (shownColor?: string) => ({
+            color: theme?.background,
+            backgroundColor: shownColor,
+          });
+          return (
+            <Box key={`folder-${folderPath}`} flexDirection="row">
+              <Button
+                key={`fold-${folderPath}`}
+                plain
+                onPress={() => onToggleFolder(folderPath)}
+              >
+                <Text color={theme?.dimmed} hover={unInverted(theme?.dimmed)}>
+                  {row.branch}
+                </Text>
+                <Text color={theme?.ansi.yellow} hover={unInverted(theme?.ansi.yellow)}>
+                  {isCollapsed ? FOLDER_CLOSED_ICON : FOLDER_ICON}{" "}
+                </Text>
+                <Text color={theme?.ansi.blue} hover={unInverted(theme?.ansi.blue)}>
+                  {row.label}
+                </Text>
+                {isCollapsed && (
+                  <Text color={theme?.dimmed} hover={unInverted(theme?.dimmed)}>
+                    {" "}
+                    {row.hiddenCount}
+                  </Text>
+                )}
+              </Button>
+            </Box>
+          );
+        }
+        const change = row.item!;
+        const icon = fileIcon(row.label);
         return (
           <Box key={`file-${rowIndex}`} flexDirection="row" gap={1}>
             <Text wrap="truncate-end">
               <Text dimColor>{row.branch}</Text>
-              {icon ? (
-                <Text color={color[icon.color]}>{icon.glyph} </Text>
-              ) : (
-                <Text color={color.yellow}>{FOLDER_ICON} </Text>
-              )}
-              {change ? (
-                row.label
-              ) : (
-                <Text color={color.blue}>{row.label}</Text>
-              )}
+              <Text color={paint(theme, icon.color)}>{icon.glyph} </Text>
+              {row.label}
             </Text>
-            {change && change.added !== null && (
-              <Text color={color.green}>+{change.added}</Text>
+            {change.added !== null && (
+              <Text color={theme?.ansi.green}>+{change.added}</Text>
             )}
-            {change && change.deleted !== null && change.deleted > 0 && (
-              <Text color={color.red}>-{change.deleted}</Text>
+            {change.deleted !== null && change.deleted > 0 && (
+              <Text color={theme?.ansi.red}>-{change.deleted}</Text>
             )}
-            {change && change.added === null && !change.isNew && (
+            {change.added === null && !change.isNew && (
               <Text dimColor>bin</Text>
             )}
-            {change && (
-              <Text color={change.isNew ? color.green : color.yellow}>
-                {EDITED_MARK}
-              </Text>
-            )}
+            <Text color={change.isNew ? theme?.ansi.green : theme?.ansi.yellow}>
+              {EDITED_MARK}
+            </Text>
           </Box>
         );
       })}
