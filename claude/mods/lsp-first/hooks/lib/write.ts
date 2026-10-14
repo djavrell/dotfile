@@ -72,13 +72,38 @@ function scriptWrittenFiles(command: string) {
   return SCRIPT_WRITE_CALLS.flatMap((writeCall) => [...command.matchAll(writeCall)].map((match) => match[1]!));
 }
 
+// ── where a path lands ───────────────────────────────────────────────────────
+
+// A part that only changes directory (`cd scratch`) or only sets a shell variable (`variant=/tmp/x`).
+const CD_TARGET = /^cd\s+['"]?([^'"\s]+)['"]?$/;
+const ASSIGNMENT = /^(\w+)=['"]?([^'"\s]*)['"]?$/;
+const VARIABLE = /\$\{?(\w+)\}?/g;
+
+// A relative path under the directory a `cd` in the command moved to; an absolute or home path as is.
+const joinPath = (directory: string, path: string) =>
+  !directory || /^[/~]/.test(path) ? path : `${directory.replace(/\/$/, "")}/${path}`;
+
 // ── the verdict ──────────────────────────────────────────────────────────────
 
 // The project source file a shell command writes, which the guard refuses; null when it writes none.
+// Each path is judged where it lands: after the command's own `cd`, with the variables it set expanded.
+// ponytail: the shell's persisted cwd and loop variables stay unknown; only a cd or assignment in the command counts
 export function shellWriteTarget(rawCommand: string): string | null {
   const command = cleanCommand(rawCommand);
-  const shellWrites = commandParts(withoutHeredocBodies(command)).map(shellWrittenFile);
+  const variables = new Map<string, string>();
+  let directory = "";
+  const candidates: string[] = [];
+  for (const rawPart of commandParts(withoutHeredocBodies(command))) {
+    const part = rawPart.replace(VARIABLE, (whole, name: string) => variables.get(name) ?? whole);
+    const assignment = part.match(ASSIGNMENT);
+    if (assignment) variables.set(assignment[1]!, assignment[2]!);
+    const cdTarget = part.match(CD_TARGET)?.[1];
+    if (cdTarget) directory = joinPath(directory, cdTarget);
+    const written = shellWrittenFile(part);
+    // behind an unknown variable (`$loop/a.ts`) the path may be anywhere: judged as written, never moved under the cd
+    if (written) candidates.push(part.includes(`$${written}`) ? written : joinPath(directory, written));
+  }
   // the script's code sits in the heredoc body: its write calls are looked for in the whole command
-  const candidates = [...shellWrites, ...scriptWrittenFiles(command)];
-  return candidates.find((path): path is string => !!path && isProjectSourceFile(path)) ?? null;
+  candidates.push(...scriptWrittenFiles(command).map((path) => joinPath(directory, path)));
+  return candidates.find(isProjectSourceFile) ?? null;
 }

@@ -71,7 +71,7 @@ export function MainAgentCard({
       paddingX={1}
     >
       <Box flexDirection="row" gap={2}>
-        <Text bold>
+        <Text weight="semibold">
           <Text color={paint(theme, model.color)}>{model.glyph} </Text>
           <Text color={theme?.ansi.cyan}>{modelInfo?.model ?? "Claude"}</Text>
         </Text>

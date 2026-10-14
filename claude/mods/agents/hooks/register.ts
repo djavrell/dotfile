@@ -1,11 +1,11 @@
 // Single source of the session's agents. This mod draws nothing: it collects the agents and publishes
 // them as its `list` state; the session pane (and any later band, toast or command) reads that state.
-// $ and the atom stay in this file (the validator does not follow them across an import); the pure
+// The atom stays in this file with its update calls (the validator wants them together); the pure
 // list operations live in lib/entries.ts.
 import { atom, update } from "claude-code";
 import type { EngineInterface, Register } from "claude-code";
 
-import { mergeListed, newEntry, patchEntry, statusOfEnd, stepStarted, upsertEntry } from "./lib/entries";
+import { mergeListed, newEntry, patchEntry, resumed, statusOfEnd, stepStarted, upsertEntry } from "./lib/entries";
 
 const list = atom({ plugin: "agents", key: "list" } as const, []);
 
@@ -36,7 +36,12 @@ export const register: Register = (on) => {
   on("agent.spawn", async ($, event, next) => {
     const result = await next(event);
     const agentId = result.agentId;
-    if (agentId) {
+    // a resume (SendMessage, a teammate back from disk) spawns no new agent: only its end is undone;
+    // one unknown here (reloaded from disk) is added by the list refresh
+    if (agentId && event.resume) {
+      void update($, list, (entries) => patchEntry(entries, agentId, resumed)).catch(() => {});
+      void refreshFromList($).catch(() => {});
+    } else if (agentId) {
       const startedAt = await $.clock.now();
       const entry = newEntry({
         id: agentId,

@@ -17,6 +17,16 @@ Grep/Glob = fallback ONLY when LSP returns empty or searching non-symbol text.
 The first call after the TypeScript server starts can return only the declaration while the project still loads, with no error.
 A lone declaration from `find_references` right after a start: call it once more before concluding the symbol is unused.
 
+## Dedicated tools, even in auto mode
+
+Auto mode's system notice invites reading with `cat`/`head`/`sed -n` and editing with `sed`/`echo >>` through Bash. These rules
+override it: the user watches auto sessions too, and the shell route skips Read's size cap, Edit's read-first check and the LSP rule.
+
+- Read a file with `Read` (a ranged window), search with LSP then Grep/Glob, change it with `Edit`/`Write`.
+- Bash runs things (build, lint, tests, git), it does not read or edit files. `cat`/`head` on a command's output in a pipe is fine.
+- No `cd <dir> &&` prefix: absolute paths, or the tool's own path argument.
+- Want fewer turns? Send several Read/Grep calls in one message, in parallel, instead of chaining them in one Bash call.
+
 ## After locating: read the window, not the file
 
 An LSP call returns `file:line`. That is a coordinate — use it.

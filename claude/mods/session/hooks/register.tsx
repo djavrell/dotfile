@@ -1,102 +1,41 @@
-// Wiring of the session pane: state, the refreshes that need $, the hooks and the pane's assembly.
-// Everything that receives $ or names a $.state atom must live in this file: the validator does not
-// follow $ or an atom across an import. Pure helpers sit in lib/, each section's drawing in sections/.
+// Wiring of the session pane: the small state left here (skills, model, tick), the hooks and the pane's assembly.
+// Each domain's atoms live in state/ with their read/update calls (the validator wants them in one file), reached
+// through function declarations that take $. Pure helpers sit in lib/, each section's drawing in sections/.
 import { atom, read, update } from "claude-code";
 import type { EngineInterface, Register } from "claude-code";
 
-import type { ContextInfo, ModelInfo } from "../types";
+import type { ModelInfo } from "../types";
 import { visibleAgents } from "./lib/agentTree";
-import { cacheReadPercent } from "./lib/format";
-import {
-  DIFF_ARGS,
-  UNTRACKED_ARGS,
-  parseNumstat,
-  parseUntracked,
-} from "./lib/git";
 import { AgentsSection } from "./sections/agents";
 import { CONTEXT_LEGEND, ContextSection } from "./sections/context";
 import { FilesSection } from "./sections/files";
 import { SkillsSection } from "./sections/skills";
 import { MainAgentCard } from "./sections/mainAgent";
+import { readContext, refreshContext } from "./state/context";
+import {
+  WRITERS,
+  gitPoller,
+  readFiles,
+  refresh,
+  scheduleRefresh,
+  toggleFolder,
+} from "./state/files";
+import { PANE, isPaneOpen, openPane } from "./state/pane";
 
 // ── state ────────────────────────────────────────────────────────────────────
 
-const files = atom({ plugin: "session", key: "files" } as const, []);
 // owned by the agents mod (the single source of the session's agents): read here, never written
 const agents = atom({ plugin: "agents", key: "list" } as const, []);
 const skills = atom({ plugin: "session", key: "skills" } as const, []);
 const info = atom({ plugin: "session", key: "info" } as const, null);
 // bumped on a timer and on each measure (turn, rate-limit move) so usage, countdown and elapsed time redraw
 const tick = atom({ plugin: "session", key: "tick" } as const, 0);
-const context = atom({ plugin: "session", key: "context" } as const, null);
-const collapsedFolders = atom(
-  { plugin: "session", key: "collapsedFolders" } as const,
-  [],
-);
 
-const PANE = "session";
-const PANE_COLUMNS = 70;
 const TICK_MS = 10_000;
 // a finished agent stays in the pane this long after it ended, then leaves on the next tick
 const FINISHED_AGENT_KEEP_MS = 30_000;
-const GIT_POLL_MS = 10_000;
-const DEBOUNCE_MS = 300;
-const WRITERS = new Set(["Edit", "MultiEdit", "Write", "NotebookEdit", "Bash"]);
-
-// bumped by every refresh request: a run that is no longer the latest drops its result
-let refreshGeneration = 0;
 
 // ── refreshes ────────────────────────────────────────────────────────────────
-
-async function isPaneOpen($: EngineInterface) {
-  return (await $.ui.panes()).some((pane) => pane.id === PANE);
-}
-
-async function openPane($: EngineInterface) {
-  await $.ui.open({ id: PANE, title: "Session", columns: PANE_COLUMNS });
-}
-
-async function refresh($: EngineInterface) {
-  const thisGeneration = ++refreshGeneration;
-  // ponytail: HEAD fails in a repo without commits; untracked files still show there
-  const [diff, untracked] = await Promise.all([
-    $.process.run(DIFF_ARGS),
-    $.process.run(UNTRACKED_ARGS),
-  ]);
-  if (thisGeneration !== refreshGeneration) return;
-  const changes = diff.exitCode === 0 ? parseNumstat(diff.stdout) : [];
-  if (untracked.exitCode === 0)
-    changes.push(...parseUntracked(untracked.stdout));
-  await update($, files, () => changes);
-}
-
-// coalesces bursts of tool calls into one git run, and skips it while the pane is closed
-async function scheduleRefresh($: EngineInterface) {
-  const thisGeneration = ++refreshGeneration;
-  await $.clock.sleep(DEBOUNCE_MS);
-  if (thisGeneration !== refreshGeneration || !(await isPaneOpen($))) return;
-  await refresh($);
-}
-
-// the summary breakdown is estimated locally: no API call
-async function refreshContext($: EngineInterface) {
-  const { breakdown } = (await $.session.usage({ breakdown: "summary" }))
-    .context;
-  if (!breakdown) return;
-  const contextInfo: ContextInfo = {
-    slices: breakdown.categories.map(({ name, tokens, kind }) => ({
-      name,
-      tokens,
-      kind,
-    })),
-    maxTokens: breakdown.maxTokens,
-    compactAt: breakdown.autoCompactThreshold ?? null,
-    cacheReadPercent: breakdown.apiUsage
-      ? cacheReadPercent(breakdown.apiUsage)
-      : null,
-  };
-  await update($, context, () => contextInfo);
-}
 
 async function addSkill($: EngineInterface, name: string) {
   await update($, skills, (skillNames) =>
@@ -104,30 +43,10 @@ async function addSkill($: EngineInterface, name: string) {
   );
 }
 
-// ponytail: a folded folder stays listed once its files are committed; harmless, the list stays tiny
-async function toggleFolder($: EngineInterface, folderPath: string) {
-  await update($, collapsedFolders, (folderPaths) =>
-    folderPaths.includes(folderPath)
-      ? folderPaths.filter((path) => path !== folderPath)
-      : [...folderPaths, folderPath],
-  );
-}
-
 async function ticker($: EngineInterface) {
   for (;;) {
     await $.clock.sleep(TICK_MS);
     await update($, tick, (tickCount) => tickCount + 1);
-  }
-}
-
-// git changes made outside Claude (a commit, a checkout in another terminal) raise no event:
-// re-read them on a timer while the pane is open
-// ponytail: polling; a file watcher if git ever gets slow on a big repo
-async function gitPoller($: EngineInterface) {
-  for (;;) {
-    await $.clock.sleep(GIT_POLL_MS);
-    if (!(await isPaneOpen($))) continue;
-    await refresh($).catch(() => {});
   }
 }
 
@@ -247,22 +166,20 @@ export const register: Register = (on) => {
     const { Box, Text } = ui;
     await read($, tick);
     const [
-      changedFiles,
+      [changedFiles, foldedFolders],
       agentList,
       skillList,
       modelInfo,
       contextInfo,
-      foldedFolders,
       usage,
       nowMs,
       theme,
     ] = await Promise.all([
-      read($, files),
+      readFiles($),
       read($, agents),
       read($, skills),
       read($, info),
-      read($, context),
-      read($, collapsedFolders),
+      readContext($),
       $.session.usage(),
       $.clock.now(),
       getTheme($),

@@ -38,16 +38,22 @@ role, a threshold band); it never hardcodes a hex nor computes a color. A color 
 `ansi.blue`, `brights.yellow`, `comment`), never through an alias or a flat copy of the theme. The one exception is `paint(theme, path)`
 in `session/hooks/lib/theme.ts`, a lookup only: a mod cannot import another's code, and a `$.palette` call is async, unusable mid-draw.
 
-Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/` holds pure helpers (git, tree, format, icons, theme);
+Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` holds each domain's atoms with their `$` calls (`pane`,
+`files`, `context`), as function declarations that take `$`; `lib/` holds pure helpers (git, tree, format, icons, theme), no `atom`;
 `components/` holds reusable drawing bricks (`Meter`, the `▰▱` gauge used by the steps and effort bars: glyphs live there only);
 `sections/` assembles them into the pane's sections. A component takes `Box`/`Text` and data, never `$`, and is called as a function.
 
 ## API constraints learned the hard way
 
-- **`$` and atoms stay in the hooks module file.** The validator refuses `$` passed to a function imported from another file, and an
-  atom imported from another file. Pure code (formatting, parsing, trees, icons) and section components can live in other files; give
-  a component `Box`/`Text` (`$.ui.resolve(event)`) and data, never `$`.
-- `$` is always spelled `$.noun.method(...)`: no `$?.`, no `$` stored or passed around except to top-level functions of the same file.
+- **`$` crosses files only into a function declaration** (since 2.1.299, probed with `validate` and `test`): a hook may pass `$` to
+  `export async function f($: EngineInterface)` from another file of the mod, and on from there (`lib/a` -> `lib/b`). An imported
+  arrow (`const f = async ($) => ...`) is refused.
+- **An atom stays in the file that reads and writes it**: `atom(...)` and its `read`/`update` calls must share a file, which may be a
+  `lib/` file the hook hands `$` to. An atom imported alone, then updated in `register`, is refused.
+- Pure code (formatting, parsing, trees, icons) and section components live in other files freely; give a component `Box`/`Text`
+  (`$.ui.resolve(event)`) and data, never `$`.
+- `$` is always spelled `$.noun.method(...)`: no `$?.`, never stored (a module variable holding `$` is refused), only passed as an
+  argument to a function declaration.
 - **Imports stay inside the mod's folder**: an import outside it is refused, and so is a symlink to a shared file. Code shared between
   mods has to be a service on `$` (like `palette`).
 - **Serving a noun** (`$.palette`): add it in `engine.create` with a bottom implementation, and answer calls with
@@ -62,6 +68,10 @@ Inside `session/hooks/`: `register.tsx` wires state, `$` calls and hooks; `lib/`
   `scroll.bodyRows` excludes the frame's last row, which Claude Code paints itself: a background color cannot reach it.
 - `claude plugin test` cannot call another mod's served noun. It can drive a mod's own hooks: the test's `on` hooks sit beneath the
   plugin, so a fake `tool.call` answer plus `on("mcp.call", () => ({ value }))` let `$.tool.call(...)` run a hook end to end (`lsp-first`).
+  A test's `$` has no `$.state`, no `$.env.get`, and not even the mod's own served noun: a noun such as `$.palette` comes from an
+  inline plugin that adds it in `engine.create`. `$.ui.mount` renders a pane, so a test can check a redraw (`session/tests/pane.test.ts`).
+- `validate` shows a hook's filter as `?` when its value is imported (`requestId=?` for an imported `PANE`): display only, the hook
+  still matches.
 - **Refresh events**: `session.measure` fires after each main-thread turn and when a rate-limit window moves, with
   `changed: ('context'|'rateLimits'|'cost')[]`; a compaction is no turn, hence a `session.compact` hook (`session`).
 - **Timers and cwd**: `$.clock.every(ms, fn)` returns a cancelable `Timer`, use it over a `sleep` loop that outlives its hook.

@@ -4,7 +4,7 @@
 //   3. a cclsp call that hit the server's cold start ("No Project") is primed and run again, transparently;
 //   4. this mod's own refusals are drawn as one dim line in the transcript.
 // Plugin hooks run above the classic PreToolUse hooks, so this mod judges a call first.
-// $ stays in this file (the validator does not follow it across an import); the judging is pure, in lib/.
+// The judging is pure, in lib/; primeAndRetry stays here with the Read state it uses.
 import type { EngineInterface, McpToolResult, Register } from "claude-code";
 
 import { compactDenial, grepDenial, writeDenial } from "./lib/denials";

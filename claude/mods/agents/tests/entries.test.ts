@@ -1,6 +1,6 @@
 import { expect, test } from 'claude-code/testing'
 
-import { MAX_ENTRIES, mergeListed, newEntry, patchEntry, statusOfEnd, stepStarted, upsertEntry } from '../hooks/lib/entries'
+import { MAX_ENTRIES, mergeListed, newEntry, patchEntry, resumed, statusOfEnd, stepStarted, upsertEntry } from '../hooks/lib/entries'
 
 const explore = newEntry({ id: 'a1', type: 'Explore', description: 'find things', status: 'running' })
 
@@ -45,4 +45,12 @@ test('a step on a finished agent marks it running again', () => {
   const finished = { ...explore, status: 'completed', endedAt: 5, endReason: 'answer' }
   expect(stepStarted(finished, 'haiku')).toEqual({ stepsStarted: 1, model: 'haiku', status: 'running', endedAt: undefined, endReason: undefined })
   expect(stepStarted(explore, 'haiku')).toEqual({ stepsStarted: 1, model: 'haiku' })
+})
+
+test('a resume undoes the end, keeps start and parent', () => {
+  const finished = { ...explore, parentId: 'main', startedAt: 1, status: 'completed', endedAt: 5, endReason: 'answer' }
+  const [entry] = patchEntry([finished], 'a1', resumed)
+  expect(entry).toMatchObject({ parentId: 'main', startedAt: 1, status: 'running' })
+  expect(entry?.endedAt).toBeUndefined()
+  expect(entry?.endReason).toBeUndefined()
 })

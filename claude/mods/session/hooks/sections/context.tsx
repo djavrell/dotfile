@@ -80,7 +80,7 @@ export function ContextSection({
 
   return (
     <Box flexDirection="column">
-      <Text bold>Context</Text>
+      <Text weight="semibold">Context</Text>
       {gridRows.map((runs, rowIndex) => (
         <Text key={`row${rowIndex}`} wrap="truncate-end">
           {runs.map((run, runIndex) => (

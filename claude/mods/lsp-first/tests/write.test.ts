@@ -27,3 +27,12 @@ test('reads, other targets and scratch paths pass', () => {
 test('the source inside a heredoc body is no redirect', () => {
   expect(shellWriteTarget("cat > notes.md <<'MD'\nconst f = () => import('./x.ts')\nMD")).toBe(null)
 })
+
+test('a target relative to a cd, or behind a variable set in the command, is judged where it lands', () => {
+  expect(shellWriteTarget('cd /tmp/x/scratchpad && sed -i "s/a/b/" v1/hooks/register.ts')).toBe(null)
+  expect(shellWriteTarget('variant=/tmp/x/scratchpad/v1; sed -i "s/a/b/" $variant/hooks/register.ts')).toBe(null)
+  expect(shellWriteTarget('cd src && sed -i "s/a/b/" app.ts')).toBe('src/app.ts')
+  // stays strict: an absolute target after a scratch cd, an unknown variable after one
+  expect(shellWriteTarget('cd /tmp/x/scratchpad && sed -i "s/a/b/" /home/me/src/a.ts')).toBe('/home/me/src/a.ts')
+  expect(shellWriteTarget('cd /tmp/x/scratchpad && sed -i "s/a/b/" $loop/a.ts')).toBe('loop/a.ts')
+})

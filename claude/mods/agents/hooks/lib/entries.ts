@@ -61,9 +61,13 @@ export const statusOfEnd = (reason: string) =>
 
 const FINISHED_STATUSES = new Set(["completed", "failed", "killed"]);
 
-// a step about to go out; a finished agent stepping again was resumed (SendMessage): running again
+// a known agent running again (SendMessage, a teammate woken): its start, parent and description stay
+export const resumed = (): Partial<AgentEntry> => ({ status: "running", endedAt: undefined, endReason: undefined });
+
+// a step about to go out; a finished agent stepping again was resumed with no spawn event (a teammate
+// woken in memory): running again
 export const stepStarted = (entry: AgentEntry, model: string): Partial<AgentEntry> => ({
   stepsStarted: entry.stepsStarted + 1,
   model,
-  ...(FINISHED_STATUSES.has(entry.status) ? { status: "running", endedAt: undefined, endReason: undefined } : {}),
+  ...(FINISHED_STATUSES.has(entry.status) ? resumed() : {}),
 });

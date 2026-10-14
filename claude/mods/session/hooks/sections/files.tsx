@@ -32,7 +32,7 @@ export function FilesSection({
 
   return (
     <Box flexDirection="column">
-      <Text bold>Files</Text>
+      <Text weight="semibold">Files</Text>
       {changedFiles.length === 0 && <Text dimColor>None.</Text>}
       {buildTree(changedFiles, collapsedFolders).map((row, rowIndex) => {
         const { folderPath } = row;
@@ -42,10 +42,8 @@ export function FilesSection({
         // (gray rather than dimColor: dim would also dim the swapped colors and the swap would show)
         if (folderPath !== undefined) {
           const isCollapsed = row.hiddenCount !== undefined;
-          const unInverted = (shownColor?: string) => ({
-            color: theme?.background,
-            backgroundColor: shownColor,
-          });
+          const unInverted = (shownColor?: string) =>
+            theme && { color: theme.background, backgroundColor: shownColor };
           return (
             <Box key={`folder-${folderPath}`} flexDirection="row">
               <Button

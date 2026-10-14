@@ -1,6 +1,6 @@
 // The current branch's pull request: fetched with gh, published as the `current` state, drawn as one line in
 // the band above the prompt. No pull request (or no gh), no band.
-// $ and the atom stay in this file (the validator does not follow them across an import); parsing lives in lib/pr.ts.
+// The atoms stay in this file with their read/update calls (the validator wants them together); parsing lives in lib/pr.ts.
 import { atom, read, update } from "claude-code";
 import type { EngineInterface, Register, Timer } from "claude-code";
 
