@@ -1,0 +1,5 @@
+{
+  "name": "diagnostics",
+  "version": "0.1.0",
+  "description": "Caps the language server's new-diagnostics attachment before the model reads it"
+}

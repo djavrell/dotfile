@@ -25,6 +25,8 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
 |                   | click, fullscreen). Drawing only: the model reads them whole.                                                |
+| `diagnostics`     | Cuts the language server's new-diagnostics list before the model reads it: 400 chars a line, 20k in all (a   |
+|                   | typera/zod type error once spelled out 5.6M chars).                                                          |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with
@@ -95,6 +97,11 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
 - **Clicks in the transcript**: a `Button` in a transcript row works in fullscreen; its `onPress` updates an atom and the row
   redraws (`fold-transcript`).
 - A command's text output is shown prefixed with `<plugin>:`.
+- **The language server's new errors** come as a `diagnostics` attachment: `prompt.attachment` with `{ type: "diagnostics" }`
+  rewrites what the model reads (`diagnostics`), but no render component draws it (probed live): Claude Code shows it as one line,
+  ctrl+o unrolls it, and no mod can fold it.
+- A `prompt.attachment` answer seems kept per attachment for the process: after a reload the hook did not fire again on the
+  attachments it had already answered.
 - Nerd Font glyphs vanish from Claude's own messages and from the copy of a command output Claude reads, yet render for the user:
   do not conclude a glyph is broken from that. A glyph missing from the user's font draws as a box; an unknown category drew one.
 
