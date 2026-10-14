@@ -6,6 +6,7 @@ function link_claude() {
     "$DOTFILE/claude/settings.json" "$claude_dir/settings.json"
     "$DOTFILE/claude/keybindings.json" "$claude_dir/keybindings.json"
     "$DOTFILE/claude/statusline-command.sh" "$claude_dir/statusline-command.sh"
+    "$DOTFILE/claude/notify.sh" "$claude_dir/notify.sh"
     "$DOTFILE/claude/cclsp.json" "$claude_dir/cclsp.json"
     "$DOTFILE/claude/rules/lsp-first.md" "$claude_dir/rules/lsp-first.md"
     "$DOTFILE/claude/rules/markdown-style.md" "$claude_dir/rules/markdown-style.md"
