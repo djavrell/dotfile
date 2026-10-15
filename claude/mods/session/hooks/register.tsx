@@ -5,7 +5,7 @@ import { atom, read, update } from "claude-code";
 import type { EngineInterface, Register } from "claude-code";
 
 import type { ModelInfo } from "../types";
-import { visibleAgents } from "./lib/agentTree";
+import { childCounts, visibleAgents } from "./lib/agentTree";
 import { AgentsSection } from "./sections/agents";
 import { CONTEXT_LEGEND, ContextSection } from "./sections/context";
 import { FilesSection } from "./sections/files";
@@ -197,12 +197,26 @@ export const register: Register = (on) => {
         backgroundColor={theme?.background}
       >
         <Box flexDirection="column" flexGrow={1}>
-          {MainAgentCard({ ui, theme, modelInfo, contextInfo, usage, nowMs })}
+          {MainAgentCard({
+            ui,
+            theme,
+            modelInfo,
+            contextInfo,
+            usage,
+            nowMs,
+            // a refused switch ({ deny }) changes nothing: ignored
+            onViewMain: () => void $.ui.view({}).catch(() => {}),
+          })}
           {AgentsSection({
             ui,
             theme,
             agentList: visibleAgents(agentList, nowMs, FINISHED_AGENT_KEEP_MS),
+            subagentCounts: childCounts(agentList),
+            nowMs,
             bodyColumns: event.props.bodyColumns,
+            viewedAgentId: event.props.view?.agentId,
+            onViewAgent: (agentId) =>
+              void $.ui.view({ agentId }).catch(() => {}),
           })}
           <Text> </Text>
           {SkillsSection({ ui, skillList })}

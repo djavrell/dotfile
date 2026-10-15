@@ -10,6 +10,8 @@ export type ListedAgent = {
   type: string;
   description: string;
   status: string;
+  // the engine gives no start: its first step, when this mod saw it (not across a reload)
+  startedAt?: number;
 };
 
 export const newEntry = (
@@ -36,11 +38,14 @@ export const patchEntry = (
 ): AgentEntry[] =>
   entries.map((entry) => (entry.id === agentId ? { ...entry, ...patch(entry) } : entry));
 
-// the engine's list brings statuses, and agents born without a spawn (a forked skill);
-// agents it has dropped keep their last known state
+// the engine's list brings statuses, and agents born without a spawn (a forked skill); agents it has
+// dropped keep their last known state. A new one with no first step seen starts `nowMs`; a known one
+// only takes a seen first step, never `nowMs`: it may have ended already (after a reload), and a
+// start after its end drew a negative time
 export const mergeListed = (
   entries: readonly AgentEntry[],
   listed: readonly ListedAgent[],
+  nowMs: number,
 ): AgentEntry[] => {
   let merged = [...entries];
   for (const agent of listed) {
@@ -49,8 +54,9 @@ export const mergeListed = (
       ? patchEntry(merged, agent.id, () => ({
           status: agent.status,
           parentId: agent.parentId ?? existing.parentId,
+          startedAt: existing.startedAt ?? agent.startedAt,
         }))
-      : upsertEntry(merged, newEntry(agent));
+      : upsertEntry(merged, newEntry({ ...agent, startedAt: agent.startedAt ?? nowMs }));
   }
   return merged;
 };

@@ -1,11 +1,11 @@
-import type { SessionUsage } from "claude-code";
+import type { Elements, SessionUsage } from "claude-code";
 import type { PaletteColorPath, PaletteTheme } from "palette";
 
 import type { ContextInfo, ModelInfo } from "../../types";
 import { Meter } from "../components/meter";
 import { fmtElapsed, fmtLeft } from "../lib/format";
 import { modelIcon } from "../lib/icons";
-import { band, paint } from "../lib/theme";
+import { band, paint, unInverted } from "../lib/theme";
 import type { Ui } from "../lib/theme";
 
 // the effort scale, one meter cell per level; a level outside it (a number) shows as text only
@@ -22,19 +22,22 @@ const CACHE_GLYPH = "\u{F00E8}";
 
 // the main conversation's card, the root the subagents' tree hangs from: model, effort, cost, limits, cache, time
 export function MainAgentCard({
-  ui: { Box, Text },
+  ui: { Box, Button, Text },
   theme,
   modelInfo,
   contextInfo,
   usage,
   nowMs,
+  onViewMain,
 }: {
-  ui: Ui;
+  // the model's line is a button: this card needs Button on top of Box and Text
+  ui: Ui & Pick<Elements[keyof Elements], "Button">;
   theme?: PaletteTheme;
   modelInfo: ModelInfo | null;
   contextInfo: ContextInfo | null;
   usage: SessionUsage;
   nowMs: number;
+  onViewMain: () => void;
 }) {
   const fiveHourLimit = usage.rateLimits.find(
     (rateLimit) => rateLimit.kind === "five_hour",
@@ -71,10 +74,23 @@ export function MainAgentCard({
       paddingX={1}
     >
       <Box flexDirection="row" gap={2}>
-        <Text weight="semibold">
-          <Text color={paint(theme, model.color)}>{model.glyph} </Text>
-          <Text color={theme?.ansi.cyan}>{modelInfo?.model ?? "Claude"}</Text>
-        </Text>
+        {/* a click brings the main conversation back into the main view; `hover` keeps the line
+            unchanged under the pointer (see unInverted); the keyed Box is the area that hovers */}
+        <Box key="view-main-row" flexDirection="row">
+          <Button key="view-main" plain onPress={onViewMain}>
+            <Text weight="semibold">
+              <Text
+                color={paint(theme, model.color)}
+                hover={unInverted(theme, paint(theme, model.color))}
+              >
+                {model.glyph}{" "}
+              </Text>
+              <Text color={theme?.ansi.cyan} hover={unInverted(theme, theme?.ansi.cyan)}>
+                {modelInfo?.model ?? "Claude"}
+              </Text>
+            </Text>
+          </Button>
+        </Box>
         {effort && (
           <Text color={effortColor}>
             🧠{" "}

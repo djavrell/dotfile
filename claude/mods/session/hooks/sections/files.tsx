@@ -3,7 +3,7 @@ import type { PaletteTheme } from "palette";
 
 import type { Change } from "../../types";
 import { EDITED_MARK, FOLDER_CLOSED_ICON, FOLDER_ICON, fileIcon } from "../lib/icons";
-import { paint } from "../lib/theme";
+import { paint, unInverted as unInvertedIn } from "../lib/theme";
 import type { Ui } from "../lib/theme";
 import { buildTree } from "../lib/tree";
 
@@ -36,14 +36,11 @@ export function FilesSection({
       {changedFiles.length === 0 && <Text dimColor>None.</Text>}
       {buildTree(changedFiles, collapsedFolders).map((row, rowIndex) => {
         const { folderPath } = row;
-        // a click on a folder's line folds and unfolds its children. A Button always inverts under
-        // the pointer and no prop turns that off: `hover` swaps each part's colors beforehand so the
-        // inversion swaps them back, and the line looks unchanged
-        // (gray rather than dimColor: dim would also dim the swapped colors and the swap would show)
+        // a click on a folder's line folds and unfolds its children; `hover` keeps the line unchanged
+        // under the pointer (see unInverted)
         if (folderPath !== undefined) {
           const isCollapsed = row.hiddenCount !== undefined;
-          const unInverted = (shownColor?: string) =>
-            theme && { color: theme.background, backgroundColor: shownColor };
+          const unInverted = (shownColor?: string) => unInvertedIn(theme, shownColor);
           return (
             <Box key={`folder-${folderPath}`} flexDirection="row">
               <Button

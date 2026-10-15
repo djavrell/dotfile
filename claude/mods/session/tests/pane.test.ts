@@ -37,3 +37,18 @@ test('the pane redraws after an Edit changes files, and on a folder toggle', { p
   await pane.press({ key: 'fold-lib' })
   expect(await pane.find({ type: 'Text', text: /a\.ts/ })).toBeUndefined()
 })
+
+test('a press on the main card asks for the main view back', { plugins: [palette] }, async ($, on) => {
+  on('session.usage', () => ({ value: USAGE }) as never)
+  on('clock.now', () => ({ value: 0 }) as never)
+  on('clock.sleep', () => ({ value: undefined }) as never)
+  const viewsAsked: unknown[] = []
+  on('ui.view', (_hookApi, event) => {
+    viewsAsked.push(event)
+    return { value: {} } as never
+  })
+
+  const pane = await $.ui.mount({ plugin: 'session', surface: 'terminal', component: 'Pane', requestId: 'session', props: PANE_PROPS })
+  await pane.press({ key: 'view-main' })
+  expect(viewsAsked.length).toBe(1)
+})

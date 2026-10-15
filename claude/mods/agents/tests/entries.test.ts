@@ -26,13 +26,21 @@ test('merge takes statuses, adds unseen agents, keeps dropped ones', () => {
   const merged = mergeListed([explore, newEntry({ ...explore, id: 'gone' })], [
     { id: 'a1', type: 'Explore', description: 'find things', status: 'completed' },
     { id: 'fork', parentId: 'a1', type: 'general-purpose', description: 'skill', status: 'running' },
-  ])
+  ], 0)
   expect(merged.map(entry => [entry.id, entry.status])).toEqual([
     ['a1', 'completed'],
     ['gone', 'running'],
     ['fork', 'running'],
   ])
   expect(merged[2]?.parentId).toBe('a1')
+})
+
+test('a list refresh keeps the workflow run of an agent', () => {
+  const workflow = { runId: 'wf_1', agentIndex: 2 }
+  const [entry] = mergeListed([newEntry({ ...explore, workflow })], [
+    { id: 'a1', type: 'Explore', description: 'find things', status: 'completed' },
+  ], 0)
+  expect(entry?.workflow).toEqual(workflow)
 })
 
 test('end reason to status', () => {
@@ -53,4 +61,17 @@ test('a resume undoes the end, keeps start and parent', () => {
   expect(entry).toMatchObject({ parentId: 'main', startedAt: 1, status: 'running' })
   expect(entry?.endedAt).toBeUndefined()
   expect(entry?.endReason).toBeUndefined()
+})
+
+test('start of agents born without a spawn: first step seen, else now for a new one only', () => {
+  const spawned = newEntry({ ...explore, startedAt: 100 })
+  // known from before a reload, already ended, no start: "now" would come after its end
+  const ended = newEntry({ ...explore, id: 'ended', status: 'completed', endedAt: 300 })
+  const merged = mergeListed([spawned, ended], [
+    { id: 'a1', type: 'Explore', description: 'find things', status: 'running', startedAt: 500 },
+    { id: 'ended', type: 'general-purpose', description: 'code-review', status: 'completed' },
+    { id: 'fork', type: 'general-purpose', description: 'code-review', status: 'running', startedAt: 200 },
+    { id: 'unseen', type: 'general-purpose', description: 'code-review', status: 'running' },
+  ], 900)
+  expect(merged.map(entry => [entry.id, entry.startedAt])).toEqual([['a1', 100], ['ended', undefined], ['fork', 200], ['unseen', 900]])
 })

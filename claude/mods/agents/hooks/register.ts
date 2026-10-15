@@ -12,9 +12,15 @@ const list = atom({ plugin: "agents", key: "list" } as const, []);
 // bumped by every list refresh: a run that is no longer the latest drops its result
 let listGeneration = 0;
 
+// first step of every agent loop, by id: the start of an agent born without a spawn (a forked skill
+// such as /code-review), which the list only shows once it spawns a child
+// ponytail: never pruned, a few numbers per session (forks for compaction and memory included)
+const firstStepAt = new Map<string, number>();
+
 async function refreshFromList($: EngineInterface) {
   const thisGeneration = ++listGeneration;
   const agentInfos = await $.agent.list();
+  const nowMs = await $.clock.now();
   if (thisGeneration !== listGeneration) return;
   const listed = agentInfos.map((agentInfo) => ({
     id: agentInfo.id,
@@ -22,8 +28,9 @@ async function refreshFromList($: EngineInterface) {
     type: agentInfo.type,
     description: agentInfo.description,
     status: agentInfo.status,
+    startedAt: firstStepAt.get(agentInfo.id),
   }));
-  await update($, list, (entries) => mergeListed(entries, listed));
+  await update($, list, (entries) => mergeListed(entries, listed, nowMs));
 }
 
 export const register: Register = (on) => {
@@ -52,6 +59,7 @@ export const register: Register = (on) => {
         model: result.model,
         background: event.background,
         startedAt,
+        workflow: event.workflow,
       });
       void update($, list, (entries) => upsertEntry(entries, entry)).catch(() => {});
       void refreshFromList($).catch(() => {});
@@ -63,6 +71,7 @@ export const register: Register = (on) => {
   // one step = one model request; counted before it goes out and once it came back
   on("turn.step", async function* ($, event, next) {
     const agentId = event.agentId;
+    if (agentId && !firstStepAt.has(agentId)) firstStepAt.set(agentId, await $.clock.now());
     if (agentId)
       void update($, list, (entries) =>
         patchEntry(entries, agentId, (entry) => stepStarted(entry, event.model)),

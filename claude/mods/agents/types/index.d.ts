@@ -21,6 +21,8 @@ export type AgentEntry = {
   // model requests (turn.step) it started, and the ones that came back
   stepsStarted: number
   stepsDone: number
+  // set when a Workflow run's agent() spawned it: the run (wf_...) and its 1-based place among the run's agents
+  workflow?: { runId: string; agentIndex: number }
 }
 
 declare module 'claude-code' {

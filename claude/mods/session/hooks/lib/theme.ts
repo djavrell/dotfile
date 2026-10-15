@@ -16,6 +16,12 @@ export const paint = (theme: PaletteTheme | undefined, path: PaletteColorPath) =
     : theme[path as PaletteSingleColor];
 };
 
+// a Text's `hover` inside a Button: a Button always inverts under the pointer and no prop turns that off,
+// so this swaps the part's colors beforehand and the inversion swaps them back (the line looks unchanged).
+// Give it a plain color, not dimColor: dim would also dim the swapped colors and the swap would show
+export const unInverted = (theme: PaletteTheme | undefined, shownColor?: string) =>
+  theme && { color: theme.background, backgroundColor: shownColor };
+
 // thresholds of statusline-command.sh: green < 50 <= yellow < 80 <= red
 export const band = (percent: number): PaletteColorPath =>
   percent >= 80 ? "ansi.red" : percent >= 50 ? "ansi.yellow" : "ansi.green";

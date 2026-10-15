@@ -96,6 +96,9 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   report comes as `origin.kind: "peer"` with `from.name` (the agent type), then a `task-notification` row.
 - **Clicks in the transcript**: a `Button` in a transcript row works in fullscreen; its `onPress` updates an atom and the row
   redraws (`fold-transcript`).
+- **Switching the main view** (2.1.300): `$.ui.view({ agentId })` from a pane `Button`'s `onPress` shows that agent's transcript,
+  `$.ui.view({})` the main one; outside the person's own input it answers `{ deny }`. The pane reads the view in force as
+  `e.props.view` (`session`).
 - A command's text output is shown prefixed with `<plugin>:`.
 - **The language server's new errors** come as a `diagnostics` attachment: `prompt.attachment` with `{ type: "diagnostics" }`
   rewrites what the model reads (`diagnostics`), but no render component draws it (probed live): Claude Code shows it as one line,
@@ -111,6 +114,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   session; the `mod-dev` agent (`claude/agents/mod-dev.md`) takes a delegated task, or a whole session with `claude --agent mod-dev`.
   Both are linked into `~/.claude/`. Knowledge goes here, the procedure in the skill, nothing in the agent.
 - Checks: `claude plugin validate <mod>`, `claude plugin test <mod>`, `npx -p typescript tsc -p <mod>`.
+- **Stale typings**: an older Claude Code session still open rewrites `.claude-plugin/types/` when a mod reloads (`validate` does
+  not). Before trusting a `tsc` error on a recent API, read the version on `index.d.ts`'s first line; copy a current mod's file over.
 - **Live test without a new shell**: once the `plugin-authoring` skill is loaded, a mod written under `~/.claude/dev-mods/<session>/`
   hot-reloads in the session after one "Enable hot reloading" question. Copy it to `claude/mods/` once it works.
 - In **auto mode**, the classifier gives no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
