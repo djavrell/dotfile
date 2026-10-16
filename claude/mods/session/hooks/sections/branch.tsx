@@ -29,9 +29,9 @@ const REVIEW_MARK: Record<PullRequest["review"], Mark | null> = {
   none: null,
 };
 
-// the branch and its pull request on one line, as git-provider publishes them: branch, pull request number (linked
-// to GitHub, colored by state), CI and review icons, then the title, cut first when the pane is narrow.
-// Nothing outside git or on a detached HEAD without a pull request
+// one line from what git-provider publishes: the pull request (number linked to GitHub and colored by state, then its
+// title, cut when the pane is narrow) then its CI and review icons, always shown; without a pull request, the
+// branch name as a fallback. Nothing outside git or on a detached HEAD without a pull request
 export function BranchSection({
   ui: { Box, Text, Link },
   theme,
@@ -51,29 +51,32 @@ export function BranchSection({
   return (
     <Box flexDirection="column">
       <Text weight="semibold">Branch</Text>
-      <Text wrap="truncate-end">
-        {branchName && (
-          <Text color={paint(theme, "ansi.blue")}>
-            {BRANCH_ICON} {branchName}
-          </Text>
-        )}
-        {pullRequest && (
-          <Text>
-            {branchName ? "  " : ""}
-            <Text color={paint(theme, STATE_ROLE[pullRequest.state])}>
-              {pullRequest.state === "merged" ? MERGED_ICON : PR_ICON}{" "}
-              <Link href={pullRequest.url}>#{pullRequest.number}</Link>
+      <Box flexDirection="row" columnGap={2}>
+        <Box flexShrink={1}>
+          {pullRequest ? (
+            <Text wrap="truncate-end">
+              <Text color={paint(theme, STATE_ROLE[pullRequest.state])}>
+                {pullRequest.state === "merged" ? MERGED_ICON : PR_ICON}{" "}
+                <Link href={pullRequest.url}>#{pullRequest.number}</Link>
+              </Text>{" "}
+              {pullRequest.title}
             </Text>
+          ) : (
+            <Text wrap="truncate-end" color={paint(theme, "ansi.blue")}>
+              {BRANCH_ICON} {branchName}
+            </Text>
+          )}
+        </Box>
+        {marks.length > 0 && (
+          <Box flexShrink={0} columnGap={1}>
             {marks.map((mark) => (
               <Text key={mark.icon} color={paint(theme, mark.role)}>
-                {" "}
                 {mark.icon}
               </Text>
-            ))}{" "}
-            <Text dimColor>{pullRequest.title}</Text>
-          </Text>
+            ))}
+          </Box>
         )}
-      </Text>
+      </Box>
       <Text> </Text>
     </Box>
   );
