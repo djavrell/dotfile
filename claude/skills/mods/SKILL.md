@@ -1,6 +1,6 @@
 ---
 name: mods
-description: Work on the user's Claude Code mods (session pane, agents, palette, pr-viewer, lsp-first, or a new one) in ~/.bashrc.d/claude/mods/. Use when the user says the session is for working on a mod, asks to change, fix, debug or create a mod, or invokes /mods — from any working directory.
+description: Work on the user's Claude Code mods, one folder each in ~/.bashrc.d/claude/mods/, or a new one. Use when the user says the session is for working on a mod, asks to change, fix, debug or create a mod, or invokes /mods — from any working directory.
 argument-hint: "[mod or task]"
 ---
 

@@ -15,4 +15,4 @@ const theme = await $.palette.get();
 const accent = theme.ansi.blue;
 ```
 
-Used by `session` (the side pane) and `pr-viewer` (the band above the prompt).
+Used by `session` (the side pane).

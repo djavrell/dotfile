@@ -1,6 +1,6 @@
 ---
 name: mod-dev
-description: Makes a scoped change to one of the user's Claude Code mods in ~/.bashrc.d/claude/mods/ (session pane, agents, palette, pr-viewer, lsp-first, or a new mod) and checks it. Use when work on a mod can be delegated as a clear task; also usable as a whole session with `claude --agent mod-dev`.
+description: Makes a scoped change to one of the user's Claude Code mods (one folder each in ~/.bashrc.d/claude/mods/, or a new one) and checks it. Use when work on a mod can be delegated as a clear task; also usable as a whole session with `claude --agent mod-dev`.
 tools: Read, Write, Edit, Bash, Skill
 ---
 

@@ -17,10 +17,10 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |-------------------|--------------------------------------------------------------------------------------------------------------|
 | `palette`         | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
 | `agents`          | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
-| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Context. |
-|                   | `/context-icons` lists what the Context legend's icons stand for. Consumer only.                             |
-| `pr-viewer`       | The branch's pull request via `gh` (polled each minute and on a branch switch): `pr-viewer.current` state,   |
-|                   | drawn as one line in the band above the prompt (state, CI, review). No pull request: the branch.             |
+| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Branch,  |
+|                   | Context. `/context-icons` lists what the Context legend's icons stand for. Consumer only.                    |
+| `git-provider`    | The checked-out branch and its pull request via `gh` (polled each minute and on a branch switch):            |
+|                   | `git-provider.branch` and `git-provider.current` states, drawn by the pane's Branch section. Draws nothing.   |
 | `lsp-first`       | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
 |                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
@@ -77,7 +77,7 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
 - **Refresh events**: `session.measure` fires after each main-thread turn and when a rate-limit window moves, with
   `changed: ('context'|'rateLimits'|'cost')[]`; a compaction is no turn, hence a `session.compact` hook (`session`).
 - **Timers and cwd**: `$.clock.every(ms, fn)` returns a cancelable `Timer`, use it over a `sleep` loop that outlives its hook.
-  `$.process.run` runs in the session's cwd, which `/cd` (a `command.run` with `command: "cd"`) and worktrees move (`pr-viewer`).
+  `$.process.run` runs in the session's cwd, which `/cd` (a `command.run` with `command: "cd"`) and worktrees move (`git-provider`).
 - **The `types` contract must be self-contained**: no `import` in `types/index.d.ts`, not even a type from `claude-code`; copy the
   union inline (as `ContextSlice.kind` does).
 - **Tool calls** (`tool.call`): plugin hooks run above the classic `PreToolUse` hooks, and fire for subagents' calls too (`agentId`).
@@ -122,8 +122,9 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule): edit a copy outside (scratchpad, or `~/.claude/dev-mods/<session>/`), check it, then
   `cp` it back. In manual mode, edits there go through directly. Go straight to the copy: a `sed` on a mod's source file first
   gets refused by `lsp-first`, and the classifier then reads the copy-back as a way around that refusal and denies it too.
-- Edit cannot match a passage holding a Nerd Font glyph (the glyph vanishes from what Claude reads): anchor on glyph-free lines,
-  and write a new icon as an escape (`""`) with its name in a comment.
+- Edit cannot match a passage holding a Nerd Font glyph (the glyph vanishes from what Claude reads): anchor on glyph-free lines.
+  Icons stay raw glyphs in the code (readable for the user), with their name in a comment; write a whole table of them with Write
+  rather than Edit.
 - Style: descriptive names (no one-letter variables), the formatting already in the file (double quotes and semicolons in `session`),
   colors through `palette` roles rather than raw names, Nerd Font glyphs for icons.
 

@@ -1,6 +1,6 @@
-// The current branch's pull request as this mod publishes it. Consumers list "pr-viewer" under
-// `dependencies` in their plugin.json, import this type from "pr-viewer", and read it with
-//   read($, atom({ plugin: "pr-viewer", key: "current" } as const, null))
+// The current branch's pull request as this mod publishes it. Consumers list "git-provider" under
+// `dependencies` in their plugin.json, import this type from "git-provider", and read it with
+//   read($, atom({ plugin: "git-provider", key: "current" } as const, null))
 export type PullRequest = {
   number: number
   title: string
@@ -16,7 +16,7 @@ export type PullRequest = {
 
 declare module 'claude-code' {
   interface PluginState {
-    'pr-viewer': {
+    'git-provider': {
       // null when the branch has no pull request, or gh cannot tell (not installed, logged out, not GitHub)
       current: PullRequest | null
       // the checked-out branch's name; null when HEAD is detached or outside git

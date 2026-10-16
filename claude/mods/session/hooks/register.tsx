@@ -7,6 +7,7 @@ import type { EngineInterface, Register } from "claude-code";
 import type { ModelInfo } from "../types";
 import { childCounts, visibleAgents } from "./lib/agentTree";
 import { AgentsSection } from "./sections/agents";
+import { BranchSection } from "./sections/branch";
 import { CONTEXT_LEGEND, ContextSection } from "./sections/context";
 import { FilesSection } from "./sections/files";
 import { SkillsSection } from "./sections/skills";
@@ -26,6 +27,9 @@ import { PANE, isPaneOpen, openPane } from "./state/pane";
 
 // owned by the agents mod (the single source of the session's agents): read here, never written
 const agents = atom({ plugin: "agents", key: "list" } as const, []);
+// owned by git-provider (it polls gh): read here, never written
+const pullRequestState = atom({ plugin: "git-provider", key: "current" } as const, null);
+const branchState = atom({ plugin: "git-provider", key: "branch" } as const, null);
 const skills = atom({ plugin: "session", key: "skills" } as const, []);
 const info = atom({ plugin: "session", key: "info" } as const, null);
 // bumped on a timer and on each measure (turn, rate-limit move) so usage, countdown and elapsed time redraw
@@ -174,6 +178,8 @@ export const register: Register = (on) => {
       usage,
       nowMs,
       theme,
+      pullRequest,
+      branchName,
     ] = await Promise.all([
       readFiles($),
       read($, agents),
@@ -183,6 +189,8 @@ export const register: Register = (on) => {
       $.session.usage(),
       $.clock.now(),
       getTheme($),
+      read($, pullRequestState),
+      read($, branchState),
     ]);
     // docked, fill the pane's height so the grown top block pushes Context to the bottom
     const minHeight =
@@ -231,6 +239,7 @@ export const register: Register = (on) => {
           })}
           <Text> </Text>
         </Box>
+        {BranchSection({ ui, theme, branchName, pullRequest })}
         {ContextSection({
           ui,
           theme,

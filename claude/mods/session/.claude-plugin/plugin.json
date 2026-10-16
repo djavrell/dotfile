@@ -3,5 +3,5 @@
   "version": "0.1.0",
   "description": "Side pane with the session's model, cost and limits, subagents, loaded skills, changed files (+/- lines) and context usage",
   "types": "./types/index.d.ts",
-  "dependencies": ["palette", "agents"]
+  "dependencies": ["palette", "agents", "git-provider"]
 }
