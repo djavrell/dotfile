@@ -82,17 +82,24 @@ export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {
   const byStart = [...agents].sort(
     (agentA, agentB) => (agentA.startedAt ?? 0) - (agentB.startedAt ?? 0),
   );
+  // each parent's children in start order, in one pass; the roots under the undefined key
+  const childrenByParent = new Map<string | undefined, AgentEntry[]>();
+  for (const agent of byStart) {
+    const parentKey =
+      agent.parentId && knownIds.has(agent.parentId)
+        ? agent.parentId
+        : undefined;
+    const siblings = childrenByParent.get(parentKey) ?? [];
+    siblings.push(agent);
+    childrenByParent.set(parentKey, siblings);
+  }
   const childrenOf = (parentId: string | undefined) =>
-    byStart.filter((agent) =>
-      parentId === undefined
-        ? !agent.parentId || !knownIds.has(agent.parentId)
-        : agent.parentId === parentId,
-    );
+    childrenByParent.get(parentId) ?? [];
 
   const rows: AgentRow[] = [];
   const pushAgent = (agent: AgentEntry, guide: string, isLast: boolean) => {
     const childGuide = guide + (isLast ? "   " : "│  ");
-    const hasChildren = childrenOf(agent.id).length > 0;
+    const hasChildren = childrenByParent.has(agent.id);
     rows.push({
       guide: guide + (isLast ? "└─ " : "├─ "),
       underGuide: childGuide + (hasChildren ? "│ " : "  "),

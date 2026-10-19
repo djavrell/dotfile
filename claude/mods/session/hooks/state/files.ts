@@ -17,7 +17,7 @@ const collapsedFolders = atom(
   [],
 );
 
-const GIT_POLL_MS = 10_000;
+export const GIT_POLL_MS = 10_000;
 const DEBOUNCE_MS = 300;
 export const WRITERS = new Set([
   "Edit",
@@ -62,14 +62,10 @@ export async function toggleFolder($: EngineInterface, folderPath: string) {
 }
 
 // git changes made outside Claude (a commit, a checkout in another terminal) raise no event:
-// re-read them on a timer while the pane is open
+// re-read them on a timer (register's $.clock.every) while the pane is open
 // ponytail: polling; a file watcher if git ever gets slow on a big repo
-export async function gitPoller($: EngineInterface) {
-  for (;;) {
-    await $.clock.sleep(GIT_POLL_MS);
-    if (!(await isPaneOpen($))) continue;
-    await refresh($).catch(() => {});
-  }
+export async function pollGit($: EngineInterface) {
+  if (await isPaneOpen($)) await refresh($);
 }
 
 // the changed files and the folded folders, for the pane's render

@@ -2,7 +2,7 @@
 // Each domain's atoms live in state/ with their read/update calls (the validator wants them in one file), reached
 // through function declarations that take $. Pure helpers sit in lib/, each section's drawing in sections/.
 import { atom, read, update } from "claude-code";
-import type { EngineInterface, Register } from "claude-code";
+import type { EngineInterface, Register, Timer } from "claude-code";
 
 import type { ModelInfo } from "../types";
 import { childCounts, visibleAgents } from "./lib/agentTree";
@@ -14,8 +14,9 @@ import { SkillsSection } from "./sections/skills";
 import { MainAgentCard } from "./sections/mainAgent";
 import { readContext, refreshContext } from "./state/context";
 import {
+  GIT_POLL_MS,
   WRITERS,
-  gitPoller,
+  pollGit,
   readFiles,
   refresh,
   scheduleRefresh,
@@ -36,6 +37,9 @@ const info = atom({ plugin: "session", key: "info" } as const, null);
 const tick = atom({ plugin: "session", key: "tick" } as const, 0);
 
 const TICK_MS = 10_000;
+// the tick and git poll timers, cancelled when a new session.start starts others
+let tickTimer: Timer | undefined;
+let gitPollTimer: Timer | undefined;
 // a finished agent stays in the pane this long after it ended, then leaves on the next tick
 const FINISHED_AGENT_KEEP_MS = 30_000;
 
@@ -47,11 +51,8 @@ async function addSkill($: EngineInterface, name: string) {
   );
 }
 
-async function ticker($: EngineInterface) {
-  for (;;) {
-    await $.clock.sleep(TICK_MS);
-    await update($, tick, (tickCount) => tickCount + 1);
-  }
+async function bumpTick($: EngineInterface) {
+  await update($, tick, (tickCount) => tickCount + 1);
 }
 
 // $.palette is absent for a moment when this mod draws before palette has loaded: default colors then
@@ -78,8 +79,16 @@ export const register: Register = (on) => {
     });
     void refresh($).catch(() => {});
     void refreshContext($).catch(() => {});
-    void ticker($).catch(() => {});
-    void gitPoller($).catch(() => {});
+    tickTimer?.cancel();
+    tickTimer = $.clock.every(
+      TICK_MS,
+      () => void bumpTick($).catch(() => {}),
+    );
+    gitPollTimer?.cancel();
+    gitPollTimer = $.clock.every(
+      GIT_POLL_MS,
+      () => void pollGit($).catch(() => {}),
+    );
     void openPane($).catch(() => {});
 
     return next(event);
@@ -143,7 +152,6 @@ export const register: Register = (on) => {
   // /name commands are caught above and here instead
   on("skill.prompt", async ($, event, next) => {
     void addSkill($, event.skill).catch(() => {});
-
     return next(event);
   });
 
