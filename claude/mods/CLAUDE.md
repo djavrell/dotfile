@@ -17,10 +17,12 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |-------------------|--------------------------------------------------------------------------------------------------------------|
 | `palette`         | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
 | `agents`          | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
-| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, Files, Branch,  |
-|                   | Context. `/context-icons` lists what the Context legend's icons stand for. Consumer only.                    |
+| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, MCP, Files,     |
+|                   | Branch, Context. `/context-icons` lists what the Context legend's icons stand for. Consumer only.            |
 | `git-provider`    | The checked-out branch and its pull request via `gh` (polled each minute and on a branch switch):            |
 |                   | `git-provider.branch` and `git-provider.current` states, drawn by the pane's Branch section. Draws nothing.   |
+| `mcp-status`      | The MCP servers' health: `claude mcp list` at start and on `/mcp-health`, then the session's MCP calls;     |
+|                   | `mcp-status.servers` and `mcp-status.notes` states, drawn by the pane's MCP section. Draws nothing.          |
 | `lsp-first`       | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
 |                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
@@ -62,6 +64,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   `on("<noun>.<method>", async ($) => ({ value }))`. A served hook must return `{ value }`, not the bare value. The `$` that
   `engine.create`'s `next(event)` returns cannot be captured for later calls.
 - **Rendering a tree in another mod's pane** works only by faking a render event for `$.ui.resolve`. Undocumented: do not build on it.
+- No mod API lists the session's MCP servers or their state (2.1.303): `$.mcp` only calls and connects the mod's own servers.
+  `mcp-status` runs `claude mcp list` and follows the `mcp__*` calls (`tool.call`) instead.
 - `skill.prompt` never fired in a live session (2.1.291 and 2.1.292): skills are caught via `tool.call` on `Skill` and `command.run`.
 - `SessionMode` renders the footer's small labels (`focus`, `memory paused`), not the permission mode. The permission mode is only on
   classic hook inputs (`permission_mode`); it was dropped from the pane anyway, the footer already shows it.

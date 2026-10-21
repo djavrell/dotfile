@@ -1,7 +1,7 @@
 {
   "name": "session",
   "version": "0.1.0",
-  "description": "Side pane with the session's model, cost and limits, subagents, loaded skills, changed files (+/- lines) and context usage",
+  "description": "Side pane with the session's model, cost and limits, subagents, loaded skills, MCP servers, changed files (+/- lines) and context usage",
   "types": "./types/index.d.ts",
-  "dependencies": ["palette", "agents", "git-provider"]
+  "dependencies": ["palette", "agents", "git-provider", "mcp-status"]
 }

@@ -1,7 +1,7 @@
 # session
 
 A side pane that shows what the session is doing at a glance: the main agent card and its subagents, the skills used,
-the files changed in the repo, and the context window usage. It opens on session start, and `/session` toggles it.
+the MCP servers' health (from `mcp-status`), the files changed in the repo, and the context window usage. It opens on session start, and `/session` toggles it.
 
 ## Example
 
@@ -17,6 +17,11 @@ the files changed in the repo, and the context window usage. It opens on session
 
 Skills
 code-review, simplify
+
+MCP
+● cclsp
+● plugin:playwright:playwright
+● linear Needs authentication
 
 Files
 └─ * claude/mods/session/

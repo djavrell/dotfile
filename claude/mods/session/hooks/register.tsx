@@ -10,6 +10,7 @@ import { AgentsSection } from "./sections/agents";
 import { BranchSection } from "./sections/branch";
 import { CONTEXT_LEGEND, ContextSection } from "./sections/context";
 import { FilesSection } from "./sections/files";
+import { McpSection } from "./sections/mcp";
 import { SkillsSection } from "./sections/skills";
 import { MainAgentCard } from "./sections/mainAgent";
 import { readContext, refreshContext } from "./state/context";
@@ -31,6 +32,8 @@ const agents = atom({ plugin: "agents", key: "list" } as const, []);
 // owned by git-provider (it polls gh): read here, never written
 const pullRequestState = atom({ plugin: "git-provider", key: "current" } as const, null);
 const branchState = atom({ plugin: "git-provider", key: "branch" } as const, null);
+// owned by mcp-status (it checks the servers and follows their calls): read here, never written
+const mcpServers = atom({ plugin: "mcp-status", key: "servers" } as const, []);
 const skills = atom({ plugin: "session", key: "skills" } as const, []);
 const info = atom({ plugin: "session", key: "info" } as const, null);
 // bumped on a timer and on each measure (turn, rate-limit move) so usage, countdown and elapsed time redraw
@@ -188,6 +191,7 @@ export const register: Register = (on) => {
       theme,
       pullRequest,
       branchName,
+      serverList,
     ] = await Promise.all([
       readFiles($),
       read($, agents),
@@ -199,6 +203,7 @@ export const register: Register = (on) => {
       getTheme($),
       read($, pullRequestState),
       read($, branchState),
+      read($, mcpServers),
     ]);
     // docked, fill the pane's height so the grown top block pushes Context to the bottom
     const minHeight =
@@ -236,6 +241,8 @@ export const register: Register = (on) => {
           })}
           <Text> </Text>
           {SkillsSection({ ui, skillList })}
+          <Text> </Text>
+          {McpSection({ ui, theme, serverList })}
           <Text> </Text>
           {FilesSection({
             ui,

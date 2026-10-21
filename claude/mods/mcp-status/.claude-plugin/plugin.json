@@ -1,0 +1,6 @@
+{
+  "name": "mcp-status",
+  "version": "0.1.0",
+  "description": "Publishes the MCP servers' health (claude mcp list, then the session's own MCP calls) as state; /mcp-health reports it; draws nothing",
+  "types": "./types/index.d.ts"
+}
