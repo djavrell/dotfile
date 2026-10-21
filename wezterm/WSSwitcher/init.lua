@@ -15,7 +15,8 @@ local M = {}
 ---@type WorkspaceSwitcherConfig
 local defaultConfig = {
   title = 'Switch to workspace',
-  filePath = os.getenv('USERPROFILE') .. '\\.local\\share\\.fzf-marks',
+  -- home_dir is %USERPROFILE% on Windows, $HOME on Linux; USERPROFILE alone is nil on Linux and broke the whole config
+  filePath = wezterm.home_dir .. '/.local/share/.fzf-marks',
 }
 
 ---@param opt WorkspaceSwitcherOpt|nil
@@ -32,22 +33,32 @@ end
 local function getFileSplitBy(path, sep)
   local choices = {}
 
-  for line in io.lines(path) do
+  -- io.lines raises when the marks file is missing (fresh machine): show an empty selector instead
+  local file = io.open(path)
+  if not file then
+    wezterm.log_warn('WSSwitcher: no marks file at ' .. path)
+    return choices
+  end
+
+  for line in file:lines() do
     local tok = split(line, sep)
     table.insert(choices, {
       label = tok[1],
       id = tok[2],
     })
   end
+  file:close()
 
   return choices
 end
 
 function M.switchTo()
-  ---@type WorkspaceSwitcherConfig
-  local opt = M.getConfig()
-
   return cb(function(win, pane)
+    -- read at keypress, not here: mappings are built before M.config() runs in wezterm.lua
+    ---@type WorkspaceSwitcherConfig
+    local opt = M.getConfig()
+
+
     win:perform_action(
       act.InputSelector({
         fuzzy = true,

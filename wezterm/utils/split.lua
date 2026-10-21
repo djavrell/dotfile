@@ -6,7 +6,8 @@ local M = {}
 M.split = function(str, sep)
   local result = {}
   for tok in str.gmatch(str, ('([^%s]+)'):format(sep)) do
-    local trimed = tok:gsub('%s', '')
+    -- trim the ends only: spaces inside a label or a path are meaningful
+    local trimed = tok:match('^%s*(.-)%s*$')
     table.insert(result, trimed)
   end
 

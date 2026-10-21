@@ -1,79 +1,86 @@
 local wezterm = require('wezterm')
+local NF = wezterm.nerdfonts
 local M = {}
 
 local C = require('djavrell.colors')
-local P = require('utils.pipe')
 local T = require('utils.tables')
 
----@type Wezline
-local line = require('wezline')
-local config = line.getConfig()
+local key_table_icons = {
+  copy_mode = NF.md_content_copy,
+}
 
-local ws_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_apps)
-local kt_icone = T.setDefault(config.key_table_icone, wezterm.nerdfonts.md_table_key)
+-- same icon table on purpose (in copy mode the workspace block shows the copy icon), only the fallback differs
+local ws_icon = T.setDefault(key_table_icons, NF.md_apps)
+local kt_icon = T.setDefault(key_table_icons, NF.md_table_key)
 
-local A = require('wezline.attrs')
-local S = require('wezline.nodes')
--- local B = require("wezline.battery")
-
-local orange_background = P.pipeC(
-  A.Bold,
-  S.wrapSpace,
-  S.section({
-    { Background = { Color = C.palette.orange.bright } },
-    { Foreground = { Color = C.palette.black0 } },
-  })
-)
-
-local green_background = P.pipeC(
-  A.Bold,
-  S.wrapSpace,
-  S.section({
-    { Background = { Color = C.palette.green.bright } },
-    { Foreground = { Color = C.palette.black0 } },
-  })
-)
-
-local time = P.pipeC(
-  S.wrapSpace,
-  S.section({
-    { Background = { Color = C.palette.black0 } },
-    { Foreground = { Color = C.palette.white1 } },
-  })
-)
-
----@param kt? string
----@return wezline.Attr[]
-local function KeyTableSection(kt)
-  return orange_background(kt_icone[kt] .. ' ' .. kt)
+---@param background string
+---@param foreground string
+---@param text string
+---@param bold? boolean
+---@return table[] items for wezterm.format
+local function section(background, foreground, text, bold)
+  return {
+    { Background = { Color = background } },
+    { Foreground = { Color = foreground } },
+    { Attribute = { Intensity = bold and 'Bold' or 'Normal' } },
+    { Text = ' ' .. text .. ' ' },
+    'ResetAttributes',
+  }
 end
 
----@param kt string|nil key table in use
-local function selectSection(kt)
-  if kt ~= nil and kt == 'copy_mode' then
-    return green_background
+-- index = charge rounded to the nearest 10%
+local battery_icons = {
+  [0] = NF.md_battery_outline,
+  NF.md_battery_10,
+  NF.md_battery_20,
+  NF.md_battery_30,
+  NF.md_battery_40,
+  NF.md_battery_50,
+  NF.md_battery_60,
+  NF.md_battery_70,
+  NF.md_battery_80,
+  NF.md_battery_90,
+  NF.md_battery,
+}
+
+-- above this charge the icon is enough, below it the percentage shows too
+local battery_percent_threshold = 0.4
+
+---@return table[] one section per battery running on its charge, none on AC
+local function batterySections()
+  local items = {}
+
+  for _, battery in ipairs(wezterm.battery_info()) do
+    if battery.state == 'Discharging' then
+      local charge = battery.state_of_charge
+      local text = battery_icons[math.floor(charge * 10 + 0.5)]
+      if charge < battery_percent_threshold then
+        text = string.format('%s %.0f%%', text, charge * 100)
+      end
+      items = T.merge(items, section(C.palette.black0, C.palette.white1, text))
+    end
   end
-  return orange_background
-end
 
----@param kt string|nil key table in use
----@param txt string
----@return string
-local function workspaceIcone(kt, txt)
-  return ws_icone[kt] .. ' ' .. txt
+  return items
 end
 
 function M.right(win)
   local key_table = win:active_key_table()
+  local items = batterySections()
 
-  return T.merge(S.if_def(key_table, KeyTableSection), time({ { Text = wezterm.time.now():format('%H:%M %F') } }))
+  if key_table then
+    items = T.merge(items, section(C.palette.orange.bright, C.palette.black0, kt_icon[key_table] .. ' ' .. key_table, true))
+  end
+
+  return T.merge(items, section(C.palette.black0, C.palette.white1, wezterm.time.now():format('%H:%M %F')))
 end
 
 function M.left(win)
   local key_table = win:active_key_table()
-  -- B.section()
+  -- the workspace block turns green in copy mode
+  local background = key_table == 'copy_mode' and C.palette.green.bright or C.palette.orange.bright
 
-  return selectSection(key_table)(workspaceIcone(key_table, win:active_workspace()))
+  return section(background, C.palette.black0, ws_icon[key_table] .. ' ' .. win:active_workspace(), true)
 end
 
 return M

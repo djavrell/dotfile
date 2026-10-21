@@ -10,6 +10,14 @@ function wezterm_stub() {
 local wezterm = require('wezterm')
 local dir = [[$dir]]
 package.path = dir .. [[\?.lua;]] .. dir .. [[\?\init.lua;]] .. package.path
+-- WSL unreachable (shut down, updating): open the auto-generated WSL domain rather than a bare cmd.exe;
+-- only that case is caught, so a broken repo config still shows its error
+local entry = io.open(dir .. [[\wezterm.lua]])
+if not entry then
+  wezterm.log_error('repo config unreachable at ' .. dir)
+  return { default_domain = 'WSL:$WSL_DISTRO_NAME' }
+end
+entry:close()
 wezterm.add_to_config_reload_watch_list(dir .. [[\wezterm.lua]])
 local config = dofile(dir .. [[\wezterm.lua]])
 -- colors/ is looked up next to the config file, which is this stub

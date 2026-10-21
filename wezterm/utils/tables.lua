@@ -1,6 +1,3 @@
-local wezterm = require('wezterm')
-local log = wezterm.log_info
-
 ---@class TableUtils
 local M = {}
 
@@ -18,28 +15,6 @@ function M.merge(a, b)
   end
 
   return c
-end
-
----@param ... table|fun(): table
----@return table
-function M.merge_all(...)
-  local result = {}
-  local tables = { ... }
-
-  for i = 1, #tables do
-    if type(tables[i]) == 'function' then
-      result = M.merge(result, tables[i]())
-    elseif type(tables[i]) == 'string' then
-      table.insert(result, tables[i])
-    else
-      local t = tables[i]
-
-      ---@cast t table
-      result = M.merge(result, t)
-    end
-  end
-
-  return result
 end
 
 ---@generic V
@@ -62,19 +37,6 @@ function M.tbl_extend(a, b)
   end
 
   return result
-end
-
----@generic T
----@param table table<`T`, unknown>
----@param key T
----@return boolean
-function M.include(table, key)
-  for _, v in ipairs(table) do
-    if v == key then
-      return true
-    end
-  end
-  return false
 end
 
 ---@param orig table
@@ -106,8 +68,6 @@ end
 ---@return table
 function M.setDefault(t, d)
   local t2 = M.clone(t)
-  log(t2)
-  log(type(t2))
   return setmetatable(t2, {
     __index = function(_, _)
       return d

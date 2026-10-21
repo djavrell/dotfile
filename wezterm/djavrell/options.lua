@@ -17,6 +17,8 @@ return function(config)
     bottom = 0,
     top = 0,
   }
+  -- with no padding the leftover pixels all go to the bottom/right edge; spread them around instead
+  config.window_content_alignment = { horizontal = 'Center', vertical = 'Center' }
 
   config.enable_scroll_bar = false
   config.use_fancy_tab_bar = false
@@ -30,15 +32,18 @@ return function(config)
 
   config.audible_bell = 'Disabled'
 
-  config.wsl_domains = {
-    {
-      name = 'arch',
-      distribution = 'Arch',
-      default_cwd = '/home/kpr',
-    },
-  }
+  -- the 'arch' WSL domain only exists on Windows; on native Linux the local domain is the right default
+  if wezterm.target_triple:find('windows') then
+    config.wsl_domains = {
+      {
+        name = 'arch',
+        distribution = 'Arch',
+        default_cwd = '/home/kpr',
+      },
+    }
 
-  config.default_domain = 'arch'
+    config.default_domain = 'arch'
+  end
 
   return config
 end

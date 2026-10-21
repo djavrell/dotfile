@@ -13,14 +13,13 @@ return function(config)
   config.keys = {
     map.alt('Enter', actions.ToggleFullScreen),
 
-    map.alt('w', actions.ActivateKeyTable({ name = 'win', timeout_millisecond = 500 })),
+    map.alt('w', actions.ActivateKeyTable({ name = 'win', timeout_milliseconds = 500 })),
     map.Alt('w', actions.ActivateKeyTable({ name = 'win2', one_shot = false, until_unknown = true })),
-    map.alt('p', actions.ActivateKeyTable({ name = 'pane', timeout_millisecond = 500 })),
+    map.alt('p', actions.ActivateKeyTable({ name = 'pane', timeout_milliseconds = 500 })),
     map.Alt('p', actions.ActivateKeyTable({ name = 'resize_pane', one_shot = false })),
-    map.Alt('d', actions.ActivateKeyTable({ name = 'debug', timeout_millisecond = 1000 })),
+    map.Alt('d', actions.ActivateKeyTable({ name = 'debug', timeout_milliseconds = 1000 })),
 
-    map.cm('v', actions.PasteFrom('Clipboard')),
-    map.cm('v', actions.PasteFrom('PrimarySelection')),
+    map.Ctrl('v', actions.PasteFrom('Clipboard')),
 
     map.leader('c', actions.ActivateCopyMode),
     map.leader('s', actions.ShowLauncherArgs({ flags = 'FUZZY|WORKSPACES' })),
@@ -44,11 +43,8 @@ return function(config)
     map.alt('UpArrow', actions.ScrollToPrompt(-1)),
     map.alt('DownArrow', actions.ScrollToPrompt(1)),
 
-    {
-      key = 'Enter',
-      mods = 'SHIFT',
-      action = wezterm.action.SendString('\n'),
-    },
+    -- ConPTY doesn't relay the kitty keyboard protocol, so Shift+Enter would reach the app as a plain Enter
+    map.shift('Enter', actions.SendString('\n')),
   }
 
   config.key_tables = {
