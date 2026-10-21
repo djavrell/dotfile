@@ -78,9 +78,16 @@ return {
       vim.lsp.config(
         'pylsp',
         lsp_conf.setup({
+          -- Globals the Fabric notebook runtime injects without an import
+          cmd_env = { PYFLAKES_BUILTINS = 'spark,sc,notebookutils,mssparkutils,display,displayHTML' },
           settings = {
             pylsp = {
               plugins = {
+                jedi = {
+                  environment = vim.fn.executable(vim.fn.getcwd() .. '/.venv/bin/python') == 1
+                      and vim.fn.getcwd() .. '/.venv/bin/python'
+                    or nil,
+                },
                 pycodestyle = {
                   ignore = { 'W391' },
                   maxLineLength = 100,
