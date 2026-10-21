@@ -13,6 +13,9 @@ in `claude/mods/` have their own guide, `claude/mods/CLAUDE.md`.
 - **Linked files are live.** `dots link` symlinks repo files into place: editing `claude/settings.json`, `git/gitconfig*` or
   `nvim/` changes the running config at once. Never touch `claude/settings.json` without the user's explicit consent.
 - **WezTerm on WSL**: `install_wezterm` writes a generated stub on the Windows side. Edit the repo, never the stub.
+- **The color theme has one source, nordic.nvim** (README, "Color theme"): `wezterm/colors/nordic.toml` and `palette.lua` are
+  fetched by `dots link` at the `lazy-lock.json` commit, never edited by hand. A tool gets the theme through the terminal's ANSI
+  colors (`ansi`/`16`/`system` modes), not through a new hardcoded copy of the palette.
 - Never delete a file or a feature unasked, never `dots unlink` unasked, never commit unless asked.
 
 ## How the shell boots

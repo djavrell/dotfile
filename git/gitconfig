@@ -65,6 +65,8 @@
   line-numbers = true
   features = decorations
   light = false
+  # terminal ANSI colors: follows the wezterm theme, also outside a shell that exports BAT_THEME
+  syntax-theme = ansi
 
 [delta "interactive"]
   keep-plus-minus-markers = false
@@ -81,11 +83,11 @@
 [interactive]
   diffFilter = delta --color-only --features=interactive
 
-[color "diff-hightlight"]
+[color "diff-highlight"]
   oldNormal     = red bold
-  oldHightlight = red bold 52
-  newNormal     = gree bold
-  newHightlight = green bold 22
+  oldHighlight  = red bold 52
+  newNormal     = green bold
+  newHighlight  = green bold 22
 
 [color "diff"]
   meta      = yellow
@@ -93,7 +95,7 @@
   commit    = yellow bold
   old       = red bold
   new       = green bold
-  whitspace = red reverse
+  whitespace = red reverse
 
 [filter "lfs"]
   smudge = git-lfs smudge -- %f

@@ -1,5 +1,8 @@
 path=( "$DOTFILE/git/git-scripts" $path )
 
+# bat (delta's highlighter) colors syntax with the terminal's ANSI colors, so it follows the wezterm theme (nordic)
+export BAT_THEME=ansi
+
 load_func "git"
 
 # git rev-parse --show-superproject-working-tree

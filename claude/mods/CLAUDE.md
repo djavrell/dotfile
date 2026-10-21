@@ -137,3 +137,9 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
 - The shell status line (`claude/statusline-command.sh`) is disabled in `settings.json`; the script is kept. Its content moved to the
   pane's Status section.
 - A `statusbar` band above the prompt was tried and dropped in favour of the pane.
+- A nordic Claude Code theme shipped by `palette` (`themes/nordic.json`, a plugin theme needs no manifest key) was tried (2.1.306)
+  and dropped, Claude Code stays on `dark`:
+  - base `dark-ansi`: hex overrides got mapped to the 16 ANSI colors, so the diff backgrounds came out brown;
+  - base `dark` with nordic diff backgrounds (green/red blended into the background, 20 to 50%): washed out or muddy, the
+    palette's pastels don't make diff backgrounds; `dark`'s own saturated diffs read better;
+  - base `dark` with only the UI tokens (`claude`, `text`, `success`...) from the palette: not worth it next to plain `dark`.
