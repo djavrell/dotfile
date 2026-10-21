@@ -1,34 +1,35 @@
+# nordic.nvim 9fb62116b891184049c50ca6ffb0d3bc100a1a6e
 # Nordic Colorscheme for Wezterm.
 # Based on https://github.com/AlexvZyl/nordic.nvim
 # Author: @kuntau
 
 [colors]
-foreground    = "#D8DEE9"
-background    = "#242933"
-cursor_bg     = "#D8DEE9"
+foreground = "#C0C8D8"
+background = "#242933"
+cursor_bg = "#D8DEE9"
 cursor_border = "#D8DEE9"
-cursor_fg     = "#242933"
-selection_fg  = "#D8DEE9"
-selection_bg  = "#2E3440"
+cursor_fg = "#242933"
+selection_fg = "#D8DEE9"
+selection_bg = "#2E3440"
 
 ansi = [
   "#191D24",
   "#BF616A",
   "#A3BE8C",
   "#EBCB8B",
-  "#81A1C1",
+  "#5E81AC",
   "#B48EAD",
   "#8FBCBB",
-  "#D8DEE9"
+  "#C0C8D8",
 ]
 
 brights = [
   "#3B4252",
-  "#D06F79",
-  "#B1D196",
-  "#F0D399",
+  "#C5727A",
+  "#B1C89D",
+  "#EFD49F",
   "#88C0D0",
-  "#C895BF",
-  "#93CCDC",
-  "#E5E9F0"
+  "#BE9DB8",
+  "#9FC6C5",
+  "#D8DEE9",
 ]

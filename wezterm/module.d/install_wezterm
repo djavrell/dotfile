@@ -26,9 +26,57 @@ return config
 LUA
 }
 
+# The theme's source is nordic.nvim: its files are fetched into the repo at the commit nvim/lazy-lock.json pins, so wezterm
+# and the Claude palette mod follow nvim without needing nvim installed. Never edit the copies, bump the lock instead.
+function wezterm_nordic_commit() {
+  local lock_line=${(M)${(f)"$(<$DOTFILE/nvim/lazy-lock.json)"}:#*\"nordic.nvim\"*}
+  print -r -- ${${lock_line#*\"commit\": \"}%%\"*}
+}
+
+# pairs of repo file (under wezterm/) and upstream path
+function wezterm_nordic_files() {
+  reply=(
+    colors/nordic.toml platforms/wezterm/nordic.toml
+    colors/palette.lua lua/nordic/colors/nordic.lua
+  )
+}
+
+# first line of each copy, naming the commit it was fetched at: lets dots link skip and dots health check without network
+function wezterm_nordic_stamp() {
+  local repo_file=$1 commit=$2
+  [[ $repo_file == *.lua ]] && print -r -- "-- nordic.nvim $commit" || print -r -- "# nordic.nvim $commit"
+}
+
+function install_wezterm_theme() {
+  local commit=$(wezterm_nordic_commit) repo_file upstream_path dest stamp first_line content fail=0
+  [[ -n $commit ]] || { log_error "commit nordic.nvim introuvable dans nvim/lazy-lock.json"; return 1 }
+
+  wezterm_nordic_files
+  for repo_file upstream_path in $reply; do
+    dest="$DOTFILE/wezterm/$repo_file"
+    stamp=$(wezterm_nordic_stamp $repo_file $commit)
+    first_line=
+    [[ -r $dest ]] && IFS= read -r first_line < "$dest"
+    [[ $first_line == "$stamp" ]] && { log_skip "$dest"; continue }
+
+    # a failed download (offline, file moved upstream) keeps the committed copy
+    if ! content=$(curl -fsSL "https://raw.githubusercontent.com/AlexvZyl/nordic.nvim/$commit/$upstream_path"); then
+      log_error "$upstream_path introuvable au commit ${commit:0:7}, copie existante gardée"
+      fail=1
+      continue
+    fi
+    print -r -- "$stamp"$'\n'"$content" > "$dest" && log_success "$dest (nordic.nvim ${commit:0:7})"
+  done
+  return fail
+}
+
 function install_wezterm() {
-  [[ $SYSTEM == wsl ]] || return 0
+  install_wezterm_theme
+  local theme_status=$?
+
+  [[ $SYSTEM == wsl ]] || return $theme_status
   local stub=$(wezterm_stub_path)
-  [[ "$(<$stub)" == "$(wezterm_stub)" ]] 2>/dev/null && { log_skip "$stub"; return }
+  [[ "$(<$stub)" == "$(wezterm_stub)" ]] 2>/dev/null && { log_skip "$stub"; return $theme_status }
   mkdir -p "${stub:h}" && wezterm_stub > "$stub" && log_success "$stub (stub Windows)"
+  return $theme_status
 }

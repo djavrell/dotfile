@@ -3,4 +3,6 @@ node
 cclsp
 tsserver
 typescript-language-server
+uvx
+lua-language-server
 jq

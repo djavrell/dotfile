@@ -1,19 +1,49 @@
 # vim: ft=zsh
 function health_wezterm() {
-  if [[ $SYSTEM != wsl ]]; then
-    (( $+commands[wezterm] )) || { log_error "deps manquantes: wezterm"; return 1 }
-    log_success "deps: wezterm"
-    return
-  fi
-
-  (( $+commands[wezterm.exe] )) || { log_error "deps manquantes: wezterm.exe"; return 1 }
-  log_success "deps: wezterm.exe"
-
+  local fail=0
   source "$DOTFILE/wezterm/module.d/install_wezterm"
-  local stub=$(wezterm_stub_path)
-  if [[ "$(<$stub)" != "$(wezterm_stub)" ]] 2>/dev/null; then
-    log_error "$stub absent ou différent (dots link)"
-    return 1
+
+  if [[ $SYSTEM != wsl ]]; then
+    if (( $+commands[wezterm] )); then log_success "deps: wezterm"; else log_error "deps manquantes: wezterm"; fail=1; fi
+  elif (( $+commands[wezterm.exe] )); then
+    log_success "deps: wezterm.exe"
+    local stub=$(wezterm_stub_path)
+    if [[ "$(<$stub)" != "$(wezterm_stub)" ]] 2>/dev/null; then
+      log_error "$stub absent ou différent (dots link)"
+      fail=1
+    else
+      log_success "$stub (stub Windows)"
+    fi
+  else
+    log_error "deps manquantes: wezterm.exe"
+    fail=1
   fi
-  log_success "$stub (stub Windows)"
+
+  # the theme copies must match the nordic.nvim commit nvim/lazy-lock.json pins
+  local commit=$(wezterm_nordic_commit) repo_file upstream_path dest first_line
+  wezterm_nordic_files
+  for repo_file upstream_path in $reply; do
+    dest="$DOTFILE/wezterm/$repo_file"
+    first_line=
+    [[ -r $dest ]] && IFS= read -r first_line < "$dest"
+    if [[ $first_line == "$(wezterm_nordic_stamp $repo_file $commit)" ]]; then
+      log_success "$repo_file (nordic.nvim ${commit:0:7})"
+    else
+      log_error "$repo_file absent ou pas au commit nordic.nvim du lock (dots link)"
+      fail=1
+    fi
+  done
+
+  # the Claude palette mod keeps a hand copy of the scheme as its fallback: same colors, in the same order
+  local mod_file="$DOTFILE/claude/mods/palette/hooks/register.ts"
+  local scheme_colors=(${(U)$(grep -oE '#[0-9A-Fa-f]{6}' "$DOTFILE/wezterm/colors/nordic.toml")})
+  local fallback_colors=(${(U)$(sed -n '/export const FALLBACK/,/comment:/{/comment:/!p}' "$mod_file" | grep -oE '#[0-9A-Fa-f]{6}')})
+  if [[ ${#scheme_colors} -gt 0 && "$scheme_colors" == "$fallback_colors" ]]; then
+    log_success "FALLBACK du mod palette = colors/nordic.toml"
+  else
+    log_error "FALLBACK de $mod_file différent de colors/nordic.toml: recopier les couleurs du toml"
+    fail=1
+  fi
+
+  return fail
 }

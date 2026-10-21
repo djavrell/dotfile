@@ -7,10 +7,11 @@ const SCHEME = '.bashrc.d/wezterm/colors/nordic.toml'
 const SLOTS = ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'] as const
 const SCALARS = ['foreground', 'background', 'cursor_bg', 'cursor_border', 'cursor_fg', 'selection_fg', 'selection_bg'] as const
 
-// full copy of wezterm/colors/nordic.toml, used field by field where the file is missing or lacks one;
-// `comment` is nordic.nvim's comment gray, which the toml has no slot for
+// full copy of wezterm/colors/nordic.toml (nordic.nvim's generated scheme, fetched by `dots link`), used field by field where
+// the file is missing or lacks one; refresh it when that file changes. `comment` is nordic.nvim's gray5, which the toml has no
+// slot for (nvim's own comment color is the darker gray4, #4C566A)
 export const FALLBACK: PaletteTheme = {
-  foreground: '#D8DEE9',
+  foreground: '#C0C8D8',
   background: '#242933',
   cursor_bg: '#D8DEE9',
   cursor_border: '#D8DEE9',
@@ -22,23 +23,23 @@ export const FALLBACK: PaletteTheme = {
     red: '#BF616A',
     green: '#A3BE8C',
     yellow: '#EBCB8B',
-    blue: '#81A1C1',
+    blue: '#5E81AC',
     magenta: '#B48EAD',
     cyan: '#8FBCBB',
-    white: '#D8DEE9',
+    white: '#C0C8D8',
   },
   brights: {
     black: '#3B4252',
-    red: '#D06F79',
-    green: '#B1D196',
-    yellow: '#F0D399',
+    red: '#C5727A',
+    green: '#B1C89D',
+    yellow: '#EFD49F',
     blue: '#88C0D0',
-    magenta: '#C895BF',
-    cyan: '#93CCDC',
-    white: '#E5E9F0',
+    magenta: '#BE9DB8',
+    cyan: '#9FC6C5',
+    white: '#D8DEE9',
   },
   comment: '#60728A',
-  dimmed: '#7e848e',
+  dimmed: '#727986',
 }
 
 const HEX = /"(#[0-9A-Fa-f]{6})"/g
