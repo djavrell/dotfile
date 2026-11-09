@@ -20,3 +20,9 @@ test('a shell grep on a code symbol is refused', async ($) => {
 
   expect(answer.deny).toMatch(/^LSP-FIRST: grep on code symbol\(s\) UserService/)
 })
+
+test('a shell read of a source file is refused', async ($) => {
+  const answer = await $.tool.call({ tool: 'Bash', command: "cd src && sed -n '120,180p' x.ts" })
+
+  expect(answer.deny).toMatch(/^LSP-FIRST: reading the source file src\/x\.ts/)
+})

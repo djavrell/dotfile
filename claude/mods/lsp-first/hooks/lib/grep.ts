@@ -12,7 +12,7 @@ type Exemption = { reason: string; applies: (command: string) => boolean };
 
 // Programs whose output a piped grep filters: that text is no code an LSP knows.
 const OUTPUT_PRODUCER =
-  /^(?:npm|npx|pnpm|yarn|node|deno|bun|git|docker|make|kubectl|tsc|eslint|jest|vitest|ps|env|printenv|ls|find|wc|sort|uniq|head|tail|curl|dig)\b/i;
+  /^(?:npm|npx|pnpm|yarn|node|deno|bun|git|docker|make|kubectl|tsc|eslint|jest|vitest|claude|ps|env|printenv|ls|find|wc|sort|uniq|head|tail|curl|dig)\b/i;
 
 // `npm test | grep FailedTest`: the grep reads a program's output, not files.
 function filtersProgramOutput(command: string) {

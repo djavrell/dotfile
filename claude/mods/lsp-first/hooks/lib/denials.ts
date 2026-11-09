@@ -13,6 +13,11 @@ export const writeDenial = (target: string) =>
   "which show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). " +
   "Scratch paths (scratchpad/, /tmp) are exempt: name them absolute, or relative to a cd in the same command.";
 
+export const readDenial = (target: string) =>
+  `${DENY_MARKER} reading the source file ${target} from the shell: use Read with offset/limit, a window around the ` +
+  "lines you need (sed -n '120,180p' is offset=120 limit=61), numbered and ready for Edit. " +
+  "Allowed: a pipe's output (cmd | head), git show/diff, typings (.d.ts), non-source files, scratch paths.";
+
 // This mod's refusal: the error text starts with the marker (a ⛔ before it allowed); its first line is captured.
 // An error that merely quotes the marker further in (a grep's output, a log) is no refusal.
 const OWN_DENIAL = new RegExp(`^\\s*(?:⛔\\s*)?(${DENY_MARKER}.*)`);

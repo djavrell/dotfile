@@ -23,8 +23,9 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |                   | `git-provider.branch` and `git-provider.current` states, drawn by the pane's Branch section. Draws nothing.   |
 | `mcp-status`      | The MCP servers' health: `claude mcp list` at start and on `/mcp-health`, then the session's MCP calls;     |
 |                   | `mcp-status.servers` and `mcp-status.notes` states, drawn by the pane's MCP section. Draws nothing.          |
-| `lsp-first`       | Refuses a shell grep on code symbols and a shell write to a source file, retries cclsp's "No Project" cold   |
-|                   | start, folds its own refusals to one line. Runs above the classic hooks.                                     |
+| `lsp-first`       | Refuses a shell grep on code symbols, a shell read of a source file (`cat`/`head`/`tail`/`sed -n`, toward   |
+|                   | Read) and a shell write to one, retries cclsp's "No Project" cold start, folds its own refusals to one line. |
+|                   | Runs above the classic hooks.                                                                                |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
 |                   | click, fullscreen). Drawing only: the model reads them whole.                                                |
 | `diagnostics`     | Cuts the language server's new-diagnostics list before the model reads it: 400 chars a line, 20k in all (a   |

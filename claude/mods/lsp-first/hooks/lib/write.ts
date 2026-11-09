@@ -1,45 +1,19 @@
 // Shell commands that write a source file: a redirect, tee, sed -i, or a script's own write call. Edit and Write
 // show the change as a diff and fail loudly on a missing anchor; a heredoc or a script's write_text() does neither.
-// Ported from the write half of the classic hook bash-file-read-block.js. Its read half (`cat`/`sed -n` on a source
-// file) is dropped on purpose: auto mode asks for those commands.
-import { EXTENSION_END, SOURCE_EXTENSION, cleanCommand, withoutHeredocBodies } from "./command";
-
-// Where a write is no edit of the project: scratch space, VCS internals, build output.
-const SCRATCH_OR_TOOLING_PATH =
-  /(?:^|[/\\])(?:\.claude|\.git|\.task|coverage|\.next|\.turbo|knowledge-vault|node_modules[/\\]\.bin)(?:[/\\]|$)|(?:^|[/\\])(?:scratchpad|tmp|temp)[/\\]|^\/tmp[/\\]/i;
+// Ported from the write half of the classic hook bash-file-read-block.js; its read half is lib/read.ts.
+import {
+  CD_TARGET,
+  EXTENSION_END,
+  SOURCE_EXTENSION,
+  cleanCommand,
+  commandParts,
+  isScratchOrToolingPath,
+  joinPath,
+  withoutHeredocBodies,
+} from "./command";
 
 const SOURCE_PATH = new RegExp(`${SOURCE_EXTENSION}${EXTENSION_END}`, "i");
-const isProjectSourceFile = (path: string) => SOURCE_PATH.test(path) && !SCRATCH_OR_TOOLING_PATH.test(path);
-
-// ── splitting the command ────────────────────────────────────────────────────
-
-// The pipeline and list parts (`a | b; c && d`), split outside quotes only, each without its leading
-// `VAR=value` assignments and sudo/command wrappers, so each is judged by the program it runs.
-function commandParts(command: string) {
-  const parts: string[] = [];
-  let currentPart = "";
-  let openQuote: string | null = null;
-  for (let index = 0; index < command.length; index++) {
-    const character = command[index]!;
-    const isEscaped = command[index - 1] === "\\";
-    if (openQuote) {
-      if (character === openQuote && !isEscaped) openQuote = null;
-      currentPart += character;
-    } else if (character === '"' || character === "'") {
-      openQuote = character;
-      currentPart += character;
-    } else if ("|;\n&".includes(character)) {
-      parts.push(currentPart);
-      currentPart = "";
-    } else {
-      currentPart += character;
-    }
-  }
-  parts.push(currentPart);
-  return parts
-    .map((part) => part.trim().replace(/^(?:\w+=\S*\s+)*(?:sudo\s+|command\s+)?/, "").trim())
-    .filter(Boolean);
-}
+const isProjectSourceFile = (path: string) => SOURCE_PATH.test(path) && !isScratchOrToolingPath(path);
 
 // ── the writes ───────────────────────────────────────────────────────────────
 
@@ -74,14 +48,9 @@ function scriptWrittenFiles(command: string) {
 
 // ── where a path lands ───────────────────────────────────────────────────────
 
-// A part that only changes directory (`cd scratch`) or only sets a shell variable (`variant=/tmp/x`).
-const CD_TARGET = /^cd\s+['"]?([^'"\s]+)['"]?$/;
+// A part that only sets a shell variable (`variant=/tmp/x`); a `cd` is lib/command.ts's CD_TARGET.
 const ASSIGNMENT = /^(\w+)=['"]?([^'"\s]*)['"]?$/;
 const VARIABLE = /\$\{?(\w+)\}?/g;
-
-// A relative path under the directory a `cd` in the command moved to; an absolute or home path as is.
-const joinPath = (directory: string, path: string) =>
-  !directory || /^[/~]/.test(path) ? path : `${directory.replace(/\/$/, "")}/${path}`;
 
 // ── the verdict ──────────────────────────────────────────────────────────────
 
