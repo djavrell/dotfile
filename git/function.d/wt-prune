@@ -1,0 +1,13 @@
+# vim:ft=zsh
+# Remove the worktrees whose branch PR is merged, in the current repo
+
+local -a merged_branches=( ${(f)"$(gbmerged)"} )
+local key value worktree_path
+
+# Porcelain gives each worktree as "worktree <path>" then "branch refs/heads/<name>".
+git worktree list --porcelain | while read -r key value; do
+  case $key in
+    worktree) worktree_path=$value ;;
+    branch) (( ${merged_branches[(Ie)${value#refs/heads/}]} )) && git worktree remove "$worktree_path" ;;
+  esac
+done
