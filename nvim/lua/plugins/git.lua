@@ -45,6 +45,7 @@ return {
             ['<leader>e'] = actions.focus_files, -- Bring focus to the files panel
             ['<leader>b'] = actions.toggle_files, -- Toggle the files panel.
             ['t'] = actions.cycle_layout, -- g<C-x> is taken by WezTerm.
+            ['q'] = actions.close,
           },
           file_panel = {
             ['j'] = actions.next_entry, -- Bring the cursor to the next file entry
@@ -59,6 +60,7 @@ return {
             ['<leader>e'] = actions.focus_files,
             ['<leader>b'] = actions.toggle_files,
             ['t'] = actions.cycle_layout,
+            ['q'] = '<cmd>DiffviewClose<cr>',
           },
           diff4 = {
             { { 'n', 'x' }, '<leader>co', actions.conflict_choose('ours') },
