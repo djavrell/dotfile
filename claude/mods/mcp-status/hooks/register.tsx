@@ -25,9 +25,22 @@ let checkGeneration = 0;
 // no mod API lists the session's MCP servers or their state: the CLI's health check stands in, run in the session's
 // cwd so project servers count. It can differ from the session (another auth source, servers added since)
 // ponytail: ~3 s and it starts each stdio server once to probe it; a session-side status API if mods ever get one
+// at a cold start it races the session's own servers (Dolmen: ~6 s warm, past the 30 s default cold), hence 90 s
+const LIST_TIMEOUT_MS = 90_000;
+
 async function checkHealth($: EngineInterface) {
   const thisGeneration = ++checkGeneration;
-  const listing = await $.process.run(["claude", "mcp", "list"]);
+  let listing;
+  try {
+    listing = await $.process.run(["claude", "mcp", "list"], {
+      timeoutMs: LIST_TIMEOUT_MS,
+    });
+  } catch (error) {
+    // a timeout rejects: say so, or the pane shows "None." with no reason
+    if (thisGeneration !== checkGeneration) return;
+    await update($, notes, () => [`claude mcp list failed: ${String(error)}`]);
+    return;
+  }
   if (thisGeneration !== checkGeneration) return;
   if (listing.exitCode !== 0) {
     const reason = listing.stderr.trim() || `exit code ${listing.exitCode}`;
