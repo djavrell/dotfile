@@ -9,6 +9,7 @@ return {
       require('lualine').setup({
         options = {
           theme = 'nordic',
+          globalstatus = true,
         },
         extensions = { 'neo-tree', 'man', 'nvim-dap-ui' },
         sections = {
