@@ -10,7 +10,6 @@
       "Bash(gh search:*)",
       "Bash(gh api *)",
       "Bash(gh release *)",
-      "Bash(python3 -c:*)",
       "Bash(grep *)",
       "Bash(npx eslint *)",
       "Bash(npx tsc *)",
@@ -52,7 +51,10 @@
     "code-simplifier@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": true,
+    "playwright@anthropic-plugin-directory": true,
+    "frontend-design@anthropic-plugin-directory": true,
+    "skill-creator@anthropic-plugin-directory": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -69,6 +71,7 @@
   },
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
+  "theme": "dark",
   "editorMode": "vim",
   "verbose": true,
   "preferredNotifChannel": "kitty",
