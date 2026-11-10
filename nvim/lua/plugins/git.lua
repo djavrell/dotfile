@@ -162,32 +162,72 @@ return {
     },
   },
   {
-    'pwntester/octo.nvim',
+    'emrearmagan/atlas.nvim',
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope.nvim',
-      'nvim-tree/nvim-web-devicons',
+      'dlyongemallo/diffview-plus.nvim',
     },
-    config = function()
-      require('octo').setup({
-        suppress_missing_scope = {
-          projects_v2 = true,
+    opts = function()
+      -- Repo-specific views and bookmarks live in lua/atlas_private.lua, out of git through the `*private*` pattern.
+      -- It returns { views = { ... }, bookmarks = { ['Name'] = 'search' } }; a machine without it gets the generic ones.
+      local has_private, private = pcall(require, 'atlas_private')
+      if not has_private then
+        private = {}
+      end
+
+      ---@type AtlasGitHubViewConfig[]
+      local views = vim.list_extend(vim.deepcopy(private.views or {}), {
+        {
+          name = 'My PRs',
+          layout = 'compact', -- "compact", "grouped", or "plain"
+          current_repo = true, -- Limit this view to the local repository.
+          search = 'author:@me sort:updated-desc',
         },
-        mappings = {
-          review_diff = {
-            select_next_entry = { lhs = '<space>n', desc = 'move to next changed file' },
-            select_prev_entry = { lhs = '<space>p', desc = 'move to previous changed file' },
-            select_first_entry = { lhs = '<space>N', desc = 'move to first changed file' },
-            select_last_entry = { lhs = '<space>P', desc = 'move to last changed file' },
-          },
-        },
-        ui = {
-          use_signcolumn = true, -- show "modified" marks on the sign column
-          use_statuscolumn = false, -- show "modified" marks on the status column
-          use_foldtext = false,
+        {
+          name = 'Reviewing',
+          search = 'is:pr review-requested:@me archived:false',
         },
       })
-      vim.treesitter.language.register('markdown', 'octo')
+      -- Keys follow the final order, so private views never shift or clash with the generic ones.
+      for index, view in ipairs(views) do
+        view.key = tostring(index)
+      end
+
+      return {
+        providers = {
+          github = {
+            cache_ttl = 300,
+          },
+        },
+        pulls = {
+          diff = {
+            -- LSP in the diff only works with AtlasDiff or CodeDiff; 'auto' would pick DiffviewOpen.
+            -- open_cmd = 'DiffviewOpen',
+            open_cmd = 'AtlasDiff',
+            layout = 'side-by-side',
+            compact = true,
+            lsp = {
+              enabled = true,
+            },
+            explorer = {
+              commits = {
+                hidden = false,
+              },
+            },
+          },
+          ---@type AtlasGitHubPullsConfig
+          github = {
+            views = views,
+            bookmarks = {
+              key = 'S', -- default
+              label = 'Search', -- default
+              items = vim.tbl_extend('force', {
+                ['Drafts'] = 'is:pr is:draft author:@me',
+                ['Review requested'] = 'is:pr is:open review-requested:@me',
+              }, private.bookmarks or {}),
+            },
+          },
+        },
+      }
     end,
   },
 }

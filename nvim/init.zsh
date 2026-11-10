@@ -3,5 +3,6 @@ alias vimdb='vim +Sqmeow'
 
 alias vadd='vim +Fugit2'
 alias vdiff='vim +DiffviewOpen'
+alias vpulls='vim +"Atlas pulls ."'
 
 alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
