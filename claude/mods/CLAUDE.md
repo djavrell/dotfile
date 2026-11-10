@@ -89,6 +89,7 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   A hook answers `{ deny }`, `{ result }` (in place of the tool) or `next(e)`; `context` on the answer is a reminder the model
   reads. A classic hook's `systemMessage` reaches the user only, never the model. `next(e)` twice replays the first run, it never
   runs the tool again: retry through `$.mcp.call` instead (`lsp-first`). A guard with no `.catch` fails open; `validate` warns.
+  Since 2.1.321 a mod's own `$.tool.call`/`$.mcp.call` raises no permission prompt (ask rules, `dontAsk`, `-p`); deny rules apply.
 - This build offers the model no `Grep`/`Glob` tool: searches go through `Bash`, so a guard has to read the shell command.
 - **Context**: `$.session.usage({ breakdown: "summary" })` is free, `"full"` calls the token-count API. Its `gridRows` is a fixed
   10x10 (or 20x10) grid: draw your own from `categories`. Branch on a row's `kind`; its `name` (`MCP server instructions`, ...) only
@@ -122,7 +123,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
 - **Stale typings**: an older Claude Code session still open rewrites `.claude-plugin/types/` when a mod reloads (`validate` does
   not). Before trusting a `tsc` error on a recent API, read the version on `index.d.ts`'s first line; copy a current mod's file over.
 - **Live test without a new shell**: once the `plugin-authoring` skill is loaded, a mod written under `~/.claude/dev-mods/<session>/`
-  hot-reloads in the session after one "Enable hot reloading" question. Copy it to `claude/mods/` once it works.
+  hot-reloads in the session after one "Enable hot reloading" question in manual mode, none in auto/bypass (2.1.321); mods do not
+  load in `dontAsk` mode. Copy it to `claude/mods/` once it works.
 - In **auto mode**, the classifier gives no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule): edit a copy outside (scratchpad, or `~/.claude/dev-mods/<session>/`), check it, then
   `cp` it back. In manual mode, edits there go through directly. Go straight to the copy: a `sed` on a mod's source file first
