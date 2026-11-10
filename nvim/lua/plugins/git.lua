@@ -13,6 +13,9 @@ return {
           },
         },
         view = {
+          cycle_layouts = {
+            default = { 'diff2_vertical', 'diff1_inline' },
+          },
           merge_tool = {
             layout = 'diff4_mixed',
             disable_diagnostics = true,
@@ -41,6 +44,7 @@ return {
             ['<s-tab>'] = actions.select_prev_entry, -- Open the diff for the previous file
             ['<leader>e'] = actions.focus_files, -- Bring focus to the files panel
             ['<leader>b'] = actions.toggle_files, -- Toggle the files panel.
+            ['t'] = actions.cycle_layout, -- g<C-x> is taken by WezTerm.
           },
           file_panel = {
             ['j'] = actions.next_entry, -- Bring the cursor to the next file entry
@@ -54,6 +58,7 @@ return {
             ['<s-tab>'] = actions.select_prev_entry,
             ['<leader>e'] = actions.focus_files,
             ['<leader>b'] = actions.toggle_files,
+            ['t'] = actions.cycle_layout,
           },
           diff4 = {
             { { 'n', 'x' }, '<leader>co', actions.conflict_choose('ours') },
