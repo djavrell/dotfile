@@ -5,3 +5,4 @@ node
 make
 cargo
 tree-sitter
+mermaid-ascii
