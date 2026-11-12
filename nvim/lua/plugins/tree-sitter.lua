@@ -20,6 +20,7 @@ local parser = {
   'markdown_inline',
   'python',
   'regex',
+  'rust',
   'scheme',
   'scss',
   'sql',

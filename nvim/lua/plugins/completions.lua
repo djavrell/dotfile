@@ -98,6 +98,9 @@ return {
         })
       )
       vim.lsp.enable('pylsp')
+
+      vim.lsp.config('rust_analyzer', lsp_conf.setup())
+      vim.lsp.enable('rust_analyzer')
     end,
   },
   'onsails/lspkind-nvim',

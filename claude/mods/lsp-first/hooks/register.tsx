@@ -18,7 +18,7 @@ const CCLSP_TOOL_PREFIX = `mcp__${CCLSP_SERVER}__`;
 // what cclsp answers until a file-scoped call has primed its project (ktnyt/cclsp#43)
 const COLD_START_ERROR = /No Project\.|ThrowNoProject|Server not initialized|Project not loaded|LSP server.*not ready/i;
 // narrower than lib/command.ts's SOURCE_EXTENSION on purpose: only what claude/cclsp.json serves can prime cclsp
-const SOURCE_FILE = /\.(?:ts|tsx|js|jsx|mjs|cjs|py)$/i;
+const SOURCE_FILE = /\.(?:ts|tsx|js|jsx|mjs|cjs|py|rs)$/i;
 // the fields of a tool.call event that are no argument of the MCP tool itself
 const EVENT_ENVELOPE_FIELDS = new Set(['tool', 'tool_use_id', 'agentId', 'requestMeta']);
 

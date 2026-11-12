@@ -78,6 +78,15 @@
         "lua-language-server"
       ],
       "rootDir": "."
+    },
+    {
+      "extensions": [
+        "rs"
+      ],
+      "command": [
+        "rust-analyzer"
+      ],
+      "rootDir": "."
     }
   ]
 }
