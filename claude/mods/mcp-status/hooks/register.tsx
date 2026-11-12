@@ -2,8 +2,8 @@
 // session's own mcp__* calls; published as the `servers` and `notes` states. Drawing belongs to the consumers (the
 // session pane's MCP section). The atoms stay in this file with their read/update calls (the validator wants them
 // together); parsing and the status rules live in lib/servers.ts.
-import { atom, read, update } from "claude-code";
-import type { EngineInterface, Register } from "claude-code";
+import { atom, read, update } from 'claude-code';
+import type { EngineInterface, Register } from 'claude-code';
 
 import {
   callOutcome,
@@ -13,11 +13,11 @@ import {
   parseMcpList,
   recordCall,
   serverKeyOfTool,
-} from "./lib/servers";
-import type { CallOutcome } from "./lib/servers";
+} from './lib/servers';
+import type { CallOutcome } from './lib/servers';
 
-const servers = atom({ plugin: "mcp-status", key: "servers" } as const, []);
-const notes = atom({ plugin: "mcp-status", key: "notes" } as const, []);
+const servers = atom({ plugin: 'mcp-status', key: 'servers' } as const, []);
+const notes = atom({ plugin: 'mcp-status', key: 'notes' } as const, []);
 
 // bumped by every check: a run that is no longer the latest drops its result
 let checkGeneration = 0;
@@ -32,7 +32,7 @@ async function checkHealth($: EngineInterface) {
   const thisGeneration = ++checkGeneration;
   let listing;
   try {
-    listing = await $.process.run(["claude", "mcp", "list"], {
+    listing = await $.process.run(['claude', 'mcp', 'list'], {
       timeoutMs: LIST_TIMEOUT_MS,
     });
   } catch (error) {
@@ -63,25 +63,25 @@ async function recordOutcome(
 }
 
 export const register: Register = (on) => {
-  on("session.start", async ($, event, next) => {
+  on('session.start', async ($, event, next) => {
     await $.command.register({
-      name: "mcp-health",
+      name: 'mcp-health',
       description:
-        "Check the MCP servers again and list their state with the errors seen this session",
+        'Check the MCP servers again and list their state with the errors seen this session',
     });
     void checkHealth($).catch(() => {});
 
     return next(event);
   });
 
-  on("command.run", { command: "mcp-health" }, async ($) => {
+  on('command.run', { command: 'mcp-health' }, async ($) => {
     await checkHealth($);
 
     return { text: formatHealth(await read($, servers), await read($, notes)) };
   });
 
   // subagents' calls count too: the server is the same
-  on("tool.call", async ($, event, next) => {
+  on('tool.call', async ($, event, next) => {
     const key = serverKeyOfTool(event.tool);
     if (!key) return next(event);
     try {

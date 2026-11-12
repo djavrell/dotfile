@@ -3,7 +3,7 @@ export const fmtLeft = (seconds: number) => {
   if (seconds >= 86400)
     return `${Math.floor(seconds / 86400)}d${Math.floor((seconds % 86400) / 3600)}h`;
   if (seconds >= 3600)
-    return `${Math.floor(seconds / 3600)}h${String(Math.floor((seconds % 3600) / 60)).padStart(2, "0")}m`;
+    return `${Math.floor(seconds / 3600)}h${String(Math.floor((seconds % 3600) / 60)).padStart(2, '0')}m`;
   return `${Math.floor(seconds / 60)}m`;
 };
 
@@ -17,7 +17,7 @@ export const fmtTokens = (tokenCount: number) =>
     ? String(tokenCount)
     : tokenCount < 1e6
       ? `${Math.round(tokenCount / 1000)}k`
-      : `${(tokenCount / 1e6).toFixed(1).replace(/\.0$/, "")}M`;
+      : `${(tokenCount / 1e6).toFixed(1).replace(/\.0$/, '')}M`;
 
 // share of a response's input the prompt cache served; null when the input was empty
 export const cacheReadPercent = (usage: {

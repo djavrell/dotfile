@@ -10,19 +10,19 @@ import {
   isScratchOrToolingPath,
   joinPath,
   withoutHeredocBodies,
-} from "./command";
+} from './command';
 
-const SOURCE_PATH = new RegExp(`${SOURCE_EXTENSION}${EXTENSION_END}`, "i");
+const SOURCE_PATH = new RegExp(`${SOURCE_EXTENSION}${EXTENSION_END}`, 'i');
 const isProjectSourceFile = (path: string) => SOURCE_PATH.test(path) && !isScratchOrToolingPath(path);
 
 // ── the writes ───────────────────────────────────────────────────────────────
 
 // `> src/app.ts`, `>> src/app.ts`
-const REDIRECT_TARGET = new RegExp(String.raw`>>?\s*['"]?([\w./@~-]+${SOURCE_EXTENSION})${EXTENSION_END}`, "i");
+const REDIRECT_TARGET = new RegExp(String.raw`>>?\s*['"]?([\w./@~-]+${SOURCE_EXTENSION})${EXTENSION_END}`, 'i');
 // `| tee src/app.ts`
-const TEE_TARGET = new RegExp(String.raw`\btee\b[^|]*?['"]?([\w./@~-]+${SOURCE_EXTENSION})${EXTENSION_END}`, "i");
+const TEE_TARGET = new RegExp(String.raw`\btee\b[^|]*?['"]?([\w./@~-]+${SOURCE_EXTENSION})${EXTENSION_END}`, 'i');
 // any source path among a command's arguments, for `sed -i`
-const SOURCE_ARGUMENT = new RegExp(String.raw`[\w./@~-]+${SOURCE_EXTENSION}${EXTENSION_END}`, "i");
+const SOURCE_ARGUMENT = new RegExp(String.raw`[\w./@~-]+${SOURCE_EXTENSION}${EXTENSION_END}`, 'i');
 
 // The source file a command part writes through the shell itself: a redirect, tee, or an in-place sed.
 function shellWrittenFile(part: string) {
@@ -60,7 +60,7 @@ const VARIABLE = /\$\{?(\w+)\}?/g;
 export function shellWriteTarget(rawCommand: string): string | null {
   const command = cleanCommand(rawCommand);
   const variables = new Map<string, string>();
-  let directory = "";
+  let directory = '';
   const candidates: string[] = [];
   for (const rawPart of commandParts(withoutHeredocBodies(command))) {
     const part = rawPart.replace(VARIABLE, (whole, name: string) => variables.get(name) ?? whole);

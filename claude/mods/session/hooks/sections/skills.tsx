@@ -1,4 +1,4 @@
-import type { Ui } from "../lib/theme";
+import type { Ui } from '../lib/theme';
 
 export function SkillsSection({
   ui: { Box, Text },
@@ -8,12 +8,12 @@ export function SkillsSection({
   skillList: readonly string[];
 }) {
   return (
-    <Box flexDirection="column">
-      <Text weight="semibold">Skills</Text>
+    <Box flexDirection='column'>
+      <Text weight='semibold'>Skills</Text>
       {skillList.length === 0 ? (
         <Text dimColor>None.</Text>
       ) : (
-        <Text wrap="wrap">{skillList.join(", ")}</Text>
+        <Text wrap='wrap'>{skillList.join(', ')}</Text>
       )}
     </Box>
   );

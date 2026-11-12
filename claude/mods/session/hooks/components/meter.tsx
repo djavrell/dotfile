@@ -1,9 +1,9 @@
-import type { Ui } from "../lib/theme";
+import type { Ui } from '../lib/theme';
 
 // the meter's glyphs, in one place: a style change touches this file only
-const FILLED_CELL = "▰";
-const EMPTY_CELL = "▱";
-const OVERFLOW = "…";
+const FILLED_CELL = '▰';
+const EMPTY_CELL = '▱';
+const OVERFLOW = '…';
 
 // `filled` cells out of `total`, as text. Past `maxWidth` cells only the last ones show, after "…"
 export function meterCells(filled: number, total: number, maxWidth = Infinity) {
@@ -15,7 +15,7 @@ export function meterCells(filled: number, total: number, maxWidth = Infinity) {
   const kept = isOverflowing ? room - 1 : shownTotal;
   const emptyCount = Math.min(shownTotal - shownFilled, kept);
   return {
-    overflow: isOverflowing ? OVERFLOW : "",
+    overflow: isOverflowing ? OVERFLOW : '',
     filled: FILLED_CELL.repeat(kept - emptyCount),
     empty: EMPTY_CELL.repeat(emptyCount),
   };

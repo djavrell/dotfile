@@ -1,4 +1,4 @@
-import type { AgentEntry } from "agents";
+import type { AgentEntry } from 'agents';
 
 // the agents one Workflow run spawned, in their run order (agentIndex)
 export type WorkflowRun = { runId: string; agents: AgentEntry[] };
@@ -11,7 +11,7 @@ export type AgentRow = { guide: string; underGuide: string } & (
   | { agent?: undefined; run: WorkflowRun }
 );
 
-export const FINISHED = new Set(["completed", "failed", "killed"]);
+export const FINISHED = new Set(['completed', 'failed', 'killed']);
 
 // drops agents finished more than `keepMs` ago (no endedAt counts as long ago), but keeps a finished
 // agent while one of its descendants is still shown, so a running child stays nested under it
@@ -98,11 +98,11 @@ export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {
 
   const rows: AgentRow[] = [];
   const pushAgent = (agent: AgentEntry, guide: string, isLast: boolean) => {
-    const childGuide = guide + (isLast ? "   " : "│  ");
+    const childGuide = guide + (isLast ? '   ' : '│  ');
     const hasChildren = childrenByParent.has(agent.id);
     rows.push({
-      guide: guide + (isLast ? "└─ " : "├─ "),
-      underGuide: childGuide + (hasChildren ? "│ " : "  "),
+      guide: guide + (isLast ? '└─ ' : '├─ '),
+      underGuide: childGuide + (hasChildren ? '│ ' : '  '),
       agent,
     });
     walk(agent.id, childGuide);
@@ -111,11 +111,11 @@ export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {
     const nodes = groupRuns(childrenOf(parentId));
     nodes.forEach((node, nodeIndex) => {
       const isLast = nodeIndex === nodes.length - 1;
-      if (!("runId" in node)) return pushAgent(node, guide, isLast);
-      const runGuide = guide + (isLast ? "   " : "│  ");
+      if (!('runId' in node)) return pushAgent(node, guide, isLast);
+      const runGuide = guide + (isLast ? '   ' : '│  ');
       rows.push({
-        guide: guide + (isLast ? "└─ " : "├─ "),
-        underGuide: runGuide + "│ ",
+        guide: guide + (isLast ? '└─ ' : '├─ '),
+        underGuide: runGuide + '│ ',
         run: node,
       });
       node.agents.forEach((agent, agentIndex) =>
@@ -123,6 +123,6 @@ export function buildAgentTree(agents: readonly AgentEntry[]): AgentRow[] {
       );
     });
   };
-  walk(undefined, "");
+  walk(undefined, '');
   return rows;
 }

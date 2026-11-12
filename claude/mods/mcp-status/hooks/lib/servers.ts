@@ -1,10 +1,10 @@
-import type { McpServer, McpStatus } from "../../types";
+import type { McpServer, McpStatus } from '../../types';
 
 // one `claude mcp list` server line: "<name>: <command or url> - <mark> <status words>"; a name may hold
 // colons (plugin:playwright:playwright) but never ": ", so the first ": " ends it
 const SERVER_LINE = /^(.+?): .* - (\S+)\s+(.+)$/;
-const HEALTHY_MARKS = new Set(["✔", "✓"]);
-const FAILED_MARKS = new Set(["✗", "✘"]);
+const HEALTHY_MARKS = new Set(['✔', '✓']);
+const FAILED_MARKS = new Set(['✗', '✘']);
 // a line of the CLI's own about the listing, such as the claude.ai connectors being disabled
 const WARNING_LINE = /^[⚠!]\s*(.+)$/;
 // `mcp__<server>__<tool>`
@@ -27,7 +27,7 @@ export type ListedServer = {
 export type CallOutcome = { status: McpStatus; issue?: string } | null;
 
 // how tool names spell a server: what is not a letter, digit, _ or - becomes _ (`claude.ai Asana` -> `claude_ai_Asana`)
-export const serverKey = (name: string) => name.replace(/[^A-Za-z0-9_-]/g, "_");
+export const serverKey = (name: string) => name.replace(/[^A-Za-z0-9_-]/g, '_');
 
 // the server key in an MCP tool's name, undefined for another tool
 export const serverKeyOfTool = (toolName: string) =>
@@ -39,7 +39,7 @@ export function parseMcpList(listing: string): {
 } {
   const servers: ListedServer[] = [];
   const notes: string[] = [];
-  for (const line of listing.split("\n").map((text) => text.trim())) {
+  for (const line of listing.split('\n').map((text) => text.trim())) {
     const warning = WARNING_LINE.exec(line);
     if (warning) {
       notes.push(warning[1] ?? line);
@@ -47,16 +47,16 @@ export function parseMcpList(listing: string): {
     }
     const server = SERVER_LINE.exec(line);
     if (!server) continue;
-    const [, name = "", mark = "", health = ""] = server;
+    const [, name = '', mark = '', health = ''] = server;
     servers.push({
       name,
       key: serverKey(name),
       health,
       status: HEALTHY_MARKS.has(mark)
-        ? "ok"
+        ? 'ok'
         : FAILED_MARKS.has(mark)
-          ? "error"
-          : "warning",
+          ? 'error'
+          : 'warning',
     });
   }
   return { servers, notes };
@@ -70,12 +70,12 @@ export function mergeHealth(
 ): McpServer[] {
   const merged = listed.map((server): McpServer => {
     const known = previous.find((entry) => entry.key === server.key);
-    const wasCalled = known !== undefined && known.status !== "idle";
+    const wasCalled = known !== undefined && known.status !== 'idle';
     return {
       name: server.name,
       key: server.key,
       health: server.health,
-      status: server.status === "ok" && !wasCalled ? "idle" : server.status,
+      status: server.status === 'ok' && !wasCalled ? 'idle' : server.status,
       issues: known?.issues ?? [],
     };
   });
@@ -91,16 +91,16 @@ export function callOutcome(
   result: { deny?: string; isError?: boolean; text?: string },
 ): CallOutcome {
   if (result.deny !== undefined) return null;
-  if (!result.isError) return { status: "ok" };
-  return failedCall(toolName, result.text ?? "error");
+  if (!result.isError) return { status: 'ok' };
+  return failedCall(toolName, result.text ?? 'error');
 }
 
 // a call that errored, or threw: red when the words say the server is down, yellow when only the call failed
 export function failedCall(toolName: string, errorText: string): CallOutcome {
   const shortTool = MCP_TOOL.exec(toolName)?.[2] ?? toolName;
-  const firstLine = errorText.split("\n").find(Boolean) ?? errorText;
+  const firstLine = errorText.split('\n').find(Boolean) ?? errorText;
   return {
-    status: SERVER_DOWN.test(errorText) ? "error" : "warning",
+    status: SERVER_DOWN.test(errorText) ? 'error' : 'warning',
     issue: `${shortTool}: ${firstLine.slice(0, ISSUE_CHARS)}`,
   };
 }
@@ -114,7 +114,7 @@ export function recordCall(
   const known = servers.find((server) => server.key === key) ?? {
     name: key,
     key,
-    status: "idle",
+    status: 'idle',
     health: null,
     issues: [],
   };
@@ -135,10 +135,10 @@ export function formatHealth(
   servers: readonly McpServer[],
   notes: readonly string[],
 ): string {
-  if (servers.length === 0 && notes.length === 0) return "No MCP server.";
+  if (servers.length === 0 && notes.length === 0) return 'No MCP server.';
   const lines = servers.flatMap((server) => [
-    `${server.status.padEnd(7)} ${server.name}${server.health ? ` · ${server.health}` : ""}`,
+    `${server.status.padEnd(7)} ${server.name}${server.health ? ` · ${server.health}` : ''}`,
     ...server.issues.map((issue) => `          ${issue}`),
   ]);
-  return [...lines, ...notes.map((note) => `⚠ ${note}`)].join("\n");
+  return [...lines, ...notes.map((note) => `⚠ ${note}`)].join('\n');
 }

@@ -26,7 +26,7 @@ export function buildTree<Item extends { path: string }>(
   const root: TreeNode<Item> = { children: new Map() };
   for (const item of items) {
     let node = root;
-    for (const segment of item.path.split("/").filter(Boolean)) {
+    for (const segment of item.path.split('/').filter(Boolean)) {
       let child = node.children.get(segment);
       if (!child) {
         child = { children: new Map() };
@@ -56,7 +56,7 @@ export function buildTree<Item extends { path: string }>(
       }
       const isLast = entryIndex === entries.length - 1;
       const isFolder = shown.children.size > 0;
-      const branch = guide + (isLast ? "└─ " : "├─ ");
+      const branch = guide + (isLast ? '└─ ' : '├─ ');
       if (!isFolder) {
         rows.push({ branch, label, item: shown.item });
         return;
@@ -69,9 +69,9 @@ export function buildTree<Item extends { path: string }>(
         folderPath,
         hiddenCount: isCollapsed ? countFiles(shown) : undefined,
       });
-      if (!isCollapsed) walk(shown, guide + (isLast ? "   " : "│  "), `${folderPath}/`);
+      if (!isCollapsed) walk(shown, guide + (isLast ? '   ' : '│  '), `${folderPath}/`);
     });
   };
-  walk(root, "", "");
+  walk(root, '', '');
   return rows;
 }

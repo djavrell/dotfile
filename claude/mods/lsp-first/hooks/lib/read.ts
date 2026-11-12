@@ -11,10 +11,10 @@ import {
   isScratchOrToolingPath,
   joinPath,
   withoutHeredocBodies,
-} from "./command";
+} from './command';
 
 // The LSP's source files, plus the code no LSP here indexes but Read shows just as well.
-const READ_SOURCE_PATH = new RegExp(String.raw`(?:${SOURCE_EXTENSION}|\.(?:sql|lua|zsh|sh))${EXTENSION_END}$`, "i");
+const READ_SOURCE_PATH = new RegExp(String.raw`(?:${SOURCE_EXTENSION}|\.(?:sql|lua|zsh|sh))${EXTENSION_END}$`, 'i');
 // Typings are allowed, as the grep guard allows them.
 const TYPINGS_PATH = /\.d\.ts$/i;
 
@@ -31,10 +31,10 @@ const OUTPUT_REDIRECT = /\d*>>?&?\s*\S+/g;
 function readFiles(part: string) {
   if (!READING_PROGRAM.test(part)) return [];
   return part
-    .replace(OUTPUT_REDIRECT, " ")
+    .replace(OUTPUT_REDIRECT, ' ')
     .split(/\s+/)
     .slice(1)
-    .map((argument) => argument.replace(/^['"<]+|['"]+$/g, ""))
+    .map((argument) => argument.replace(/^['"<]+|['"]+$/g, ''))
     .filter((argument) => READ_SOURCE_PATH.test(argument));
 }
 
@@ -42,7 +42,7 @@ function readFiles(part: string) {
 // A relative path is judged after the command's own `cd` (`cd /tmp/x && cat a.ts` reads scratch).
 // ponytail: the shell's persisted cwd stays unknown, as in lib/write.ts
 export function shellReadTarget(rawCommand: string): string | null {
-  let directory = "";
+  let directory = '';
   for (const part of commandParts(withoutHeredocBodies(cleanCommand(rawCommand)))) {
     const cdTarget = part.match(CD_TARGET)?.[1];
     if (cdTarget) directory = joinPath(directory, cdTarget);

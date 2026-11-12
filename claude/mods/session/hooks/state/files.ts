@@ -1,30 +1,30 @@
 // The Files section's state: the changed files (git, debounced after writes and polled while the pane is open)
 // and the folded folders. The atoms stay here with their read/update calls, as the validator requires.
-import { atom, read, update } from "claude-code";
-import type { EngineInterface } from "claude-code";
+import { atom, read, update } from 'claude-code';
+import type { EngineInterface } from 'claude-code';
 
 import {
   DIFF_ARGS,
   UNTRACKED_ARGS,
   parseNumstat,
   parseUntracked,
-} from "../lib/git";
-import { isPaneOpen } from "./pane";
+} from '../lib/git';
+import { isPaneOpen } from './pane';
 
-const files = atom({ plugin: "session", key: "files" } as const, []);
+const files = atom({ plugin: 'session', key: 'files' } as const, []);
 const collapsedFolders = atom(
-  { plugin: "session", key: "collapsedFolders" } as const,
+  { plugin: 'session', key: 'collapsedFolders' } as const,
   [],
 );
 
 export const GIT_POLL_MS = 10_000;
 const DEBOUNCE_MS = 300;
 export const WRITERS = new Set([
-  "Edit",
-  "MultiEdit",
-  "Write",
-  "NotebookEdit",
-  "Bash",
+  'Edit',
+  'MultiEdit',
+  'Write',
+  'NotebookEdit',
+  'Bash',
 ]);
 
 // bumped by every refresh request: a run that is no longer the latest drops its result

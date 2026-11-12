@@ -1,24 +1,24 @@
-import type { Elements, SessionUsage } from "claude-code";
-import type { PaletteColorPath, PaletteTheme } from "palette";
+import type { Elements, SessionUsage } from 'claude-code';
+import type { PaletteColorPath, PaletteTheme } from 'palette';
 
-import type { ContextInfo, ModelInfo } from "../../types";
-import { Meter } from "../components/meter";
-import { fmtElapsed, fmtLeft } from "../lib/format";
-import { modelIcon } from "../lib/icons";
-import { band, paint, unInverted } from "../lib/theme";
-import type { Ui } from "../lib/theme";
+import type { ContextInfo, ModelInfo } from '../../types';
+import { Meter } from '../components/meter';
+import { fmtElapsed, fmtLeft } from '../lib/format';
+import { modelIcon } from '../lib/icons';
+import { band, paint, unInverted } from '../lib/theme';
+import type { Ui } from '../lib/theme';
 
 // the effort scale, one meter cell per level; a level outside it (a number) shows as text only
-const EFFORT_LEVELS = ["low", "medium", "high", "xhigh", "max"];
+const EFFORT_LEVELS = ['low', 'medium', 'high', 'xhigh', 'max'];
 // low and medium are drawn gray
 const EFFORT_COLOR: Record<string, PaletteColorPath> = {
-  max: "ansi.magenta",
-  xhigh: "ansi.magenta",
-  high: "ansi.cyan",
+  max: 'ansi.magenta',
+  xhigh: 'ansi.magenta',
+  high: 'ansi.cyan',
 };
 
 // nf-md-cached, as an escape: Nerd Font glyphs vanish from Claude's own output
-const CACHE_GLYPH = "\u{F00E8}";
+const CACHE_GLYPH = '\u{F00E8}';
 
 // the main conversation's card, the root the subagents' tree hangs from: model, effort, cost, limits, cache, time
 export function MainAgentCard({
@@ -31,7 +31,7 @@ export function MainAgentCard({
   onViewMain,
 }: {
   // the model's line is a button: this card needs Button on top of Box and Text
-  ui: Ui & Pick<Elements[keyof Elements], "Button">;
+  ui: Ui & Pick<Elements[keyof Elements], 'Button'>;
   theme?: PaletteTheme;
   modelInfo: ModelInfo | null;
   contextInfo: ContextInfo | null;
@@ -40,13 +40,13 @@ export function MainAgentCard({
   onViewMain: () => void;
 }) {
   const fiveHourLimit = usage.rateLimits.find(
-    (rateLimit) => rateLimit.kind === "five_hour",
+    (rateLimit) => rateLimit.kind === 'five_hour',
   );
   const sevenDayLimit = usage.rateLimits.find(
-    (rateLimit) => rateLimit.kind === "seven_day",
+    (rateLimit) => rateLimit.kind === 'seven_day',
   );
   const spendLimit = usage.rateLimits.find(
-    (rateLimit) => rateLimit.kind === "spend_limit",
+    (rateLimit) => rateLimit.kind === 'spend_limit',
   );
   // one countdown, for the 7d window once it is under pressure, else the 5h one
   const countdownLimit =
@@ -62,38 +62,38 @@ export function MainAgentCard({
   const elapsedSeconds = Math.floor((nowMs - usage.startedAt) / 1000);
   const effort = modelInfo?.effort;
   const effortLevel = effort ? EFFORT_LEVELS.indexOf(effort) + 1 : 0;
-  const effortColor = paint(theme, (effort && EFFORT_COLOR[effort]) || "comment");
+  const effortColor = paint(theme, (effort && EFFORT_COLOR[effort]) || 'comment');
   const model = modelIcon(modelInfo?.model);
   const cacheRead = contextInfo?.cacheReadPercent ?? null;
 
   return (
     <Box
-      flexDirection="column"
-      borderStyle="round"
+      flexDirection='column'
+      borderStyle='round'
       borderColor={theme?.comment}
       paddingX={1}
     >
-      <Box flexDirection="row" gap={2}>
+      <Box flexDirection='row' gap={2}>
         {/* a click brings the main conversation back into the main view; `hover` keeps the line
             unchanged under the pointer (see unInverted); the keyed Box is the area that hovers */}
-        <Box key="view-main-row" flexDirection="row">
-          <Button key="view-main" plain onPress={onViewMain}>
-            <Text weight="semibold">
+        <Box key='view-main-row' flexDirection='row'>
+          <Button key='view-main' plain onPress={onViewMain}>
+            <Text weight='semibold'>
               <Text
                 color={paint(theme, model.color)}
                 hover={unInverted(theme, paint(theme, model.color))}
               >
-                {model.glyph}{" "}
+                {model.glyph}{' '}
               </Text>
               <Text color={theme?.ansi.cyan} hover={unInverted(theme, theme?.ansi.cyan)}>
-                {modelInfo?.model ?? "Claude"}
+                {modelInfo?.model ?? 'Claude'}
               </Text>
             </Text>
           </Button>
         </Box>
         {effort && (
           <Text color={effortColor}>
-            🧠{" "}
+            🧠{' '}
             {effortLevel > 0 && (
               <Text>
                 {Meter({
@@ -101,7 +101,7 @@ export function MainAgentCard({
                   filled: effortLevel,
                   total: EFFORT_LEVELS.length,
                   filledColor: effortColor,
-                })}{" "}
+                })}{' '}
               </Text>
             )}
             {effort}
@@ -111,7 +111,7 @@ export function MainAgentCard({
           <Text color={theme?.ansi.red}>💰 ${usage.cost.usd.toFixed(4)}</Text>
         )}
       </Box>
-      <Box flexDirection="row" gap={2}>
+      <Box flexDirection='row' gap={2}>
         {fiveHourLimit && sevenDayLimit && (
           <Text>
             <Text color={theme?.ansi.yellow}>⚡ </Text>

@@ -1,6 +1,6 @@
-import { expect, test } from 'claude-code/testing'
+import { expect, test } from 'claude-code/testing';
 
-import { FALLBACK, parseScheme } from '../hooks/register'
+import { FALLBACK, parseScheme } from '../hooks/register';
 
 const SCHEME = `
 [colors]
@@ -17,27 +17,27 @@ ansi = [
   "#000007",
   "#000008"
 ]
-`
+`;
 
 test('reads scalars and the ansi array by slot', () => {
-  const t = parseScheme(SCHEME)
-  expect(t.foreground).toBe('#111111')
-  expect(t.background).toBe('#222222')
-  expect(t.ansi.black).toBe('#000001')
-  expect(t.ansi.white).toBe('#000008')
-})
+  const t = parseScheme(SCHEME);
+  expect(t.foreground).toBe('#111111');
+  expect(t.background).toBe('#222222');
+  expect(t.ansi.black).toBe('#000001');
+  expect(t.ansi.white).toBe('#000008');
+});
 
 test('falls back field by field for what the file lacks', () => {
-  const t = parseScheme(SCHEME)
-  expect(t.cursor_fg).toBe(FALLBACK.cursor_fg)
-  expect(t.brights).toEqual(FALLBACK.brights)
-  expect(t.comment).toBe(FALLBACK.comment)
-})
+  const t = parseScheme(SCHEME);
+  expect(t.cursor_fg).toBe(FALLBACK.cursor_fg);
+  expect(t.brights).toEqual(FALLBACK.brights);
+  expect(t.comment).toBe(FALLBACK.comment);
+});
 
 test('dimmed sits halfway between the foreground and the background', () => {
-  expect(parseScheme(SCHEME).dimmed).toBe('#1a1a1a')
-})
+  expect(parseScheme(SCHEME).dimmed).toBe('#1a1a1a');
+});
 
 test('an empty file is the fallback', () => {
-  expect(parseScheme('')).toEqual(FALLBACK)
-})
+  expect(parseScheme('')).toEqual(FALLBACK);
+});

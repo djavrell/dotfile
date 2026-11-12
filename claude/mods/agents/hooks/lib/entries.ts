@@ -1,4 +1,4 @@
-import type { AgentEntry } from "../../types";
+import type { AgentEntry } from '../../types';
 
 // ponytail: keeps the last 30 agents; older ones drop off the list
 export const MAX_ENTRIES = 30;
@@ -15,7 +15,7 @@ export type ListedAgent = {
 };
 
 export const newEntry = (
-  fields: Omit<AgentEntry, "stepsStarted" | "stepsDone">,
+  fields: Omit<AgentEntry, 'stepsStarted' | 'stepsDone'>,
 ): AgentEntry => ({ ...fields, stepsStarted: 0, stepsDone: 0 });
 
 // adds an agent, or replaces the fields given on the one already there
@@ -63,12 +63,12 @@ export const mergeListed = (
 
 // a finished turn's reason, as a status, until the engine's list says otherwise
 export const statusOfEnd = (reason: string) =>
-  reason === "answer" ? "completed" : reason === "aborted" ? "killed" : "failed";
+  reason === 'answer' ? 'completed' : reason === 'aborted' ? 'killed' : 'failed';
 
-const FINISHED_STATUSES = new Set(["completed", "failed", "killed"]);
+const FINISHED_STATUSES = new Set(['completed', 'failed', 'killed']);
 
 // a known agent running again (SendMessage, a teammate woken): its start, parent and description stay
-export const resumed = (): Partial<AgentEntry> => ({ status: "running", endedAt: undefined, endReason: undefined });
+export const resumed = (): Partial<AgentEntry> => ({ status: 'running', endedAt: undefined, endReason: undefined });
 
 // a step about to go out; a finished agent stepping again was resumed with no spawn event (a teammate
 // woken in memory): running again

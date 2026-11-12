@@ -1,7 +1,7 @@
 // Shell greps that look up a code symbol. An LSP lookup answers those better (the exact definition, the real
 // references), so the guard refuses them and names the LSP call to make instead.
 // Ported from the classic hook bash-grep-block.js.
-import { cleanCommand, withoutHeredocBodies } from "./command";
+import { cleanCommand, withoutHeredocBodies } from './command';
 
 const SEARCH_PROGRAM = /\b(grep|rg|ag|ack)\b/i;
 
@@ -16,7 +16,7 @@ const OUTPUT_PRODUCER =
 
 // `npm test | grep FailedTest`: the grep reads a program's output, not files.
 function filtersProgramOutput(command: string) {
-  const pipeIndex = command.indexOf("|");
+  const pipeIndex = command.indexOf('|');
   const searchIndex = command.search(SEARCH_PROGRAM);
   const grepComesAfterPipe = pipeIndex !== -1 && pipeIndex < searchIndex;
   // with xargs or -exec the grep reads files again, whatever comes before the pipe
@@ -24,7 +24,7 @@ function filtersProgramOutput(command: string) {
   const producer = command
     .slice(0, pipeIndex)
     .trim()
-    .replace(/^\S*=\S*\s+/, ""); // a leading `VAR=value` is no program
+    .replace(/^\S*=\S*\s+/, ''); // a leading `VAR=value` is no program
   return OUTPUT_PRODUCER.test(producer);
 }
 
@@ -59,7 +59,7 @@ function searchesOnlyNonCodeFiles(command: string) {
 
 const GREP_EXEMPTIONS: Exemption[] = [
   {
-    reason: "git grep: a deliberate search of the git index",
+    reason: 'git grep: a deliberate search of the git index',
     applies: (command) => /\bgit\s+grep\b/i.test(command),
   },
   {
@@ -67,7 +67,7 @@ const GREP_EXEMPTIONS: Exemption[] = [
     applies: (command) => /\.d\.ts\b/.test(command),
   },
   {
-    reason: "-v drops lines: nobody looks for a definition by excluding it",
+    reason: '-v drops lines: nobody looks for a definition by excluding it',
     applies: (command) => /\b(?:grep|rg|ag|ack)\s+(?:-\w*v\w*|--invert-match)\b/i.test(command),
   },
   {
@@ -75,29 +75,29 @@ const GREP_EXEMPTIONS: Exemption[] = [
     applies: filtersProgramOutput,
   },
   {
-    reason: "a tree that holds no indexed code (node_modules, migrations, .claude, notes)",
+    reason: 'a tree that holds no indexed code (node_modules, migrations, .claude, notes)',
     applies: (command) =>
       // the tree name starts an argument (after a space or a quote) or a path segment (after a slash)
       /(?:^|[\s'"/\\])(?:supabase[/\\]migrations|\.task|\.claude|node_modules|knowledge-vault)(?:[/\\]|$)/i.test(command),
   },
   {
-    reason: "--include of non-code files only",
+    reason: '--include of non-code files only',
     applies: (command) => /--include=?\S*\.(sql|md|json|yaml|yml|txt|env|sh|css|scss|log)\b/i.test(command),
   },
   {
-    reason: "one known file: grep finds the line cheaper than any LSP call",
+    reason: 'one known file: grep finds the line cheaper than any LSP call',
     applies: searchesOneKnownFile,
   },
   {
-    reason: "-c counts occurrences: LSP has no count",
+    reason: '-c counts occurrences: LSP has no count',
     applies: (command) => /\b(?:grep|rg|ag|ack)\s+(?:-\w*c\w*|--count)\b/i.test(command),
   },
   {
-    reason: "-A/-B/-C asks for the lines around: LSP answers positions only",
+    reason: '-A/-B/-C asks for the lines around: LSP answers positions only',
     applies: (command) => /\s-[ABC]\s?\d|--(?:after|before)-context\b|--context\b/i.test(command),
   },
   {
-    reason: "only non-code files are searched",
+    reason: 'only non-code files are searched',
     applies: searchesOnlyNonCodeFiles,
   },
 ];
@@ -115,7 +115,7 @@ function searchPattern(command: string) {
 
 // `build.*Tree`, `Optional?`: an unescaped wildcard or quantifier makes a regex, and LSP looks up exact names only.
 // An escaped dot (`UserService\.`) is still a name; `\\` pairs are dropped first so `\\.` reads as an escape.
-const isRegex = (pattern: string) => /(?<!\\)[.?*+[]/.test(pattern.replace(/\\\\/g, ""));
+const isRegex = (pattern: string) => /(?<!\\)[.?*+[]/.test(pattern.replace(/\\\\/g, ''));
 
 // Words that look like identifiers but are none.
 const NOT_SYMBOLS = [
@@ -146,8 +146,8 @@ function symbolsOf(pattern: string, searchesPython: boolean) {
     .split(/\\?\||\./) // alternatives, and each side of `a.b`
     .map((word) =>
       word
-        .replace(/\\[a-zA-Z]/g, " ") // an escape goes whole: `Dao\b` must not read as the PascalCase `Daob`
-        .replace(/[*+?^${}()[\]\\]/g, "")
+        .replace(/\\[a-zA-Z]/g, ' ') // an escape goes whole: `Dao\b` must not read as the PascalCase `Daob`
+        .replace(/[*+?^${}()[\]\\]/g, '')
         .trim(),
     )
     .filter((word) => isSymbol(word, searchesPython));

@@ -1,17 +1,17 @@
 // What the model reads when a guard refuses, and the one line the transcript shows in its place.
 
 // Starts every refusal of this mod, as it started the classic hooks' ones.
-const DENY_MARKER = "LSP-FIRST:";
+const DENY_MARKER = 'LSP-FIRST:';
 
 export const grepDenial = (symbols: readonly string[]) =>
-  `${DENY_MARKER} grep on code symbol(s) ${symbols.join(", ")}: ask the LSP instead, ` +
+  `${DENY_MARKER} grep on code symbol(s) ${symbols.join(', ')}: ask the LSP instead, ` +
   `mcp__cclsp__find_workspace_symbols("${symbols[0]}") then find_references from its definition. ` +
-  "Allowed: typings (.d.ts), one known file, regex patterns, -c, -A/-B/-C.";
+  'Allowed: typings (.d.ts), one known file, regex patterns, -c, -A/-B/-C.';
 
 export const writeDenial = (target: string) =>
   `${DENY_MARKER} writing the source file ${target} from the shell: use Edit (Read it first) or Write, ` +
-  "which show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). " +
-  "Scratch paths (scratchpad/, /tmp) are exempt: name them absolute, or relative to a cd in the same command.";
+  'which show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). ' +
+  'Scratch paths (scratchpad/, /tmp) are exempt: name them absolute, or relative to a cd in the same command.';
 
 export const readDenial = (target: string) =>
   `${DENY_MARKER} reading the source file ${target} from the shell: use Read with offset/limit, a window around the ` +

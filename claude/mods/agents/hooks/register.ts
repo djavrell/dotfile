@@ -2,12 +2,12 @@
 // them as its `list` state; the session pane (and any later band, toast or command) reads that state.
 // The atom stays in this file with its update calls (the validator wants them together); the pure
 // list operations live in lib/entries.ts.
-import { atom, update } from "claude-code";
-import type { EngineInterface, Register } from "claude-code";
+import { atom, update } from 'claude-code';
+import type { EngineInterface, Register } from 'claude-code';
 
-import { mergeListed, newEntry, patchEntry, resumed, statusOfEnd, stepStarted, upsertEntry } from "./lib/entries";
+import { mergeListed, newEntry, patchEntry, resumed, statusOfEnd, stepStarted, upsertEntry } from './lib/entries';
 
-const list = atom({ plugin: "agents", key: "list" } as const, []);
+const list = atom({ plugin: 'agents', key: 'list' } as const, []);
 
 // bumped by every list refresh: a run that is no longer the latest drops its result
 let listGeneration = 0;
@@ -34,13 +34,13 @@ async function refreshFromList($: EngineInterface) {
 }
 
 export const register: Register = (on) => {
-  on("session.start", async ($, event, next) => {
+  on('session.start', async ($, event, next) => {
     void refreshFromList($).catch(() => {});
 
     return next(event);
   });
 
-  on("agent.spawn", async ($, event, next) => {
+  on('agent.spawn', async ($, event, next) => {
     const result = await next(event);
     const agentId = result.agentId;
     // a resume (SendMessage, a teammate back from disk) spawns no new agent: only its end is undone;
@@ -55,7 +55,7 @@ export const register: Register = (on) => {
         parentId: event.parentAgentId,
         type: event.subagentType,
         description: event.description,
-        status: "running",
+        status: 'running',
         model: result.model,
         background: event.background,
         startedAt,
@@ -69,7 +69,7 @@ export const register: Register = (on) => {
   });
 
   // one step = one model request; counted before it goes out and once it came back
-  on("turn.step", async function* ($, event, next) {
+  on('turn.step', async function* ($, event, next) {
     const agentId = event.agentId;
     if (agentId && !firstStepAt.has(agentId)) firstStepAt.set(agentId, await $.clock.now());
     if (agentId)
@@ -88,7 +88,7 @@ export const register: Register = (on) => {
   });
 
   // a subagent's run is one turn: its end is the agent's end
-  on("turn.complete", async ($, event, next) => {
+  on('turn.complete', async ($, event, next) => {
     const result = await next(event);
     const agentId = event.agentId;
     if (agentId) {
