@@ -12,6 +12,7 @@ typeset -gU mods=(
   navi
   nvim
   rust
+  go
   python
   fnm
   goose
