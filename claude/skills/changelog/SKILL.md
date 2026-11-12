@@ -6,13 +6,18 @@ argument-hint: "[nombre de versions, défaut 3]"
 
 Version installée : !`claude --version`
 
-Changelog (les 10 dernières versions) :
+Nombre de versions demandé : `$ARGUMENTS` (3 si vide). Récupère-les avec cette commande, `<N>` remplacé par ce nombre :
 
-!`curl -sL https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md | awk '/^## /{n++} n>=1 && n<=10'`
+```bash
+curl -sfL https://raw.githubusercontent.com/anthropics/claude-code/main/CHANGELOG.md | awk -v wanted=<N> '/^## /{n++} n>=1 && n<=wanted'
+```
 
-Résume en français les $ARGUMENTS dernières versions ci-dessus (3 si aucun nombre n'est donné) :
+Si la sortie est vide (hors ligne, GitHub indisponible), dis-le en une ligne et arrête-toi : ne résume rien de mémoire.
 
-- une section `## <version>` par version, en commençant par la plus récente ;
+Résume ces versions en français :
+
+- une section `## <version>` par version, en commençant par la plus récente ; marque `(pas encore installée)` celles plus récentes
+  que la version installée ;
 - regroupe les entrées par thème (Nouveautés, Sécurité/permissions, Fiabilité, Améliorations) et ne garde que l'essentiel ;
   une petite version tient en 2-3 puces ;
 - termine par une ligne sur ce qui concerne cet environnement : zsh, WSL, mods/plugins.
@@ -23,8 +28,9 @@ Saute cette étape si les versions résumées n'ont aucune entrée sur les mods 
 `settings.read`, `ui.render`...), `$.<noun>`, `Button`/`Box`, panes, `claude plugin validate|test`, rechargement de mod. Dis-le en
 une ligne.
 
-Sinon, lance un agent `Explore` (lecture seule) avec `model: "sonnet"` et donne-lui, mot pour mot, les entrées du changelog qui touchent les mods. Sa
-mission, sur `~/.bashrc.d/claude/mods/` (hors `node_modules` et `.claude-plugin/types/`), en s'appuyant sur `claude/mods/CLAUDE.md` :
+Sinon, lance un agent `general-purpose` avec `model: "sonnet"`, en lui précisant qu'il est en lecture seule (aucune modification de
+fichier), et donne-lui, mot pour mot, les entrées du changelog qui touchent les mods. Sa mission, sur `~/.bashrc.d/claude/mods/`
+(hors `node_modules` et `.claude-plugin/types/`), en s'appuyant sur `claude/mods/CLAUDE.md` :
 
 - **cassé** : un mod qui utilise une API changée ou retirée ;
 - **contournement devenu inutile** : un bug corrigé pour lequel un mod, un commentaire `ponytail:` ou une ligne de la section « API
