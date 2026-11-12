@@ -101,6 +101,7 @@ return {
 
       vim.lsp.config('rust_analyzer', lsp_conf.setup())
       vim.lsp.enable('rust_analyzer')
+      vim.lsp.enable('clangd')
     end,
   },
   'onsails/lspkind-nvim',
