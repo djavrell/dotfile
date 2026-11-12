@@ -36,18 +36,21 @@ set guifont=Hasklug_Nerd_Font:h11
 set termguicolors
 
 set clipboard+=unnamedplus
-let g:clipboard = {
-  \   'name': 'WslClipboard',
-  \   'copy': {
-  \      '+': 'clip.exe',
-  \      '*': 'clip.exe',
-  \    },
-  \   'paste': {
-  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \   },
-  \   'cache_enabled': 0,
-  \ }
+" WSL only: native Linux keeps nvim's own provider detection (wl-copy, xclip...).
+" clip.exe reads its input in the OEM code page and turns UTF-8 into mojibake (é -> ├®), and Get-Clipboard writes
+" in it too: both directions go through PowerShell forced to UTF-8 (~0.3 s a call). Lists skip the shell.
+if has('wsl')
+  let s:wsl_copy = ['powershell.exe', '-NoProfile', '-c',
+    \ '[Console]::InputEncoding = [Text.Encoding]::UTF8; Set-Clipboard -Value ([Console]::In.ReadToEnd())']
+  let s:wsl_paste = ['powershell.exe', '-NoProfile', '-c',
+    \ '[Console]::OutputEncoding = [Text.Encoding]::UTF8; [Console]::Out.Write((Get-Clipboard -Raw).tostring().replace("`r", ""))']
+  let g:clipboard = {
+    \   'name': 'WslClipboard',
+    \   'copy': { '+': s:wsl_copy, '*': s:wsl_copy },
+    \   'paste': { '+': s:wsl_paste, '*': s:wsl_paste },
+    \   'cache_enabled': 0,
+    \ }
+endif
 
 " global status line
 set laststatus=3
