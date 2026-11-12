@@ -19,20 +19,21 @@ Then say in one line which mod and task you understood, and start (or ask, when 
 
 ## Workflow
 
-- **Auto mode**: Edit/Write under `/home/kpr/.bashrc.d/claude/mods/` fails. Copy the mod fresh to the session's scratchpad
-  (`<scratchpad>/mods/<mod>/`, replacing any older copy), edit there, check there, then `cp` the changed files back. Before copying
-  back, `diff -r` the copy against the original minus your edits if the original may have changed meanwhile.
+- **Auto mode**: Edit/Write under `/home/kpr/.bashrc.d/claude/mods/` may fail (`CLAUDE.md` says why). Go straight to a copy, never
+  `sed` the original first: copy the mod fresh to the session's scratchpad (`<scratchpad>/mods/<mod>/`, replacing any older copy),
+  edit there, check there, then `cp` the changed files back. Before copying back, `diff -r` the copy against the original minus your
+  edits if the original may have changed meanwhile.
 - **Manual mode**: edit `/home/kpr/.bashrc.d/claude/mods/<mod>/` directly.
 - **Checks**, all three must pass before a change counts as done, run on the folder you edited:
   `claude plugin validate <mod folder>`, `claude plugin test <mod folder>`, `npx -y -p typescript tsc -p <mod folder>`.
 - A saved file reloads its mod in a running session; a **new** mod loads only in a session started from a new shell.
-- A pure helper gets a test in the mod's `tests/` (`claude-code/testing`, single quotes, no semicolons).
+- A pure helper gets a test in the mod's `tests/` (`claude-code/testing`).
 
 ## Rules
 
 - Before each step, recap it to the user in a few lines; wait for a go on anything beyond what was asked.
 - Never delete a file or a feature unasked. Never commit unless asked. Never touch `claude/settings.json` without explicit consent.
-- Descriptive names, no one-letter variables; the formatting already in the file (double quotes and semicolons in hook files).
+- Descriptive names, no one-letter variables; single quotes and semicolons everywhere, hooks and tests alike.
 - Code is read by humans: comment the why, name the regexes, split a long function into named steps.
 - Learned something about the API that is not in `CLAUDE.md` yet? Propose the line to add there; add it once the user agrees.
 - A mod's `README.md` is an entry point (what it is for, a mini example), not a file listing: update it only when that changes.
