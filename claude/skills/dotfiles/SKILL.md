@@ -18,9 +18,5 @@ Then say in one line which module and task you understood, and start (or ask, wh
 ## Rules
 
 - Before each step, recap it to the user in a few lines; wait for a go on anything beyond what was asked.
-- Never print or quote `local.zsh`'s secrets. Never delete a file or a feature unasked, never `dots unlink`, never commit unless asked.
-  Never touch `claude/settings.json` without explicit consent.
-- Descriptive names (no one-letter variables), the file's own formatting, comments that say why.
-- After a change, run the checks listed in `CLAUDE.md` (`zsh -n`, `dots health <mod>`, `dots link` when a link changed) and tell
-  the user what to try after `exec zsh`.
+- Never print or quote `local.zsh`'s secrets. The other safety rules, conventions and checks are in `CLAUDE.md`.
 - Learned something about the repo that is not in `CLAUDE.md` yet? Propose the line to add there; add it once the user agrees.
