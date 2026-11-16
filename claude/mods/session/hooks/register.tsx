@@ -72,7 +72,7 @@ async function getTheme($: EngineInterface) {
 export const register: Register = (on) => {
   on('session.start', async ($, event, next) => {
     await $.command.register({
-      name: 'session',
+      name: 'session-pane',
       description: 'Toggle the session pane: agents, skills, changed files',
     });
     await $.command.register({
@@ -97,7 +97,7 @@ export const register: Register = (on) => {
     return next(event);
   });
 
-  on('command.run', { command: 'session' }, async ($) => {
+  on('command.run', { command: 'session-pane' }, async ($) => {
     if (await isPaneOpen($)) {
       await $.ui.close({ id: PANE });
 

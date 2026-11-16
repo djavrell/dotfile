@@ -17,7 +17,7 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |-------------------|--------------------------------------------------------------------------------------------------------------|
 | `palette`         | Shares the terminal theme: `$.palette.get()` parses `wezterm/colors/nordic.toml`, built-in copy as fallback. |
 | `agents`          | Single source of the session's agents: history (last 30), parent, model, steps, end; `agents.list` state.    |
-| `session`         | The side pane (`/session` toggles it, opens on start): main agent and its subagents, Skills, MCP, Files,     |
+| `session`         | The side pane (`/session-pane` toggles it, opens on start): main agent and its subagents, Skills, MCP, Files,|
 |                   | Branch, Context. `/context-icons` lists what the Context legend's icons stand for. Consumer only.            |
 | `git-provider`    | The checked-out branch and its pull request via `gh` (polled each minute and on a branch switch):            |
 |                   | `git-provider.branch` and `git-provider.current` states, drawn by the pane's Branch section. Draws nothing.   |
@@ -61,7 +61,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   argument to a function declaration.
 - **Imports stay inside the mod's folder**: an import outside it is refused, and so is a symlink to a shared file. Code shared between
   mods has to be a service on `$` (like `palette`).
-- **Serving a noun** (`$.palette`): add it in `engine.create` with a bottom implementation, and answer calls with
+- **Serving a noun** (`$.palette`): add it in `engine.create`, hooked by its exact name (since 2.1.323 a `*`, namespace or
+  negated hook on it only observes, and `validate` fails a hook not in the one accepted form), with a bottom implementation, and answer calls with
   `on("<noun>.<method>", async ($) => ({ value }))`. A served hook must return `{ value }`, not the bare value. The `$` that
   `engine.create`'s `next(event)` returns cannot be captured for later calls.
 - **Rendering a tree in another mod's pane** works only by faking a render event for `$.ui.resolve`. Undocumented: do not build on it.
@@ -122,8 +123,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
 - **Stale typings**: an older Claude Code session still open rewrites `.claude-plugin/types/` when a mod reloads (`validate` does
   not). Before trusting a `tsc` error on a recent API, read the version on `index.d.ts`'s first line; copy a current mod's file over.
 - **Live test without a new shell**: once the `plugin-authoring` skill is loaded, a mod written under `~/.claude/dev-mods/<session>/`
-  hot-reloads in the session after one "Enable hot reloading" question in manual mode, none in auto/bypass (2.1.321); mods do not
-  load in `dontAsk` mode. Copy it to `claude/mods/` once it works.
+  hot-reloads in the session after one "Enable hot reloading" question in manual mode, none in auto/bypass (2.1.321); its "Not now"
+  answer says when the mods will load (2.1.323). Mods do not load in `dontAsk` mode. Copy it to `claude/mods/` once it works.
 - In **auto mode**, the classifier may give no verdict on Edit/Write under `claude/mods/` (hard failure, even with the
   `Edit(~/.bashrc.d/claude/mods/**)` allow rule); manual mode goes through. And a `sed` on a mod's source file gets refused by
   `lsp-first`, after which the classifier reads any copy-back as a way around that refusal and denies it too. The `mods` skill's

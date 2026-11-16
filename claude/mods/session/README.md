@@ -1,7 +1,7 @@
 # session
 
 A side pane that shows what the session is doing at a glance: the main agent card and its subagents, the skills used,
-the MCP servers' health (from `mcp-status`), the files changed in the repo, and the context window usage. It opens on session start, and `/session` toggles it.
+the MCP servers' health (from `mcp-status`), the files changed in the repo, and the context window usage. It opens on session start, and `/session-pane` toggles it.
 
 ## Example
 
@@ -36,6 +36,6 @@ Context
 ```
 
 ```
-/session         toggle the pane
+/session-pane    toggle the pane
 /context-icons   list the Context legend's icons and grid cells
 ```
