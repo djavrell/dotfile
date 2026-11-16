@@ -1,6 +1,9 @@
 {
   "name": "palette",
   "version": "0.1.0",
+  "author": { "name": "djavrell" },
+  "license": "MIT",
+  "engines": { "claude-code": ">=2.1.323" },
   "description": "Shares the wezterm color scheme with other mods as $.palette",
   "types": "./types/index.d.ts"
 }

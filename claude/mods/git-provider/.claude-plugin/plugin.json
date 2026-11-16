@@ -1,6 +1,8 @@
 {
   "name": "git-provider",
   "version": "0.1.0",
+  "author": { "name": "djavrell" },
+  "license": "MIT",
   "description": "Publishes the checked-out branch and its GitHub pull request (state, CI, review) as state; draws nothing",
   "types": "./types/index.d.ts"
 }

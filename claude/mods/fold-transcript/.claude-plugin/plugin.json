@@ -1,6 +1,8 @@
 {
   "name": "fold-transcript",
   "version": "0.1.0",
+  "author": { "name": "djavrell" },
+  "license": "MIT",
   "description": "Folds Bash and Agent results and agents' reports in the transcript to one line; a click on [+] unfolds them in place",
   "types": "./types/index.d.ts"
 }

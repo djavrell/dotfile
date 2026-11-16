@@ -1,5 +1,7 @@
 {
   "name": "diagnostics",
   "version": "0.1.0",
+  "author": { "name": "djavrell" },
+  "license": "MIT",
   "description": "Caps the language server's new-diagnostics attachment before the model reads it"
 }
