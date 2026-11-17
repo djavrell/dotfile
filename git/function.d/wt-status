@@ -1,0 +1,67 @@
+# vim:ft=zsh
+# One line per worktree of the current repo: branch, its GitHub PR, ahead/behind its upstream, uncommitted changes
+
+local key value worktree_path line branch ahead_behind sync pr_number pr_state pr_text pr_color
+local -i change_count gh_pid frame_index=0
+local -a spinner_frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+local pr_file=$(mktemp)
+
+# Porcelain gives each worktree as "worktree <path>" (paths with spaces survive, unlike awk $2).
+git worktree list --porcelain | while read -r key value; do
+  [[ $key == worktree ]] || continue
+  worktree_path=$value
+  [[ -d $worktree_path ]] || { printf '\033[1;34m%-30s\033[0m \033[31mabsent (prunable)\033[0m\n' "${worktree_path:t}"; continue }
+
+  branch= ahead_behind= change_count=0
+  # One status call per worktree gives the branch, its divergence and every change line.
+  for line in ${(f)"$(git -C "$worktree_path" status --porcelain=v2 --branch)"}; do
+    case $line in
+      '# branch.head '*) branch=${line#\# branch.head } ;;
+      '# branch.ab '*) ahead_behind=${line#\# branch.ab } ;;
+      '#'*) ;;
+      *) (( change_count++ )) ;;
+    esac
+  done
+
+  # No tracking set (pushed without -u): compare to origin/<branch> as of the last fetch.
+  if [[ -z $ahead_behind ]] && git -C "$worktree_path" rev-parse -q --verify "refs/remotes/origin/$branch" >/dev/null; then
+    ahead_behind=$(git -C "$worktree_path" rev-list --left-right --count "HEAD...origin/$branch")
+    ahead_behind="+${ahead_behind%%[[:space:]]*} -${ahead_behind##*[[:space:]]}"
+  fi
+
+  if [[ -z $ahead_behind ]]; then
+    sync='\033[2mpas sur origin\033[0m'
+  else
+    # "+2 -0" -> "↑2 ↓0"
+    sync="↑${${ahead_behind%% *}#+} ↓${${ahead_behind##* }#-}"
+  fi
+
+  # One gh call per branch (~0.5-1 s each) so lines show up one by one; its latest PR only.
+  # Disowned (&! prints no job message), stdin closed so it never eats the worktree list, while a spinner turns on stderr.
+  gh pr list --head "$branch" --state all --limit 1 --json number,state,isDraft,reviewDecision --jq '.[] |
+    [.number, (if .state != "OPEN" then .state elif .isDraft then "DRAFT" else (.reviewDecision // "") end)] | @tsv' \
+    >"$pr_file" 2>/dev/null </dev/null &!
+  gh_pid=$!
+  while kill -0 $gh_pid 2>/dev/null; do
+    [[ -t 2 ]] && printf '\r\033[K%s %s…' ${spinner_frames[frame_index++ % ${#spinner_frames} + 1]} "${worktree_path:t}" >&2
+    sleep 0.1
+  done
+  IFS=$'\t' read -r pr_number pr_state <"$pr_file"
+
+  case $pr_state in
+    MERGED)            pr_color='\033[35m' pr_text='mergée' ;;
+    CLOSED)            pr_color='\033[2m'  pr_text='fermée' ;;
+    DRAFT)             pr_color='\033[2m'  pr_text='brouillon' ;;
+    APPROVED)          pr_color='\033[32m' pr_text='approuvée' ;;
+    CHANGES_REQUESTED) pr_color='\033[31m' pr_text='changements demandés' ;;
+    *)                 pr_color='\033[33m' pr_text='en revue' ;;
+  esac
+  [[ -n $pr_number ]] && pr_text="#$pr_number $pr_text" || { pr_color='\033[2m' pr_text='pas de PR' }
+
+  [[ -t 2 ]] && printf '\r\033[K' >&2
+  # Pad the plain text, then color it: escape codes would break printf's widths.
+  printf '\033[1;34m%-30s\033[0m %-40s %b%-28s\033[0m %b  %s\n' "${worktree_path:t}" "$branch" "$pr_color" "$pr_text" "$sync" \
+    "$( (( change_count )) && print "\033[33m$change_count modifs\033[0m" || print '\033[32mpropre\033[0m' )"
+done
+
+rm -f "$pr_file"
