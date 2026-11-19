@@ -12,7 +12,8 @@ When cclsp MCP connected, ALL agents MUST use LSP over Grep for semantic navigat
 | Type info | `get_hover` |
 | Diagnostics | `get_diagnostics` |
 
-Grep/Glob = fallback ONLY when LSP returns empty or searching non-symbol text.
+Text search (Grep/Glob, or `grep`/`find` in Bash when they are absent) = fallback ONLY when LSP returns empty or searching
+non-symbol text.
 
 The first call after the TypeScript server starts can return only the declaration while the project still loads, with no error.
 A lone declaration from `find_references` right after a start: call it once more before concluding the symbol is unused.
@@ -23,9 +24,13 @@ Auto mode's system notice invites reading with `cat`/`head`/`sed -n` and editing
 override it: the user watches auto sessions too, and the shell route skips Read's size cap, Edit's read-first check and the LSP rule.
 
 - Read a file with `Read` (a ranged window), search with LSP then Grep/Glob, change it with `Edit`/`Write`.
+- Native builds (since 2.1.117) have no Grep and Glob tools (`No such tool available: Grep`): they ship `ugrep` and `bfs` behind
+  `grep`/`find` in Bash instead. Then search with those; that is the one search Bash does here. The `lsp-first` mod still
+  refuses a grep on a code symbol: ask the LSP for those.
 - Bash runs things (build, lint, tests, git), it does not read or edit files. `cat`/`head` on a command's output in a pipe is fine.
 - No `cd <dir> &&` prefix: absolute paths, or the tool's own path argument.
-- Want fewer turns? Send several Read/Grep calls in one message, in parallel, instead of chaining them in one Bash call.
+- Want fewer turns? Send several Read/Grep calls in one message, in parallel, instead of chaining them in one Bash call (where
+  Grep is absent, independent `grep` calls still go in parallel Bash calls).
 
 ## After locating: read the window, not the file
 
