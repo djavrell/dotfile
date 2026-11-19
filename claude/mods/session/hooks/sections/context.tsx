@@ -50,8 +50,13 @@ export function ContextSection({
   // the pane's inner width, which the grid fills
   bodyColumns: number;
 }) {
-  const contextPercent = usage.context.percent ?? 0;
   const contextTokens = usage.context.tokens;
+  // measured against the compaction window when one is set (autoCompactWindow), like the grid, not the model's window
+  const windowTokens = contextInfo?.maxTokens ?? usage.context.window;
+  const contextPercent =
+    contextTokens && windowTokens
+      ? (contextTokens / windowTokens) * 100
+      : (usage.context.percent ?? 0);
   const compactTokens = contextInfo?.compactAt;
   // close to the auto-compaction threshold, which can sit well below the model's window
   const nearCompact =
@@ -105,7 +110,9 @@ export function ContextSection({
       <Text color={nearCompact ? theme?.ansi.red : theme?.ansi.yellow} wrap='truncate-end'>
         {Math.round(contextPercent)}%  📊{' '}
         {contextTokens
-          ? `${fmtTokens(contextTokens)}/${fmtTokens(usage.context.window)}`
+          ? `${fmtTokens(contextTokens)}/${fmtTokens(windowTokens)}${
+              windowTokens !== usage.context.window ? ` (${fmtTokens(usage.context.window)})` : ''
+            }`
           : '--/--'}
         {nearCompact ? ' ⚠' : ''}
       </Text>
