@@ -17,6 +17,10 @@ in `claude/mods/` have their own guide, `claude/mods/CLAUDE.md`.
   fetched by `dots link` at the `lazy-lock.json` commit, never edited by hand. A tool gets the theme through the terminal's ANSI
   colors (`ansi`/`16`/`system` modes), not through a new hardcoded copy of the palette.
 - Never delete a file or a feature unasked, never `dots unlink` unasked, never commit unless asked.
+- **Any change under `claude/mods/`**, even one line, even in the middle of another task: load the `mods` skill first. In auto mode
+  a direct Edit there can fail, and the `cp` that follows gets refused as a way around it; the skill's workflow avoids both.
+- **Rules, skills, agents and `CLAUDE.md` files change only when asked.** An addition that looks useful is proposed in one line,
+  not made.
 
 ## How the shell boots
 
@@ -72,6 +76,16 @@ Helpers from `core/function.d/`: `load <file>` (source if it exists), `module <m
 - Descriptive names, never one-letter variables, shell included.
 - A deliberate shortcut gets a `ponytail:` comment naming its ceiling and the way up.
 - Commit messages: `[module] lowercase summary`, several modules as `[zsh][wezterm] ...`.
+
+## nvim
+
+- Leader is `!` (`nvim/init.lua`). The keyboard is **AZERTY**: no `[`/`]` in new mappings, they are awkward to reach.
+- `<C-x>` is taken by WezTerm: never map it in nvim.
+- Check a change with `luac -p <file>`, then `nvim --headless "+qa"` for load errors; the user tries the behaviour.
+- `Undefined global vim` comes from the lua_ls cclsp starts on this repo (no `$VIMRUNTIME` in its library), not from the user's nvim:
+  never "fix" it in the code. `.luarc.json` at the repo root declares `vim` for it.
+- Local plugin patches live in `nvim/patches/<plugin>-<topic>/`: the `.patch`, a `README.md`, a `github-issue.md` draft (never
+  published by Claude), and a `-- local patch (kpr)` marker in the patched code.
 
 ## Checking a change
 
