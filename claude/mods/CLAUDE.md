@@ -30,6 +30,8 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 |                   | click, fullscreen). Drawing only: the model reads them whole.                                                |
 | `diagnostics`     | Cuts the language server's new-diagnostics list before the model reads it: 400 chars a line, 20k in all (a   |
 |                   | typera/zod type error once spelled out 5.6M chars).                                                          |
+| `skill-hint`      | On a typed prompt (`prompt.submit`, `context`: model only), names the skill or command that matches: `mods`, |
+|                   | `/pr-reply`, `changelog`, `dotfiles`. Keyword regexes in `hooks/lib/hints.ts`; slash commands skipped.       |
 
 Architecture rule: **data sources publish state, consumers draw.** A mod that collects data (agents, later files or status) owns that
 state and its types; a consumer lists it under `dependencies` in `plugin.json` and reads it with

@@ -1,0 +1,7 @@
+{
+  "name": "skill-hint",
+  "version": "0.1.0",
+  "author": { "name": "djavrell" },
+  "license": "MIT",
+  "description": "Reminds the model, beside a submitted prompt, which skill or command matches it (mods, dotfiles, changelog, pr-reply)"
+}
