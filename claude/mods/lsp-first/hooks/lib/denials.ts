@@ -22,6 +22,11 @@ export const readDenial = (target: string) =>
   "lines you need (sed -n '120,180p' is offset=120 limit=61), numbered and ready for Edit. " +
   "Allowed: a pipe's output (cmd | head), git show/diff, typings (.d.ts), non-source files, scratch paths.";
 
+export const cdDenial = (directory: string) =>
+  `${DENY_MARKER} a leading "cd ${directory}" makes the command unique, so no allow rule matches it: use absolute paths, ` +
+  "git -C <dir>, npm --prefix <dir> / npm -w <ws>, cargo --manifest-path, make -C, or the tool's own path argument. " +
+  'The cwd persists between Bash calls in the main session: a separate plain `cd <dir>` call also works.';
+
 // This mod's refusal: the error text starts with the marker (a ⛔ before it allowed); its first line is captured.
 // An error that merely quotes the marker further in (a grep's output, a log) is no refusal.
 const OWN_DENIAL = new RegExp(`^\\s*(?:⛔\\s*)?(${DENY_MARKER}.*)`);

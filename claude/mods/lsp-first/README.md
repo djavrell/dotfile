@@ -16,6 +16,7 @@ retries the LSP server when it is not warmed up yet, and shows each refusal as a
 | `cargo test \| grep Expected`           | allowed (filters a pipe)              |
 | `sed -n '120,180p' src/x.ts`            | refused (shell read of `src/x.ts`)    |
 | `npm run build 2>&1 \| tail -30`        | allowed (reads a pipe)                |
+| `cd crates/foo && cargo test`           | refused (leading `cd`, no allow rule) |
 
 The transcript shows a refusal as one dim line:
 

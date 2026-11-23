@@ -1,6 +1,6 @@
 // LSP-first guards, as a mod. Four hooks:
 //   1. a Bash command that greps for a code symbol, writes or reads a source file, is refused (lib/grep.ts,
-//      lib/write.ts, lib/read.ts);
+//      lib/write.ts, lib/read.ts), and so is a leading `cd <dir> &&` prefix (lib/cd.ts);
 //   2. Read calls are noted, so cclsp can be primed on a file the session already opened;
 //   3. a cclsp call that hit the server's cold start ("No Project") is primed and run again, transparently;
 //   4. this mod's own refusals are drawn as one dim line in the transcript.
@@ -8,7 +8,8 @@
 // The judging is pure, in lib/; primeAndRetry stays here with the Read state it uses.
 import type { EngineInterface, McpToolResult, Register } from 'claude-code';
 
-import { compactDenial, grepDenial, readDenial, writeDenial } from './lib/denials';
+import { leadingCdTarget } from './lib/cd';
+import { cdDenial, compactDenial, grepDenial, readDenial, writeDenial } from './lib/denials';
 import { grepSymbols } from './lib/grep';
 import { shellReadTarget } from './lib/read';
 import { shellWriteTarget } from './lib/write';
@@ -50,6 +51,10 @@ export const register: Register = (on) => {
 
     const readSourceFile = shellReadTarget(event.command);
     if (readSourceFile) return { deny: readDenial(readSourceFile) };
+
+    // after the others: their refusals say more than this one
+    const cdDirectory = leadingCdTarget(event.command);
+    if (cdDirectory) return { deny: cdDenial(cdDirectory) };
 
     return next(event);
   });
