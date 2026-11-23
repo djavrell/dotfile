@@ -14,5 +14,6 @@ function link_claude() {
     "$DOTFILE/claude/skills/mods" "$claude_dir/skills/mods"
     "$DOTFILE/claude/skills/dotfiles" "$claude_dir/skills/dotfiles"
     "$DOTFILE/claude/agents/mod-dev.md" "$claude_dir/agents/mod-dev.md"
+    "$DOTFILE/claude/agents/diff-reviewer.md" "$claude_dir/agents/diff-reviewer.md"
   )
 }
