@@ -1,5 +1,4 @@
 # nvim
-nvim/lazy-lock.json
 nvim/lua/.luarc.json
 wip_*.lua
 
