@@ -13,6 +13,8 @@ import { FilesSection } from './sections/files';
 import { McpSection } from './sections/mcp';
 import { SkillsSection } from './sections/skills';
 import { MainAgentCard } from './sections/mainAgent';
+import { TrackingSection } from './sections/tracking';
+import { PANE_ROWS_KEY, readPaneRows, storePaneRows } from './state/paneRows';
 import { readContext, refreshContext } from './state/context';
 import {
   GIT_POLL_MS,
@@ -174,6 +176,16 @@ export const register: Register = (on) => {
     return result;
   });
 
+  // another mod's rows for the Tracking section: copied once its write landed (state/paneRows.ts says why)
+  on('state.set', async ($, event, next) => {
+    const result = await next(event);
+    const { plugin, key, value } = event as unknown as { plugin: string; key: string; value: unknown };
+    if (key === PANE_ROWS_KEY && plugin !== 'session' && result.value?.isSet)
+      void storePaneRows($, plugin, value).catch(() => {});
+
+    return result;
+  });
+
   // ── pane ───────────────────────────────────────────────────────────────────
 
   on('ui.render', { component: 'Pane', requestId: PANE }, async ($, event) => {
@@ -192,6 +204,7 @@ export const register: Register = (on) => {
       pullRequest,
       branchName,
       serverList,
+      paneRows,
     ] = await Promise.all([
       readFiles($),
       read($, agents),
@@ -204,6 +217,7 @@ export const register: Register = (on) => {
       read($, pullRequestState),
       read($, branchState),
       read($, mcpServers),
+      readPaneRows($),
     ]);
     // docked, fill the pane's height so the grown top block pushes Context to the bottom
     const minHeight =
@@ -255,6 +269,7 @@ export const register: Register = (on) => {
           <Text> </Text>
         </Box>
         {BranchSection({ ui, theme, branchName, pullRequest })}
+        {TrackingSection({ ui, theme, rows: paneRows })}
         {ContextSection({
           ui,
           theme,

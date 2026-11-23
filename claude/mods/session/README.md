@@ -39,3 +39,13 @@ Context
 /session-pane    toggle the pane
 /context-icons   list the Context legend's icons and grid cells
 ```
+
+## Adding rows from another mod
+
+Any mod that publishes `paneRows` (the `PaneRow` shape of `types/index.d.ts`) in its own state gets a line per row in the
+Tracking section, under Branch. Neither mod lists the other under `dependencies`: the pane copies each `paneRows` write it sees.
+
+```ts
+const paneRows = atom({ plugin: 'tracker', key: 'paneRows' } as const, []);
+await update($, paneRows, () => [{ icon: '', key: 'ISSUE-1', url: 'https://…', label: 'Fix the parser', status: 'Open', badge: null }]);
+```

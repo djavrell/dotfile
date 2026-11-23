@@ -13,9 +13,22 @@ export type ContextInfo = {
   cacheReadPercent: number | null
 }
 
+// one line another mod adds to the pane's Tracking section (a ticket, an issue): it publishes `paneRows: PaneRow[]` in its own
+// state, with no dependency either way, and the pane draws it. key is linked to url when there is one; badge sits on the right
+export type PaneRow = {
+  icon: string
+  key: string
+  url: string | null
+  label: string
+  status: string | null
+  badge: string | null
+}
+
 declare module 'claude-code' {
   interface PluginState {
     session: {
+      // every other mod's last `paneRows` write, by mod name (state/paneRows.ts)
+      providedRows: Record<string, PaneRow[]>
       files: Change[]
       skills: string[]
       info: ModelInfo | null
