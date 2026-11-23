@@ -3,14 +3,18 @@
 // Starts every refusal of this mod, as it started the classic hooks' ones.
 const DENY_MARKER = 'LSP-FIRST:';
 
+// No list of what the guard lets through: sessions read "Allowed: regex patterns" as a way around it and
+// searched `Invalid[V]alue`. The refusal names the tool to switch to, and how to load it when deferred.
 export const grepDenial = (symbols: readonly string[]) =>
   `${DENY_MARKER} grep on code symbol(s) ${symbols.join(', ')}: ask the LSP instead, ` +
-  `mcp__cclsp__find_workspace_symbols("${symbols[0]}") then find_references from its definition. ` +
-  'Allowed: typings (.d.ts), one known file, regex patterns, -c, -A/-B/-C.';
+  `mcp__cclsp__find_workspace_symbols("${symbols[0]}") then find_references from its definition ` +
+  '(deferred? load them first: ToolSearch "select:mcp__cclsp__find_workspace_symbols,mcp__cclsp__find_references"). ' +
+  'Switch tool: the same search reworded (a regex, another shell form) is the same lookup.';
 
 export const writeDenial = (target: string) =>
-  `${DENY_MARKER} writing the source file ${target} from the shell: use Edit (Read it first) or Write, ` +
-  'which show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). ' +
+  `${DENY_MARKER} writing ${target} from the shell: use Edit (Read it first) or Write, for every file type, ` +
+  'Markdown included; they show a diff and fail loudly on a missing anchor (Edit refuses a non-UTF-8 file: Write it whole). ' +
+  'Switch tool: python/perl/node writing the file, a heredoc or printf >> is the same edit. ' +
   'Scratch paths (scratchpad/, /tmp) are exempt: name them absolute, or relative to a cd in the same command.';
 
 export const readDenial = (target: string) =>

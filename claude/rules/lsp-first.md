@@ -15,6 +15,10 @@ When cclsp MCP connected, ALL agents MUST use LSP over Grep for semantic navigat
 Text search (Grep/Glob, or `grep`/`find` in Bash when they are absent) = fallback ONLY when LSP returns empty or searching
 non-symbol text.
 
+Scope: code of the current project in a language `claude/cclsp.json` serves (TS/JS, Python, Lua, Rust). Shell scripts, SQL, CSV,
+command output and third-party code (`node_modules`, `~/.cargo`, nvim plugins) have no useful LSP: grep them. The cclsp tools are
+often deferred: load them with ToolSearch at the session's first symbol search, before any grep.
+
 The first call after the TypeScript server starts can return only the declaration while the project still loads, with no error.
 A lone declaration from `find_references` right after a start: call it once more before concluding the symbol is unused.
 
@@ -27,8 +31,14 @@ override it: the user watches auto sessions too, and the shell route skips Read'
 - Native builds (since 2.1.117) have no Grep and Glob tools (`No such tool available: Grep`): they ship `ugrep` and `bfs` behind
   `grep`/`find` in Bash instead. Then search with those; that is the one search Bash does here. The `lsp-first` mod still
   refuses a grep on a code symbol: ask the LSP for those.
-- Bash runs things (build, lint, tests, git), it does not read or edit files. `cat`/`head` on a command's output in a pipe is fine.
-- No `cd <dir> &&` prefix: absolute paths, or the tool's own path argument.
+- Bash runs things (build, lint, tests, git, `cp` back from the scratchpad), it does not read or edit files. `cat`/`head` on a
+  command's output in a pipe is fine. No shell write to a project file of any type, Markdown included: no `sed -i`, `perl -pi`,
+  `echo`/`printf >>`, `cat > file`, `tee`, and no interpreter rewriting a file (`python3 - <<EOF`, `node -e`). A failed Edit is
+  re-read and redone with Edit.
+- A refusal from the `lsp-first` mod means "switch tool", never "find another shell form": a symbol hidden in a regex (`Foo[B]ar`)
+  is still a grep on a symbol, a python write is still a shell edit.
+- Don't chain an edit and a check in one command: edit with Edit, then run the check in its own call.
+- No `cd <dir>` prefix, whatever the separator (`&&`, `;`): absolute paths, `git -C`, or the tool's own path argument.
 - Want fewer turns? Send several Read/Grep calls in one message, in parallel, instead of chaining them in one Bash call (where
   Grep is absent, independent `grep` calls still go in parallel Bash calls).
 

@@ -24,7 +24,7 @@ mod. The API reference is the `plugin-authoring` skill (load it before writing a
 | `mcp-status`      | The MCP servers' health: `claude mcp list` at start and on `/mcp-health`, then the session's MCP calls;     |
 |                   | `mcp-status.servers` and `mcp-status.notes` states, drawn by the pane's MCP section. Draws nothing.          |
 | `lsp-first`       | Refuses a shell grep on code symbols, a shell read of a source file (`cat`/`head`/`tail`/`sed -n`, toward   |
-|                   | Read) and a shell write to one, retries cclsp's "No Project" cold start, folds its own refusals to one line. |
+|                   | Read) and a shell edit of any project file, retries cclsp's "No Project" cold start, folds its refusals.     |
 |                   | Runs above the classic hooks.                                                                                |
 | `fold-transcript` | Folds Bash and Agent results and agents' reports in the transcript to one line, `[+]`/`[−]` to toggle (a     |
 |                   | click, fullscreen). Drawing only: the model reads them whole.                                                |

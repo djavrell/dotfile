@@ -46,6 +46,24 @@ export function commandParts(command: string) {
     .filter(Boolean);
 }
 
+// Quoted text blanked to spaces of the same length: separators and redirects inside a string (`grep "a|b"`,
+// `echo "a > b"`) stop counting, and an index into the result is an index into the original.
+const QUOTED = /"(?:\\.|[^"\\])*"|'[^']*'/g;
+export const maskQuotes = (command: string) => command.replace(QUOTED, (quoted) => ' '.repeat(quoted.length));
+
+// The list segments of a command (`a; b && c || d`, one per line), split outside quotes. Unlike commandParts,
+// a pipe stays inside its segment: the grep guard needs to know what feeds a grep.
+export function listSegments(command: string) {
+  const segments: string[] = [];
+  let segmentStart = 0;
+  for (const separator of maskQuotes(command).matchAll(/;|&&|\|\||\n/g)) {
+    segments.push(command.slice(segmentStart, separator.index));
+    segmentStart = separator.index + separator[0].length;
+  }
+  segments.push(command.slice(segmentStart));
+  return segments.map((segment) => segment.trim()).filter(Boolean);
+}
+
 // A part that only changes directory (`cd scratch`).
 export const CD_TARGET = /^cd\s+['"]?([^'"\s]+)['"]?$/;
 

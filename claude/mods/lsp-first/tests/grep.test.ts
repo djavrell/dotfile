@@ -60,6 +60,33 @@ test('exemption: only non-code files named', () => {
   expect(grepSymbols('grep -n "UserService" notes.md todo.md')).toEqual([]);
 });
 
+test('a grep after a pipe filters output, whatever the program and what comes before', () => {
+  expect(grepSymbols('cargo test 2>&1 | grep "UnexpectedToken"')).toEqual([]);
+  expect(grepSymbols('cd /x; pacman -Si neovim | grep Version')).toEqual([]);
+  // a quoted pipe is no pipe
+  expect(grepSymbols('grep -rn "Foo|UserService" src/')).toEqual(['UserService']);
+});
+
+test('each list segment is judged on its own', () => {
+  expect(grepSymbols('cd /home/me/repo; grep -rn "UserService" src/')).toEqual(['UserService']);
+  expect(grepSymbols('npm run build && grep -rn "UserService" src/ | head')).toEqual(['UserService']);
+});
+
+test('a one-letter class is the letter: the disguise is still a symbol', () => {
+  expect(grepSymbols('grep -rn "Invalid[V]alue" src/')).toEqual(['InvalidValue']);
+  expect(grepSymbols('grep -rn "Invalid[VW]alue" src/')).toEqual([]);
+});
+
+test('exemption: named files and globs, Lua included', () => {
+  expect(grepSymbols('grep -n "setupKeymaps" lua/plugins/keys.lua')).toEqual([]);
+  expect(grepSymbols('grep -n "toContain\\|expectError" tests/*.ts')).toEqual([]);
+});
+
+test('exemption: third-party trees', () => {
+  expect(grepSymbols('grep -rn "setupKeymaps" ~/.local/share/nvim/lazy/')).toEqual([]);
+  expect(grepSymbols('rg "ParseError" ~/.cargo/registry/src')).toEqual([]);
+});
+
 test('a grep quoted in a heredoc body is payload, not a search', () => {
   const prBody = 'gh pr create --body "$(cat <<\'EOF\'\nRan grep -rn "UserService" src/ to check.\nEOF\n)"';
   expect(grepSymbols(prBody)).toEqual([]);
