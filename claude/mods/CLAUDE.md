@@ -109,6 +109,7 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   `$.ui.view({})` the main one; outside the person's own input it answers `{ deny }`. The pane reads the view in force as
   `e.props.view` (`session`).
 - A command's text output is shown prefixed with `<plugin>:`.
+- A skill's `description` and `argument-hint` are shown HTML-escaped: `<n>` reads `&lt;n&gt;`. Write `N` or `[n]` there instead.
 - **The language server's new errors** come as a `diagnostics` attachment: `prompt.attachment` with `{ type: "diagnostics" }`
   rewrites what the model reads (`diagnostics`), but no render component draws it (probed live): Claude Code shows it as one line,
   ctrl+o unrolls it, and no mod can fold it.
@@ -116,6 +117,8 @@ Inside `session/hooks/`: `register.tsx` wires the hooks and the pane; `state/` h
   attachments it had already answered.
 - Nerd Font glyphs vanish from Claude's own messages and from the copy of a command output Claude reads, yet render for the user:
   do not conclude a glyph is broken from that. A glyph missing from the user's font draws as a box; an unknown category drew one.
+  When an icon is in doubt, ask the user to run `! nf_range <start_code> [count=32]` (`zsh/function.d/nf_range`): Font Awesome
+  0xf000, Octicons 0xf400, Devicons 0xe700, Codicons 0xea60, Powerline 0xe0a0, Material Design v3 0xf0001.
 
 ## Working on a mod
 

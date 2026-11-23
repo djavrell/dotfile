@@ -37,7 +37,9 @@ fichier), et donne-lui, mot pour mot, les entrées du changelog qui touchent les
   constraints learned the hard way » de `claude/mods/CLAUDE.md` contourne ou documente encore l'ancien comportement ;
 - **opportunité** : une nouvelle API qui simplifierait un mod existant (pas de nouvelle fonctionnalité spéculative).
 
-Il répond par un tableau `Entrée | Mod (fichier:ligne) | Constat | Action proposée`, « rien à changer » pour une entrée sans
-effet.
+Il répond par un tableau `Entrée | Mod (fichier:ligne) | Constat | Action proposée` qui tient en 150 colonnes : quelques mots par
+cellule, jamais une phrase longue (au-delà, le terminal l'affiche en liste). Les entrées sans effet tiennent ensemble sur une seule
+ligne « rien à changer ». Les explications vont en puces sous le tableau, une par ligne du tableau qui en a besoin.
 
-Ajoute une section `## Mods` après le résumé avec ce tableau tel quel. N'applique aucune modification : l'utilisateur trie d'abord.
+Ajoute une section `## Mods` après le résumé avec ce tableau et ses puces. Un tableau reçu trop large est resserré avant d'être
+affiché, pas recopié tel quel. N'applique aucune modification : l'utilisateur trie d'abord.

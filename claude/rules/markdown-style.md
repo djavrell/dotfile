@@ -12,6 +12,9 @@ read in narrow viewers and produce ugly diffs.
 Continuation lines in a list indent to the content column (3 spaces after
 `1. `, 2 after `- `) so the renderer keeps them in the same item.
 
+**Text meant to be pasted elsewhere** (a message, a PR comment, a request for another session) is not wrapped at all: the
+destination wraps it, and hard newlines survive the paste as broken lines.
+
 **Never wrap:** code and SQL blocks (hard-wrapping breaks column alignment and
 diffs), table rows (newline-delimited — a wrap splits the row), headings,
 frontmatter, or URLs that break when split.
