@@ -35,6 +35,18 @@ test('merge takes statuses, adds unseen agents, keeps dropped ones', () => {
   expect(merged[2]?.parentId).toBe('a1');
 });
 
+test('a stale running status from the list does not undo a seen end', () => {
+  const ended = { ...explore, status: 'completed', endedAt: 5, endReason: 'answer' };
+  const [entry] = mergeListed([ended], [
+    { id: 'a1', type: 'Explore', description: 'find things', status: 'waiting' },
+  ], 0);
+  expect(entry?.status).toBe('completed');
+  const [failed] = mergeListed([ended], [
+    { id: 'a1', type: 'Explore', description: 'find things', status: 'failed' },
+  ], 0);
+  expect(failed?.status).toBe('failed');
+});
+
 test('a list refresh keeps the workflow run of an agent', () => {
   const workflow = { runId: 'wf_1', agentIndex: 2 };
   const [entry] = mergeListed([newEntry({ ...explore, workflow })], [

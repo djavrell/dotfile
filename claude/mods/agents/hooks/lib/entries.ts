@@ -41,7 +41,9 @@ export const patchEntry = (
 // the engine's list brings statuses, and agents born without a spawn (a forked skill); agents it has
 // dropped keep their last known state. A new one with no first step seen starts `nowMs`; a known one
 // only takes a seen first step, never `nowMs`: it may have ended already (after a reload), and a
-// start after its end drew a negative time
+// start after its end drew a negative time. A known finished agent stays finished: the refresh right after
+// its turn.complete can still read it `running`/`waiting`, then the engine drops it and nothing corrects
+// it; a real resume comes through `resumed` (agent.spawn) or `stepStarted`
 export const mergeListed = (
   entries: readonly AgentEntry[],
   listed: readonly ListedAgent[],
@@ -52,7 +54,10 @@ export const mergeListed = (
     const existing = merged.find((entry) => entry.id === agent.id);
     merged = existing
       ? patchEntry(merged, agent.id, () => ({
-          status: agent.status,
+          status:
+            FINISHED_STATUSES.has(existing.status) && !FINISHED_STATUSES.has(agent.status)
+              ? existing.status
+              : agent.status,
           parentId: agent.parentId ?? existing.parentId,
           startedAt: existing.startedAt ?? agent.startedAt,
         }))
